@@ -11,3 +11,11 @@ void navigateTo({
     ),
   );
 }
+
+TextStyle getTextStyle() {
+  return const TextStyle(
+    fontSize: 18,
+    // fontWeight: FontWeight.bold,
+    color: Colors.black,
+  );
+}

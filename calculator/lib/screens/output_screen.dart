@@ -1,3 +1,4 @@
+import 'package:calculator/core/functions.dart';
 import 'package:calculator/cubit/calculator_cubit.dart';
 import 'package:calculator/cubit/calculator_state.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +12,10 @@ class OutputScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Output'),
+        title: const Text(
+          'Output Screen',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
         centerTitle: true,
       ),
       body: Padding(
@@ -22,13 +26,33 @@ class OutputScreen extends StatelessWidget {
               var cubit = CalculatorCubit.get(context);
               return Column(
                 children: [
+                  // date
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Date',
+                        style: getTextStyle(),
+                      ),
+                      Text(
+                        cubit.getCurrentDate(),
+                        style: getTextStyle(),
+                      ),
+                    ],
+                  ),
+
+                  const Divider(),
                   // total profit
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text('Total profit'),
+                      Text(
+                        'Total profit',
+                        style: getTextStyle(),
+                      ),
                       Text(
                         '${cubit.totalProfit}',
+                        style: getTextStyle(),
                       ),
                     ],
                   ),
@@ -38,9 +62,13 @@ class OutputScreen extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text('Total expense'),
+                      Text(
+                        'Total expense',
+                        style: getTextStyle(),
+                      ),
                       Text(
                         '${cubit.totalExpense}',
+                        style: getTextStyle(),
                       ),
                     ],
                   ),
@@ -51,9 +79,13 @@ class OutputScreen extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text('Net profit'),
+                      Text(
+                        'Net profit',
+                        style: getTextStyle(),
+                      ),
                       Text(
                         '${cubit.netProfit}',
+                        style: getTextStyle(),
                       ),
                     ],
                   ),
@@ -65,9 +97,13 @@ class OutputScreen extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text('Administration profit'),
+                      Text(
+                        'Administration',
+                        style: getTextStyle(),
+                      ),
                       Text(
                         '${cubit.adminProfit}',
+                        style: getTextStyle(),
                       ),
                     ],
                   ),
@@ -83,10 +119,14 @@ class OutputScreen extends StatelessWidget {
                       return Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(key),
+                          Text(
+                            key,
+                            style: getTextStyle(),
+                          ),
                           const Gap(10),
                           Text(
                             '${cubit.personNetProfit[key]}',
+                            style: getTextStyle(),
                           ),
                         ],
                       );

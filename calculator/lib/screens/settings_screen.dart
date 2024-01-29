@@ -14,7 +14,10 @@ class SttingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Settings'),
+        title: const Text(
+          'Settings Screen',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
         centerTitle: true,
       ),
       body: BlocBuilder<CalculatorCubit, CalculatorState>(
@@ -90,16 +93,11 @@ class SttingsScreen extends StatelessWidget {
                       ),
 
                       // save button
-                      ElevatedButton(
+                      CustomElevatedButton(
                         onPressed: () {
                           cubit.saveData();
                         },
-                        child: const Text(
-                          'Save',
-                          style: TextStyle(
-                            color: Colors.black,
-                          ),
-                        ),
+                        text: 'Save',
                       ),
                     ],
                   ),

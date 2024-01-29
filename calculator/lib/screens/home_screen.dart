@@ -15,7 +15,10 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Calculator'),
+        title: const Text(
+          'Home Calculator Screen',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
         centerTitle: true,
         actions: [
           IconButton(
@@ -50,18 +53,23 @@ class HomeScreen extends StatelessWidget {
 
                   // profit buttons
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       // add profit field button
-                      CustomElevatedButton(
-                        onPressed: () => cubit.addProfitField(),
-                        text: 'Add profit field',
+                      Expanded(
+                        child: CustomElevatedButton(
+                          onPressed: () => cubit.addProfitField(),
+                          text: 'Add profit',
+                        ),
                       ),
 
+                      const Gap(10),
+
                       // delete profit field button
-                      CustomElevatedButton(
-                        onPressed: () => cubit.deleteProfitField(),
-                        text: 'Delete profit field',
+                      Expanded(
+                        child: CustomElevatedButton(
+                          onPressed: () => cubit.deleteProfitField(),
+                          text: 'Delete profit',
+                        ),
                       ),
                     ],
                   ),
@@ -83,30 +91,39 @@ class HomeScreen extends StatelessWidget {
 
                   // expense buttons
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       // add expense field button
-                      CustomElevatedButton(
-                        onPressed: () => cubit.addExpenseField(),
-                        text: 'Add expanse field',
+                      Expanded(
+                        child: CustomElevatedButton(
+                          onPressed: () => cubit.addExpenseField(),
+                          text: 'Add expanse',
+                        ),
                       ),
 
+                      const Gap(10),
+
                       // delete expense field button
-                      CustomElevatedButton(
-                        onPressed: () => cubit.deleteExpenseField(),
-                        text: 'Delete expanse field',
+                      Expanded(
+                        child: CustomElevatedButton(
+                          onPressed: () => cubit.deleteExpenseField(),
+                          text: 'Delete expanse',
+                        ),
                       ),
                     ],
                   ),
                   const Gap(25),
 
                   // calculate button
-                  CustomElevatedButton(
-                    onPressed: () {
-                      cubit.calculate();
-                      navigateTo(context: context, dest: const OutputScreen());
-                    },
-                    text: 'Calculate',
+                  SizedBox(
+                    width: double.infinity,
+                    child: CustomElevatedButton(
+                      onPressed: () {
+                        cubit.calculate();
+                        navigateTo(
+                            context: context, dest: const OutputScreen());
+                      },
+                      text: 'Calculate',
+                    ),
                   ),
                 ],
               );
