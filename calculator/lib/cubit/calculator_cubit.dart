@@ -146,7 +146,7 @@ class CalculatorCubit extends Cubit<CalculatorState> {
     if (keys.isNotEmpty) {
       adminPercentage = CacheController.getData(key: 'admin')!.toDouble();
       keys.remove('admin');
-      
+
       for (var key in keys) {
         double? value = CacheController.getData(key: key)!.toDouble();
         persons[key] = value;
@@ -154,7 +154,7 @@ class CalculatorCubit extends Cubit<CalculatorState> {
     } else {
       adminPercentage = 0;
       persons = {};
-      CacheController.saveData(key: 'admin', value: 0.0);
+      CacheController.saveData(key: 'admin', value: 50.0);
     }
     emit(DataLoadedSuccessState());
   }
