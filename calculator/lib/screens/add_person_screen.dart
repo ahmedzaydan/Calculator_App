@@ -1,5 +1,6 @@
 import 'package:calculator/cubit/calculator_cubit.dart';
 import 'package:calculator/cubit/calculator_state.dart';
+import 'package:calculator/screens/widgets/custom_elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -53,7 +54,7 @@ class AddPersonScreen extends StatelessWidget {
                       },
                     ),
                     const SizedBox(height: 20),
-                    ElevatedButton(
+                    CustomElevatedButton(
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
                           CalculatorCubit.get(context).addPerson(
@@ -63,7 +64,7 @@ class AddPersonScreen extends StatelessWidget {
                           Navigator.pop(context);
                         }
                       },
-                      child: const Text('Add'),
+                      text: 'Add',
                     ),
                   ],
                 ),
