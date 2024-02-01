@@ -35,7 +35,7 @@ class OutputScreen extends StatelessWidget {
                         style: getTextStyle(),
                       ),
                       Text(
-                        cubit.getCurrentDate(),
+                        getCurrentDate(),
                         style: getTextStyle(),
                       ),
                     ],

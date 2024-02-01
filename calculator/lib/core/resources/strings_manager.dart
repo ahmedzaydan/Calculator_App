@@ -13,5 +13,9 @@ abstract class StringsManager {
   static const String settings = 'Settings';
   static const String adminPercentage = 'Adminstration percentage';
   static const String save = 'Save';
-  static const String clearList = 'Clear List';
+  static const String editList = 'Edit List';
+
+  // edit profit list strings
+  static const String editProfitList = 'Edit Profit List';
+  static const String clearList = 'Clear list';
 }

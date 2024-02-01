@@ -37,3 +37,12 @@ AppBar customAppBar({
     actions: actions,
   );
 }
+
+double roundDouble(double value) {
+  return double.parse(value.toStringAsFixed(4));
+}
+
+String getCurrentDate() {
+  DateTime now = DateTime.now();
+  return '${now.day}/${now.month}/${now.year}';
+}

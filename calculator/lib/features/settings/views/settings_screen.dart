@@ -6,6 +6,7 @@ import 'package:calculator/core/widgets/custom_text_form_field.dart';
 import 'package:calculator/features/home/cubit/calculator_cubit.dart';
 import 'package:calculator/features/home/cubit/calculator_state.dart';
 import 'package:calculator/features/settings/views/edit_persons_list_view.dart';
+import 'package:calculator/features/settings/views/edit_profit_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
@@ -103,12 +104,15 @@ class SttingsScreen extends StatelessWidget {
                         text: StringsManager.editPersons,
                       ),
 
-                      // reset profit values button
+                      // edit profit values button
                       CustomElevatedButton(
                         onPressed: () {
-                          // cubit.resetProfitValues();
+                          navigateTo(
+                            context: context,
+                            dest: const EditProfitList(),
+                          );
                         },
-                        text: StringsManager.clearList,
+                        text: StringsManager.editList,
                       ),
                     ],
                   ),

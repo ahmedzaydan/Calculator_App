@@ -55,7 +55,7 @@ class EditPersonsList extends StatelessWidget {
                           onPressed: () {
                             cubit.saveData();
                           },
-                          text: 'Save',
+                          text: StringsManager.save,
                         ),
                       ),
                     ],

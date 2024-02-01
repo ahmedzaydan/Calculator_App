@@ -1,6 +1,7 @@
 import 'package:calculator/core/cache_controller.dart';
-import 'package:calculator/features/home/cubit/calculator_state.dart';
+import 'package:calculator/core/functions.dart';
 import 'package:calculator/core/widgets/custom_text_form_field.dart';
+import 'package:calculator/features/home/cubit/calculator_state.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,14 +11,17 @@ class CalculatorCubit extends Cubit<CalculatorState> {
 
   static CalculatorCubit get(context) => BlocProvider.of(context);
 
+  int kitNumbers = 0;
+  String note = '';
+  
   /// home screen
   double totalProfit = 0;
   List<double> profitList = [];
-  List<CustomTextFormField> profitFields = [];
+  // List<CustomTextFormField> profitFields = [];
 
   double totalExpense = 0;
   List<double> expenseList = [];
-  List<CustomTextFormField> expenseFields = [];
+  // List<CustomTextFormField> expenseFields = [];
 
   double netProfit = 0;
 
@@ -29,80 +33,84 @@ class CalculatorCubit extends Cubit<CalculatorState> {
   double adminProfit = 0.0;
   Map<String, double> personNetProfit = {};
 
-  void addField({
-    required List<double> list,
-    required List<CustomTextFormField> fields,
-    required String label,
-    required CalculatorState state,
-  }) {
-    Key formkey = Key('${fields.length + 1}');
-    list.add(0.0);
 
-    fields.add(
-      CustomTextFormField(
-        formKey: formkey,
-        labelText: '$label # ${fields.length + 1}',
-        onChanged: (value) {
-          int index = 0;
-          for (int i = 0; i < fields.length; i++) {
-            if (fields[i].formKey == formkey) {
-              index = i;
-              break;
-            }
-          }
 
-          list[index] = double.parse(value);
-          emit(state);
-        },
-      ),
-    );
-    emit(AddFieldState());
-  }
 
-  void addProfitField() {
-    if (kDebugMode) {
-      print('addProfitField');
-    }
-    addField(
-      list: profitList,
-      fields: profitFields,
-      label: 'Profit',
-      state: ValueAddedState(),
-    );
-  }
+  // void addField({
+  //   required List<double> list,
+  //   required List<CustomTextFormField> fields,
+  //   required String label,
+  //   required CalculatorState state,
+  // }) {
+  //   Key formkey = Key('${fields.length + 1}');
+  //   list.add(0.0);
 
-  void deleteProfitField() {
-    if (profitFields.isNotEmpty) {
-      profitFields.removeLast();
-    }
+  //   fields.add(
+  //     CustomTextFormField(
+  //       formKey: formkey,
+  //       labelText: '$label # ${fields.length + 1}',
+  //       onChanged: (value) {
+  //         int index = 0;
+  //         for (int i = 0; i < fields.length; i++) {
+  //           if (fields[i].formKey == formkey) {
+  //             index = i;
+  //             break;
+  //           }
+  //         }
 
-    if (profitList.isNotEmpty) {
-      totalProfit -= profitList.last;
-      profitList.removeLast();
-    }
-    emit(DeleteProfitFieldState());
-  }
+  //         list[index] = double.parse(value);
+  //         emit(state);
+  //       },
+  //     ),
+  //   );
+  //   emit(AddFieldState());
+  // }
 
-  void addExpenseField() {
-    addField(
-      list: expenseList,
-      fields: expenseFields,
-      label: 'Expense',
-      state: ValueAddedState(),
-    );
-  }
+  // void addProfitField() {
+  //   if (kDebugMode) {
+  //     print('addProfitField');
+  //   }
+  //   addField(
+  //     list: profitList,
+  //     fields: profitFields,
+  //     label: 'Profit',
+  //     state: ValueAddedState(),
+  //   );
+  // }
 
-  void deleteExpenseField() {
-    if (expenseFields.isNotEmpty) {
-      expenseFields.removeLast();
-    }
-    if (expenseList.isNotEmpty) {
-      totalExpense -= expenseList.last;
-      expenseList.removeLast();
-    }
-    emit(DeleteExpenseFieldState());
-  }
+  // void deleteProfitField() {
+  //   if (profitFields.isNotEmpty) {
+  //     profitFields.removeLast();
+  //   }
 
+  //   if (profitList.isNotEmpty) {
+  //     totalProfit -= profitList.last;
+  //     profitList.removeLast();
+  //   }
+  //   emit(DeleteProfitFieldState());
+  // }
+
+  // void addExpenseField() {
+  //   addField(
+  //     list: expenseList,
+  //     fields: expenseFields,
+  //     label: 'Expense',
+  //     state: ValueAddedState(),
+  //   );
+  // }
+
+  // void deleteExpenseField() {
+  //   if (expenseFields.isNotEmpty) {
+  //     expenseFields.removeLast();
+  //   }
+  //   if (expenseList.isNotEmpty) {
+  //     totalExpense -= expenseList.last;
+  //     expenseList.removeLast();
+  //   }
+  //   emit(DeleteExpenseFieldState());
+  // }
+
+  /// output screen
   void calculate() {
     totalProfit = 0;
     for (var profit in profitList) {
@@ -131,7 +139,7 @@ class CalculatorCubit extends Cubit<CalculatorState> {
     emit(CalculateState());
   }
 
-  // settings screen
+  /// settings screen
   void loadData() {
     keys = CacheController.getKeys();
     if (keys.isNotEmpty) {
@@ -164,7 +172,9 @@ class CalculatorCubit extends Cubit<CalculatorState> {
   }) async {
     keys.add(name);
     persons[name] = percentage;
+
     await CacheController.saveData(key: name, value: percentage);
+
     emit(AddPersonState());
   }
 
@@ -177,18 +187,22 @@ class CalculatorCubit extends Cubit<CalculatorState> {
     if (personFields.isNotEmpty) {
       personFields.removeAt(index);
     }
+
     await CacheController.removeData(key: name);
+
     emit(DeletePersonState());
   }
 
-  int kitNumbers = 0;
-  String note = '';
-  double roundDouble(double value) {
-    return double.parse(value.toStringAsFixed(4));
+  // edit profit list 
+  void addProfitItem(int number, int value) {
+
   }
 
-  String getCurrentDate() {
-    DateTime now = DateTime.now();
-    return '${now.day}/${now.month}/${now.year}';
+  Future<void> deleteProfitItem(int number) async {
+
+  }
+
+  Future<void> clearProfitItems () async {
+
   }
 }
