@@ -1,6 +1,6 @@
-import 'package:calculator/cache_controller.dart';
-import 'package:calculator/cubit/calculator_state.dart';
-import 'package:calculator/screens/widgets/custom_text_form_field.dart';
+import 'package:calculator/core/cache_controller.dart';
+import 'package:calculator/features/home/cubit/calculator_state.dart';
+import 'package:calculator/core/widgets/custom_text_form_field.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,53 +11,64 @@ class CalculatorCubit extends Cubit<CalculatorState> {
   static CalculatorCubit get(context) => BlocProvider.of(context);
 
   /// home screen
-  List<CustomTextFormField> profitFields = [];
-  List<double> profitList = [];
   double totalProfit = 0;
+  List<double> profitList = [];
+  List<CustomTextFormField> profitFields = [];
 
-  List<CustomTextFormField> expenseFields = [];
-  List<double> expenseList = [];
   double totalExpense = 0;
+  List<double> expenseList = [];
+  List<CustomTextFormField> expenseFields = [];
 
   double netProfit = 0;
 
-  // settings screen
   double adminPercentage = 0;
-  Map<String, double> persons = {};
   List<String> keys = [];
   List<TextFormField> personFields = [];
+  Map<String, double> persons = {};
 
   double adminProfit = 0.0;
   Map<String, double> personNetProfit = {};
 
-  void addProfitField() {
-    Key formkey = Key('${profitFields.length + 1}');
-    profitList.add(0.0);
-    profitFields.add(
+  void addField({
+    required List<double> list,
+    required List<CustomTextFormField> fields,
+    required String label,
+    required CalculatorState state,
+  }) {
+    Key formkey = Key('${fields.length + 1}');
+    list.add(0.0);
+
+    fields.add(
       CustomTextFormField(
         formKey: formkey,
-        labelText: 'Profit # ${profitFields.length + 1}',
+        labelText: '$label # ${fields.length + 1}',
         onChanged: (value) {
-          // get index
           int index = 0;
-          for (var i = 0; i < profitFields.length; i++) {
-            if (profitFields[i].formKey == formkey) {
+          for (int i = 0; i < fields.length; i++) {
+            if (fields[i].formKey == formkey) {
               index = i;
               break;
             }
           }
 
-          profitList[index] = double.parse(value);
-
-          if (kDebugMode) {
-            print('profitList: $profitList');
-          }
-
-          emit(ValueAddedState());
+          list[index] = double.parse(value);
+          emit(state);
         },
       ),
     );
     emit(AddFieldState());
+  }
+
+  void addProfitField() {
+    if (kDebugMode) {
+      print('addProfitField');
+    }
+    addField(
+      list: profitList,
+      fields: profitFields,
+      label: 'Profit',
+      state: ValueAddedState(),
+    );
   }
 
   void deleteProfitField() {
@@ -73,32 +84,12 @@ class CalculatorCubit extends Cubit<CalculatorState> {
   }
 
   void addExpenseField() {
-    Key formkey = Key('${expenseFields.length + 1}');
-    expenseList.add(0.0);
-    expenseFields.add(
-      CustomTextFormField(
-        formKey: formkey,
-        labelText: 'Expense # ${expenseFields.length + 1}',
-        onChanged: (value) {
-          // get index
-          int index = 0;
-          for (var i = 0; i < expenseFields.length; i++) {
-            if (expenseFields[i].formKey == formkey) {
-              index = i;
-              break;
-            }
-          }
-
-          expenseList[index] = double.parse(value);
-
-          if (kDebugMode) {
-            print('expenseList: $expenseList');
-          }
-          emit(ValueAddedState());
-        },
-      ),
+    addField(
+      list: expenseList,
+      fields: expenseFields,
+      label: 'Expense',
+      state: ValueAddedState(),
     );
-    emit(AddFieldState());
   }
 
   void deleteExpenseField() {
@@ -152,7 +143,7 @@ class CalculatorCubit extends Cubit<CalculatorState> {
         persons[key] = value;
       }
     } else {
-      adminPercentage = 0;
+      adminPercentage = 50;
       persons = {};
       CacheController.saveData(key: 'admin', value: 50.0);
     }
@@ -190,6 +181,8 @@ class CalculatorCubit extends Cubit<CalculatorState> {
     emit(DeletePersonState());
   }
 
+  int kitNumbers = 0;
+  String note = '';
   double roundDouble(double value) {
     return double.parse(value.toStringAsFixed(4));
   }

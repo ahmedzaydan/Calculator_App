@@ -7,25 +7,42 @@ class CustomTextFormField extends StatelessWidget {
     this.onChanged,
     this.controller,
     this.formKey,
+    this.keyboardType = TextInputType.number,
   });
 
   final String labelText;
   final void Function(String)? onChanged;
   final TextEditingController? controller;
   final Key? formKey;
+  final TextInputType? keyboardType;
+
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       key: formKey,
       controller: controller,
-      keyboardType: TextInputType.number,
+      keyboardType: keyboardType,
       decoration: InputDecoration(
         labelText: labelText,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15),
+        labelStyle: const TextStyle(
+          color: Colors.black,
         ),
+        enabledBorder: decorateBorder(),
+        focusedBorder: decorateBorder(),
+        errorBorder: decorateBorder(),
+        disabledBorder: decorateBorder(),
       ),
       onChanged: onChanged,
     );
   }
+}
+
+OutlineInputBorder decorateBorder() {
+  return OutlineInputBorder(
+    borderRadius: BorderRadius.circular(15),
+    borderSide: const BorderSide(
+      color: Colors.blue,
+      width: 2,
+    ),
+  );
 }
