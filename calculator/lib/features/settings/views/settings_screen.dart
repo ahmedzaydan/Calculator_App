@@ -1,3 +1,6 @@
+import 'package:calculator/core/functions.dart';
+import 'package:calculator/core/resources/strings_manager.dart';
+import 'package:calculator/core/resources/styles_manager.dart';
 import 'package:calculator/core/widgets/custom_elevated_button.dart';
 import 'package:calculator/core/widgets/custom_text_form_field.dart';
 import 'package:calculator/features/home/cubit/calculator_cubit.dart';
@@ -13,13 +16,7 @@ class SttingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Settings Screen',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true,
-      ),
+      appBar: customAppBar(text: StringsManager.settings),
       body: BlocBuilder<CalculatorCubit, CalculatorState>(
         builder: (context, state) {
           var cubit = CalculatorCubit.get(context);
@@ -29,17 +26,39 @@ class SttingsScreen extends StatelessWidget {
               child: Column(
                 children: [
                   // adminstration percentage
-                  CustomTextFormField(
-                    controller: TextEditingController(
-                      text: cubit.adminPercentage.toString(),
-                    ),
-                    labelText: 'Adminstration percentage',
-                    onChanged: (value) {
-                      cubit.adminPercentage = double.parse(value);
-                    },
+                  Row(
+                    children: [
+                      Expanded(
+                        flex: 4,
+                        child: CustomTextFormField(
+                          controller: TextEditingController(
+                            text: cubit.adminPercentage.toString(),
+                          ),
+                          labelText: StringsManager.adminPercentage,
+                          onChanged: (value) {
+                            cubit.adminPercentage = double.parse(value);
+                          },
+                        ),
+                      ),
+
+                      const Gap(10),
+
+                      // save button
+                      Expanded(
+                        flex: 2,
+                        child: CustomElevatedButton(
+                          heightValue: 0.08,
+                          onPressed: () {
+                            cubit.saveData();
+                          },
+                          text: StringsManager.save,
+                        ),
+                      ),
+                    ],
                   ),
 
                   const Gap(20),
+
                   // persons percentage
                   ListView.separated(
                     shrinkWrap: true,
@@ -47,25 +66,17 @@ class SttingsScreen extends StatelessWidget {
                     itemBuilder: (context, index) {
                       String key = cubit.keys[index];
                       return Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Expanded(
-                            child: CustomTextFormField(
-                              controller: TextEditingController(
-                                text: cubit.persons[key].toString(),
-                              ),
-                              labelText: key,
-                              onChanged: (value) {
-                                cubit.persons[key] = double.parse(value);
-                              },
-                            ),
+                          Text(
+                            key,
+                            style: TextStylesManager.textStyle20,
                           ),
 
-                          // delete person button
-                          IconButton(
-                            onPressed: () async {
-                              await cubit.deletePerson(name: key, index: index);
-                            },
-                            icon: const Icon(Icons.delete),
+                          // percentage
+                          Text(
+                            '${cubit.persons[key]}%',
+                            style: TextStylesManager.textStyle20,
                           ),
                         ],
                       );
@@ -79,25 +90,25 @@ class SttingsScreen extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      // add person button
+                      // edit persons button
                       CustomElevatedButton(
                         onPressed: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => EditPersonsList(),
+                              builder: (context) => const EditPersonsList(),
                             ),
                           );
                         },
-                        text: 'Add person',
+                        text: StringsManager.editPersons,
                       ),
 
-                      // save button
+                      // reset profit values button
                       CustomElevatedButton(
                         onPressed: () {
-                          cubit.saveData();
+                          // cubit.resetProfitValues();
                         },
-                        text: 'Save',
+                        text: StringsManager.clearList,
                       ),
                     ],
                   ),

@@ -1,4 +1,5 @@
 import 'package:calculator/core/resources/strings_manager.dart';
+import 'package:calculator/core/widgets/custom_icon_button.dart';
 import 'package:calculator/core/widgets/custom_text_form_field.dart';
 import 'package:calculator/features/home/cubit/calculator_cubit.dart';
 import 'package:flutter/material.dart';
@@ -57,33 +58,20 @@ class AddPersonWidget extends StatelessWidget {
           const Gap(10),
 
           // add button
-          SizedBox(
-            width: MediaQuery.of(context).size.width * 0.12,
-            height: MediaQuery.of(context).size.height * 0.08,
-            child: IconButton(
-              icon: const Icon(
-                Icons.add,
-                color: Colors.white,
-              ),
-              onPressed: () {
-                if (_formKey.currentState!.validate()) {
-                  CalculatorCubit.get(context).addPerson(
-                    name: nameController.text,
-                    percentage: double.parse(percentageController.text),
-                  );
-                  // Navigator.pop(context);
-                }
-              },
-              style: ButtonStyle(
-                backgroundColor:
-                    MaterialStateProperty.all(const Color(0xFF3498db)),
-                shape: MaterialStateProperty.all(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                ),
-              ),
+          CustomIconButton(
+            icon: const Icon(
+              Icons.add,
+              color: Colors.white,
             ),
+            onPressed: () {
+              if (_formKey.currentState!.validate()) {
+                CalculatorCubit.get(context).addPerson(
+                  name: nameController.text,
+                  percentage: double.parse(percentageController.text),
+                );
+                // Navigator.pop(context);
+              }
+            },
           ),
         ],
       ),

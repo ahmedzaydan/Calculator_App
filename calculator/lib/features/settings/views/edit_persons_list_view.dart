@@ -41,23 +41,22 @@ class EditPersonsList extends StatelessWidget {
                         separatorBuilder: (context, index) => const Gap(10),
                         itemCount: cubit.keys.length,
                       ),
+
                       const Gap(20),
+
                       AddPersonWidget(),
 
-                      //
-                      const SizedBox(height: 20),
-                      CustomElevatedButton(
-                        onPressed: () {
-                          // if (_formKey.currentState!.validate()) {
-                          //   CalculatorCubit.get(context).addPerson(
-                          //     name: nameController.text,
-                          //     percentage:
-                          //         double.parse(percentageController.text),
-                          //   );
-                          //   // Navigator.pop(context);
-                          // }
-                        },
-                        text: 'Add',
+                      const Gap(20),
+
+                      // save button
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 1,
+                        child: CustomElevatedButton(
+                          onPressed: () {
+                            cubit.saveData();
+                          },
+                          text: 'Save',
+                        ),
                       ),
                     ],
                   );

@@ -1,18 +1,21 @@
+import 'package:calculator/core/widgets/custom_icon_button.dart';
 import 'package:calculator/core/widgets/custom_text_form_field.dart';
 import 'package:calculator/features/home/cubit/calculator_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 
 class EditPerson extends StatelessWidget {
   const EditPerson({
     super.key,
     required this.cubit,
-    required this.personKey, required this.index,
+    required this.personKey,
+    required this.index,
   });
 
   final CalculatorCubit cubit;
   final String personKey;
   final int index;
-  
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -29,18 +32,19 @@ class EditPerson extends StatelessWidget {
           ),
         ),
 
+        const Gap(10),
+
         // delete person button
-        IconButton(
+        CustomIconButton(
           onPressed: () async {
             await cubit.deletePerson(
               name: personKey,
               index: index,
             );
           },
-          iconSize: 40,
           icon: const Icon(
             Icons.delete,
-            color: Colors.red,
+            color: Colors.white,
           ),
         ),
       ],

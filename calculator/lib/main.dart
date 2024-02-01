@@ -20,23 +20,23 @@ class CalculatorApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<CalculatorCubit>(
       create: (context) => CalculatorCubit()..loadData(),
-      child: MaterialApp(
+      child: const MaterialApp(
         title: 'Calculator',
         debugShowCheckedModeBanner: false,
-        home: const HomeView(),
-        theme: ThemeData(
-          primarySwatch: Colors.deepOrange,
-          primaryColor: Colors.black,
-          scaffoldBackgroundColor: Colors.white,
-          appBarTheme: const AppBarTheme(
-            backgroundColor: Colors.white,
-            elevation: 0,
-            iconTheme: IconThemeData(
-              color: Colors.black,
-            ),
-          ),
-        ),
+        home: HomeView(),
+        // theme: ThemeData(
+        //   primarySwatch: Colors.deepOrange,
+        //   primaryColor: Colors.black,
+        //   scaffoldBackgroundColor: Colors.white,
+        //   appBarTheme: const AppBarTheme(
+        //     backgroundColor: Colors.white,
+        //     elevation: 0,
+        //     iconTheme: IconThemeData(
+        //       color: Colors.black,
+        //     ),
+        //   ),
+        // ),
       ),
     );
-  }
+  } // TODO: change primarySwatch to good color
 }

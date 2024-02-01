@@ -1,3 +1,4 @@
+import 'package:calculator/core/resources/constants_manager.dart';
 import 'package:flutter/material.dart';
 
 class CustomTextFormField extends StatelessWidget {
@@ -10,6 +11,7 @@ class CustomTextFormField extends StatelessWidget {
     this.keyboardType = TextInputType.number,
     this.validator,
     this.hintText,
+    this.enabled = true,
   });
 
   final String? labelText;
@@ -19,11 +21,12 @@ class CustomTextFormField extends StatelessWidget {
   final Key? formKey;
   final TextInputType? keyboardType;
   final String? Function(String?)? validator;
-
+  final bool enabled;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       key: formKey,
+      enabled: enabled,
       controller: controller,
       keyboardType: keyboardType,
       decoration: InputDecoration(
@@ -47,7 +50,7 @@ class CustomTextFormField extends StatelessWidget {
 
 OutlineInputBorder decorateBorder() {
   return OutlineInputBorder(
-    borderRadius: BorderRadius.circular(15),
+    borderRadius: BorderRadius.circular(ConstantsManager.borderRadius),
     borderSide: const BorderSide(
       color: Colors.blue,
       width: 2,

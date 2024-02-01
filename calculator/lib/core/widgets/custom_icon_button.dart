@@ -1,22 +1,22 @@
 import 'package:calculator/core/resources/constants_manager.dart';
 import 'package:flutter/material.dart';
 
-class CustomElevatedButton extends StatelessWidget {
-  const CustomElevatedButton({
+class CustomIconButton extends StatelessWidget {
+  const CustomIconButton({
     super.key,
     required this.onPressed,
-    required this.text,
-    this.heightValue,
+    required this.icon,
   });
 
   final void Function()? onPressed;
-  final String text;
-  final double? heightValue;
+  final Icon icon;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: MediaQuery.sizeOf(context).height * (heightValue ?? 0.07),
-      child: ElevatedButton(
+      width: MediaQuery.of(context).size.width * 0.12,
+      height: MediaQuery.of(context).size.height * 0.08,
+      child: IconButton(
+        icon: icon,
         onPressed: onPressed,
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all(const Color(0xFF3498db)),
@@ -26,15 +26,6 @@ class CustomElevatedButton extends StatelessWidget {
                   BorderRadius.circular(ConstantsManager.borderRadius),
             ),
           ),
-        ),
-        child: Text(
-          text,
-          style: const TextStyle(
-            color: Colors.white,
-            // color: Colors.black,
-            fontSize: 18,
-          ),
-          textAlign: TextAlign.left,
         ),
       ),
     );
