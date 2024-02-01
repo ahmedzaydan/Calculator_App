@@ -1,8 +1,8 @@
-import 'package:calculator/features/home/cubit/calculator_cubit.dart';
-import 'package:calculator/features/home/cubit/calculator_state.dart';
-import 'package:calculator/features/settings/add_person_screen.dart';
 import 'package:calculator/core/widgets/custom_elevated_button.dart';
 import 'package:calculator/core/widgets/custom_text_form_field.dart';
+import 'package:calculator/features/home/cubit/calculator_cubit.dart';
+import 'package:calculator/features/home/cubit/calculator_state.dart';
+import 'package:calculator/features/settings/views/edit_persons_list_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
@@ -85,7 +85,7 @@ class SttingsScreen extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => AddPersonScreen(),
+                              builder: (context) => EditPersonsList(),
                             ),
                           );
                         },

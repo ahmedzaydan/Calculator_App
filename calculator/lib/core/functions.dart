@@ -21,7 +21,6 @@ TextStyle getTextStyle() {
 }
 
 AppBar customAppBar({
-  required BuildContext context,
   required String text,
   List<Widget>? actions,
 }) {

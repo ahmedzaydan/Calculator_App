@@ -30,7 +30,7 @@ class CustomElevatedButton extends StatelessWidget {
             // color: Colors.black,
             fontSize: 18,
           ),
-          textAlign: TextAlign.center,
+          textAlign: TextAlign.left,
         ),
       ),
     );
