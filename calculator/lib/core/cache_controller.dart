@@ -12,7 +12,7 @@ class CacheController {
     required String key,
     required double value,
   }) async {
-     await sharedPreferences.setDouble(key, value);
+    await sharedPreferences.setDouble(key, value);
   }
 
   static double? getData({
@@ -29,5 +29,11 @@ class CacheController {
     required String key,
   }) async {
     return await sharedPreferences.remove(key);
+  }
+
+  static bool checkKey({
+    required String key,
+  }) {
+    return sharedPreferences.containsKey(key);
   }
 }

@@ -1,5 +1,6 @@
 import 'package:calculator/core/bloc_observer.dart';
 import 'package:calculator/core/cache_controller.dart';
+import 'package:calculator/core/resources/theme_manager.dart';
 import 'package:calculator/features/home/cubit/calculator_cubit.dart';
 import 'package:calculator/features/home/views/home_view.dart';
 import 'package:flutter/material.dart';
@@ -24,18 +25,7 @@ class CalculatorApp extends StatelessWidget {
         title: 'Calculator',
         debugShowCheckedModeBanner: false,
         home: const HomeView(),
-        theme: ThemeData(
-          primarySwatch: Colors.deepOrange,
-          primaryColor: Colors.black,
-          scaffoldBackgroundColor: Colors.white,
-          appBarTheme: const AppBarTheme(
-            backgroundColor: Colors.white,
-            elevation: 0,
-            iconTheme: IconThemeData(
-              color: Colors.black,
-            ),
-          ),
-        ),
+        theme: getApplicationTheme(),
       ),
     );
   }

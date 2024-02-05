@@ -1,6 +1,7 @@
 import 'package:calculator/core/functions.dart';
-import 'package:calculator/features/settings/settings_screen.dart';
-import 'package:calculator/features/home/views/widgets/home_screen_body.dart';
+import 'package:calculator/core/resources/strings_manager.dart';
+import 'package:calculator/features/home/views/widgets/home_view_body.dart';
+import 'package:calculator/features/settings/views/settings_screen.dart';
 import 'package:flutter/material.dart';
 
 class HomeView extends StatelessWidget {
@@ -9,24 +10,30 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppBar(
-        context: context,
-        text: 'Home Calculator Screen',
-        actions: [
-          IconButton(
-            onPressed: () {
-              navigateTo(context: context, dest: const SttingsScreen());
-            },
-            icon: const Icon(Icons.settings),
-          ),
-        ],
-      ),
+      appBar: homeAppBar(context),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: SingleChildScrollView(
-          child: HomeScreenBody(),
+          child: HomeViewBody(),
         ),
       ),
     );
   }
+}
+
+AppBar homeAppBar(BuildContext context) {
+  return customAppBar(
+    text: StringsManager.homeScreen,
+    actions: [
+      IconButton(
+        onPressed: () {
+          navigateTo(
+            context: context,
+            dest: const SttingsScreen(),
+          );
+        },
+        icon: const Icon(Icons.settings),
+      ),
+    ],
+  );
 }

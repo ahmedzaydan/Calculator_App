@@ -1,6 +1,7 @@
 import 'package:calculator/core/cache_controller.dart';
+import 'package:calculator/core/functions.dart';
+import 'package:calculator/core/resources/strings_manager.dart';
 import 'package:calculator/features/home/cubit/calculator_state.dart';
-import 'package:calculator/core/widgets/custom_text_form_field.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,162 +11,183 @@ class CalculatorCubit extends Cubit<CalculatorState> {
 
   static CalculatorCubit get(context) => BlocProvider.of(context);
 
-  /// home screen
-  double totalProfit = 0;
-  List<double> profitList = [];
-  List<CustomTextFormField> profitFields = [];
+  double totalProfit = 0.0;
+  List<String> profitKeys = [];
+  Map<String, double> profits = {};
+  Map<String, bool> profitItemStates = {};
+  String checkedProfits = '';
 
-  double totalExpense = 0;
-  List<double> expenseList = [];
-  List<CustomTextFormField> expenseFields = [];
+  double totalExpense = 0.0;
+  String expenses = '';
 
   double netProfit = 0;
+  int kitNumbers = 0;
+  String note = '';
 
   double adminPercentage = 0;
-  List<String> keys = [];
-  List<TextFormField> personFields = [];
+  List<String> personKeys = [];
   Map<String, double> persons = {};
 
+  List<TextFormField> personFields = [];
   double adminProfit = 0.0;
   Map<String, double> personNetProfit = {};
 
-  void addField({
-    required List<double> list,
-    required List<CustomTextFormField> fields,
-    required String label,
-    required CalculatorState state,
-  }) {
-    Key formkey = Key('${fields.length + 1}');
-    list.add(0.0);
+  void loadData() {
+    totalProfit = 0.0;
+    profitKeys = [];
+    profits = {};
+    profitItemStates = {};
+    checkedProfits = '';
 
-    fields.add(
-      CustomTextFormField(
-        formKey: formkey,
-        labelText: '$label # ${fields.length + 1}',
-        onChanged: (value) {
-          int index = 0;
-          for (int i = 0; i < fields.length; i++) {
-            if (fields[i].formKey == formkey) {
-              index = i;
-              break;
-            }
-          }
+    totalExpense = 0.0;
+    expenses = '';
 
-          list[index] = double.parse(value);
-          emit(state);
-        },
-      ),
-    );
-    emit(AddFieldState());
-  }
+    netProfit = 0;
+    kitNumbers = 0;
+    note = '';
 
-  void addProfitField() {
+    adminPercentage = 0;
+    personKeys = [];
+    persons = {};
+
+    personFields = [];
+    adminProfit = 0.0;
+    personNetProfit = {};
+
+    List<String> keys = CacheController.getKeys();
+    // separte the keys into two lists, profit list and person list
     if (kDebugMode) {
-      print('addProfitField');
+      print('keys: $keys');
     }
-    addField(
-      list: profitList,
-      fields: profitFields,
-      label: 'Profit',
-      state: ValueAddedState(),
-    );
+    for (var key in keys) {
+      if (key.startsWith('#c') || key.startsWith('#')) {
+        String newKey = '';
+        if (key.startsWith('#c')) {
+          newKey = key.substring(8);
+        } else {
+          newKey = key.substring(1);
+        }
+
+        print('newKey: $newKey');
+
+        profitKeys.add(newKey);
+        double? value = CacheController.getData(key: key)!.toDouble();
+        profits[newKey] = value;
+
+        profitItemStates[newKey] = (key.startsWith('#checked'));
+      } else {
+        if (key == 'admin') {
+          adminPercentage = CacheController.getData(key: 'admin')!.toDouble();
+        } else {
+          personKeys.add(key);
+          double? value = CacheController.getData(key: key)!.toDouble();
+          persons[key] = value;
+        }
+      }
+    }
+
+    if (adminPercentage == 0) {
+      adminPercentage = 30;
+      CacheController.saveData(
+        key: 'admin',
+        value: adminPercentage,
+      );
+    }
+    emit(DataLoadedSuccessState());
   }
 
-  void deleteProfitField() {
-    if (profitFields.isNotEmpty) {
-      profitFields.removeLast();
-    }
+  void changeProfitStatus(String profitId) async {
+    if (profitItemStates[profitId] != null) {
+      if (profitItemStates[profitId] == true) {
+        profitItemStates[profitId] = false;
 
-    if (profitList.isNotEmpty) {
-      totalProfit -= profitList.last;
-      profitList.removeLast();
-    }
-    emit(DeleteProfitFieldState());
-  }
+        CacheController.removeData(key: '#checked$profitId');
 
-  void addExpenseField() {
-    addField(
-      list: expenseList,
-      fields: expenseFields,
-      label: 'Expense',
-      state: ValueAddedState(),
-    );
-  }
+        await CacheController.saveData(
+          key: '#$profitId',
+          value: profits[profitId]!,
+        );
+      } else {
+        profitItemStates[profitId] = true;
 
-  void deleteExpenseField() {
-    if (expenseFields.isNotEmpty) {
-      expenseFields.removeLast();
+        CacheController.removeData(key: '#$profitId');
+
+        await CacheController.saveData(
+          key: '#checked$profitId',
+          value: profits[profitId]!,
+        );
+      }
+      emit(ChangeProfitStatusState());
     }
-    if (expenseList.isNotEmpty) {
-      totalExpense -= expenseList.last;
-      expenseList.removeLast();
-    }
-    emit(DeleteExpenseFieldState());
   }
 
   void calculate() {
     totalProfit = 0;
-    for (var profit in profitList) {
-      totalProfit += profit;
-    }
+    checkedProfits = '';
 
+    for (var key in profitKeys) {
+      if (profitItemStates[key] == true && profits[key] != null) {
+        totalProfit += profits[key]!;
+        checkedProfits += '#$key,   ';
+      }
+    }
+    if (checkedProfits.isNotEmpty) {
+      checkedProfits = checkedProfits.substring(0, checkedProfits.length - 4);
+    }
     totalProfit = roundDouble(totalProfit);
 
-    totalExpense = 0;
-    for (var expense in expenseList) {
-      totalExpense += expense;
+    totalExpense = 0.0;
+    List<String> ex = expenses.split(',');
+    for (var i = 0; i < ex.length; i++) {
+      if (ex[i].isNotEmpty) {
+        totalExpense += double.parse(ex[i]);
+      }
     }
-
     totalExpense = roundDouble(totalExpense);
 
-    netProfit = totalProfit - totalExpense;
-    netProfit = roundDouble(netProfit);
-
     adminProfit = totalProfit * (adminPercentage / 100);
+    netProfit = roundDouble(totalProfit - totalExpense - adminProfit);
     adminProfit = roundDouble(adminProfit);
 
-    for (var key in keys) {
-      personNetProfit[key] = roundDouble(netProfit * (persons[key]! / 100));
+    for (var key in personKeys) {
+      if (persons[key] != null) {
+        personNetProfit[key] = roundDouble(netProfit * (persons[key]! / 100));
+      }
     }
 
     emit(CalculateState());
   }
 
-  // settings screen
-  void loadData() {
-    keys = CacheController.getKeys();
-    if (keys.isNotEmpty) {
-      adminPercentage = CacheController.getData(key: 'admin')!.toDouble();
-      keys.remove('admin');
-
-      for (var key in keys) {
-        double? value = CacheController.getData(key: key)!.toDouble();
-        persons[key] = value;
-      }
-    } else {
-      adminPercentage = 50;
-      persons = {};
-      CacheController.saveData(key: 'admin', value: 50.0);
-    }
-    emit(DataLoadedSuccessState());
-  }
-
-  void saveData() {
+  /// settings screen
+  void savePersonsData() {
     CacheController.saveData(key: 'admin', value: adminPercentage);
-    for (var key in keys) {
+    for (var key in personKeys) {
       CacheController.saveData(key: key, value: persons[key]!);
     }
-    emit(DataSavedState());
+    emit(PersonsDataSavedState());
   }
 
   void addPerson({
     required String name,
     required double percentage,
   }) async {
-    keys.add(name);
-    persons[name] = percentage;
-    await CacheController.saveData(key: name, value: percentage);
-    emit(AddPersonState());
+    if (!CacheController.checkKey(key: name)) {
+      personKeys.add(name);
+      persons[name] = percentage;
+
+      await CacheController.saveData(
+        key: name,
+        value: percentage,
+      );
+
+      emit(AddPersonState());
+    } else {
+      emit(
+        AddPersonFieldState(
+          StringsManager.addPersonField,
+        ),
+      );
+    }
   }
 
   Future<void> deletePerson({
@@ -173,22 +195,70 @@ class CalculatorCubit extends Cubit<CalculatorState> {
     required int index,
   }) async {
     persons.remove(name);
-    keys.remove(name);
+    personKeys.remove(name);
     if (personFields.isNotEmpty) {
       personFields.removeAt(index);
     }
+
     await CacheController.removeData(key: name);
     emit(DeletePersonState());
   }
 
-  int kitNumbers = 0;
-  String note = '';
-  double roundDouble(double value) {
-    return double.parse(value.toStringAsFixed(4));
+  void addProfitItem({
+    required String profitId,
+    required double value,
+  }) async {
+    if (!CacheController.checkKey(key: '#$profitId') &&
+        !CacheController.checkKey(key: '#checked$profitId')) {
+      profitKeys.add(profitId);
+      profitItemStates[profitId] = false;
+      profits[profitId] = value;
+
+      await CacheController.saveData(
+        key: '#$profitId',
+        value: value,
+      );
+      emit(AddProfitState());
+    } else {
+      emit(
+        AddProfitFailedState(
+          StringsManager.addProfitField,
+        ),
+      );
+    }
   }
 
-  String getCurrentDate() {
-    DateTime now = DateTime.now();
-    return '${now.day}/${now.month}/${now.year}';
+  Future<void> deleteProfitItem({
+    required String profitId,
+  }) async {
+    profits.remove(profitId);
+    profitKeys.remove(profitId);
+    await CacheController.removeData(key: profitId);
+    emit(DeleteProfitState());
+  }
+
+  Future<void> clearProfitItems() async {
+    for (var key in profitKeys) {
+      if (profitItemStates[key] != null) {
+        if (profitItemStates[key] == true) {
+          CacheController.removeData(key: '#checked$key');
+          if (profits[key] != null) {
+            await CacheController.saveData(
+              key: '#$key',
+              value: profits[key]!,
+            );
+          }
+        }
+      }
+      profitItemStates[key] = false;
+    }
+    emit(ClearProfitItemsState());
+  }
+
+  void saveProfitData() {
+    for (var key in profitKeys) {
+      CacheController.saveData(key: key, value: profits[key]!);
+    }
+    emit(ProfitsDataSavedState());
   }
 }

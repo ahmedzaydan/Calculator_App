@@ -1,3 +1,4 @@
+import 'package:calculator/core/resources/color_manager.dart';
 import 'package:flutter/material.dart';
 
 class CustomElevatedButton extends StatelessWidget {
@@ -12,25 +13,16 @@ class CustomElevatedButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: MediaQuery.sizeOf(context).height * 0.07,
+      height: MediaQuery.sizeOf(context).height * 0.069,
       child: ElevatedButton(
         onPressed: onPressed,
-        style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(const Color(0xFF3498db)),
-          shape: MaterialStateProperty.all(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
-            ),
-          ),
-        ),
         child: Text(
           text,
-          style: const TextStyle(
-            color: Colors.white,
-            // color: Colors.black,
-            fontSize: 18,
+          style: TextStyle(
+            color: ColorManager.white,
+            fontSize: 20,
           ),
-          textAlign: TextAlign.center,
+          textAlign: TextAlign.left,
         ),
       ),
     );
