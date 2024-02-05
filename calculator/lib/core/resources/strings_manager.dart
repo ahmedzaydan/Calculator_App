@@ -14,7 +14,11 @@ abstract class StringsManager {
   static const String percentage = 'Percentage';
   static const String enterName = 'Enter name';
   static const String enterPercentage = 'Enter percentage';
-  static const String addPersonField = 'Person name already exists';
+  static const String personExists = 'Person name already exists';
+  static const String percentageTotalLessThan100 =
+      'Total percentage must be less than 100';
+  static const String invalidPercentage =
+      'Percentage must be a number between 0 and 100';
 
   // settings screen strings
   static const String settings = 'Settings';

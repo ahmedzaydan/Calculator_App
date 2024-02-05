@@ -1,7 +1,7 @@
 import 'package:calculator/core/cache_controller.dart';
+import 'package:calculator/core/cubit/calculator_state.dart';
 import 'package:calculator/core/functions.dart';
 import 'package:calculator/core/resources/strings_manager.dart';
-import 'package:calculator/features/home/cubit/calculator_state.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -171,23 +171,41 @@ class CalculatorCubit extends Cubit<CalculatorState> {
     required String name,
     required double percentage,
   }) async {
-    if (!CacheController.checkKey(key: name)) {
-      personKeys.add(name);
-      persons[name] = percentage;
-
-      await CacheController.saveData(
-        key: name,
-        value: percentage,
-      );
-
-      emit(AddPersonState());
-    } else {
-      emit(
-        AddPersonFieldState(
-          StringsManager.addPersonField,
-        ),
-      );
+    // check if perecentage is valid or not
+    if (percentage < 0 || percentage > 100) {
+      emit(AddPersonFieldState(StringsManager.invalidPercentage));
+      return;
     }
+
+    // check if total percentage is less than 100
+    double totalPercentage = 0;
+    for (var key in personKeys) {
+      if (persons[key] != null) {
+        totalPercentage += persons[key]!;
+      }
+    }
+
+    if (totalPercentage + percentage > 100) {
+      emit(AddPersonFieldState(StringsManager.percentageTotalLessThan100));
+      return;
+    }
+
+    // check if person name already exists
+    if (CacheController.checkKey(key: name)) {
+      emit(AddPersonFieldState(StringsManager.personExists));
+      return;
+    }
+
+    // add person to the list
+    personKeys.add(name);
+    persons[name] = percentage;
+
+    await CacheController.saveData(
+      key: name,
+      value: percentage,
+    );
+
+    emit(AddPersonState());
   }
 
   Future<void> deletePerson({

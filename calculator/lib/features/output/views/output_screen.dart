@@ -1,7 +1,7 @@
 import 'package:calculator/core/functions.dart';
 import 'package:calculator/core/resources/strings_manager.dart';
-import 'package:calculator/features/home/cubit/calculator_cubit.dart';
-import 'package:calculator/features/home/cubit/calculator_state.dart';
+import 'package:calculator/core/cubit/calculator_cubit.dart';
+import 'package:calculator/core/cubit/calculator_state.dart';
 import 'package:calculator/features/output/views/widgets/basic_info.dart';
 import 'package:calculator/features/output/views/widgets/info_item.dart';
 import 'package:calculator/features/output/views/widgets/results_section.dart';
