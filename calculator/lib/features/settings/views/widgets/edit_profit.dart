@@ -4,18 +4,18 @@ import 'package:calculator/features/home/cubit/calculator_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
-class EditPerson extends StatelessWidget {
-  const EditPerson({
+class EditProfit extends StatelessWidget {
+  const EditProfit({
     super.key,
     required this.cubit,
-    required this.personKey,
+    required this.profitKey,
     required this.index,
   });
 
   final CalculatorCubit cubit;
-  final String personKey;
+  final String profitKey;
   final int index;
-
+// TODO: combine profit and person widgets together
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -23,11 +23,11 @@ class EditPerson extends StatelessWidget {
         Expanded(
           child: CustomTextFormField(
             controller: TextEditingController(
-              text: cubit.persons[personKey].toString(),
+              text: cubit.profits[profitKey].toString(),
             ),
-            labelText: personKey,
+            labelText: profitKey,
             onChanged: (value) {
-              cubit.persons[personKey] = double.parse(value);
+              cubit.profits[profitKey] = double.parse(value);
             },
           ),
         ),
@@ -37,10 +37,7 @@ class EditPerson extends StatelessWidget {
         // delete person button
         CustomIconButton(
           onPressed: () async {
-            await cubit.deletePerson(
-              name: personKey,
-              index: index,
-            );
+            await cubit.deleteProfitItem(profitId: profitKey);
           },
           icon: const Icon(
             Icons.delete

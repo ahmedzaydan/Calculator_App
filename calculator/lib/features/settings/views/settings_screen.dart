@@ -48,9 +48,8 @@ class SttingsScreen extends StatelessWidget {
                       Expanded(
                         flex: 2,
                         child: CustomElevatedButton(
-                          heightValue: 0.08,
                           onPressed: () {
-                            cubit.saveData();
+                            cubit.savePersonsData();
                           },
                           text: StringsManager.save,
                         ),
@@ -65,7 +64,7 @@ class SttingsScreen extends StatelessWidget {
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     itemBuilder: (context, index) {
-                      String key = cubit.keys[index];
+                      String key = cubit.personKeys[index];
                       return Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -83,7 +82,7 @@ class SttingsScreen extends StatelessWidget {
                       );
                     },
                     separatorBuilder: (context, index) => const Gap(10),
-                    itemCount: cubit.keys.length,
+                    itemCount: cubit.personKeys.length,
                   ),
 
                   const Gap(25),

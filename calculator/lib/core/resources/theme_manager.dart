@@ -1,85 +1,92 @@
 import 'package:calculator/core/resources/color_manager.dart';
-import 'package:calculator/core/resources/values_manager.dart';
+import 'package:calculator/core/resources/constants_manager.dart';
 import 'package:flutter/material.dart';
 
 ThemeData getApplicationTheme() {
   return ThemeData(
     // Main colors
     primaryColor: ColorManager.primary,
-    primaryColorLight: ColorManager.lightPrimary,
-    primaryColorDark: ColorManager.darkPrimary,
-    disabledColor: ColorManager.grey1,
-    splashColor: ColorManager.lightPrimary, // Ripple effect color
-
-    // Card view theme
-    cardTheme: CardTheme(
-      color: ColorManager.white,
-      shadowColor: ColorManager.grey,
-      elevation: AppSize.s4,
-    ),
+    primarySwatch: Colors.primaries[0],
+    primaryColorLight: ColorManager.primary,
+    disabledColor: ColorManager.primary,
 
     // App bar theme
     appBarTheme: AppBarTheme(
       centerTitle: true,
       color: ColorManager.primary,
-      elevation: AppSize.s4,
-      shadowColor: ColorManager.lightPrimary,
-      // titleTextStyle: getRegularStyle(
-      //   fontSize: FontSize.s16,
-      //   color: ColorManager.white,
-      // ),
+      titleTextStyle: TextStyle(
+        color: ColorManager.white,
+        fontSize: 20,
+        fontWeight: FontWeight.bold,
+      ),
+      actionsIconTheme: IconThemeData(
+        color: ColorManager.white,
+      ),
+      iconTheme: IconThemeData(
+        color: ColorManager.white,
+      ),
     ),
 
-    // Button theme
-    buttonTheme: ButtonThemeData(
-      shape: const StadiumBorder(),
-      disabledColor: ColorManager.grey1,
-      buttonColor: ColorManager.primary,
-      splashColor: ColorManager.lightPrimary,
+    // icon theme
+    iconTheme: IconThemeData(
+      color: ColorManager.white,
     ),
 
     // Elevated button theme
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        // textStyle: getRegularStyle(
-        //   fontSize: FontSize.s17,
-        //   color: ColorManager.white,
-        // ),
+        textStyle: TextStyle(
+          color: ColorManager.error,
+        ),
         backgroundColor: ColorManager.primary,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(
-            AppSize.s12,
+            ConstantsManager.borderRadius,
           ),
         ),
       ),
     ),
 
-    // Text theme
-
-    // Input decoration theme (text form field)
-    inputDecorationTheme: const InputDecorationTheme(
-      // Content padding style
-      contentPadding: EdgeInsets.all(
-        AppPadding.p8,
+    // text form field theme
+    inputDecorationTheme: InputDecorationTheme(
+      contentPadding: const EdgeInsets.all(15),
+      labelStyle: const TextStyle(
+        color: Colors.black,
       ),
+      enabledBorder: decorateBorder(),
+      focusedBorder: decorateBorder(),
+      errorBorder: decorateBorder(),
+      focusedErrorBorder: decorateBorder(),
+      disabledBorder: decorateBorder(),
+      border: decorateBorder(),
+    ),
 
-      // Hint style
-      // hintStyle: getRegularStyle(
-      //   fontSize: FontSize.s14,
-      //   color: ColorManager.grey,
-      // ),
+    // icon button theme
+    iconButtonTheme: IconButtonThemeData(
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all(
+          ColorManager.primary,
+        ),
+        shape: MaterialStateProperty.all(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(
+              ConstantsManager.borderRadius,
+            ),
+          ),
+        ),
+      ),
+    ),
+  );
+}
 
-      // Label style
-      // labelStyle: getMediumStyle(
-      //   fontSize: FontSize.s14,
-      //   color: ColorManager.grey,
-      // ),
-
-      // Error style
-      // errorStyle: getRegularStyle(
-      //   fontSize: FontSize.s14,
-      //   color: ColorManager.error,
-      // ),
+OutlineInputBorder decorateBorder() {
+  return OutlineInputBorder(
+    borderRadius: BorderRadius.circular(
+      ConstantsManager.borderRadius,
+    ),
+    borderSide: BorderSide(
+      color: ColorManager.primary,
+      width: 2,
     ),
   );
 }

@@ -1,4 +1,3 @@
-import 'package:calculator/core/resources/constants_manager.dart';
 import 'package:flutter/material.dart';
 
 class CustomIconButton extends StatelessWidget {
@@ -14,19 +13,11 @@ class CustomIconButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: MediaQuery.of(context).size.width * 0.12,
-      height: MediaQuery.of(context).size.height * 0.08,
+      height: MediaQuery.of(context).size.height * 0.07,
       child: IconButton(
         icon: icon,
         onPressed: onPressed,
-        style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(const Color(0xFF3498db)),
-          shape: MaterialStateProperty.all(
-            RoundedRectangleBorder(
-              borderRadius:
-                  BorderRadius.circular(ConstantsManager.borderRadius),
-            ),
-          ),
-        ),
+        style: Theme.of(context).iconButtonTheme.style,
       ),
     );
   }

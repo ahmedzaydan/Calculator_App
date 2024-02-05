@@ -1,4 +1,5 @@
 import 'package:calculator/core/functions.dart';
+import 'package:calculator/core/resources/constants_manager.dart';
 import 'package:calculator/core/resources/strings_manager.dart';
 import 'package:calculator/core/widgets/custom_elevated_button.dart';
 import 'package:calculator/features/home/cubit/calculator_cubit.dart';
@@ -14,7 +15,15 @@ class EditPersonsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CalculatorCubit, CalculatorState>(
+    return BlocConsumer<CalculatorCubit, CalculatorState>(
+      listener: (context, state) {
+        if (state is AddPersonFieldState) {
+          showCustomToast(
+            message: state.message,
+            state: ToastStates.error,
+          );
+        }
+      },
       builder: (_, state) {
         return Scaffold(
           appBar: customAppBar(text: StringsManager.editPersons),
@@ -31,7 +40,7 @@ class EditPersonsList extends StatelessWidget {
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index) {
-                          String key = cubit.keys[index];
+                          String key = cubit.personKeys[index];
                           return EditPerson(
                             cubit: cubit,
                             personKey: key,
@@ -39,7 +48,7 @@ class EditPersonsList extends StatelessWidget {
                           );
                         },
                         separatorBuilder: (context, index) => const Gap(10),
-                        itemCount: cubit.keys.length,
+                        itemCount: cubit.personKeys.length,
                       ),
 
                       const Gap(20),
@@ -53,7 +62,7 @@ class EditPersonsList extends StatelessWidget {
                         width: MediaQuery.of(context).size.width * 1,
                         child: CustomElevatedButton(
                           onPressed: () {
-                            cubit.saveData();
+                            cubit.savePersonsData();
                           },
                           text: StringsManager.save,
                         ),

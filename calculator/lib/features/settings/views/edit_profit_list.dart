@@ -1,16 +1,29 @@
 import 'package:calculator/core/functions.dart';
+import 'package:calculator/core/resources/constants_manager.dart';
 import 'package:calculator/core/resources/strings_manager.dart';
+import 'package:calculator/core/widgets/custom_elevated_button.dart';
 import 'package:calculator/features/home/cubit/calculator_cubit.dart';
 import 'package:calculator/features/home/cubit/calculator_state.dart';
+import 'package:calculator/features/settings/views/widgets/add_profit.dart';
+import 'package:calculator/features/settings/views/widgets/edit_profit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
 
 class EditProfitList extends StatelessWidget {
   const EditProfitList({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CalculatorCubit, CalculatorState>(
+    return BlocConsumer<CalculatorCubit, CalculatorState>(
+      listener: (context, state) {
+        if (state is AddProfitFailedState) {
+          showCustomToast(
+            message: state.message,
+            state: ToastStates.error,
+          );
+        }
+      },
       builder: (_, state) {
         return Scaffold(
           appBar: customAppBar(text: StringsManager.editProfitList),
@@ -21,39 +34,51 @@ class EditProfitList extends StatelessWidget {
                 builder: (context, state) {
                   var cubit = CalculatorCubit.get(context);
 
-                  return const Column(
+                  return Column(
                     children: [
-                      // ListView.separated(
-                      //   shrinkWrap: true,
-                      //   physics: const NeverScrollableScrollPhysics(),
-                      //   itemBuilder: (context, index) {
-                      //     String key = cubit.keys[index];
-                      //     return EditPerson(
-                      //       cubit: cubit,
-                      //       personKey: key,
-                      //       index: index,
-                      //     );
-                      //   },
-                      //   separatorBuilder: (context, index) => const Gap(10),
-                      //   itemCount: cubit.keys.length,
-                      // ),
+                      ListView.separated(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          String key = cubit.profitKeys[index];
+                          return EditProfit(
+                            cubit: cubit,
+                            profitKey: key,
+                            index: index,
+                          );
+                        },
+                        separatorBuilder: (context, index) => const Gap(10),
+                        itemCount: cubit.profitKeys.length,
+                      ),
 
-                      // const Gap(20),
+                      const Gap(20),
 
-                      // AddPersonWidget(),
+                      AddProfitWidget(),
 
-                      // const Gap(20),
+                      const Gap(20),
 
-                      // // save button
-                      // SizedBox(
-                      //   width: MediaQuery.of(context).size.width * 1,
-                      //   child: CustomElevatedButton(
-                      //     onPressed: () {
-                      //       cubit.saveData();
-                      //     },
-                      //     text: StringsManager.save,
-                      //   ),
-                      // ),
+                      // save button
+                      Row(
+                        children: [
+                          Expanded(
+                            child: CustomElevatedButton(
+                              onPressed: () {
+                                cubit.saveProfitData();
+                              },
+                              text: StringsManager.save,
+                            ),
+                          ),
+                          const Gap(20),
+                          Expanded(
+                            child: CustomElevatedButton(
+                              onPressed: () {
+                                cubit.clearProfitItems();
+                              },
+                              text: StringsManager.clearList,
+                            ),
+                          ),
+                        ],
+                      ),
                     ],
                   );
                 },
