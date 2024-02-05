@@ -1,7 +1,7 @@
 import 'package:calculator/core/resources/strings_manager.dart';
 import 'package:calculator/core/widgets/custom_icon_button.dart';
 import 'package:calculator/core/widgets/custom_text_form_field.dart';
-import 'package:calculator/features/home/cubit/calculator_cubit.dart';
+import 'package:calculator/core/cubit/calculator_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gap/gap.dart';

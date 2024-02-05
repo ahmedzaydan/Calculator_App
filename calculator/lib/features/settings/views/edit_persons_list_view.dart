@@ -2,8 +2,8 @@ import 'package:calculator/core/functions.dart';
 import 'package:calculator/core/resources/constants_manager.dart';
 import 'package:calculator/core/resources/strings_manager.dart';
 import 'package:calculator/core/widgets/custom_elevated_button.dart';
-import 'package:calculator/features/home/cubit/calculator_cubit.dart';
-import 'package:calculator/features/home/cubit/calculator_state.dart';
+import 'package:calculator/core/cubit/calculator_cubit.dart';
+import 'package:calculator/core/cubit/calculator_state.dart';
 import 'package:calculator/features/settings/views/widgets/add_person.dart';
 import 'package:calculator/features/settings/views/widgets/edit_person.dart';
 import 'package:flutter/material.dart';
@@ -59,7 +59,7 @@ class EditPersonsList extends StatelessWidget {
 
                       // save button
                       SizedBox(
-                        width: MediaQuery.of(context).size.width * 1,
+                        width: MediaQuery.of(context).size.width,
                         child: CustomElevatedButton(
                           onPressed: () {
                             cubit.savePersonsData();
