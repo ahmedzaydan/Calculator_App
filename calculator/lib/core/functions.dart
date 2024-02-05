@@ -1,5 +1,6 @@
 import 'package:calculator/core/resources/constants_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 void navigateTo({
@@ -35,7 +36,13 @@ AppBar customAppBar({
 }
 
 double roundDouble(double value) {
-  return double.parse(value.toStringAsFixed(4));
+  return double.parse(value.toStringAsFixed(2));
+}
+
+List<TextInputFormatter>? getInputFormatters() {
+  return [
+    FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}')),
+  ];
 }
 
 String getCurrentDate() {

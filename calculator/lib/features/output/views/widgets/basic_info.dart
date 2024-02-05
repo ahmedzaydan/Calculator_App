@@ -1,4 +1,4 @@
-import 'package:calculator/core/cubit/calculator_cubit.dart';
+import 'package:calculator/core/calculator_cubit/calculator_cubit.dart';
 import 'package:calculator/core/functions.dart';
 import 'package:calculator/core/resources/strings_manager.dart';
 import 'package:calculator/features/output/views/widgets/info_item.dart';
@@ -18,11 +18,9 @@ class BasicInfo extends StatelessWidget {
           value: getCurrentDate(),
         ),
 
-        const Divider(
-          color: Colors.black,
-        ),
+        const Divider(),
 
-        // total profit
+        // total kit
         InfoItem(
           label: StringsManager.totalProfit,
           value: cubit.totalProfit.toString(),
@@ -36,9 +34,7 @@ class BasicInfo extends StatelessWidget {
             ),
           ),
 
-        const Divider(
-          color: Colors.black,
-        ),
+        const Divider(),
 
         // total expense
         InfoItem(
@@ -46,9 +42,7 @@ class BasicInfo extends StatelessWidget {
           value: cubit.totalExpense.toString(),
         ),
 
-        const Divider(
-          color: Colors.black,
-        ),
+        const Divider(),
 
         // net profit
         InfoItem(
@@ -56,9 +50,7 @@ class BasicInfo extends StatelessWidget {
           value: cubit.netProfit.toString(),
         ),
 
-        const Divider(
-          color: Colors.black,
-        ),
+        const Divider(),
       ],
     );
   }

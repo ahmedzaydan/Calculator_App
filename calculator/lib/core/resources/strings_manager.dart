@@ -1,18 +1,19 @@
 abstract class StringsManager {
   // home screen
   static const String homeScreen = 'Home Screen';
-  static const String profits = 'Profits';
+  static const String kits = 'Kits';
   static const String expenses = 'Expenses';
-  static const String kitNumbers = 'Kit numbers';
   static const String note = 'Note';
   static const String clear = 'Clear';
+
+  static const String name = 'Name';
+  static const String enterName = 'Enter name';
+  
   // edit persons screen strings
   static const String editPersons = 'Edit Persons';
   static const String add = 'Add';
   static const String addPerson = 'Add Person';
-  static const String name = 'Name';
   static const String percentage = 'Percentage';
-  static const String enterName = 'Enter name';
   static const String enterPercentage = 'Enter percentage';
   static const String personExists = 'Person name already exists';
   static const String percentageTotalLessThan100 =
@@ -24,24 +25,24 @@ abstract class StringsManager {
   static const String settings = 'Settings';
   static const String adminPercentage = 'Adminstration';
   static const String save = 'Save';
-  static const String editProfits = 'Edit Profits';
+  static const String editKits = 'Edit Kits';
 
-  // edit profit list strings
-  static const String editProfitList = 'Edit Profit List';
-  static const String clearList = 'Clear profit list';
-  static const String profitNumber = 'Profit number';
-  static const String profitValue = 'Profit value';
+  // edit kit list strings
+  static const String editKitList = 'Edit Kit List';
+  static const String clearList = 'Clear kit list';
+  static const String profitNumber = 'Kit number';
+  static const String profitValue = 'Kit value';
   static const String enterValue = 'Enter value';
   static const String enterNumber = 'Enter number';
-  static const String addProfitField = 'Profit id already exists';
-  static const String invalidProfitId = 'Profit number must be an integer';
+  static const String addProfitField = 'Kit id already exists';
+  static const String invalidProfitId = 'Kit number must be an integer';
 
   // output screen strings
   static const String outputScreen = 'Output Screen';
   static const String date = 'Date';
-  static const String totalProfit = 'Total profit';
+  static const String totalProfit = 'Total kit';
   static const String totalExpense = 'Total expense';
-  static const String netProfit = 'Net profit';
+  static const String netProfit = 'Net kit';
   static const String adminProfit = 'Administration';
-  static const String personNetProfit = 'Person net profit';
+  static const String personNetProfit = 'Person net kit';
 }

@@ -1,5 +1,5 @@
 import 'package:calculator/core/cache_controller.dart';
-import 'package:calculator/core/cubit/calculator_state.dart';
+import 'package:calculator/core/calculator_cubit/calculator_state.dart';
 import 'package:calculator/core/functions.dart';
 import 'package:calculator/core/resources/strings_manager.dart';
 import 'package:flutter/foundation.dart';
