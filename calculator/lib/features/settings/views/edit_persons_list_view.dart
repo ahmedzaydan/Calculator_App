@@ -59,7 +59,7 @@ class EditPersonsList extends StatelessWidget {
 
                       // save button
                       SizedBox(
-                        width: MediaQuery.of(context).size.width * 1,
+                        width: MediaQuery.of(context).size.width,
                         child: CustomElevatedButton(
                           onPressed: () {
                             cubit.savePersonsData();

@@ -21,7 +21,6 @@ class CalculatorCubit extends Cubit<CalculatorState> {
   String expenses = '';
 
   double netProfit = 0;
-  int kitNumbers = 0;
   String note = '';
 
   double adminPercentage = 0;
@@ -43,7 +42,6 @@ class CalculatorCubit extends Cubit<CalculatorState> {
     expenses = '';
 
     netProfit = 0;
-    kitNumbers = 0;
     note = '';
 
     adminPercentage = 0;
@@ -67,8 +65,6 @@ class CalculatorCubit extends Cubit<CalculatorState> {
         } else {
           newKey = key.substring(1);
         }
-
-        print('newKey: $newKey');
 
         profitKeys.add(newKey);
         double? value = CacheController.getData(key: key)!.toDouble();

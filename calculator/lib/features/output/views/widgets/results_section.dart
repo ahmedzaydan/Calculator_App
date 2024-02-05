@@ -1,6 +1,6 @@
+import 'package:calculator/core/cubit/calculator_cubit.dart';
 import 'package:calculator/core/functions.dart';
 import 'package:calculator/core/resources/strings_manager.dart';
-import 'package:calculator/core/cubit/calculator_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -29,7 +29,9 @@ class ResultsSection extends StatelessWidget {
           ],
         ),
 
-        const Divider(),
+        const Divider(
+          color: Colors.black,
+        ),
 
         // person net profit
         ListView.separated(
@@ -52,7 +54,9 @@ class ResultsSection extends StatelessWidget {
               ],
             );
           },
-          separatorBuilder: (context, index) => const Divider(),
+          separatorBuilder: (context, index) => const Divider(
+            color: Colors.black,
+          ),
           itemCount: cubit.personKeys.length,
         ),
       ],

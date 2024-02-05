@@ -1,10 +1,10 @@
+import 'package:calculator/core/cubit/calculator_cubit.dart';
+import 'package:calculator/core/cubit/calculator_state.dart';
 import 'package:calculator/core/functions.dart';
 import 'package:calculator/core/resources/strings_manager.dart';
 import 'package:calculator/core/resources/styles_manager.dart';
 import 'package:calculator/core/widgets/custom_elevated_button.dart';
 import 'package:calculator/core/widgets/custom_text_form_field.dart';
-import 'package:calculator/core/cubit/calculator_cubit.dart';
-import 'package:calculator/core/cubit/calculator_state.dart';
 import 'package:calculator/features/settings/views/edit_persons_list_view.dart';
 import 'package:calculator/features/settings/views/edit_profit_list.dart';
 import 'package:flutter/material.dart';
@@ -111,7 +111,7 @@ class SttingsScreen extends StatelessWidget {
                             dest: const EditProfitList(),
                           );
                         },
-                        text: StringsManager.editList,
+                        text: StringsManager.editProfits,
                       ),
                     ],
                   ),

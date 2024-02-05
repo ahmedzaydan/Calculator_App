@@ -17,6 +17,7 @@ class ProfitItem extends StatelessWidget {
   final void Function(bool?)? onChanged;
   @override
   Widget build(BuildContext context) {
+    Color color = value ? ColorManager.lightGrey : ColorManager.black;
     return Row(
       children: [
         Transform.scale(
@@ -38,6 +39,7 @@ class ProfitItem extends StatelessWidget {
           '(#$profitId)',
           style: TextStylesManager.textStyle20.copyWith(
             fontWeight: FontWeight.bold,
+            color: color,
           ),
         ),
         const Spacer(),
@@ -45,6 +47,7 @@ class ProfitItem extends StatelessWidget {
           profitValue,
           style: TextStylesManager.textStyle20.copyWith(
             fontWeight: FontWeight.bold,
+            color: color,
           ),
         ),
       ],

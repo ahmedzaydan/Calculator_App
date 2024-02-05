@@ -1,6 +1,6 @@
+import 'package:calculator/core/cubit/calculator_cubit.dart';
 import 'package:calculator/core/functions.dart';
 import 'package:calculator/core/resources/strings_manager.dart';
-import 'package:calculator/core/cubit/calculator_cubit.dart';
 import 'package:calculator/features/output/views/widgets/info_item.dart';
 import 'package:flutter/material.dart';
 
@@ -18,7 +18,9 @@ class BasicInfo extends StatelessWidget {
           value: getCurrentDate(),
         ),
 
-        const Divider(),
+        const Divider(
+          color: Colors.black,
+        ),
 
         // total profit
         InfoItem(
@@ -34,7 +36,9 @@ class BasicInfo extends StatelessWidget {
             ),
           ),
 
-        const Divider(),
+        const Divider(
+          color: Colors.black,
+        ),
 
         // total expense
         InfoItem(
@@ -42,7 +46,9 @@ class BasicInfo extends StatelessWidget {
           value: cubit.totalExpense.toString(),
         ),
 
-        const Divider(),
+        const Divider(
+          color: Colors.black,
+        ),
 
         // net profit
         InfoItem(
@@ -50,7 +56,9 @@ class BasicInfo extends StatelessWidget {
           value: cubit.netProfit.toString(),
         ),
 
-        const Divider(),
+        const Divider(
+          color: Colors.black,
+        ),
       ],
     );
   }

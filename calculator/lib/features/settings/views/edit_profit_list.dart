@@ -1,9 +1,9 @@
+import 'package:calculator/core/cubit/calculator_cubit.dart';
+import 'package:calculator/core/cubit/calculator_state.dart';
 import 'package:calculator/core/functions.dart';
 import 'package:calculator/core/resources/constants_manager.dart';
 import 'package:calculator/core/resources/strings_manager.dart';
 import 'package:calculator/core/widgets/custom_elevated_button.dart';
-import 'package:calculator/core/cubit/calculator_cubit.dart';
-import 'package:calculator/core/cubit/calculator_state.dart';
 import 'package:calculator/features/settings/views/widgets/add_profit.dart';
 import 'package:calculator/features/settings/views/widgets/edit_profit.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +33,6 @@ class EditProfitList extends StatelessWidget {
               child: BlocBuilder<CalculatorCubit, CalculatorState>(
                 builder: (context, state) {
                   var cubit = CalculatorCubit.get(context);
-
                   return Column(
                     children: [
                       ListView.separated(
@@ -58,26 +57,14 @@ class EditProfitList extends StatelessWidget {
                       const Gap(20),
 
                       // save button
-                      Row(
-                        children: [
-                          Expanded(
-                            child: CustomElevatedButton(
-                              onPressed: () {
-                                cubit.saveProfitData();
-                              },
-                              text: StringsManager.save,
-                            ),
-                          ),
-                          const Gap(20),
-                          Expanded(
-                            child: CustomElevatedButton(
-                              onPressed: () {
-                                cubit.clearProfitItems();
-                              },
-                              text: StringsManager.clearList,
-                            ),
-                          ),
-                        ],
+                      SizedBox(
+                        width: double.infinity,
+                        child: CustomElevatedButton(
+                          onPressed: () {
+                            cubit.saveProfitData();
+                          },
+                          text: StringsManager.save,
+                        ),
                       ),
                     ],
                   );

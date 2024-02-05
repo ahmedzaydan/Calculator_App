@@ -5,7 +5,7 @@ abstract class StringsManager {
   static const String expenses = 'Expenses';
   static const String kitNumbers = 'Kit numbers';
   static const String note = 'Note';
-
+  static const String clear = 'Clear';
   // edit persons screen strings
   static const String editPersons = 'Edit Persons';
   static const String add = 'Add';
@@ -24,11 +24,11 @@ abstract class StringsManager {
   static const String settings = 'Settings';
   static const String adminPercentage = 'Adminstration';
   static const String save = 'Save';
-  static const String editList = 'Edit List';
+  static const String editProfits = 'Edit Profits';
 
   // edit profit list strings
   static const String editProfitList = 'Edit Profit List';
-  static const String clearList = 'Clear list';
+  static const String clearList = 'Clear profit list';
   static const String profitNumber = 'Profit number';
   static const String profitValue = 'Profit value';
   static const String enterValue = 'Enter value';

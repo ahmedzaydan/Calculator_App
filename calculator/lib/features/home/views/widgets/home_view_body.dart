@@ -1,10 +1,10 @@
+import 'package:calculator/core/cubit/calculator_cubit.dart';
+import 'package:calculator/core/cubit/calculator_state.dart';
 import 'package:calculator/core/functions.dart';
 import 'package:calculator/core/resources/strings_manager.dart';
 import 'package:calculator/core/resources/styles_manager.dart';
 import 'package:calculator/core/widgets/custom_elevated_button.dart';
 import 'package:calculator/core/widgets/custom_text_form_field.dart';
-import 'package:calculator/core/cubit/calculator_cubit.dart';
-import 'package:calculator/core/cubit/calculator_state.dart';
 import 'package:calculator/features/home/views/widgets/profit_item.dart';
 import 'package:calculator/features/home/views/widgets/profits_grid_view.dart';
 import 'package:calculator/features/output/views/output_screen.dart';
@@ -18,7 +18,6 @@ class HomeViewBody extends StatelessWidget {
   });
 
   final TextEditingController expensesController = TextEditingController();
-  final TextEditingController kitNumbersController = TextEditingController();
   final TextEditingController noteController = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -31,14 +30,22 @@ class HomeViewBody extends StatelessWidget {
               padding: EdgeInsets.only(
                 left: MediaQuery.of(context).size.width * 0.02,
               ),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  StringsManager.profits,
-                  style: TextStylesManager.textStyle20.copyWith(
-                    fontWeight: FontWeight.bold,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    StringsManager.profits,
+                    style: TextStylesManager.textStyle20.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
+                  CustomElevatedButton(
+                    onPressed: () {
+                      cubit.clearProfitItems();
+                    },
+                    text: StringsManager.clear,
+                  ),
+                ],
               ),
             ),
 
@@ -67,17 +74,6 @@ class HomeViewBody extends StatelessWidget {
               labelText: StringsManager.expenses,
               hintText: 'value1,  value2, ',
               onChanged: (value) => cubit.expenses = value,
-            ),
-
-            const Gap(25),
-
-            // kit numbers
-            CustomTextFormField(
-              controller: kitNumbersController,
-              labelText: StringsManager.kitNumbers,
-              onChanged: (kitNumbers) {
-                cubit.kitNumbers = int.parse(kitNumbers);
-              },
             ),
 
             const Gap(25),
