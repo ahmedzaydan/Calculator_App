@@ -13,6 +13,7 @@ class AddItemWidget extends StatelessWidget {
     required this.value,
     required this.valueValidator,
     this.isPerson = false,
+    this.inputType = TextInputType.text,
   });
 
   final TextEditingController nameController = TextEditingController();
@@ -26,6 +27,8 @@ class AddItemWidget extends StatelessWidget {
   final String valueValidator;
 
   final bool isPerson;
+
+  final TextInputType inputType;
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -40,7 +43,7 @@ class AddItemWidget extends StatelessWidget {
             child: CustomTextFormField(
               controller: nameController,
               labelText: name,
-              keyboardType: TextInputType.text,
+              keyboardType: inputType,
               validator: (value) {
                 if (value!.isEmpty) {
                   return nameValidator;

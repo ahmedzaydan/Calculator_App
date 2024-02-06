@@ -42,7 +42,7 @@ abstract class StringsManager {
   static const String date = 'Date';
   static const String totalProfit = 'Total kit';
   static const String totalExpense = 'Total expense';
-  static const String netProfit = 'Net kit';
+  static const String netProfit = 'Net profit';
   static const String adminProfit = 'Administration';
   static const String personNetProfit = 'Person net kit';
 }

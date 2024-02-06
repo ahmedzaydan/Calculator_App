@@ -26,12 +26,24 @@ TextStyle getTextStyle() {
 AppBar customAppBar({
   required String text,
   List<Widget>? actions,
+  void Function()? onPressed,
+  bool leading = true,
 }) {
   return AppBar(
     title: Text(
       text,
     ),
     actions: actions,
+    leading: leading
+        ? IconButton(
+            icon: const Icon(
+              Icons.arrow_back_outlined,
+              color: Colors.white,
+              size: 32,
+            ),
+            onPressed: onPressed,
+          )
+        : null,
   );
 }
 

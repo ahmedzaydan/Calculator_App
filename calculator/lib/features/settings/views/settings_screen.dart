@@ -17,12 +17,18 @@ class SttingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: customAppBar(text: StringsManager.settings),
-      body: BlocBuilder<CalculatorCubit, CalculatorState>(
-        builder: (context, state) {
-          var cubit = CalculatorCubit.get(context);
-          return Padding(
+    return BlocBuilder<CalculatorCubit, CalculatorState>(
+      builder: (context2, state) {
+        var cubit = CalculatorCubit.get(context2);
+        return Scaffold(
+          appBar: customAppBar(
+            text: StringsManager.settings,
+            onPressed: () {
+              cubit.sortProfits();
+              Navigator.pop(context);
+            },
+          ),
+          body: Padding(
             padding: const EdgeInsets.all(20.0),
             child: SingleChildScrollView(
               child: Column(
@@ -126,9 +132,9 @@ class SttingsScreen extends StatelessWidget {
                 ],
               ),
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }

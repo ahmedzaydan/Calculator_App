@@ -2,7 +2,6 @@ import 'package:calculator/core/cache_controller.dart';
 import 'package:calculator/core/calculator_cubit/calculator_state.dart';
 import 'package:calculator/core/functions.dart';
 import 'package:calculator/core/resources/strings_manager.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -10,6 +9,7 @@ class CalculatorCubit extends Cubit<CalculatorState> {
   CalculatorCubit() : super(CalculatorInitial());
 
   static CalculatorCubit get(context) => BlocProvider.of(context);
+  String checked = 'checked';
 
   double totalProfit = 0.0;
   List<String> profitKeys = [];
@@ -32,31 +32,17 @@ class CalculatorCubit extends Cubit<CalculatorState> {
   Map<String, double> personNetProfit = {};
 
   void loadData() {
-    totalProfit = 0.0;
     profitKeys = [];
     profits = {};
     profitItemStates = {};
     checkedProfits = '';
-
-    totalExpense = 0.0;
-    expenses = '';
-
-    netProfit = 0;
-    note = '';
-
-    adminPercentage = 0;
     personKeys = [];
     persons = {};
-
     personFields = [];
-    adminProfit = 0.0;
     personNetProfit = {};
 
     List<String> keys = CacheController.getKeys();
     // separte the keys into two lists, profit list and person list
-    if (kDebugMode) {
-      print('keys: $keys');
-    }
     for (var key in keys) {
       if (key.startsWith('#c') || key.startsWith('#')) {
         String newKey = '';
@@ -66,11 +52,11 @@ class CalculatorCubit extends Cubit<CalculatorState> {
           newKey = key.substring(1);
         }
 
-        profitKeys.add(newKey);
+        profitKeys.add(key);
         double? value = CacheController.getData(key: key)!.toDouble();
         profits[newKey] = value;
 
-        profitItemStates[newKey] = (key.startsWith('#checked'));
+        profitItemStates[newKey] = (key.startsWith('#$checked'));
       } else {
         if (key == 'admin') {
           adminPercentage = CacheController.getData(key: 'admin')!.toDouble();
@@ -89,6 +75,8 @@ class CalculatorCubit extends Cubit<CalculatorState> {
         value: adminPercentage,
       );
     }
+
+    sortProfits();
     emit(DataLoadedSuccessState());
   }
 
@@ -97,7 +85,7 @@ class CalculatorCubit extends Cubit<CalculatorState> {
       if (profitItemStates[profitId] == true) {
         profitItemStates[profitId] = false;
 
-        CacheController.removeData(key: '#checked$profitId');
+        CacheController.removeData(key: '#$checked$profitId');
 
         await CacheController.saveData(
           key: '#$profitId',
@@ -133,10 +121,10 @@ class CalculatorCubit extends Cubit<CalculatorState> {
     totalProfit = roundDouble(totalProfit);
 
     totalExpense = 0.0;
-    List<String> ex = expenses.split(',');
-    for (var i = 0; i < ex.length; i++) {
-      if (ex[i].isNotEmpty) {
-        totalExpense += double.parse(ex[i]);
+    List<String> expenseValues = expenses.split(',');
+    for (var i = 0; i < expenseValues.length; i++) {
+      if (expenseValues[i].isNotEmpty) {
+        totalExpense += double.parse(expenseValues[i]);
       }
     }
     totalExpense = roundDouble(totalExpense);
@@ -218,6 +206,27 @@ class CalculatorCubit extends Cubit<CalculatorState> {
     emit(DeletePersonState());
   }
 
+  void saveProfitData() async {
+    for (var key in profitKeys) {
+      String newKey = '';
+      if (profitItemStates[key] != null) {
+        if (profitItemStates[key] == true) {
+          newKey = '#checked$key';
+        } else {
+          newKey = '#$key';
+        }
+      }
+
+      if (profits[key] != null) {
+        await CacheController.saveData(
+          key: newKey,
+          value: profits[key]!,
+        );
+      }
+    }
+    emit(ProfitsDataSavedState());
+  }
+
   void addProfitItem({
     required String profitId,
     required double value,
@@ -232,6 +241,7 @@ class CalculatorCubit extends Cubit<CalculatorState> {
         key: '#$profitId',
         value: value,
       );
+      sortProfits();
       emit(AddProfitState());
     } else {
       emit(
@@ -248,6 +258,7 @@ class CalculatorCubit extends Cubit<CalculatorState> {
     profits.remove(profitId);
     profitKeys.remove(profitId);
     await CacheController.removeData(key: profitId);
+    sortProfits();
     emit(DeleteProfitState());
   }
 
@@ -269,10 +280,17 @@ class CalculatorCubit extends Cubit<CalculatorState> {
     emit(ClearProfitItemsState());
   }
 
-  void saveProfitData() {
-    for (var key in profitKeys) {
-      CacheController.saveData(key: key, value: profits[key]!);
-    }
-    emit(ProfitsDataSavedState());
+  void sortProfits() {
+    // Step 1: Remove '#' at the beginning of each key and convert to integers
+    List<int> modifiedKeys =
+        profitKeys.map((key) => int.parse(key)).toList();
+
+    // Step 2: Sort the modified keys based on integers
+    modifiedKeys.sort();
+
+    // Step 3: Add '#' back to each key in the sorted list
+    profitKeys.clear();
+    profitKeys = modifiedKeys.map((key) => '$key').toList();
+    emit(ProfitKeysSortedState());
   }
 }

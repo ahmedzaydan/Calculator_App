@@ -24,30 +24,33 @@ class EditKitList extends StatelessWidget {
           );
         }
       },
-      builder: (_, state) {
+      builder: (context2, state) {
+        var cubit = CalculatorCubit.get(context2);
         return Scaffold(
-          appBar: customAppBar(text: StringsManager.editKitList),
+          appBar: customAppBar(
+            text: StringsManager.editKitList,
+            onPressed: () {
+              cubit.sortProfits();
+              Navigator.pop(context);
+            },
+          ),
           body: Padding(
             padding: const EdgeInsets.all(20.0),
             child: SingleChildScrollView(
-              child: BlocBuilder<CalculatorCubit, CalculatorState>(
-                builder: (context, state) {
-                  var cubit = CalculatorCubit.get(context);
-                  return Column(
-                    children: [
-                      ProfitsList(cubit: cubit),
-                      const Gap(20),
-                      AddItemWidget(
-                        name: StringsManager.profitNumber,
-                        nameValidator: StringsManager.enterNumber,
-                        value: StringsManager.profitValue,
-                        valueValidator: StringsManager.enterValue,
-                      ),
-                      const Gap(20),
-                      SaveButton(onPressed: () => cubit.saveProfitData()),
-                    ],
-                  );
-                },
+              child: Column(
+                children: [
+                  ProfitsList(cubit: cubit),
+                  const Gap(20),
+                  AddItemWidget(
+                    name: StringsManager.profitNumber,
+                    nameValidator: StringsManager.enterNumber,
+                    value: StringsManager.profitValue,
+                    valueValidator: StringsManager.enterValue,
+                    inputType: TextInputType.number,
+                  ),
+                  const Gap(20),
+                  SaveButton(onPressed: () => cubit.saveProfitData()),
+                ],
               ),
             ),
           ),

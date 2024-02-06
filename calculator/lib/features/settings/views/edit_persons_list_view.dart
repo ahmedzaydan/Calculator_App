@@ -24,31 +24,33 @@ class EditPersonsList extends StatelessWidget {
           );
         }
       },
-      builder: (_, state) {
+      builder: (context2, state) {
+        var cubit = CalculatorCubit.get(context2);
         return Scaffold(
-          appBar: customAppBar(text: StringsManager.editPersons),
+          appBar: customAppBar(
+            text: StringsManager.editPersons,
+            onPressed: () {
+              cubit.sortProfits();
+              Navigator.pop(context);
+            },
+          ),
           body: Padding(
             padding: const EdgeInsets.all(20.0),
             child: SingleChildScrollView(
-              child: BlocBuilder<CalculatorCubit, CalculatorState>(
-                builder: (context, state) {
-                  var cubit = CalculatorCubit.get(context);
-                  return Column(
-                    children: [
-                      PersonsList(cubit: cubit),
-                      const Gap(20),
-                      AddItemWidget(
-                        name: StringsManager.name,
-                        nameValidator: StringsManager.enterName,
-                        value: StringsManager.percentage,
-                        valueValidator: StringsManager.enterPercentage,
-                        isPerson: true,
-                      ),
-                      const Gap(20),
-                      SaveButton(onPressed: () => cubit.savePersonsData()),
-                    ],
-                  );
-                },
+              child: Column(
+                children: [
+                  PersonsList(cubit: cubit),
+                  const Gap(20),
+                  AddItemWidget(
+                    name: StringsManager.name,
+                    nameValidator: StringsManager.enterName,
+                    value: StringsManager.percentage,
+                    valueValidator: StringsManager.enterPercentage,
+                    isPerson: true,
+                  ),
+                  const Gap(20),
+                  SaveButton(onPressed: () => cubit.savePersonsData()),
+                ],
               ),
             ),
           ),
