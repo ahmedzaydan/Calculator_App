@@ -1,5 +1,5 @@
-import 'package:calculator/core/cubit/calculator_cubit.dart';
-import 'package:calculator/core/cubit/calculator_state.dart';
+import 'package:calculator/core/calculator_cubit/calculator_cubit.dart';
+import 'package:calculator/core/calculator_cubit/calculator_state.dart';
 import 'package:calculator/core/functions.dart';
 import 'package:calculator/core/resources/strings_manager.dart';
 import 'package:calculator/core/resources/styles_manager.dart';
@@ -34,7 +34,7 @@ class HomeViewBody extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    StringsManager.profits,
+                    StringsManager.kits,
                     style: TextStylesManager.textStyle20.copyWith(
                       fontWeight: FontWeight.bold,
                     ),

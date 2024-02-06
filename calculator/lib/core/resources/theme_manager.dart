@@ -76,6 +76,10 @@ ThemeData getApplicationTheme() {
         ),
       ),
     ),
+
+
+    // divider theme 
+    dividerColor: ColorManager.black,
   );
 }
 

@@ -38,3 +38,5 @@ class DeletePersonState extends CalculatorState {}
 class PersonsDataSavedState extends CalculatorState {}
 
 class ClearProfitItemsState extends CalculatorState {}
+
+class ProfitKeysSortedState extends CalculatorState {}

@@ -8,28 +8,27 @@ class CustomTextFormField extends StatelessWidget {
     this.onChanged,
     this.controller,
     this.formKey,
-    this.keyboardType = TextInputType.number,
+    this.keyboardType = const TextInputType.numberWithOptions(
+      decimal: true,
+    ),
     this.validator,
     this.hintText,
-    this.enabled = true,
     this.inputFormatters,
   });
 
+  final Key? formKey;
+  final TextEditingController? controller;
+  final TextInputType? keyboardType;
+  final List<TextInputFormatter>? inputFormatters;
   final String? labelText;
   final String? hintText;
   final void Function(String)? onChanged;
-  final TextEditingController? controller;
-  final Key? formKey;
-  final TextInputType? keyboardType;
   final String? Function(String?)? validator;
-  final bool enabled;
-  final List<TextInputFormatter>? inputFormatters;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       cursorColor: Theme.of(context).primaryColor,
       key: formKey,
-      enabled: enabled,
       controller: controller,
       keyboardType: keyboardType,
       inputFormatters: inputFormatters,

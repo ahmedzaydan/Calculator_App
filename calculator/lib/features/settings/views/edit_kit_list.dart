@@ -10,14 +10,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 
-class EditPersonsList extends StatelessWidget {
-  const EditPersonsList({super.key});
+class EditKitList extends StatelessWidget {
+  const EditKitList({super.key});
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<CalculatorCubit, CalculatorState>(
       listener: (context, state) {
-        if (state is AddPersonFieldState) {
+        if (state is AddProfitFailedState) {
           showCustomToast(
             message: state.message,
             state: ToastStates.error,
@@ -28,7 +28,7 @@ class EditPersonsList extends StatelessWidget {
         var cubit = CalculatorCubit.get(context2);
         return Scaffold(
           appBar: customAppBar(
-            text: StringsManager.editPersons,
+            text: StringsManager.editKitList,
             onPressed: () {
               cubit.sortProfits();
               Navigator.pop(context);
@@ -39,17 +39,17 @@ class EditPersonsList extends StatelessWidget {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  PersonsList(cubit: cubit),
+                  ProfitsList(cubit: cubit),
                   const Gap(20),
                   AddItemWidget(
-                    name: StringsManager.name,
-                    nameValidator: StringsManager.enterName,
-                    value: StringsManager.percentage,
-                    valueValidator: StringsManager.enterPercentage,
-                    isPerson: true,
+                    name: StringsManager.profitNumber,
+                    nameValidator: StringsManager.enterNumber,
+                    value: StringsManager.profitValue,
+                    valueValidator: StringsManager.enterValue,
+                    inputType: TextInputType.number,
                   ),
                   const Gap(20),
-                  SaveButton(onPressed: () => cubit.savePersonsData()),
+                  SaveButton(onPressed: () => cubit.saveProfitData()),
                 ],
               ),
             ),
@@ -60,8 +60,8 @@ class EditPersonsList extends StatelessWidget {
   }
 }
 
-class PersonsList extends StatelessWidget {
-  const PersonsList({
+class ProfitsList extends StatelessWidget {
+  const ProfitsList({
     super.key,
     required this.cubit,
   });
@@ -74,21 +74,18 @@ class PersonsList extends StatelessWidget {
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
-        String key = cubit.personKeys[index];
+        String key = cubit.profitKeys[index];
         return EditItemWidget(
-          value: cubit.persons[key].toString(),
+          value: cubit.profits[key].toString(),
           name: key,
-          onChanged: (value) => cubit.persons[key] = double.parse(value),
+          onChanged: (value) => cubit.profits[key] = double.parse(value),
           deleteOnPressed: () async {
-            await cubit.deletePerson(
-              name: key,
-              index: index,
-            );
+            await cubit.deleteProfitItem(profitId: key);
           },
         );
       },
       separatorBuilder: (context, index) => const Gap(10),
-      itemCount: cubit.personKeys.length,
+      itemCount: cubit.profitKeys.length,
     );
   }
 }

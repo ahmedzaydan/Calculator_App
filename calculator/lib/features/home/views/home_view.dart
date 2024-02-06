@@ -24,6 +24,7 @@ class HomeView extends StatelessWidget {
 AppBar homeAppBar(BuildContext context) {
   return customAppBar(
     text: StringsManager.homeScreen,
+    leading: false,
     actions: [
       IconButton(
         onPressed: () {
