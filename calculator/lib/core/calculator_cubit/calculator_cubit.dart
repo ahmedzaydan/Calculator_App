@@ -122,14 +122,15 @@ class CalculatorCubit extends Cubit<CalculatorState> {
   /// settings screen
 
   /// person functions ******************************************************
-  Future<void> addPerson({
-    required String name,
-    required double percentage,
-  }) async {
+  String checkPersonData(String name, double percentage) {
+    // check if person name already exists
+    if (CacheController.checkKey(key: name)) {
+      return StringsManager.personExists;
+    }
+
     // check if perecentage is valid or not
     if (percentage < 0 || percentage > 100) {
-      emit(AddPersonErrorState(StringsManager.invalidPercentage));
-      return;
+      return StringsManager.invalidPercentage;
     }
 
     // check if total percentage is less than 100
@@ -139,29 +140,34 @@ class CalculatorCubit extends Cubit<CalculatorState> {
     }
 
     if (totalPercentage + percentage > 100) {
-      emit(AddPersonErrorState(StringsManager.percentageError));
-      return;
+      return StringsManager.percentageError;
     }
 
-    // check if person name already exists
-    if (CacheController.checkKey(key: name)) {
-      emit(AddPersonErrorState(StringsManager.personExists));
-      return;
+    return '';
+  }
+
+  Future<void> addPerson({
+    required String name,
+    required double percentage,
+  }) async {
+    String validationResult = checkPersonData(name, percentage);
+    if (validationResult.isNotEmpty) {
+      emit(AddPersonErrorState(validationResult));
+    } else {
+      // create person object
+      PersonModel person = PersonModel(
+        name: name,
+        percentage: percentage,
+      );
+
+      // add person to the personItems list
+      personItems.add(person);
+
+      // add person to shared preferences
+      await CacheController.saveData(person.name, person.percentage);
+
+      emit(AddPersonSuccessState());
     }
-
-    // create person object
-    PersonModel person = PersonModel(
-      name: name,
-      percentage: percentage,
-    );
-
-    // add person to the personItems list
-    personItems.add(person);
-
-    // add person to shared preferences
-    await CacheController.saveData(person.name, person.percentage);
-
-    emit(AddPersonSuccessState());
   }
 
   void savePersonsData() {
