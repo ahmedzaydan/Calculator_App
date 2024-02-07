@@ -8,7 +8,7 @@ abstract class StringsManager {
 
   static const String name = 'Name';
   static const String enterName = 'Enter name';
-  
+
   // edit persons screen strings
   static const String editPersons = 'Edit Persons';
   static const String add = 'Add';
@@ -34,7 +34,7 @@ abstract class StringsManager {
   static const String profitValue = 'Kit value';
   static const String enterValue = 'Enter value';
   static const String enterNumber = 'Enter number';
-  static const String addProfitField = 'Kit id already exists';
+  static const String profitExists = 'Kit id already exists';
   static const String invalidProfitId = 'Kit number must be an integer';
 
   // output screen strings
@@ -45,4 +45,8 @@ abstract class StringsManager {
   static const String netProfit = 'Net profit';
   static const String adminProfit = 'Administration';
   static const String personNetProfit = 'Person net kit';
+
+  // cubit strings
+  static const String checked = 'checked';
+  static const String admin = 'admin';
 }

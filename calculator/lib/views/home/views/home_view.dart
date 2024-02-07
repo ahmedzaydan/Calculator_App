@@ -1,7 +1,7 @@
-import 'package:calculator/core/functions.dart';
+import 'package:calculator/core/utils/functions.dart';
 import 'package:calculator/core/resources/strings_manager.dart';
-import 'package:calculator/features/home/views/widgets/home_view_body.dart';
-import 'package:calculator/features/settings/views/settings_screen.dart';
+import 'package:calculator/views/home/widgets/home_view_body.dart';
+import 'package:calculator/views/settings/views/settings_view.dart';
 import 'package:flutter/material.dart';
 
 class HomeView extends StatelessWidget {
@@ -30,7 +30,7 @@ AppBar homeAppBar(BuildContext context) {
         onPressed: () {
           navigateTo(
             context: context,
-            dest: const SttingsScreen(),
+            dest: const SttingsView(),
           );
         },
         icon: const Icon(Icons.settings),

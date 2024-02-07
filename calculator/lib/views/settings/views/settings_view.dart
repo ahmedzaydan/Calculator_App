@@ -1,19 +1,21 @@
 import 'package:calculator/core/calculator_cubit/calculator_cubit.dart';
 import 'package:calculator/core/calculator_cubit/calculator_state.dart';
-import 'package:calculator/core/functions.dart';
+import 'package:calculator/core/utils/functions.dart';
+import 'package:calculator/core/models/person_model.dart';
 import 'package:calculator/core/resources/strings_manager.dart';
 import 'package:calculator/core/resources/styles_manager.dart';
 import 'package:calculator/core/widgets/custom_elevated_button.dart';
+import 'package:calculator/core/widgets/custom_list_view.dart';
 import 'package:calculator/core/widgets/custom_text_form_field.dart';
-import 'package:calculator/features/settings/views/edit_kit_list.dart';
-import 'package:calculator/features/settings/views/edit_persons_list_view.dart';
+import 'package:calculator/views/settings/views/edit_kit_list_view.dart';
+import 'package:calculator/views/settings/views/edit_persons_list_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 
-class SttingsScreen extends StatelessWidget {
-  const SttingsScreen({super.key});
+class SttingsView extends StatelessWidget {
+  const SttingsView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -74,29 +76,26 @@ class SttingsScreen extends StatelessWidget {
                   const Gap(20),
 
                   // persons percentage
-                  ListView.separated(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
+                  CustomListView(
                     itemBuilder: (context, index) {
-                      String key = cubit.personKeys[index];
+                      PersonModel person = cubit.personItems[index];
                       return Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            key,
+                            person.name,
                             style: TextStylesManager.textStyle20,
                           ),
 
                           // percentage
                           Text(
-                            '${cubit.persons[key]}%',
+                            '${person.percentage}%',
                             style: TextStylesManager.textStyle20,
                           ),
                         ],
                       );
                     },
-                    separatorBuilder: (context, index) => const Gap(10),
-                    itemCount: cubit.personKeys.length,
+                    itemCount: cubit.personItems.length,
                   ),
 
                   const Gap(25),
@@ -110,7 +109,7 @@ class SttingsScreen extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const EditPersonsList(),
+                              builder: (context) => const EditPersonsListView(),
                             ),
                           );
                         },
@@ -122,7 +121,7 @@ class SttingsScreen extends StatelessWidget {
                         onPressed: () {
                           navigateTo(
                             context: context,
-                            dest: const EditKitList(),
+                            dest: const EditKitListView(),
                           );
                         },
                         text: StringsManager.editKits,

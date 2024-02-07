@@ -1,6 +1,8 @@
 import 'package:calculator/core/calculator_cubit/calculator_cubit.dart';
-import 'package:calculator/core/functions.dart';
+import 'package:calculator/core/utils/functions.dart';
+import 'package:calculator/core/models/person_model.dart';
 import 'package:calculator/core/resources/strings_manager.dart';
+import 'package:calculator/core/widgets/custom_list_view.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -44,21 +46,19 @@ class ResultsSection extends StatelessWidget {
             const Divider(color: Colors.black),
 
             // person net profit
-            ListView.separated(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
+            CustomListView(
               itemBuilder: (context, index) {
-                String key = cubit.personKeys[index];
+                PersonModel person = cubit.personItems[index];
                 return Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      key,
+                      person.name,
                       style: getTextStyle(),
                     ),
                     const Gap(10),
                     Text(
-                      '${cubit.personNetProfit[key]}',
+                      '${person.netProfitValue}',
                       style: getTextStyle(),
                     ),
                   ],
@@ -67,7 +67,7 @@ class ResultsSection extends StatelessWidget {
               separatorBuilder: (context, index) {
                 return const Divider(color: Colors.black);
               },
-              itemCount: cubit.personKeys.length,
+              itemCount: cubit.personItems.length,
             ),
           ],
         ),

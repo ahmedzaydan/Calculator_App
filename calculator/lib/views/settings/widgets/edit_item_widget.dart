@@ -1,4 +1,4 @@
-import 'package:calculator/core/functions.dart';
+import 'package:calculator/core/utils/functions.dart';
 import 'package:calculator/core/widgets/custom_icon_button.dart';
 import 'package:calculator/core/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
@@ -13,8 +13,8 @@ class EditItemWidget extends StatelessWidget {
     required this.deleteOnPressed,
   });
 
-  final String value;
   final String name;
+  final double value;
   final Function(String)? onChanged;
   final void Function()? deleteOnPressed;
 
@@ -25,7 +25,7 @@ class EditItemWidget extends StatelessWidget {
         Expanded(
           child: CustomTextFormField(
             controller: TextEditingController(
-              text: value,
+              text: value.toString(),
             ),
             labelText: name,
             inputFormatters: getInputFormatters(),

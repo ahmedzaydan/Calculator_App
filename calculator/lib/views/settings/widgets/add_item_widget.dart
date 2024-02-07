@@ -1,5 +1,5 @@
 import 'package:calculator/core/calculator_cubit/calculator_cubit.dart';
-import 'package:calculator/core/functions.dart';
+import 'package:calculator/core/utils/functions.dart';
 import 'package:calculator/core/widgets/custom_icon_button.dart';
 import 'package:calculator/core/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
@@ -88,7 +88,7 @@ class AddItemWidget extends StatelessWidget {
                   );
                 } else {
                   CalculatorCubit.get(context).addProfitItem(
-                    profitId: nameController.text,
+                    id: nameController.text,
                     value: double.parse(valueController.text),
                   );
                 }

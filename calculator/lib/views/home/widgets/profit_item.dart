@@ -12,9 +12,10 @@ class ProfitItem extends StatelessWidget {
   });
 
   final String profitId;
-  final String profitValue;
+  final double profitValue;
   final bool value;
   final void Function(bool?)? onChanged;
+
   @override
   Widget build(BuildContext context) {
     Color color = value ? ColorManager.lightGrey : ColorManager.black;
@@ -44,7 +45,7 @@ class ProfitItem extends StatelessWidget {
         ),
         const Spacer(),
         Text(
-          profitValue,
+          '$profitValue',
           style: TextStylesManager.textStyle20.copyWith(
             fontWeight: FontWeight.bold,
             color: color,

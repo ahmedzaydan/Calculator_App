@@ -9,10 +9,10 @@ class DataLoadedFailedState extends CalculatorState {}
 
 class CalculateState extends CalculatorState {}
 
-class ChangeProfitStatusState extends CalculatorState {}
+class ProfitStatusChangedState extends CalculatorState {}
 
 /// Settings screen
-class AddProfitState extends CalculatorState {}
+class AddProfitSuccessState extends CalculatorState {}
 
 class AddProfitFailedState extends CalculatorState {
   final String message;
@@ -22,15 +22,15 @@ class AddProfitFailedState extends CalculatorState {
 
 class ProfitsDataSavedState extends CalculatorState {}
 
-class DeleteProfitState extends CalculatorState {}
+class DeleteProfitSuccessState extends CalculatorState {}
 
 // settings screen
-class AddPersonState extends CalculatorState {}
+class AddPersonSuccessState extends CalculatorState {}
 
-class AddPersonFieldState extends CalculatorState {
+class AddPersonErrorState extends CalculatorState {
   final String message;
 
-  AddPersonFieldState(this.message);
+  AddPersonErrorState(this.message);
 }
 
 class DeletePersonState extends CalculatorState {}
