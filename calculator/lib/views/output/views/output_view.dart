@@ -1,15 +1,15 @@
 import 'package:calculator/core/calculator_cubit/calculator_cubit.dart';
 import 'package:calculator/core/calculator_cubit/calculator_state.dart';
 import 'package:calculator/core/resources/strings_manager.dart';
-import 'package:calculator/features/output/views/widgets/basic_info.dart';
-import 'package:calculator/features/output/views/widgets/note.dart';
-import 'package:calculator/features/output/views/widgets/results_section.dart';
+import 'package:calculator/views/output/widgets/basic_info.dart';
+import 'package:calculator/views/output/widgets/note.dart';
+import 'package:calculator/views/output/widgets/results_section.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 
-class OutputScreen extends StatelessWidget {
-  const OutputScreen({super.key});
+class OutputView extends StatelessWidget {
+  const OutputView({super.key});
 
   @override
   Widget build(BuildContext context) {

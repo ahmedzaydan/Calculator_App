@@ -1,4 +1,5 @@
 import 'package:calculator/core/widgets/custom_elevated_button.dart';
+import 'package:calculator/core/widgets/custom_list_view.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -27,14 +28,11 @@ class Section extends StatelessWidget {
     return Column(
       children: [
         // fields
-        ListView.separated(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: itemCount,
+        CustomListView(
           itemBuilder: itemBuilder,
-          separatorBuilder: (context, index) => const Gap(10),
+          itemCount: itemCount,
         ),
-
+        
         const Gap(20),
 
         Row(

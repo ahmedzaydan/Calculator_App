@@ -1,13 +1,14 @@
 import 'package:calculator/core/calculator_cubit/calculator_cubit.dart';
 import 'package:calculator/core/calculator_cubit/calculator_state.dart';
-import 'package:calculator/core/functions.dart';
+import 'package:calculator/core/models/profit_model.dart';
 import 'package:calculator/core/resources/strings_manager.dart';
 import 'package:calculator/core/resources/styles_manager.dart';
+import 'package:calculator/core/utils/functions.dart';
 import 'package:calculator/core/widgets/custom_elevated_button.dart';
+import 'package:calculator/core/widgets/custom_list_view.dart';
 import 'package:calculator/core/widgets/custom_text_form_field.dart';
-import 'package:calculator/features/home/views/widgets/profit_item.dart';
-import 'package:calculator/features/home/views/widgets/profits_grid_view.dart';
-import 'package:calculator/features/output/views/output_screen.dart';
+import 'package:calculator/views/home/widgets/profit_item.dart';
+import 'package:calculator/views/output/views/output_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
@@ -51,19 +52,19 @@ class HomeViewBody extends StatelessWidget {
 
             const Gap(10),
 
-            ProfitsGridView(
-              itemsCount: cubit.profitKeys.length,
+            // profits list
+            CustomListView(
               itemBuilder: (context, index) {
-                String profitId = cubit.profitKeys[index];
+                ProfitModel profit = cubit.profitItems[index];
                 return ProfitItem(
-                  profitId: profitId,
-                  profitValue: cubit.profits[profitId].toString(),
-                  value: cubit.profitItemStates[profitId] ?? false,
-                  onChanged: (_) {
-                    cubit.changeProfitStatus(profitId);
-                  },
+                  profitId: profit.id,
+                  profitValue: profit.value,
+                  value: profit.status,
+                  onChanged: (_) => cubit.changeProfitStatus(index),
                 );
               },
+              separatorBuilder: (context, index) => const Gap(1),
+              itemCount: cubit.profitItems.length,
             ),
 
             const Gap(25),
@@ -98,7 +99,7 @@ class HomeViewBody extends StatelessWidget {
                   cubit.calculate();
                   navigateTo(
                     context: context,
-                    dest: const OutputScreen(),
+                    dest: const OutputView(),
                   );
                 },
                 text: 'Calculate',

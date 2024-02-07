@@ -1,23 +1,25 @@
 import 'package:calculator/core/calculator_cubit/calculator_cubit.dart';
 import 'package:calculator/core/calculator_cubit/calculator_state.dart';
-import 'package:calculator/core/functions.dart';
+import 'package:calculator/core/utils/functions.dart';
+import 'package:calculator/core/models/person_model.dart';
 import 'package:calculator/core/resources/constants_manager.dart';
 import 'package:calculator/core/resources/strings_manager.dart';
-import 'package:calculator/features/settings/views/widgets/add_item_widget.dart';
-import 'package:calculator/features/settings/views/widgets/edit_item_widget.dart';
-import 'package:calculator/features/settings/views/widgets/save_button.dart';
+import 'package:calculator/core/widgets/custom_list_view.dart';
+import 'package:calculator/views/settings/widgets/add_item_widget.dart';
+import 'package:calculator/views/settings/widgets/edit_item_widget.dart';
+import 'package:calculator/views/settings/widgets/save_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 
-class EditKitList extends StatelessWidget {
-  const EditKitList({super.key});
+class EditPersonsListView extends StatelessWidget {
+  const EditPersonsListView({super.key});
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<CalculatorCubit, CalculatorState>(
       listener: (context, state) {
-        if (state is AddProfitFailedState) {
+        if (state is AddPersonErrorState) {
           showCustomToast(
             message: state.message,
             state: ToastStates.error,
@@ -28,7 +30,7 @@ class EditKitList extends StatelessWidget {
         var cubit = CalculatorCubit.get(context2);
         return Scaffold(
           appBar: customAppBar(
-            text: StringsManager.editKitList,
+            text: StringsManager.editPersons,
             onPressed: () {
               cubit.sortProfits();
               Navigator.pop(context);
@@ -39,17 +41,17 @@ class EditKitList extends StatelessWidget {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  ProfitsList(cubit: cubit),
+                  PersonsList(cubit: cubit),
                   const Gap(20),
                   AddItemWidget(
-                    name: StringsManager.profitNumber,
-                    nameValidator: StringsManager.enterNumber,
-                    value: StringsManager.profitValue,
-                    valueValidator: StringsManager.enterValue,
-                    inputType: TextInputType.number,
+                    name: StringsManager.name,
+                    nameValidator: StringsManager.enterName,
+                    value: StringsManager.percentage,
+                    valueValidator: StringsManager.enterPercentage,
+                    isPerson: true,
                   ),
                   const Gap(20),
-                  SaveButton(onPressed: () => cubit.saveProfitData()),
+                  SaveButton(onPressed: () => cubit.savePersonsData()),
                 ],
               ),
             ),
@@ -60,8 +62,8 @@ class EditKitList extends StatelessWidget {
   }
 }
 
-class ProfitsList extends StatelessWidget {
-  const ProfitsList({
+class PersonsList extends StatelessWidget {
+  const PersonsList({
     super.key,
     required this.cubit,
   });
@@ -70,22 +72,22 @@ class ProfitsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
+    return CustomListView(
       itemBuilder: (context, index) {
-        String key = cubit.profitKeys[index];
+        PersonModel person = cubit.personItems[index];
         return EditItemWidget(
-          value: cubit.profits[key].toString(),
-          name: key,
-          onChanged: (value) => cubit.profits[key] = double.parse(value),
-          deleteOnPressed: () async {
-            await cubit.deleteProfitItem(profitId: key);
+          value: person.netProfitValue,
+          name: person.name,
+          onChanged: (value) {
+            cubit.editPersonPercentage(
+              index: index,
+              value: value,
+            );
           },
+          deleteOnPressed: () async => await cubit.deletePerson(index),
         );
       },
-      separatorBuilder: (context, index) => const Gap(10),
-      itemCount: cubit.profitKeys.length,
+      itemCount: cubit.personItems.length,
     );
   }
 }
