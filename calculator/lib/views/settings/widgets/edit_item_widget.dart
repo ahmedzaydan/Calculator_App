@@ -25,7 +25,7 @@ class EditItemWidget extends StatelessWidget {
         Expanded(
           child: CustomTextFormField(
             controller: TextEditingController(
-              text: value.toString(),
+              text: '$value',
             ),
             labelText: name,
             inputFormatters: getInputFormatters(),

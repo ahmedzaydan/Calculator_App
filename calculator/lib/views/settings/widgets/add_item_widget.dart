@@ -79,15 +79,15 @@ class AddItemWidget extends StatelessWidget {
           // add button
           CustomIconButton(
             icon: const Icon(Icons.add),
-            onPressed: () {
+            onPressed: () async {
               if (_formKey.currentState!.validate()) {
                 if (isPerson) {
-                  CalculatorCubit.get(context).addPerson(
+                  await CalculatorCubit.get(context).addPerson(
                     name: nameController.text,
                     percentage: double.parse(valueController.text),
                   );
                 } else {
-                  CalculatorCubit.get(context).addProfitItem(
+                  await CalculatorCubit.get(context).addProfitItem(
                     id: nameController.text,
                     value: double.parse(valueController.text),
                   );

@@ -5,15 +5,17 @@ class PersonModel {
   double _netProfitValue = 0.0;
   double _percentage = 0.0;
 
-  void setName(String name) {
-    _name = name;
-  }
+  PersonModel({
+    required String name,
+    required double percentage,
+  })  : _name = name,
+        _percentage = percentage;
+
+  void setName(String name) => _name = name;
 
   String get name => _name;
 
-  void setPercentage(double value) {
-    _percentage = value;
-  }
+  void setPercentage(double value) => _percentage = value;
 
   double get percentage => _percentage;
 

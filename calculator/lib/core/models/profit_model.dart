@@ -1,28 +1,19 @@
 import 'package:calculator/core/resources/strings_manager.dart';
 
 class ProfitModel {
-  String _id = '';
-  double _value = 0.0;
-  bool _isChecked = false;
+  String _id;
+  double _value;
+  bool _isChecked;
 
-  void setProfitKey(String key) {
-    if (key.startsWith('#c')) {
-      _id = key.substring(8);
-      _isChecked = true;
-    } else {
-      _id = key.substring(1);
-      _isChecked = false;
-    }
-  }
+  ProfitModel({
+    required String id,
+    required double value,
+    bool isChecked = false,
+  })  : _id = id,
+        _value = value,
+        _isChecked = isChecked;
 
-  // return the key to use in shared preferences
-  String getSharedPrefKey() {
-    if (_isChecked) {
-      return '#checked$_id';
-    } else {
-      return '#$_id';
-    }
-  }
+  void setProfitKey(String key) => _id = key;
 
   String get id => _id;
 
@@ -34,14 +25,12 @@ class ProfitModel {
 
   void setStatus(bool status) => _isChecked = status;
 
-  bool get status => _isChecked;
+  bool get isChecked => _isChecked;
 
   String get outputProfitKey {
     String spaces = '    ';
-    return '#$_id,$spaces';
+    return '$_id,$spaces';
   }
 
-  String get checkedId => '#${StringsManager.checked}$_id';
-
-  String get uncheckedId => '#$_id';
+  String get statusId => '$_id${StringsManager.status}';
 }

@@ -1,9 +1,9 @@
 import 'package:calculator/core/calculator_cubit/calculator_cubit.dart';
 import 'package:calculator/core/calculator_cubit/calculator_state.dart';
-import 'package:calculator/core/utils/functions.dart';
 import 'package:calculator/core/models/profit_model.dart';
 import 'package:calculator/core/resources/constants_manager.dart';
 import 'package:calculator/core/resources/strings_manager.dart';
+import 'package:calculator/core/utils/functions.dart';
 import 'package:calculator/core/widgets/custom_list_view.dart';
 import 'package:calculator/views/settings/widgets/add_item_widget.dart';
 import 'package:calculator/views/settings/widgets/edit_item_widget.dart';
@@ -51,7 +51,11 @@ class EditKitListView extends StatelessWidget {
                     inputType: TextInputType.number,
                   ),
                   const Gap(20),
-                  SaveButton(onPressed: () => cubit.saveProfitData()),
+                  SaveButton(
+                    onPressed: () async {
+                      await cubit.saveProfitData();
+                    },
+                  ),
                 ],
               ),
             ),
@@ -78,8 +82,8 @@ class ProfitsList extends StatelessWidget {
         return EditItemWidget(
           value: profit.value,
           name: profit.id,
-          onChanged: (value) {
-            cubit.editProfitValue(
+          onChanged: (value) async {
+            await cubit.editProfitValue(
               index: index,
               value: value,
             );

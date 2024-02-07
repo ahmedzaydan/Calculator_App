@@ -16,7 +16,7 @@ abstract class StringsManager {
   static const String percentage = 'Percentage';
   static const String enterPercentage = 'Enter percentage';
   static const String personExists = 'Person name already exists';
-  static const String percentageTotalLessThan100 =
+  static const String percentageError =
       'Total percentage must be less than 100';
   static const String invalidPercentage =
       'Percentage must be a number between 0 and 100';
@@ -47,6 +47,6 @@ abstract class StringsManager {
   static const String personNetProfit = 'Person net kit';
 
   // cubit strings
-  static const String checked = 'checked';
+  static const String status = 'status';
   static const String admin = 'admin';
 }
