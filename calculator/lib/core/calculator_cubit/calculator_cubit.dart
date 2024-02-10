@@ -4,6 +4,7 @@ import 'package:calculator/core/models/profit_model.dart';
 import 'package:calculator/core/resources/strings_manager.dart';
 import 'package:calculator/core/utils/cache_controller.dart';
 import 'package:calculator/core/utils/functions.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CalculatorCubit extends Cubit<CalculatorState> {
@@ -11,55 +12,48 @@ class CalculatorCubit extends Cubit<CalculatorState> {
 
   static CalculatorCubit get(context) => BlocProvider.of(context);
 
-  double totalProfit = 0.0;
   String checkedProfits = '';
-  List<ProfitModel> profitItems = [];
-
-  double totalExpense = 0.0;
   String expenses = '';
-
-  double netProfit = 0;
   String note = '';
 
-  double adminPercentage = 0;
+  double totalProfit = 0.0;
+  double totalExpense = 0.0;
+  double netProfit = 0.0;
+  double adminPercentage = 0.0;
   double adminProfit = 0.0;
 
+  List<ProfitModel> profitItems = [];
   List<PersonModel> personItems = [];
 
   void loadProfitItem(String key) {
-    ProfitModel profit = ProfitModel();
-    profit.setProfitKey(key);
-    profit.setValue(
-      CacheController.getData(
-        key: profit.getSharedPrefKey(),
-      )!,
-    );
-    profitItems.add(profit);
+    if (!key.contains(StringsManager.status)) {
+      ProfitModel profit = ProfitModel(
+        id: key,
+        value: CacheController.getDoubleData(key)!,
+        isChecked: CacheController.getBoolData('$key${StringsManager.status}')!,
+      );
+      profitItems.add(profit);
+    }
   }
 
   void loadPersonItem(String key) {
-    PersonModel person = PersonModel();
-    person.setName(key);
-    person.setPercentage(
-      CacheController.getData(
-        key: person.name,
-      )!,
+    PersonModel person = PersonModel(
+      name: key,
+      percentage: CacheController.getDoubleData(key)!,
     );
+    personItems.add(person);
   }
 
   void handleAdminPercentage(String key) {
     // check if admin has stored percentage
     if (CacheController.checkKey(key: key)) {
-      adminPercentage = CacheController.getData(key: key)!;
+      adminPercentage = CacheController.getDoubleData(key)!;
     } else {
       // default admin percentage
       adminPercentage = 30;
 
       // save the default admin percentage
-      CacheController.saveData(
-        key: key,
-        value: adminPercentage,
-      );
+      CacheController.saveData(key, adminPercentage);
     }
   }
 
@@ -69,6 +63,9 @@ class CalculatorCubit extends Cubit<CalculatorState> {
     checkedProfits = '';
 
     List<String> keys = CacheController.getKeys();
+    if (kDebugMode) {
+      print("keys: $keys");
+    }
     for (var key in keys) {
       if (key.startsWith('#')) {
         loadProfitItem(key);
@@ -86,7 +83,7 @@ class CalculatorCubit extends Cubit<CalculatorState> {
     totalProfit = 0;
     checkedProfits = '';
     for (var profit in profitItems) {
-      if (profit.status) {
+      if (profit.isChecked) {
         totalProfit += profit.value;
         checkedProfits += profit.outputProfitKey;
       }
@@ -125,18 +122,15 @@ class CalculatorCubit extends Cubit<CalculatorState> {
   /// settings screen
 
   /// person functions ******************************************************
-  void addPerson({
-    required String name,
-    required double percentage,
-  }) async {
+  String checkPersonData(String name, double percentage) {
+    // check if person name already exists
+    if (CacheController.checkKey(key: name)) {
+      return StringsManager.personExists;
+    }
+
     // check if perecentage is valid or not
     if (percentage < 0 || percentage > 100) {
-      emit(
-        AddPersonErrorState(
-          StringsManager.invalidPercentage,
-        ),
-      );
-      return;
+      return StringsManager.invalidPercentage;
     }
 
     // check if total percentage is less than 100
@@ -146,54 +140,43 @@ class CalculatorCubit extends Cubit<CalculatorState> {
     }
 
     if (totalPercentage + percentage > 100) {
-      emit(
-        AddPersonErrorState(
-          StringsManager.percentageTotalLessThan100,
-        ),
-      );
-      return;
+      return StringsManager.percentageError;
     }
 
-    // check if person name already exists
-    if (CacheController.checkKey(key: name)) {
-      emit(
-        AddPersonErrorState(
-          StringsManager.personExists,
-        ),
+    return '';
+  }
+
+  Future<void> addPerson({
+    required String name,
+    required double percentage,
+  }) async {
+    String validationResult = checkPersonData(name, percentage);
+    if (validationResult.isNotEmpty) {
+      emit(AddPersonErrorState(validationResult));
+    } else {
+      // create person object
+      PersonModel person = PersonModel(
+        name: name,
+        percentage: percentage,
       );
-      return;
+
+      // add person to the personItems list
+      personItems.add(person);
+
+      // add person to shared preferences
+      await CacheController.saveData(person.name, person.percentage);
+
+      emit(AddPersonSuccessState());
     }
-
-    // create person object
-    PersonModel person = PersonModel();
-    person.setName(name);
-    person.setPercentage(percentage);
-
-    // add person to the personItems list
-    personItems.add(person);
-
-    // add person to shared preferences
-    await CacheController.saveData(
-      key: person.name,
-      value: person.percentage,
-    );
-
-    emit(AddPersonSuccessState());
   }
 
   void savePersonsData() {
     // save admin data
-    CacheController.saveData(
-      key: StringsManager.admin,
-      value: adminPercentage,
-    );
+    CacheController.saveData(StringsManager.admin, adminPercentage);
 
     // save persons data
     for (var person in personItems) {
-      CacheController.saveData(
-        key: person.name,
-        value: person.percentage,
-      );
+      CacheController.saveData(person.name, person.percentage);
     }
     emit(PersonsDataSavedState());
   }
@@ -217,25 +200,23 @@ class CalculatorCubit extends Cubit<CalculatorState> {
   }
 
   /// profit functions *******************************************************
-  void addProfitItem({
+  Future<void> addProfitItem({
     required String id,
     required double value,
   }) async {
-    if (!CacheController.checkKey(key: '#$id') &&
-        !CacheController.checkKey(key: '#${StringsManager.checked}$id')) {
+    if (!CacheController.checkKey(key: '#$id')) {
       // create profit object
-      ProfitModel profit = ProfitModel();
-      profit.setProfitKey(id);
-      profit.setValue(value);
+      ProfitModel profit = ProfitModel(
+        id: '#$id',
+        value: value,
+      );
 
       // add profit to the profitItems list
       profitItems.add(profit);
 
       // add profit to shared preferences
-      await CacheController.saveData(
-        key: profit.uncheckedId,
-        value: profit.value,
-      );
+      await CacheController.saveData(profit.id, profit.value);
+      await CacheController.saveData(profit.statusId, false);
 
       sortProfits();
       emit(AddProfitSuccessState());
@@ -246,84 +227,59 @@ class CalculatorCubit extends Cubit<CalculatorState> {
     }
   }
 
-  void changeProfitStatus(int index) async {
-    ProfitModel profit = profitItems[index];
-    await deleteProfitFromSharedPref(profit);
-
-    profit.toggleStatus();
-
+  Future<void> changeProfitStatus(int index) async {
+    profitItems[index].toggleStatus();
     await CacheController.saveData(
-      key: profit.getSharedPrefKey(),
-      value: profit.value,
+      profitItems[index].statusId,
+      profitItems[index].isChecked,
     );
     emit(ProfitStatusChangedState());
   }
 
-  void editProfitValue({
+  Future<void> editProfitValue({
     required int index,
     required String value,
-  }) {
+  }) async {
     profitItems[index].setValue(double.parse(value));
+    await CacheController.saveData(
+      profitItems[index].id,
+      profitItems[index].value,
+    );
   }
 
-  void saveProfitData() async {
+  Future<void> saveProfitData() async {
     for (var profit in profitItems) {
-      await deleteProfitFromSharedPref(profit);
-
       // save profit data to shared preferences
-      await CacheController.saveData(
-        key: profit.getSharedPrefKey(),
-        value: profit.value,
-      );
+      await CacheController.saveData(profit.id, profit.value);
     }
     sortProfits();
     emit(ProfitsDataSavedState());
   }
 
   Future<void> deleteProfitItem(int index) async {
-    await deleteProfitFromSharedPref(profitItems[index]);
+    await CacheController.removeData(key: profitItems[index].id);
+    await CacheController.removeData(key: profitItems[index].statusId);
     profitItems.removeAt(index);
     sortProfits();
     emit(DeleteProfitSuccessState());
   }
 
-  Future<void> deleteProfitFromSharedPref(ProfitModel profit) async {
-    // delete checked key from shared preferences (#checkedkey)
-    await CacheController.removeData(key: profit.checkedId);
-
-    // delete unchecked key from shared preferences (#key)
-    await CacheController.removeData(key: profit.uncheckedId);
-  }
-
   Future<void> clearProfitItems() async {
-    for (var profit in profitItems) {
-      await deleteProfitFromSharedPref(profit);
-
+    for (ProfitModel profit in profitItems) {
       profit.setStatus(false);
-
-      // save profit data to shared preferences
-      await CacheController.saveData(
-        key: profit.getSharedPrefKey(),
-        value: profit.value,
-      );
+      await CacheController.saveData(profit.statusId, false);
     }
     emit(ClearProfitItemsState());
   }
 
   void sortProfits() {
-    profitItems.sort((a, b) => a.id.compareTo(b.id));
-
-    // // Step 1: Remove '#' at the beginning of each key and convert to integers
-    // List<int> modifiedKeys = profitItems.map((profit) {
-    //   return int.parse(profit.id);
-    // }).toList();
-
-    // // Step 2: Sort the modified keys based on integers
-    // modifiedKeys.sort();
-
-    // // Step 3: Add '#' back to each key in the sorted list
-    // profitKeys.clear();
-    // profitKeys = modifiedKeys.map((key) => '$key').toList();
+    profitItems.sort(
+      (a, b) {
+        int aIndex = int.parse(a.id.substring(1));
+        int bIndex = int.parse(b.id.substring(1));
+        return aIndex.compareTo(bIndex);
+      },
+    );
     emit(ProfitKeysSortedState());
   }
 }

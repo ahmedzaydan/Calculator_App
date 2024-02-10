@@ -1,9 +1,9 @@
 import 'package:calculator/core/calculator_cubit/calculator_cubit.dart';
 import 'package:calculator/core/calculator_cubit/calculator_state.dart';
-import 'package:calculator/core/utils/functions.dart';
 import 'package:calculator/core/models/person_model.dart';
 import 'package:calculator/core/resources/constants_manager.dart';
 import 'package:calculator/core/resources/strings_manager.dart';
+import 'package:calculator/core/utils/functions.dart';
 import 'package:calculator/core/widgets/custom_list_view.dart';
 import 'package:calculator/views/settings/widgets/add_item_widget.dart';
 import 'package:calculator/views/settings/widgets/edit_item_widget.dart';
@@ -32,7 +32,6 @@ class EditPersonsListView extends StatelessWidget {
           appBar: customAppBar(
             text: StringsManager.editPersons,
             onPressed: () {
-              cubit.sortProfits();
               Navigator.pop(context);
             },
           ),
@@ -76,7 +75,7 @@ class PersonsList extends StatelessWidget {
       itemBuilder: (context, index) {
         PersonModel person = cubit.personItems[index];
         return EditItemWidget(
-          value: person.netProfitValue,
+          value: person.percentage,
           name: person.name,
           onChanged: (value) {
             cubit.editPersonPercentage(

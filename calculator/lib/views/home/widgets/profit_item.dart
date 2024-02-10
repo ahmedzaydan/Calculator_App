@@ -37,7 +37,7 @@ class ProfitItem extends StatelessWidget {
           ),
         ),
         Text(
-          '(#$profitId)',
+          profitId,
           style: TextStylesManager.textStyle20.copyWith(
             fontWeight: FontWeight.bold,
             color: color,

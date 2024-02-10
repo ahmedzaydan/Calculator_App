@@ -41,8 +41,8 @@ class HomeViewBody extends StatelessWidget {
                     ),
                   ),
                   CustomElevatedButton(
-                    onPressed: () {
-                      cubit.clearProfitItems();
+                    onPressed: () async {
+                      await cubit.clearProfitItems();
                     },
                     text: StringsManager.clear,
                   ),
@@ -59,8 +59,10 @@ class HomeViewBody extends StatelessWidget {
                 return ProfitItem(
                   profitId: profit.id,
                   profitValue: profit.value,
-                  value: profit.status,
-                  onChanged: (_) => cubit.changeProfitStatus(index),
+                  value: profit.isChecked,
+                  onChanged: (_) async {
+                    await cubit.changeProfitStatus(index);
+                  },
                 );
               },
               separatorBuilder: (context, index) => const Gap(1),
