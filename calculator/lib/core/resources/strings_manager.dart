@@ -3,8 +3,10 @@ abstract class StringsManager {
   static const String homeScreen = 'Home Screen';
   static const String kits = 'Kits';
   static const String expenses = 'Expenses';
+  static const String extra = 'Extra';
   static const String note = 'Note';
   static const String clear = 'Clear';
+  static const valuesHint = 'value1,  value2,';
 
   static const String name = 'Name';
   static const String enterName = 'Enter name';

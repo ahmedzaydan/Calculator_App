@@ -15,9 +15,11 @@ class CalculatorCubit extends Cubit<CalculatorState> {
   String expenses = '';
   String checkedProfits = '';
   String note = '';
+  String extra = '';
 
   double totalProfit = 0.0;
   double totalExpense = 0.0;
+  double totalExtra = 0.0;
   double netProfit = 0.0;
   double adminPercentage = 0.0;
   double adminProfit = 0.0;
@@ -94,22 +96,25 @@ class CalculatorCubit extends Cubit<CalculatorState> {
     totalProfit = roundDouble(totalProfit);
   }
 
-  void calculateExpense() {
-    totalExpense = 0.0;
-    List<String> expenseValues = expenses.split(',');
-    for (var i = 0; i < expenseValues.length; i++) {
-      if (expenseValues[i].isNotEmpty) {
-        totalExpense += double.parse(expenseValues[i]);
+  double calculateString(String s) {
+    double total = 0.0;
+    List<String> values = s.split(',');
+    for (var i = 0; i < values.length; i++) {
+      if (values[i].isNotEmpty) {
+        total += double.parse(values[i]);
       }
     }
-    totalExpense = roundDouble(totalExpense);
+    total = roundDouble(total);
+    return total;
   }
 
   void calculate() {
     calculateProfit();
-    calculateExpense();
+    totalExpense = calculateString(expenses);
+    totalExtra = calculateString(extra);
     adminProfit = totalProfit * (adminPercentage / 100);
-    netProfit = roundDouble(totalProfit - totalExpense - adminProfit);
+    netProfit =
+        roundDouble(totalProfit - totalExpense - adminProfit + totalExtra);
     adminProfit = roundDouble(adminProfit);
 
     // calculate person net profits
