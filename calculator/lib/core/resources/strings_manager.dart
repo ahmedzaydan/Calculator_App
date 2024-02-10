@@ -25,7 +25,7 @@ abstract class StringsManager {
 
   // settings screen strings
   static const String settings = 'Settings';
-  static const String adminPercentage = 'Adminstration';
+  static const String adminPercentage = 'Teresa';
   static const String save = 'Save';
   static const String editKits = 'Edit Kits';
 
@@ -45,10 +45,10 @@ abstract class StringsManager {
   static const String totalProfit = 'Total kit';
   static const String totalExpense = 'Total expense';
   static const String netProfit = 'Net profit';
-  static const String adminProfit = 'Administration';
+  static const String adminProfit = 'Teresa';
   static const String personNetProfit = 'Person net kit';
 
   // cubit strings
   static const String status = 'status';
-  static const String admin = 'admin';
+  static const String admin = 'Teresa';
 }
