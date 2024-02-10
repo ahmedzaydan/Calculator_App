@@ -12,8 +12,8 @@ class CalculatorCubit extends Cubit<CalculatorState> {
 
   static CalculatorCubit get(context) => BlocProvider.of(context);
 
-  String checkedProfits = '';
   String expenses = '';
+  String checkedProfits = '';
   String note = '';
 
   double totalProfit = 0.0;
