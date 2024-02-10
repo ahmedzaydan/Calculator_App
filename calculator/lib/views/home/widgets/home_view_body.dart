@@ -19,6 +19,7 @@ class HomeViewBody extends StatelessWidget {
   });
 
   final TextEditingController expensesController = TextEditingController();
+  final TextEditingController extraController = TextEditingController();
   final TextEditingController noteController = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -75,8 +76,18 @@ class HomeViewBody extends StatelessWidget {
             CustomTextFormField(
               controller: expensesController,
               labelText: StringsManager.expenses,
-              hintText: 'value1,  value2, ',
+              hintText: StringsManager.valuesHint,
               onChanged: (value) => cubit.expenses = value,
+            ),
+
+            const Gap(25),
+
+            // extra section
+            CustomTextFormField(
+              controller: extraController,
+              labelText: StringsManager.extra,
+              hintText: StringsManager.valuesHint,
+              onChanged: (value) => cubit.extra = value,
             ),
 
             const Gap(25),

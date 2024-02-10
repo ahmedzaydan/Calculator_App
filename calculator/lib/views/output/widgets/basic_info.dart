@@ -1,6 +1,6 @@
 import 'package:calculator/core/calculator_cubit/calculator_cubit.dart';
-import 'package:calculator/core/utils/functions.dart';
 import 'package:calculator/core/resources/strings_manager.dart';
+import 'package:calculator/core/utils/functions.dart';
 import 'package:calculator/views/output/widgets/info_item.dart';
 import 'package:flutter/material.dart';
 
@@ -40,6 +40,14 @@ class BasicInfo extends StatelessWidget {
         InfoItem(
           label: StringsManager.totalExpense,
           value: cubit.totalExpense.toString(),
+        ),
+
+        const Divider(),
+
+        // total extra
+        InfoItem(
+          label: StringsManager.extra,
+          value: cubit.totalExtra.toString(),
         ),
 
         const Divider(),
