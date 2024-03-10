@@ -41,14 +41,19 @@ class HomeViewBody extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  CustomElevatedButton(
-                    onPressed: () async {
-                      expensesController.clear();
-                      extraController.clear();
-                      noteController.clear();
-                      await cubit.clearProfitItems();
-                    },
-                    text: StringsManager.clear,
+
+                  // clera button
+                  SizedBox(
+                    height: MediaQuery.of(context).size.width * 0.12,
+                    child: CustomElevatedButton(
+                      onPressed: () async {
+                        expensesController.clear();
+                        extraController.clear();
+                        noteController.clear();
+                        await cubit.clear();
+                      },
+                      text: StringsManager.clear,
+                    ),
                   ),
                 ],
               ),
@@ -61,7 +66,7 @@ class HomeViewBody extends StatelessWidget {
               itemBuilder: (context, index) {
                 ProfitModel profit = cubit.profitItems[index];
                 return ProfitItem(
-                  profitId: profit.id,
+                  profitId: 'Kit ${profit.id.substring(1)}',
                   profitValue: profit.value,
                   value: profit.isChecked,
                   onChanged: (_) async {
@@ -78,6 +83,7 @@ class HomeViewBody extends StatelessWidget {
             // expense section
             CustomTextFormField(
               controller: expensesController,
+              fontWeight: FontWeight.normal,
               labelText: StringsManager.expenses,
               hintText: StringsManager.valuesHint,
               onChanged: (value) => cubit.expenses = value,
@@ -88,6 +94,7 @@ class HomeViewBody extends StatelessWidget {
             // extra section
             CustomTextFormField(
               controller: extraController,
+              fontWeight: FontWeight.normal,
               labelText: StringsManager.extra,
               hintText: StringsManager.valuesHint,
               onChanged: (value) => cubit.extra = value,
@@ -98,6 +105,7 @@ class HomeViewBody extends StatelessWidget {
             // note
             CustomTextFormField(
               controller: noteController,
+              fontWeight: FontWeight.normal,
               keyboardType: TextInputType.text,
               labelText: StringsManager.note,
               onChanged: (note) {

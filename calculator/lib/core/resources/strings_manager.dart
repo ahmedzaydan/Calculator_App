@@ -14,7 +14,7 @@ abstract class StringsManager {
   // edit persons screen strings
   static const String editPersons = 'Edit Persons';
   static const String add = 'Add';
-  static const String addPerson = 'Add Person';
+  static const String addPerson = 'Add New Person';
   static const String percentage = 'Percentage';
   static const String enterPercentage = 'Enter percentage';
   static const String personExists = 'Person name already exists';
@@ -38,6 +38,7 @@ abstract class StringsManager {
   static const String enterNumber = 'Enter number';
   static const String profitExists = 'Kit id already exists';
   static const String invalidProfitId = 'Kit number must be an integer';
+  static const String addKit = 'Add New Kit';
 
   // output screen strings
   static const String outputScreen = 'Output Screen';

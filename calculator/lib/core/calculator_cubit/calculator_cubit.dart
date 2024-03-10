@@ -269,11 +269,14 @@ class CalculatorCubit extends Cubit<CalculatorState> {
     emit(DeleteProfitSuccessState());
   }
 
-  Future<void> clearProfitItems() async {
+  Future<void> clear() async {
     for (ProfitModel profit in profitItems) {
       profit.setStatus(false);
       await CacheController.saveData(profit.statusId, false);
     }
+    expenses = '';
+    extra = '';
+    note = '';
     emit(ClearProfitItemsState());
   }
 

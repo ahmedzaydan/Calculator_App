@@ -1,5 +1,5 @@
 import 'package:calculator/core/resources/color_manager.dart';
-import 'package:calculator/core/resources/styles_manager.dart';
+import 'package:calculator/core/utils/functions.dart';
 import 'package:flutter/material.dart';
 
 class ProfitItem extends StatelessWidget {
@@ -38,18 +38,14 @@ class ProfitItem extends StatelessWidget {
         ),
         Text(
           profitId,
-          style: TextStylesManager.textStyle20.copyWith(
-            fontWeight: FontWeight.bold,
+          style: getTextStyle().copyWith(
             color: color,
           ),
         ),
         const Spacer(),
         Text(
           '$profitValue',
-          style: TextStylesManager.textStyle20.copyWith(
-            fontWeight: FontWeight.bold,
-            color: color,
-          ),
+          style: getTextStyle(),
         ),
       ],
     );

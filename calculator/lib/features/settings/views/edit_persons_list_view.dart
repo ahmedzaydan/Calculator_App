@@ -1,16 +1,15 @@
 import 'package:calculator/core/calculator_cubit/calculator_cubit.dart';
 import 'package:calculator/core/calculator_cubit/calculator_state.dart';
-import 'package:calculator/core/models/person_model.dart';
 import 'package:calculator/core/resources/constants_manager.dart';
 import 'package:calculator/core/resources/strings_manager.dart';
 import 'package:calculator/core/utils/functions.dart';
-import 'package:calculator/core/widgets/custom_list_view.dart';
 import 'package:calculator/features/settings/widgets/add_item_widget.dart';
-import 'package:calculator/features/settings/widgets/edit_item_widget.dart';
 import 'package:calculator/features/settings/widgets/save_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+
+import '../widgets/persons_list.dart';
 
 class EditPersonsListView extends StatelessWidget {
   const EditPersonsListView({super.key});
@@ -39,8 +38,14 @@ class EditPersonsListView extends StatelessWidget {
             padding: const EdgeInsets.all(20.0),
             child: SingleChildScrollView(
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   PersonsList(cubit: cubit),
+                  const Gap(50),
+                   Text(
+                    StringsManager.addPerson,
+                    style: getTextStyle(),
+                  ),
                   const Gap(20),
                   AddItemWidget(
                     name: StringsManager.name,
@@ -57,36 +62,6 @@ class EditPersonsListView extends StatelessWidget {
           ),
         );
       },
-    );
-  }
-}
-
-class PersonsList extends StatelessWidget {
-  const PersonsList({
-    super.key,
-    required this.cubit,
-  });
-
-  final CalculatorCubit cubit;
-
-  @override
-  Widget build(BuildContext context) {
-    return CustomListView(
-      itemBuilder: (context, index) {
-        PersonModel person = cubit.personItems[index];
-        return EditItemWidget(
-          value: person.percentage,
-          name: person.name,
-          onChanged: (value) {
-            cubit.editPersonPercentage(
-              index: index,
-              value: value,
-            );
-          },
-          deleteOnPressed: () async => await cubit.deletePerson(index),
-        );
-      },
-      itemCount: cubit.personItems.length,
     );
   }
 }

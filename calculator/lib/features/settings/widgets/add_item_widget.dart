@@ -42,6 +42,7 @@ class AddItemWidget extends StatelessWidget {
             flex: 3,
             child: CustomTextFormField(
               controller: nameController,
+              fontWeight: FontWeight.normal,
               labelText: name,
               keyboardType: inputType,
               validator: (value) {
@@ -60,6 +61,7 @@ class AddItemWidget extends StatelessWidget {
             flex: 3,
             child: CustomTextFormField(
               controller: valueController,
+              fontWeight: FontWeight.normal,
               labelText: value,
               keyboardType: const TextInputType.numberWithOptions(
                 decimal: true,

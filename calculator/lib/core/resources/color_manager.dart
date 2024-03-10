@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
-class ColorManager {
+abstract class ColorManager {
   // static Color primary = const Color(0xffED9728);
   static Color primary = const Color.fromARGB(255, 67, 156, 215);
   static Color darkGrey = const Color(0xff525252);
   static Color grey = const Color(0xff737477);
   static Color lightGrey = const Color(0xff9E9E9E);
+  static Color lightGrey2 = const Color(0xFFEEEEEE);
   static Color darkPrimary = const Color(0xffd17d11);
   static Color lightPrimary = const Color(0xCCd17d11); // Color with 80% opacity
   static Color grey1 = const Color(0xff707070);

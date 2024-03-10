@@ -1,3 +1,5 @@
+import 'package:calculator/core/resources/color_manager.dart';
+import 'package:calculator/core/resources/font_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -14,6 +16,8 @@ class CustomTextFormField extends StatelessWidget {
     this.validator,
     this.hintText,
     this.inputFormatters,
+    this.fontWeight = FontWeight.bold,
+    this.fontSize = FontSize.s18,
   });
 
   final Key? formKey;
@@ -24,20 +28,34 @@ class CustomTextFormField extends StatelessWidget {
   final String? hintText;
   final void Function(String)? onChanged;
   final String? Function(String?)? validator;
+  final FontWeight fontWeight;
+  final double? fontSize;
+
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      cursorColor: Theme.of(context).primaryColor,
-      key: formKey,
-      controller: controller,
-      keyboardType: keyboardType,
-      inputFormatters: inputFormatters,
-      decoration: InputDecoration(
-        hintText: hintText,
-        labelText: labelText,
+    return SizedBox(
+      height: MediaQuery.of(context).size.width * 0.13,
+      child: TextFormField(
+        cursorColor: Theme.of(context).primaryColor,
+        key: formKey,
+        controller: controller,
+        keyboardType: keyboardType,
+        inputFormatters: inputFormatters,
+        decoration: InputDecoration(
+          hintText: hintText,
+          hintStyle: TextStyle(
+            color: ColorManager.lightGrey,
+          ),
+          labelText: labelText,
+          labelStyle: TextStyle(
+            fontSize: fontSize,
+            color: ColorManager.black,
+            fontWeight: fontWeight,
+          ),
+        ),
+        onChanged: onChanged,
+        validator: validator,
       ),
-      onChanged: onChanged,
-      validator: validator,
     );
   }
 }

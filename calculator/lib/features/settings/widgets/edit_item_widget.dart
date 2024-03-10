@@ -1,3 +1,4 @@
+import 'package:calculator/core/resources/font_manager.dart';
 import 'package:calculator/core/utils/functions.dart';
 import 'package:calculator/core/widgets/custom_icon_button.dart';
 import 'package:calculator/core/widgets/custom_text_form_field.dart';
@@ -28,6 +29,7 @@ class EditItemWidget extends StatelessWidget {
               text: '$value',
             ),
             labelText: name,
+            fontSize: FontSize.s22,
             inputFormatters: getInputFormatters(),
             onChanged: onChanged,
           ),

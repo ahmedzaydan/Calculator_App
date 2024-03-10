@@ -53,12 +53,12 @@ ThemeData getApplicationTheme() {
       labelStyle: const TextStyle(
         color: Colors.black,
       ),
-      enabledBorder: decorateBorder(),
-      focusedBorder: decorateBorder(),
-      errorBorder: decorateBorder(),
-      focusedErrorBorder: decorateBorder(),
-      disabledBorder: decorateBorder(),
-      border: decorateBorder(),
+      enabledBorder: _decorateBorder(),
+      focusedBorder: _decorateBorder(),
+      errorBorder: _decorateBorder(),
+      focusedErrorBorder: _decorateBorder(),
+      disabledBorder: _decorateBorder(),
+      border: _decorateBorder(),
     ),
 
     // icon button theme
@@ -77,13 +77,12 @@ ThemeData getApplicationTheme() {
       ),
     ),
 
-
-    // divider theme 
+    // divider theme
     dividerColor: ColorManager.black,
   );
 }
 
-OutlineInputBorder decorateBorder() {
+OutlineInputBorder _decorateBorder() {
   return OutlineInputBorder(
     borderRadius: BorderRadius.circular(
       ConstantsManager.borderRadius,

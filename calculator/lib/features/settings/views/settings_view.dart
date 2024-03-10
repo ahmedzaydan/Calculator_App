@@ -1,9 +1,11 @@
 import 'package:calculator/core/calculator_cubit/calculator_cubit.dart';
 import 'package:calculator/core/calculator_cubit/calculator_state.dart';
-import 'package:calculator/core/utils/functions.dart';
 import 'package:calculator/core/models/person_model.dart';
+import 'package:calculator/core/resources/color_manager.dart';
+import 'package:calculator/core/resources/font_manager.dart';
 import 'package:calculator/core/resources/strings_manager.dart';
-import 'package:calculator/core/resources/styles_manager.dart';
+import 'package:calculator/core/resources/values_manager.dart';
+import 'package:calculator/core/utils/functions.dart';
 import 'package:calculator/core/widgets/custom_elevated_button.dart';
 import 'package:calculator/core/widgets/custom_list_view.dart';
 import 'package:calculator/core/widgets/custom_text_form_field.dart';
@@ -30,13 +32,15 @@ class SttingsView extends StatelessWidget {
               Navigator.pop(context);
             },
           ),
-          body: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  // adminstration percentage
-                  Row(
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                // adminstration percentage
+                Padding(
+                  padding: const EdgeInsets.all(
+                    AppPadding.p20,
+                  ),
+                  child: Row(
                     children: [
                       Expanded(
                         flex: 4,
@@ -44,6 +48,7 @@ class SttingsView extends StatelessWidget {
                           controller: TextEditingController(
                             text: cubit.adminPercentage.toString(),
                           ),
+                          fontSize: FontSize.s22,
                           labelText: StringsManager.adminPercentage,
                           keyboardType: const TextInputType.numberWithOptions(
                               decimal: true),
@@ -72,64 +77,83 @@ class SttingsView extends StatelessWidget {
                       ),
                     ],
                   ),
+                ),
 
-                  const Gap(20),
-
-                  // persons percentage
-                  CustomListView(
-                    itemBuilder: (context, index) {
-                      PersonModel person = cubit.personItems[index];
-                      return Row(
+                // persons percentage
+                CustomListView(
+                  itemBuilder: (context, index) {
+                    PersonModel person = cubit.personItems[index];
+                    return Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: AppPadding.p20,
+                        vertical: AppPadding.p10,
+                      ),
+                      width: double.infinity,
+                      color: (index % 2 != 0) ? ColorManager.lightGrey2 : null,
+                      child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
                             person.name,
-                            style: TextStylesManager.textStyle20,
+                            style: getTextStyle(),
                           ),
 
                           // percentage
                           Text(
                             '${person.percentage}%',
-                            style: TextStylesManager.textStyle20,
+                            style: getTextStyle(),
                           ),
                         ],
-                      );
-                    },
-                    itemCount: cubit.personItems.length,
+                      ),
+                    );
+                  },
+                  itemCount: cubit.personItems.length,
+                ),
+
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: AppPadding.p20,
+                    right: AppPadding.p20,
+                    top: AppPadding.p20,
                   ),
-
-                  const Gap(25),
-
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  child: Column(
                     children: [
-                      // edit persons button
-                      CustomElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const EditPersonsListView(),
-                            ),
-                          );
-                        },
-                        text: StringsManager.editPersons,
+                      // edit persons list button
+                      SizedBox(
+                        width: double.infinity,
+                        child: CustomElevatedButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    const EditPersonsListView(),
+                              ),
+                            );
+                          },
+                          text: StringsManager.editPersons,
+                        ),
                       ),
 
+                      const Gap(25),
+
                       // edit profit values button
-                      CustomElevatedButton(
-                        onPressed: () {
-                          navigateTo(
-                            context: context,
-                            dest: const EditKitListView(),
-                          );
-                        },
-                        text: StringsManager.editKits,
+                      SizedBox(
+                        width: double.infinity,
+                        child: CustomElevatedButton(
+                          onPressed: () {
+                            navigateTo(
+                              context: context,
+                              dest: const EditKitListView(),
+                            );
+                          },
+                          text: StringsManager.editKits,
+                        ),
                       ),
                     ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         );

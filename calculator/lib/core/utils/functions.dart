@@ -1,4 +1,5 @@
 import 'package:calculator/core/resources/constants_manager.dart';
+import 'package:calculator/core/resources/values_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -17,8 +18,7 @@ void navigateTo({
 
 TextStyle getTextStyle() {
   return const TextStyle(
-    fontSize: 18,
-    fontWeight: FontWeight.bold,
+    fontSize: 22,
     color: Colors.black,
   );
 }
@@ -32,6 +32,10 @@ AppBar customAppBar({
   return AppBar(
     title: Text(
       text,
+      style: const TextStyle(
+        fontSize: AppSize.s24,
+        fontWeight: FontWeight.bold,
+      ),
     ),
     actions: actions,
     leading: leading
