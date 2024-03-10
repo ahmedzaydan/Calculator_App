@@ -8,7 +8,7 @@ class CacheController {
     _sharedPreferences = await SharedPreferences.getInstance();
   }
 
-  static Future<dynamic> saveData(String key, dynamic value) async {
+  static Future<bool> saveData(String key, dynamic value) async {
     if (value is String) {
       return await _sharedPreferences.setString(key, value);
     }
@@ -21,6 +21,7 @@ class CacheController {
     if (value is bool) {
       return await _sharedPreferences.setBool(key, value);
     }
+    return true; // TODO: if error caused delete this and make it Future<dynamic>
   }
 
   static double? getDoubleData(String key) {
@@ -34,7 +35,7 @@ class CacheController {
   static List<String> getKeys() {
     return _sharedPreferences.getKeys().toList();
   }
-
+  
   static Future<bool> removeData({
     required String key,
   }) async {

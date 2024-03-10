@@ -1,7 +1,7 @@
 import 'package:calculator/core/utils/functions.dart';
 import 'package:calculator/core/resources/strings_manager.dart';
-import 'package:calculator/views/home/widgets/home_view_body.dart';
-import 'package:calculator/views/settings/views/settings_view.dart';
+import 'package:calculator/features/home/widgets/home_view_body.dart';
+import 'package:calculator/features/settings/views/settings_view.dart';
 import 'package:flutter/material.dart';
 
 class HomeView extends StatelessWidget {
