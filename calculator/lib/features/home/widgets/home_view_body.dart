@@ -7,8 +7,8 @@ import 'package:calculator/core/utils/functions.dart';
 import 'package:calculator/core/widgets/custom_elevated_button.dart';
 import 'package:calculator/core/widgets/custom_list_view.dart';
 import 'package:calculator/core/widgets/custom_text_form_field.dart';
-import 'package:calculator/views/home/widgets/profit_item.dart';
-import 'package:calculator/views/output/views/output_view.dart';
+import 'package:calculator/features/home/widgets/profit_item.dart';
+import 'package:calculator/features/output/views/output_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
@@ -43,6 +43,9 @@ class HomeViewBody extends StatelessWidget {
                   ),
                   CustomElevatedButton(
                     onPressed: () async {
+                      expensesController.clear();
+                      extraController.clear();
+                      noteController.clear();
                       await cubit.clearProfitItems();
                     },
                     text: StringsManager.clear,

@@ -2,7 +2,7 @@ import 'package:calculator/core/utils/bloc_observer.dart';
 import 'package:calculator/core/utils/cache_controller.dart';
 import 'package:calculator/core/resources/theme_manager.dart';
 import 'package:calculator/core/calculator_cubit/calculator_cubit.dart';
-import 'package:calculator/views/home/views/home_view.dart';
+import 'package:calculator/features/home/views/home_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
