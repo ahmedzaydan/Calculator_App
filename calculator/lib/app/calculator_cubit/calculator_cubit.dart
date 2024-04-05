@@ -1,9 +1,9 @@
-import 'package:calculator/core/calculator_cubit/calculator_state.dart';
-import 'package:calculator/core/models/person_model.dart';
-import 'package:calculator/core/models/profit_model.dart';
-import 'package:calculator/core/resources/strings_manager.dart';
-import 'package:calculator/core/utils/cache_controller.dart';
-import 'package:calculator/core/utils/functions.dart';
+import 'package:calculator/app/calculator_cubit/calculator_state.dart';
+import 'package:calculator/app/models/person_model.dart';
+import 'package:calculator/app/models/profit_model.dart';
+import 'package:calculator/app/resources/strings_manager.dart';
+import 'package:calculator/app/utils/cache_controller.dart';
+import 'package:calculator/app/utils/functions.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

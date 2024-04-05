@@ -1,6 +1,6 @@
-import 'package:calculator/core/calculator_cubit/calculator_cubit.dart';
-import 'package:calculator/core/utils/functions.dart';
-import 'package:calculator/core/resources/strings_manager.dart';
+import 'package:calculator/app/calculator_cubit/calculator_cubit.dart';
+import 'package:calculator/app/utils/functions.dart';
+import 'package:calculator/app/resources/strings_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 

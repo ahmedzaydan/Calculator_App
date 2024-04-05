@@ -1,7 +1,7 @@
-import 'package:calculator/core/resources/font_manager.dart';
-import 'package:calculator/core/utils/functions.dart';
-import 'package:calculator/core/widgets/custom_icon_button.dart';
-import 'package:calculator/core/widgets/custom_text_form_field.dart';
+import 'package:calculator/app/resources/font_manager.dart';
+import 'package:calculator/app/utils/functions.dart';
+import 'package:calculator/app/widgets/custom_icon_button.dart';
+import 'package:calculator/app/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 

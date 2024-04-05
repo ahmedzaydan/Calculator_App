@@ -1,4 +1,4 @@
-import 'package:calculator/core/utils/functions.dart';
+import 'package:calculator/app/utils/functions.dart';
 import 'package:flutter/material.dart';
 
 class InfoItem extends StatelessWidget {

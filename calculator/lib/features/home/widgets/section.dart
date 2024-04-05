@@ -1,5 +1,5 @@
-import 'package:calculator/core/widgets/custom_elevated_button.dart';
-import 'package:calculator/core/widgets/custom_list_view.dart';
+import 'package:calculator/app/widgets/custom_elevated_button.dart';
+import 'package:calculator/app/widgets/custom_list_view.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 

@@ -1,4 +1,4 @@
-import 'package:calculator/core/resources/strings_manager.dart';
+import 'package:calculator/app/resources/strings_manager.dart';
 
 class ProfitModel {
   String _id;

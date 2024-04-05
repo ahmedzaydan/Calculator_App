@@ -1,5 +1,5 @@
-import 'package:calculator/core/resources/color_manager.dart';
-import 'package:calculator/core/resources/constants_manager.dart';
+import 'package:calculator/app/resources/color_manager.dart';
+import 'package:calculator/app/resources/constants_manager.dart';
 import 'package:flutter/material.dart';
 
 ThemeData getApplicationTheme() {

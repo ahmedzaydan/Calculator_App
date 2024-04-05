@@ -1,5 +1,5 @@
-import 'package:calculator/core/resources/color_manager.dart';
-import 'package:calculator/core/utils/functions.dart';
+import 'package:calculator/app/resources/color_manager.dart';
+import 'package:calculator/app/utils/functions.dart';
 import 'package:flutter/material.dart';
 
 class ProfitItem extends StatelessWidget {

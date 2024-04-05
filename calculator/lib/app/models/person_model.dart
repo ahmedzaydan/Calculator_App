@@ -1,4 +1,4 @@
-import 'package:calculator/core/utils/functions.dart';
+import 'package:calculator/app/utils/functions.dart';
 
 class PersonModel {
   String _name = '';

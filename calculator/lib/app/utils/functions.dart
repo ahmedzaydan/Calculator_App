@@ -1,5 +1,5 @@
-import 'package:calculator/core/resources/constants_manager.dart';
-import 'package:calculator/core/resources/values_manager.dart';
+import 'package:calculator/app/resources/constants_manager.dart';
+import 'package:calculator/app/resources/values_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';

@@ -1,5 +1,5 @@
-import 'package:calculator/core/resources/strings_manager.dart';
-import 'package:calculator/core/widgets/custom_elevated_button.dart';
+import 'package:calculator/app/resources/strings_manager.dart';
+import 'package:calculator/app/widgets/custom_elevated_button.dart';
 import 'package:flutter/material.dart';
 
 class SaveButton extends StatelessWidget {
