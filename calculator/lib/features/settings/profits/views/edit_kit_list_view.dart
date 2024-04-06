@@ -1,36 +1,37 @@
-import 'package:calculator/app/calculator_cubit/calculator_cubit.dart';
-import 'package:calculator/app/calculator_cubit/calculator_state.dart';
 import 'package:calculator/app/resources/constants_manager.dart';
 import 'package:calculator/app/resources/strings_manager.dart';
+import 'package:calculator/app/utils/dependency_injection.dart';
 import 'package:calculator/app/utils/functions.dart';
+import 'package:calculator/features/settings/profits/profit_cubit/profit_cubit.dart';
+import 'package:calculator/features/settings/profits/profit_cubit/profit_states.dart';
 import 'package:calculator/features/settings/widgets/add_item_widget.dart';
-import 'package:calculator/features/settings/widgets/save_button.dart';
+import 'package:calculator/features/settings/widgets/profits_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 
-import '../widgets/persons_list.dart';
-
-class EditPersonsListView extends StatelessWidget {
-  const EditPersonsListView({super.key});
+class EditKitListView extends StatelessWidget {
+  const EditKitListView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<CalculatorCubit, CalculatorState>(
+    return BlocConsumer<ProfitsCubit, ProfitsStates>(
       listener: (context, state) {
-        if (state is AddPersonErrorState) {
+        if (state is AddProfitErrorState) {
+          kprint(state.message);
           showCustomToast(
             message: state.message,
             state: ToastStates.error,
           );
         }
       },
-      builder: (context2, state) {
-        var cubit = CalculatorCubit.get(context2);
+      builder: (_, __) {
+        var cubit = locator<ProfitsCubit>();
         return Scaffold(
           appBar: customAppBar(
-            text: StringsManager.editPersons,
+            text: StringsManager.editKitList,
             onPressed: () {
+              cubit.sortProfits();
               Navigator.pop(context);
             },
           ),
@@ -40,22 +41,26 @@ class EditPersonsListView extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  PersonsList(cubit: cubit),
+                  ProfitsList(),
                   const Gap(50),
-                   Text(
-                    StringsManager.addPerson,
+                  Text(
+                    StringsManager.addKit,
                     style: getTextStyle(),
                   ),
                   const Gap(20),
                   AddItemWidget(
-                    name: StringsManager.name,
-                    nameValidator: StringsManager.enterName,
-                    value: StringsManager.percentage,
-                    valueValidator: StringsManager.enterPercentage,
-                    isPerson: true,
+                    name: StringsManager.profitNumber,
+                    nameValidator: StringsManager.enterNumber,
+                    value: StringsManager.profitValue,
+                    valueValidator: StringsManager.enterValue,
+                    inputType: TextInputType.number,
                   ),
                   const Gap(20),
-                  SaveButton(onPressed: () => cubit.savePersonsData()),
+                  // SaveButton(
+                  //   onPressed: () async {
+                  //     await cubit.saveProfitData();
+                  //   },
+                  // ),
                 ],
               ),
             ),

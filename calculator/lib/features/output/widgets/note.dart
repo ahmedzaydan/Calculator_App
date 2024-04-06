@@ -1,4 +1,4 @@
-import 'package:calculator/app/calculator_cubit/calculator_cubit.dart';
+import 'package:calculator/features/home/calculator_cubit/calculator_cubit.dart';
 import 'package:calculator/app/utils/functions.dart';
 import 'package:calculator/app/resources/strings_manager.dart';
 import 'package:flutter/material.dart';

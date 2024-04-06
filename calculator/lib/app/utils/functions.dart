@@ -1,5 +1,6 @@
 import 'package:calculator/app/resources/constants_manager.dart';
 import 'package:calculator/app/resources/values_manager.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -99,5 +100,11 @@ TextDirection getTextDirection(String text) {
     return TextDirection.ltr;
   } else {
     return TextDirection.rtl;
+  }
+}
+
+void kprint(dynamic message) {
+  if (kDebugMode) {
+    print('\n$message\n');
   }
 }

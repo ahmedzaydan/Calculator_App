@@ -1,17 +1,17 @@
-import 'package:calculator/app/calculator_cubit/calculator_cubit.dart';
-import 'package:calculator/app/models/profit_model.dart';
+import 'package:calculator/app/utils/dependency_injection.dart';
 import 'package:calculator/app/widgets/custom_list_view.dart';
+import 'package:calculator/features/settings/profits/models/profit_model.dart';
+import 'package:calculator/features/settings/profits/profit_cubit/profit_cubit.dart';
 import 'package:calculator/features/settings/widgets/edit_item_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
 class ProfitsList extends StatelessWidget {
-  const ProfitsList({
+  ProfitsList({
     super.key,
-    required this.cubit,
   });
 
-  final CalculatorCubit cubit;
+  final ProfitsCubit cubit = locator<ProfitsCubit>();
 
   @override
   Widget build(BuildContext context) {
@@ -20,9 +20,9 @@ class ProfitsList extends StatelessWidget {
         ProfitModel profit = cubit.profitItems[index];
         return EditItemWidget(
           value: profit.value,
-          name: 'Kit ${profit.id.substring(1)}',
+          name: profit.id,
           onChanged: (value) async {
-            await cubit.editProfitValue(
+            await cubit.updateProfitValue(
               index: index,
               value: value,
             );

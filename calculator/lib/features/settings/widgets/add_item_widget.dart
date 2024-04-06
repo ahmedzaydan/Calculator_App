@@ -1,7 +1,9 @@
-import 'package:calculator/app/calculator_cubit/calculator_cubit.dart';
+import 'package:calculator/app/utils/dependency_injection.dart';
 import 'package:calculator/app/utils/functions.dart';
 import 'package:calculator/app/widgets/custom_icon_button.dart';
 import 'package:calculator/app/widgets/custom_text_form_field.dart';
+import 'package:calculator/features/settings/persons/person_cubit/persons_cubit.dart';
+import 'package:calculator/features/settings/profits/profit_cubit/profit_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -15,6 +17,9 @@ class AddItemWidget extends StatelessWidget {
     this.isPerson = false,
     this.inputType = TextInputType.text,
   });
+
+  final PersonsCubit personsCubit = locator<PersonsCubit>();
+  final ProfitsCubit profitsCubit = locator<ProfitsCubit>();
 
   final TextEditingController nameController = TextEditingController();
   final TextEditingController valueController = TextEditingController();
@@ -84,12 +89,12 @@ class AddItemWidget extends StatelessWidget {
             onPressed: () async {
               if (_formKey.currentState!.validate()) {
                 if (isPerson) {
-                  await CalculatorCubit.get(context).addPerson(
+                  await personsCubit.addPerson(
                     name: nameController.text,
                     percentage: double.parse(valueController.text),
                   );
                 } else {
-                  await CalculatorCubit.get(context).addProfitItem(
+                  await profitsCubit.addProfit(
                     id: nameController.text,
                     value: double.parse(valueController.text),
                   );

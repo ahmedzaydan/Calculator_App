@@ -1,36 +1,34 @@
-import 'package:calculator/app/calculator_cubit/calculator_cubit.dart';
-import 'package:calculator/app/calculator_cubit/calculator_state.dart';
 import 'package:calculator/app/resources/constants_manager.dart';
 import 'package:calculator/app/resources/strings_manager.dart';
 import 'package:calculator/app/utils/functions.dart';
+import 'package:calculator/features/settings/persons/person_cubit/persons_cubit.dart';
+import 'package:calculator/features/settings/persons/person_cubit/persons_states.dart';
 import 'package:calculator/features/settings/widgets/add_item_widget.dart';
-import 'package:calculator/features/settings/widgets/profits_list.dart';
-import 'package:calculator/features/settings/widgets/save_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 
-class EditKitListView extends StatelessWidget {
-  const EditKitListView({super.key});
+import '../../widgets/persons_list.dart';
+
+class EditPersonsListView extends StatelessWidget {
+  const EditPersonsListView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<CalculatorCubit, CalculatorState>(
+    return BlocConsumer<PersonsCubit, PersonsStates>(
       listener: (context, state) {
-        if (state is AddProfitFailedState) {
+        if (state is AddPersonErrorState) {
           showCustomToast(
             message: state.message,
             state: ToastStates.error,
           );
         }
       },
-      builder: (context2, state) {
-        var cubit = CalculatorCubit.get(context2);
+      builder: (_, __) {
         return Scaffold(
           appBar: customAppBar(
-            text: StringsManager.editKitList,
+            text: StringsManager.editPersons,
             onPressed: () {
-              cubit.sortProfits();
               Navigator.pop(context);
             },
           ),
@@ -40,26 +38,22 @@ class EditKitListView extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ProfitsList(cubit: cubit),
+                  PersonsList(),
                   const Gap(50),
                   Text(
-                    StringsManager.addKit,
+                    StringsManager.addPerson,
                     style: getTextStyle(),
                   ),
                   const Gap(20),
                   AddItemWidget(
-                    name: StringsManager.profitNumber,
-                    nameValidator: StringsManager.enterNumber,
-                    value: StringsManager.profitValue,
-                    valueValidator: StringsManager.enterValue,
-                    inputType: TextInputType.number,
+                    name: StringsManager.name,
+                    nameValidator: StringsManager.enterName,
+                    value: StringsManager.percentage,
+                    valueValidator: StringsManager.enterPercentage,
+                    isPerson: true,
                   ),
                   const Gap(20),
-                  SaveButton(
-                    onPressed: () async {
-                      await cubit.saveProfitData();
-                    },
-                  ),
+                  // SaveButton(onPressed: () => cubit.savePersonsData()),
                 ],
               ),
             ),
