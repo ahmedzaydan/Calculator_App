@@ -1,17 +1,17 @@
-import 'package:calculator/app/calculator_cubit/calculator_cubit.dart';
-import 'package:calculator/app/models/person_model.dart';
+import 'package:calculator/app/utils/dependency_injection.dart';
 import 'package:calculator/app/widgets/custom_list_view.dart';
+import 'package:calculator/features/settings/persons/models/person_model.dart';
+import 'package:calculator/features/settings/persons/person_cubit/persons_cubit.dart';
 import 'package:calculator/features/settings/widgets/edit_item_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
 class PersonsList extends StatelessWidget {
-  const PersonsList({
+  PersonsList({
     super.key,
-    required this.cubit,
   });
 
-  final CalculatorCubit cubit;
+  final PersonsCubit cubit = locator<PersonsCubit>();
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class PersonsList extends StatelessWidget {
           value: person.percentage,
           name: person.name,
           onChanged: (value) {
-            cubit.editPersonPercentage(
+            cubit.updatePersonPercentage(
               index: index,
               value: value,
             );

@@ -1,7 +1,9 @@
-import 'package:calculator/app/calculator_cubit/calculator_cubit.dart';
 import 'package:calculator/app/resources/strings_manager.dart';
+import 'package:calculator/app/utils/dependency_injection.dart';
 import 'package:calculator/app/utils/functions.dart';
+import 'package:calculator/features/home/calculator_cubit/calculator_cubit.dart';
 import 'package:calculator/features/output/widgets/info_item.dart';
+import 'package:calculator/features/settings/profits/profit_cubit/profit_cubit.dart';
 import 'package:flutter/material.dart';
 
 class BasicInfo extends StatelessWidget {
@@ -9,7 +11,8 @@ class BasicInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var cubit = CalculatorCubit.get(context);
+    var cubit = locator<CalculatorCubit>();
+    var profitsCubit = locator<ProfitsCubit>();
     return Column(
       children: [
         // date
@@ -23,14 +26,14 @@ class BasicInfo extends StatelessWidget {
         // total kit
         InfoItem(
           label: StringsManager.totalProfit,
-          value: cubit.totalProfit.toString(),
+          value: profitsCubit.totalProfit.toString(),
         ),
 
-        if (cubit.checkedProfits.isNotEmpty)
+        if (profitsCubit.checkedProfits.isNotEmpty)
           Align(
             alignment: Alignment.centerLeft,
             child: Text(
-              '(${cubit.checkedProfits})',
+              '(${profitsCubit.checkedProfits})',
             ),
           ),
 

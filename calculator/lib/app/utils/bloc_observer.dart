@@ -14,7 +14,11 @@ class MyBlocObserver extends BlocObserver {
   void onChange(BlocBase bloc, Change change) {
     super.onChange(bloc, change);
     if (kDebugMode) {
-      print('onChange -- ${bloc.runtimeType}, $change');
+      print(
+      '\nonChange -- ${bloc.runtimeType}:\n'
+      'Current state: ${change.currentState.runtimeType.toString()}\n'
+      'Next state: ${change.nextState.runtimeType.toString()}\n\n',
+    );
     }
   }
 

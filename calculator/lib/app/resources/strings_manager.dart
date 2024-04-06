@@ -1,4 +1,7 @@
 abstract class StringsManager {
+  // general strings
+  static const String emptyString = '';
+
   // home screen
   static const String homeScreen = 'Home Screen';
   static const String kits = 'Kits';
@@ -52,4 +55,5 @@ abstract class StringsManager {
   // cubit strings
   static const String status = 'status';
   static const String admin = 'Teresa';
+  static const String defaultError = 'An error occurred';
 }

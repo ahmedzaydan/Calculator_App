@@ -1,7 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CacheController {
-  /// shared preferences helps me to cache some things
   static late SharedPreferences _sharedPreferences;
 
   static init() async {
@@ -12,6 +11,9 @@ class CacheController {
     if (value is String) {
       return await _sharedPreferences.setString(key, value);
     }
+    if (value is List<String>) {
+      return await _sharedPreferences.setStringList(key, value);
+    }
     if (value is int) {
       return await _sharedPreferences.setInt(key, value);
     }
@@ -21,7 +23,15 @@ class CacheController {
     if (value is bool) {
       return await _sharedPreferences.setBool(key, value);
     }
-    return true;
+    return false;
+  }
+
+  static String? getStringData(String key) {
+    return _sharedPreferences.getString(key);
+  }
+
+  static List<String>? getStringListData(String key) {
+    return _sharedPreferences.getStringList(key);
   }
 
   static double? getDoubleData(String key) {
@@ -36,15 +46,16 @@ class CacheController {
     return _sharedPreferences.getKeys().toList();
   }
 
-  static Future<bool> removeData({
-    required String key,
-  }) async {
+  static Future<bool> removeData(String key) async {
     return await _sharedPreferences.remove(key);
   }
 
-  static bool checkKey({
-    required String key,
-  }) {
+  static bool checkKey(String key) {
     return _sharedPreferences.containsKey(key);
+  }
+
+  // return all stored keys
+  static List<String> getAllKeys() {
+    return _sharedPreferences.getKeys().toList();
   }
 }

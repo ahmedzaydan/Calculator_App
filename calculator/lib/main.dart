@@ -1,32 +1,18 @@
+import 'package:calculator/app/calculator_app.dart';
 import 'package:calculator/app/utils/bloc_observer.dart';
 import 'package:calculator/app/utils/cache_controller.dart';
-import 'package:calculator/app/resources/theme_manager.dart';
-import 'package:calculator/app/calculator_cubit/calculator_cubit.dart';
-import 'package:calculator/features/home/views/home_view.dart';
+import 'package:calculator/app/utils/dependency_injection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await CacheController.init();
 
   Bloc.observer = MyBlocObserver();
+
+  getAppModules();
+
   runApp(const CalculatorApp());
-}
-
-class CalculatorApp extends StatelessWidget {
-  const CalculatorApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocProvider<CalculatorCubit>(
-      create: (context) => CalculatorCubit()..loadData(),
-      child: MaterialApp(
-        title: 'Calculator',
-        debugShowCheckedModeBanner: false,
-        home: const HomeView(),
-        theme: getApplicationTheme(),
-      ),
-    );
-  }
 }

@@ -1,31 +1,37 @@
-import 'package:calculator/app/calculator_cubit/calculator_cubit.dart';
-import 'package:calculator/app/calculator_cubit/calculator_state.dart';
-import 'package:calculator/app/models/profit_model.dart';
 import 'package:calculator/app/resources/strings_manager.dart';
 import 'package:calculator/app/resources/styles_manager.dart';
+import 'package:calculator/app/utils/dependency_injection.dart';
 import 'package:calculator/app/utils/functions.dart';
 import 'package:calculator/app/widgets/custom_elevated_button.dart';
 import 'package:calculator/app/widgets/custom_list_view.dart';
 import 'package:calculator/app/widgets/custom_text_form_field.dart';
+import 'package:calculator/features/home/calculator_cubit/calculator_cubit.dart';
+import 'package:calculator/features/home/calculator_cubit/calculator_state.dart';
 import 'package:calculator/features/home/widgets/profit_item.dart';
 import 'package:calculator/features/output/views/output_view.dart';
+import 'package:calculator/features/settings/persons/person_cubit/persons_cubit.dart';
+import 'package:calculator/features/settings/profits/models/profit_model.dart';
+import 'package:calculator/features/settings/profits/profit_cubit/profit_cubit.dart';
+import 'package:calculator/features/settings/profits/profit_cubit/profit_states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 
 class HomeViewBody extends StatelessWidget {
-  HomeViewBody({
-    super.key,
-  });
+  HomeViewBody({super.key});
 
   final TextEditingController expensesController = TextEditingController();
   final TextEditingController extraController = TextEditingController();
   final TextEditingController noteController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CalculatorCubit, CalculatorState>(
+    return BlocBuilder<CalculatorCubit, CalculatorStates>(
       builder: (context, state) {
         var cubit = CalculatorCubit.get(context);
+        var personsCubit = locator<PersonsCubit>();
+        if (state is LoadingDataState) {
+          return const Center(child: CircularProgressIndicator());
+        }
         return Column(
           children: [
             Padding(
@@ -62,20 +68,25 @@ class HomeViewBody extends StatelessWidget {
             const Gap(10),
 
             // profits list
-            CustomListView(
-              itemBuilder: (context, index) {
-                ProfitModel profit = cubit.profitItems[index];
-                return ProfitItem(
-                  profitId: 'Kit ${profit.id.substring(1)}',
-                  profitValue: profit.value,
-                  value: profit.isChecked,
-                  onChanged: (_) async {
-                    await cubit.changeProfitStatus(index);
+            BlocBuilder<ProfitsCubit, ProfitsStates>(
+              builder: (context, state) {
+                var profitCubit = locator<ProfitsCubit>();
+                return CustomListView(
+                  itemBuilder: (context, index) {
+                    ProfitModel profit = profitCubit.profitItems[index];
+                    return ProfitItem(
+                      profitId: profit.id,
+                      profitValue: profit.value,
+                      value: profit.isChecked,
+                      onChanged: (_) async {
+                        await profitCubit.changeProfitStatus(index);
+                      },
+                    );
                   },
+                  separatorBuilder: (context, index) => const Gap(1),
+                  itemCount: profitCubit.profitItems.length,
                 );
               },
-              separatorBuilder: (context, index) => const Gap(1),
-              itemCount: cubit.profitItems.length,
             ),
 
             const Gap(25),
@@ -108,9 +119,7 @@ class HomeViewBody extends StatelessWidget {
               fontWeight: FontWeight.normal,
               keyboardType: TextInputType.text,
               labelText: StringsManager.note,
-              onChanged: (note) {
-                cubit.note = note;
-              },
+              onChanged: (note) => cubit.note = note,
             ),
 
             const Gap(25),

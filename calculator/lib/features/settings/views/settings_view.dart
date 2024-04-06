@@ -1,16 +1,18 @@
-import 'package:calculator/app/calculator_cubit/calculator_cubit.dart';
-import 'package:calculator/app/calculator_cubit/calculator_state.dart';
-import 'package:calculator/app/models/person_model.dart';
 import 'package:calculator/app/resources/color_manager.dart';
 import 'package:calculator/app/resources/font_manager.dart';
 import 'package:calculator/app/resources/strings_manager.dart';
 import 'package:calculator/app/resources/values_manager.dart';
+import 'package:calculator/app/utils/dependency_injection.dart';
 import 'package:calculator/app/utils/functions.dart';
 import 'package:calculator/app/widgets/custom_elevated_button.dart';
 import 'package:calculator/app/widgets/custom_list_view.dart';
 import 'package:calculator/app/widgets/custom_text_form_field.dart';
-import 'package:calculator/features/settings/views/edit_kit_list_view.dart';
-import 'package:calculator/features/settings/views/edit_persons_list_view.dart';
+import 'package:calculator/features/settings/persons/models/person_model.dart';
+import 'package:calculator/features/settings/persons/person_cubit/persons_cubit.dart';
+import 'package:calculator/features/settings/persons/person_cubit/persons_states.dart';
+import 'package:calculator/features/settings/persons/views/edit_persons_list_view.dart';
+import 'package:calculator/features/settings/profits/profit_cubit/profit_cubit.dart';
+import 'package:calculator/features/settings/profits/views/edit_kit_list_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,14 +23,14 @@ class SttingsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CalculatorCubit, CalculatorState>(
+    return BlocBuilder<PersonsCubit, PersonsStates>(
       builder: (context2, state) {
-        var cubit = CalculatorCubit.get(context2);
+        var cubit = locator<PersonsCubit>();
         return Scaffold(
           appBar: customAppBar(
             text: StringsManager.settings,
             onPressed: () {
-              cubit.sortProfits();
+              locator<ProfitsCubit>().sortProfits();
               Navigator.pop(context);
             },
           ),
@@ -70,7 +72,7 @@ class SttingsView extends StatelessWidget {
                         flex: 2,
                         child: CustomElevatedButton(
                           onPressed: () {
-                            cubit.savePersonsData();
+                            // cubit.savePersonsData();
                           },
                           text: StringsManager.save,
                         ),
