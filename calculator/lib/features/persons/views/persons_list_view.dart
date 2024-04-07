@@ -1,13 +1,13 @@
 import 'package:calculator/app/utils/dependency_injection.dart';
 import 'package:calculator/app/widgets/custom_list_view.dart';
-import 'package:calculator/features/settings/persons/models/person_model.dart';
-import 'package:calculator/features/settings/persons/person_cubit/persons_cubit.dart';
+import 'package:calculator/features/persons/models/person_model.dart';
+import 'package:calculator/features/persons/person_cubit/persons_cubit.dart';
 import 'package:calculator/features/settings/widgets/edit_item_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
-class PersonsList extends StatelessWidget {
-  PersonsList({
+class PersonsListView extends StatelessWidget {
+  PersonsListView({
     super.key,
   });
 

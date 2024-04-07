@@ -1,15 +1,15 @@
-class ProfitModel {
+class KitModel {
   String id;
   double value;
   bool isChecked;
 
-  ProfitModel({
+  KitModel({
     required this.id,
     required this.value,
     this.isChecked = false,
   });
 
-  ProfitModel.fromStringList(List<String> data)
+  KitModel.fromStringList(List<String> data)
       : id = data[0],
         value = double.parse(data[1]),
         isChecked = data[2] == 'true';

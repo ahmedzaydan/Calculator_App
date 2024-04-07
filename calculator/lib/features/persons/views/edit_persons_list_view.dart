@@ -1,14 +1,12 @@
 import 'package:calculator/app/resources/constants_manager.dart';
 import 'package:calculator/app/resources/strings_manager.dart';
 import 'package:calculator/app/utils/functions.dart';
-import 'package:calculator/features/settings/persons/person_cubit/persons_cubit.dart';
-import 'package:calculator/features/settings/persons/person_cubit/persons_states.dart';
+import 'package:calculator/features/persons/person_cubit/persons_cubit.dart';
+import 'package:calculator/features/persons/person_cubit/persons_states.dart';
 import 'package:calculator/features/settings/widgets/add_item_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
-
-import '../../widgets/persons_list.dart';
 
 class EditPersonsListView extends StatelessWidget {
   const EditPersonsListView({super.key});
@@ -38,7 +36,8 @@ class EditPersonsListView extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  PersonsList(),
+                  // TODO: change
+                  // PersonsListView(),
                   const Gap(50),
                   Text(
                     StringsManager.addPerson,

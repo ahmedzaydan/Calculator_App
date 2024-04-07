@@ -7,12 +7,12 @@ import 'package:calculator/app/utils/functions.dart';
 import 'package:calculator/app/widgets/custom_elevated_button.dart';
 import 'package:calculator/app/widgets/custom_list_view.dart';
 import 'package:calculator/app/widgets/custom_text_form_field.dart';
-import 'package:calculator/features/settings/persons/models/person_model.dart';
-import 'package:calculator/features/settings/persons/person_cubit/persons_cubit.dart';
-import 'package:calculator/features/settings/persons/person_cubit/persons_states.dart';
-import 'package:calculator/features/settings/persons/views/edit_persons_list_view.dart';
-import 'package:calculator/features/settings/profits/profit_cubit/profit_cubit.dart';
-import 'package:calculator/features/settings/profits/views/edit_kit_list_view.dart';
+import 'package:calculator/features/kits/kit_cubit/kit_cubit.dart';
+import 'package:calculator/features/kits/views/kits_view.dart';
+import 'package:calculator/features/persons/models/person_model.dart';
+import 'package:calculator/features/persons/person_cubit/persons_cubit.dart';
+import 'package:calculator/features/persons/person_cubit/persons_states.dart';
+import 'package:calculator/features/persons/views/edit_persons_list_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -30,7 +30,7 @@ class SttingsView extends StatelessWidget {
           appBar: customAppBar(
             text: StringsManager.settings,
             onPressed: () {
-              locator<ProfitsCubit>().sortProfits();
+              locator<KitsCubit>().sortKits();
               Navigator.pop(context);
             },
           ),
@@ -146,7 +146,7 @@ class SttingsView extends StatelessWidget {
                           onPressed: () {
                             navigateTo(
                               context: context,
-                              dest: const EditKitListView(),
+                              dest: const KitsView(),
                             );
                           },
                           text: StringsManager.editKits,

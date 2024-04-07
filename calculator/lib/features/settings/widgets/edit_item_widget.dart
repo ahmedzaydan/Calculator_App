@@ -1,5 +1,4 @@
 import 'package:calculator/app/resources/font_manager.dart';
-import 'package:calculator/app/utils/functions.dart';
 import 'package:calculator/app/widgets/custom_icon_button.dart';
 import 'package:calculator/app/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
@@ -30,8 +29,12 @@ class EditItemWidget extends StatelessWidget {
             ),
             labelText: name,
             fontSize: FontSize.s22,
-            inputFormatters: getInputFormatters(),
+            // inputFormatters: getInputFormatters(),
             onChanged: onChanged,
+            // onChanged: (value) {
+            //   // kprint(value.runtimeType);
+            //   // kprint(value);
+            // },
           ),
         ),
 

@@ -2,8 +2,8 @@ import 'package:calculator/app/utils/dependency_injection.dart';
 import 'package:calculator/app/utils/functions.dart';
 import 'package:calculator/app/widgets/custom_icon_button.dart';
 import 'package:calculator/app/widgets/custom_text_form_field.dart';
-import 'package:calculator/features/settings/persons/person_cubit/persons_cubit.dart';
-import 'package:calculator/features/settings/profits/profit_cubit/profit_cubit.dart';
+import 'package:calculator/features/kits/kit_cubit/kit_cubit.dart';
+import 'package:calculator/features/persons/person_cubit/persons_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -19,7 +19,7 @@ class AddItemWidget extends StatelessWidget {
   });
 
   final PersonsCubit personsCubit = locator<PersonsCubit>();
-  final ProfitsCubit profitsCubit = locator<ProfitsCubit>();
+  final KitsCubit profitsCubit = locator<KitsCubit>();
 
   final TextEditingController nameController = TextEditingController();
   final TextEditingController valueController = TextEditingController();
@@ -94,7 +94,7 @@ class AddItemWidget extends StatelessWidget {
                     percentage: double.parse(valueController.text),
                   );
                 } else {
-                  await profitsCubit.addProfit(
+                  await profitsCubit.addKit(
                     id: nameController.text,
                     value: double.parse(valueController.text),
                   );

@@ -15,6 +15,7 @@ abstract class StringsManager {
   static const String enterName = 'Enter name';
 
   // edit persons screen strings
+  static const String personsScreen = 'Persons Screen';
   static const String editPersons = 'Edit Persons';
   static const String add = 'Add';
   static const String addPerson = 'Add New Person';
@@ -33,13 +34,14 @@ abstract class StringsManager {
   static const String editKits = 'Edit Kits';
 
   // edit kit list strings
+  static const String kitsScreen = 'Kits Screen';
   static const String editKitList = 'Edit Kit List';
   static const String clearList = 'Clear kit list';
-  static const String profitNumber = 'Kit number';
-  static const String profitValue = 'Kit value';
+  static const String kitNumber = 'Kit number';
+  static const String kitValue = 'Kit value';
   static const String enterValue = 'Enter value';
   static const String enterNumber = 'Enter number';
-  static const String profitExists = 'Kit id already exists';
+  static const String kitExists = 'Kit id already exists';
   static const String invalidProfitId = 'Kit number must be an integer';
   static const String addKit = 'Add New Kit';
 

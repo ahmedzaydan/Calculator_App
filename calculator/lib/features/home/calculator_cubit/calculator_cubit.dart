@@ -1,9 +1,9 @@
 import 'package:calculator/app/utils/cache_controller.dart';
 import 'package:calculator/app/utils/functions.dart';
 import 'package:calculator/features/home/calculator_cubit/calculator_state.dart';
-import 'package:calculator/features/settings/persons/person_cubit/persons_cubit.dart';
-import 'package:calculator/features/settings/profits/models/profit_model.dart';
-import 'package:calculator/features/settings/profits/profit_cubit/profit_cubit.dart';
+import 'package:calculator/features/kits/kit_cubit/kit_cubit.dart';
+import 'package:calculator/features/kits/models/kit_model.dart';
+import 'package:calculator/features/persons/person_cubit/persons_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CalculatorCubit extends Cubit<CalculatorStates> {
@@ -15,7 +15,7 @@ class CalculatorCubit extends Cubit<CalculatorStates> {
   static CalculatorCubit get(context) => BlocProvider.of(context);
 
   final PersonsCubit personsCubit;
-  final ProfitsCubit profitsCubit;
+  final KitsCubit profitsCubit;
 
   String expenses = '';
   String note = '';
@@ -26,7 +26,7 @@ class CalculatorCubit extends Cubit<CalculatorStates> {
 
   double netProfit = 0.0;
 
-  List<ProfitModel> profitItems = [];
+  List<KitModel> profitItems = [];
 
   Future<void> init() async {
     emit(LoadingDataState());
@@ -38,7 +38,7 @@ class CalculatorCubit extends Cubit<CalculatorStates> {
     for (var key in keys) {
       if (key == personsCubit.amdinKey) {
         continue;
-      } else if (key.startsWith(profitsCubit.profitKeyPrefix)) {
+      } else if (key.startsWith(profitsCubit.kitKeyPrefix)) {
         profitKeys.add(key);
       } else {
         personKeys.add(key);
@@ -47,7 +47,7 @@ class CalculatorCubit extends Cubit<CalculatorStates> {
 
     await profitsCubit.loadData(profitKeys);
     await personsCubit.loadData(personKeys);
-    
+
     emit(DataLoadedSuccessState());
   }
 
@@ -64,16 +64,16 @@ class CalculatorCubit extends Cubit<CalculatorStates> {
   }
 
   void calculate() {
-    profitsCubit.calculateProfit();
+    profitsCubit.calculateKits();
 
     totalExpense = calculateString(expenses);
     totalExtra = calculateString(extra);
 
     personsCubit.adminProfit =
-        profitsCubit.totalProfit * (personsCubit.adminPercentage / 100);
+        profitsCubit.totalKits * (personsCubit.adminPercentage / 100);
     personsCubit.adminProfit = roundDouble(personsCubit.adminProfit);
 
-    netProfit = profitsCubit.totalProfit -
+    netProfit = profitsCubit.totalKits -
         totalExpense -
         personsCubit.adminProfit +
         totalExtra;
@@ -85,7 +85,7 @@ class CalculatorCubit extends Cubit<CalculatorStates> {
   }
 
   Future<void> clear() async {
-    await profitsCubit.clearProfits();
+    await profitsCubit.clearKits();
     expenses = '';
     extra = '';
     note = '';

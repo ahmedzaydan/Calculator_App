@@ -1,8 +1,8 @@
 import 'package:calculator/app/resources/strings_manager.dart';
 import 'package:calculator/app/utils/cache_controller.dart';
 import 'package:calculator/app/utils/extensions.dart';
-import 'package:calculator/features/settings/persons/models/person_model.dart';
-import 'package:calculator/features/settings/persons/person_cubit/persons_states.dart';
+import 'package:calculator/features/persons/models/person_model.dart';
+import 'package:calculator/features/persons/person_cubit/persons_states.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PersonsCubit extends Cubit<PersonsStates> {
