@@ -7,15 +7,18 @@ class CustomElevatedButton extends StatelessWidget {
     super.key,
     required this.onPressed,
     required this.text,
+    this.width,
   });
 
   final void Function()? onPressed;
   final String text;
+  final double? width;
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: MediaQuery.sizeOf(context).width * 0.13,
-      // width: double.infinity,
+      width: width,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           shape: RoundedRectangleBorder(

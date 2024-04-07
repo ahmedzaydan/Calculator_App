@@ -14,7 +14,7 @@ class KitModel {
         value = double.parse(data[1]),
         isChecked = data[2] == 'true';
 
-  void setValue(String val) => value = double.parse(val);
+  void setValue(double val) => value = val;
 
   void setStatus(bool status) => isChecked = status;
 

@@ -54,7 +54,7 @@ class KitsView extends StatelessWidget {
 
                 const Gap(40),
 
-                KitsListView(),
+                KitsListView(sourceContext: context),
               ],
             ),
           ),

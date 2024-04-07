@@ -108,13 +108,13 @@ class PersonsCubit extends Cubit<PersonsStates> {
     return null;
   }
 
-  void updatePersonPercentage({
+  Future<void> updatePersonPercentage({
     required int index,
-    required String value,
-  }) {
+    required double value,
+  }) async {
     try {
-      personItems[index].setPercentage(double.parse(value));
-
+      personItems[index].setPercentage(value);
+      // TODO: for all async function use .then
       CacheController.saveData(
         personItems[index].name,
         personItems[index].toStringList(),
