@@ -3,7 +3,7 @@ import 'package:calculator/app/resources/strings_manager.dart';
 import 'package:calculator/app/utils/functions.dart';
 import 'package:calculator/features/persons/person_cubit/persons_cubit.dart';
 import 'package:calculator/features/persons/person_cubit/persons_states.dart';
-import 'package:calculator/features/settings/widgets/add_item_widget.dart';
+import 'package:calculator/features/widgets/add_item_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';

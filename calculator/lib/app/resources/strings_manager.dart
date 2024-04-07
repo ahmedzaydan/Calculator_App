@@ -40,7 +40,7 @@ abstract class StringsManager {
   static const String kitNumber = 'Kit number';
   static const String kitValue = 'Kit value';
   static const String enterValue = 'Enter value';
-  static const String enterNumber = 'Enter number';
+  static const String enterNumber = 'Enter kit number';
   static const String kitExists = 'Kit id already exists';
   static const String invalidProfitId = 'Kit number must be an integer';
   static const String addKit = 'Add New Kit';

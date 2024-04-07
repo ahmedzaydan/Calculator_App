@@ -24,8 +24,8 @@ class KitsCubit extends Cubit<KitsStates> {
           kitItems.add(kit);
         }
       }
-
       emit(LoadKitsDataSuccessState());
+      sortKits();
     } catch (e) {
       emit(LoadKitsDataErrorState(e.toString()));
     }
@@ -67,7 +67,7 @@ class KitsCubit extends Cubit<KitsStates> {
 
   Future<void> updateKitValue({
     required int index,
-    required String value,
+    required double value,
   }) async {
     try {
       CacheController.saveData(
@@ -76,6 +76,7 @@ class KitsCubit extends Cubit<KitsStates> {
       ).then((updateResult) {
         if (updateResult) {
           kitItems[index].setValue(value);
+          kprint('kit value updated to $value');
           emit(UpdateKitDataSuccessState());
           sortKits();
         } else {
