@@ -47,25 +47,20 @@ ThemeData getApplicationTheme() {
       ),
     ),
 
-    // text form field theme
-    inputDecorationTheme: InputDecorationTheme(
-      contentPadding: const EdgeInsets.all(15),
-      labelStyle: const TextStyle(
-        color: Colors.black,
-      ),
-      enabledBorder: _decorateBorder(),
-      focusedBorder: _decorateBorder(),
-      errorBorder: _decorateBorder(),
-      focusedErrorBorder: _decorateBorder(),
-      disabledBorder: _decorateBorder(),
-      border: _decorateBorder(),
-    ),
-
     // icon button theme
     iconButtonTheme: IconButtonThemeData(
       style: ButtonStyle(
         backgroundColor: MaterialStateProperty.all(
+          ColorManager.transparent,
+        ),
+        iconColor: MaterialStateProperty.all(
           ColorManager.primary,
+        ),
+        iconSize: MaterialStateProperty.all(
+          ConstantsManager.iconSize,
+        ),
+        padding: MaterialStateProperty.all(
+          const EdgeInsets.all(0),
         ),
         shape: MaterialStateProperty.all(
           RoundedRectangleBorder(
@@ -79,17 +74,5 @@ ThemeData getApplicationTheme() {
 
     // divider theme
     dividerColor: ColorManager.black,
-  );
-}
-
-OutlineInputBorder _decorateBorder() {
-  return OutlineInputBorder(
-    borderRadius: BorderRadius.circular(
-      ConstantsManager.borderRadius,
-    ),
-    borderSide: BorderSide(
-      color: ColorManager.primary,
-      width: 2,
-    ),
   );
 }

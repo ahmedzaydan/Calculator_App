@@ -24,8 +24,8 @@ class KitsCubit extends Cubit<KitsStates> {
           kitItems.add(kit);
         }
       }
-
       emit(LoadKitsDataSuccessState());
+      sortKits();
     } catch (e) {
       emit(LoadKitsDataErrorState(e.toString()));
     }

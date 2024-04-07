@@ -56,9 +56,9 @@ double roundDouble(double value) {
   return double.parse(value.toStringAsFixed(2));
 }
 
-List<TextInputFormatter>? getInputFormatters() {
+List<TextInputFormatter>? getInputFormatters(String regex) {
   return [
-    FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}')),
+    FilteringTextInputFormatter.allow(RegExp(regex)),
   ];
 }
 

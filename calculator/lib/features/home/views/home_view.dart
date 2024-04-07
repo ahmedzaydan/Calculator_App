@@ -15,6 +15,51 @@ import 'package:calculator/features/output/views/output_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+// TODO: amdin code
+
+// adminstration percentage
+// Padding(
+//   padding: const EdgeInsets.all(
+//     AppPadding.p20,
+//   ),
+//   child: Row(
+//     children: [
+//       Expanded(
+//         flex: 4,
+//         child: CustomTextFormField(
+//           controller: TextEditingController(
+//             text: cubit.adminPercentage.toString(),
+//           ),
+//           fontSize: FontSize.s22,
+//           labelText: StringsManager.adminPercentage,
+//           keyboardType: const TextInputType.numberWithOptions(
+//               decimal: true),
+//           inputFormatters: [
+//             FilteringTextInputFormatter.allow(
+//               RegExp(r'^\d*\.?\d{0,2}'),
+//             ),
+//           ],
+//           onChanged: (value) {
+//             cubit.adminPercentage = double.parse(value);
+//           },
+//         ),
+//       ),
+
+//       const Gap(10),
+
+//       // save button
+//       Expanded(
+//         flex: 2,
+//         child: CustomElevatedButton(
+//           onPressed: () {
+//             // cubit.savePersonsData();
+//           },
+//           text: StringsManager.save,
+//         ),
+//       ),
+//     ],
+//   ),
+// ),
 
 class HomeView extends StatelessWidget {
   HomeView({super.key});
