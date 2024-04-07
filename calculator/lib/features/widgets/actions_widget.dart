@@ -30,7 +30,7 @@ class ActionsWidget extends StatelessWidget {
           style: ButtonStyle(
             backgroundColor:
                 MaterialStateProperty.all(ColorManager.transparent),
-            iconColor: MaterialStateProperty.all(ColorManager.error),
+            iconColor: MaterialStateProperty.all(ColorManager.red),
           ),
         ),
       ],

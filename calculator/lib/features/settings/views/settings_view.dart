@@ -12,7 +12,7 @@ import 'package:calculator/features/kits/views/kits_view.dart';
 import 'package:calculator/features/persons/models/person_model.dart';
 import 'package:calculator/features/persons/person_cubit/persons_cubit.dart';
 import 'package:calculator/features/persons/person_cubit/persons_states.dart';
-import 'package:calculator/features/persons/views/edit_persons_list_view.dart';
+import 'package:calculator/features/persons/views/persons_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -128,8 +128,7 @@ class SttingsView extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) =>
-                                    const EditPersonsListView(),
+                                builder: (context) => const PersonsView(),
                               ),
                             );
                           },

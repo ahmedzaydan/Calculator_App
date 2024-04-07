@@ -18,7 +18,7 @@ class AddItemWidget extends StatelessWidget {
     required this.value,
     required this.valueValidator,
     this.isPerson = false,
-    this.inputType = TextInputType.text,
+    this.inputType,
     this.inputFormatters,
   });
 
@@ -39,7 +39,7 @@ class AddItemWidget extends StatelessWidget {
   final String valueValidator;
   final bool isPerson;
 
-  final TextInputType inputType;
+  final TextInputType? inputType;
   final List<TextInputFormatter>? inputFormatters;
 
   @override
@@ -57,9 +57,8 @@ class AddItemWidget extends StatelessWidget {
               controller: nameController,
               fontWeight: FontWeight.normal,
               labelText: name,
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: false),
-              inputFormatters: getInputFormatters(ConstantsManager.kitsRegex),
+              keyboardType: inputType,
+              inputFormatters: inputFormatters,
               validator: (value) {
                 if (value!.isEmpty) {
                   return nameValidator;

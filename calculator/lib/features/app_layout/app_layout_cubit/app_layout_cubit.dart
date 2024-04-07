@@ -2,7 +2,7 @@ import 'package:calculator/app/resources/strings_manager.dart';
 import 'package:calculator/features/app_layout/app_layout_cubit/app_layout_states.dart';
 import 'package:calculator/features/home/views/home_view.dart';
 import 'package:calculator/features/kits/views/kits_view.dart';
-import 'package:calculator/features/persons/views/persons_list_view.dart';
+import 'package:calculator/features/persons/views/persons_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -25,7 +25,7 @@ class AppLayoutCubit extends Cubit<AppLayoutStates> {
   final List<Widget> screens = [
     HomeView(),
     const KitsView(),
-    PersonsListView(),
+    const PersonsView(),
   ];
 
   final List<BottomNavigationBarItem> bottomNavItems = [

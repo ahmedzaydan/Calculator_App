@@ -1,4 +1,5 @@
 import 'package:calculator/app/resources/constants_manager.dart';
+import 'package:calculator/app/resources/font_manager.dart';
 import 'package:calculator/app/resources/values_manager.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -17,9 +18,11 @@ void navigateTo({
   );
 }
 
-TextStyle getTextStyle() {
-  return const TextStyle(
-    fontSize: 22,
+TextStyle getTextStyle({
+  double fontSize = FontSize.s22,
+}) {
+  return TextStyle(
+    fontSize: fontSize,
     color: Colors.black,
   );
 }

@@ -47,8 +47,8 @@ class EditItemView extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(
-          vertical: AppPadding.p20,
-          horizontal: AppPadding.p30,
+          vertical: AppPadding.p50,
+          horizontal: AppPadding.p20,
         ),
         child: Column(
           children: [
@@ -58,7 +58,7 @@ class EditItemView extends StatelessWidget {
               fontSize: FontSize.s22,
               inputFormatters: getInputFormatters(ConstantsManager.valueRegex),
             ),
-            const Gap(10),
+            const Gap(30),
             CustomElevatedButton(
               onPressed: () async {
                 if (updateKits) {

@@ -1,8 +1,11 @@
+import 'package:calculator/app/resources/color_manager.dart';
 import 'package:calculator/app/resources/strings_manager.dart';
 import 'package:calculator/app/utils/cache_controller.dart';
 import 'package:calculator/app/utils/extensions.dart';
+import 'package:calculator/app/utils/functions.dart';
 import 'package:calculator/features/persons/models/person_model.dart';
 import 'package:calculator/features/persons/person_cubit/persons_states.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PersonsCubit extends Cubit<PersonsStates> {
@@ -56,19 +59,28 @@ class PersonsCubit extends Cubit<PersonsStates> {
       String? errorMessage = _validatePersonData(name, percentage);
       if (errorMessage == null) {
         // create person object
-        int futureMonth = DateTime.now().month + 6;
-        int futureYear = DateTime.now().year + 2 + (futureMonth ~/ 12);
+        // DateTime startDate = DateTime.now();
+        DateTime startDate = DateTime(
+          2022,
+          11,
+          7,
+        );
+        int futureMonth = startDate.month + 6;
+        
+        int futureYear = startDate.year + 2 + (futureMonth ~/ 12);
         futureMonth %= 12;
+
+        int futureDay = startDate.day;
+        // handle future day
         DateTime endDate = DateTime(
           futureYear,
           futureMonth,
-          DateTime.now().day, // TODO: handle if day is 30 or 31
         );
 
         PersonModel person = PersonModel(
           name: name,
           percentage: percentage,
-          startDate: DateTime.now(),
+          startDate: startDate,
           endDate: endDate,
         );
 
@@ -114,7 +126,6 @@ class PersonsCubit extends Cubit<PersonsStates> {
   }) async {
     try {
       personItems[index].setPercentage(value);
-      // TODO: for all async function use .then
       CacheController.saveData(
         personItems[index].name,
         personItems[index].toStringList(),
@@ -129,6 +140,27 @@ class PersonsCubit extends Cubit<PersonsStates> {
   void calculatePersonShareValues(double totalNetProfit) {
     for (var person in personItems) {
       person.calculateShareValue(totalNetProfit);
+    }
+  }
+
+  Color getPersonColor(PersonModel person) {
+    DateTime now = DateTime.now();
+    DateTime endDate = person.endDate;
+
+    kprint("Person: ${person.name}");
+    kprint("Start Date: ${person.startDate}");
+    kprint("End Date: $endDate");
+    kprint("Now: $now");
+    kprint("Date difference ${endDate.month - now.month}\n\n");
+    // if the remaining months are 1 month
+    if (endDate.month - now.month == 1) {
+      return ColorManager.red;
+    } else if (endDate.month - now.month == 7 && endDate.day - now.day <= 10) {
+      return ColorManager.organe;
+    } else if (endDate.month - now.month == 18 && endDate.day - now.day <= 10) {
+      return ColorManager.green;
+    } else {
+      return ColorManager.transparent;
     }
   }
 
