@@ -1,6 +1,7 @@
 import 'package:calculator/app/resources/color_manager.dart';
 import 'package:calculator/app/widgets/custom_icon_button.dart';
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 
 class ActionsWidget extends StatelessWidget {
   const ActionsWidget({
@@ -21,7 +22,14 @@ class ActionsWidget extends StatelessWidget {
         CustomIconButton(
           onPressed: editOnPressed,
           icon: const Icon(Icons.edit),
+          style: ButtonStyle(
+            backgroundColor:
+                MaterialStateProperty.all(ColorManager.transparent),
+            iconColor: MaterialStateProperty.all(ColorManager.black),
+          ),
         ),
+
+        const Gap(10),
 
         // delete button
         CustomIconButton(
@@ -30,7 +38,7 @@ class ActionsWidget extends StatelessWidget {
           style: ButtonStyle(
             backgroundColor:
                 MaterialStateProperty.all(ColorManager.transparent),
-            iconColor: MaterialStateProperty.all(ColorManager.red),
+            iconColor: MaterialStateProperty.all(ColorManager.black),
           ),
         ),
       ],

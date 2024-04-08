@@ -1,8 +1,8 @@
 import 'package:calculator/app/resources/theme_manager.dart';
 import 'package:calculator/app/utils/dependency_injection.dart';
-import 'package:calculator/features/app_layout/app_layout_cubit/app_layout_cubit.dart';
+import 'package:calculator/features/app_layout/app_layout_cubit/app_cubit.dart';
 import 'package:calculator/features/app_layout/app_layout_view.dart';
-import 'package:calculator/features/home/calculator_cubit/calculator_cubit.dart';
+import 'package:calculator/features/calculator/calculator_cubit/calculator_cubit.dart';
 import 'package:calculator/features/kits/kit_cubit/kit_cubit.dart';
 import 'package:calculator/features/persons/person_cubit/persons_cubit.dart';
 import 'package:flutter/material.dart';
@@ -17,14 +17,14 @@ class CalculatorApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         // app layout cubit
-        BlocProvider<AppLayoutCubit>(
-          create: (context) => locator<AppLayoutCubit>(),
+        BlocProvider<AppCubit>(
+          create: (context) => locator<AppCubit>()..init(),
           // build
         ),
 
         // calculator cubit
         BlocProvider<CalculatorCubit>(
-          create: (context) => locator<CalculatorCubit>()..init(),
+          create: (context) => locator<CalculatorCubit>(),
         ),
 
         // persons cubit

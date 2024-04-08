@@ -1,6 +1,6 @@
 import 'package:calculator/app/resources/strings_manager.dart';
-import 'package:calculator/features/home/calculator_cubit/calculator_cubit.dart';
-import 'package:calculator/features/home/calculator_cubit/calculator_state.dart';
+import 'package:calculator/features/app_layout/app_layout_cubit/app_states.dart';
+import 'package:calculator/features/calculator/calculator_cubit/calculator_cubit.dart';
 import 'package:calculator/features/output/widgets/basic_info.dart';
 import 'package:calculator/features/output/widgets/note.dart';
 import 'package:calculator/features/output/widgets/results_section.dart';
@@ -18,7 +18,7 @@ class OutputView extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: SingleChildScrollView(
-          child: BlocBuilder<CalculatorCubit, CalculatorStates>(
+          child: BlocBuilder<CalculatorCubit, AppStates>(
             builder: (context, state) {
               var cubit = CalculatorCubit.get(context);
               return Column(

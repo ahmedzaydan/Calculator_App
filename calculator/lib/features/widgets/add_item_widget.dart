@@ -95,6 +95,8 @@ class AddItemWidget extends StatelessWidget {
           // add button
           CustomIconButton(
             icon: const Icon(Icons.add),
+            height: MediaQuery.of(context).size.width * 0.156,
+            width: MediaQuery.of(context).size.width * 0.12,
             style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all(
                 ColorManager.primary,
@@ -112,7 +114,7 @@ class AddItemWidget extends StatelessWidget {
                   );
                 } else {
                   await profitsCubit.addKit(
-                    id: nameController.text,
+                    name: nameController.text,
                     value: double.parse(valueController.text),
                   );
                 }

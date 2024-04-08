@@ -5,13 +5,14 @@ import 'package:calculator/app/utils/functions.dart';
 import 'package:calculator/app/widgets/custom_elevated_button.dart';
 import 'package:calculator/app/widgets/custom_list_view.dart';
 import 'package:calculator/app/widgets/custom_text_form_field.dart';
-import 'package:calculator/features/home/calculator_cubit/calculator_cubit.dart';
-import 'package:calculator/features/home/calculator_cubit/calculator_state.dart';
-import 'package:calculator/features/home/widgets/profit_item.dart';
+import 'package:calculator/features/app_layout/app_layout_cubit/app_states.dart';
+import 'package:calculator/features/calculator/calculator_cubit/calculator_cubit.dart';
+import 'package:calculator/features/calculator/widgets/profit_item.dart';
 import 'package:calculator/features/kits/kit_cubit/kit_cubit.dart';
-import 'package:calculator/features/kits/kit_cubit/kit_states.dart';
 import 'package:calculator/features/kits/models/kit_model.dart';
 import 'package:calculator/features/output/views/output_view.dart';
+import 'package:calculator/features/widgets/custom_error_widget.dart';
+import 'package:calculator/features/widgets/loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
@@ -61,20 +62,22 @@ import 'package:gap/gap.dart';
 //   ),
 // ),
 
-class HomeView extends StatelessWidget {
-  HomeView({super.key});
+class CalculatorView extends StatelessWidget {
+  CalculatorView({super.key});
 
   final TextEditingController expensesController = TextEditingController();
   final TextEditingController extraController = TextEditingController();
   final TextEditingController noteController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CalculatorCubit, CalculatorStates>(
+    return BlocBuilder<CalculatorCubit, AppStates>(
       builder: (context, state) {
         var cubit = CalculatorCubit.get(context);
         // var personsCubit = locator<PersonsCubit>();
         if (state is LoadingDataState) {
-          return const Center(child: CircularProgressIndicator());
+          return const LoadingWidget();
+        } else if (state is LoadingDataErrorState) {
+          return CustomErrorWidget(state.message);
         }
         return Padding(
           padding: EdgeInsets.all(
@@ -116,15 +119,15 @@ class HomeView extends StatelessWidget {
 
                 const Gap(10),
 
-                // profits list
-                BlocBuilder<KitsCubit, KitsStates>(
+                // kits list
+                BlocBuilder<KitsCubit, AppStates>(
                   builder: (context, state) {
                     var profitCubit = locator<KitsCubit>();
                     return CustomListView(
                       itemBuilder: (context, index) {
                         KitModel profit = profitCubit.kitItems[index];
                         return ProfitItem(
-                          profitId: profit.id,
+                          profitId: profit.name,
                           profitValue: profit.value,
                           value: profit.isChecked,
                           onChanged: (_) async {
@@ -145,7 +148,7 @@ class HomeView extends StatelessWidget {
                   controller: expensesController,
                   fontWeight: FontWeight.normal,
                   labelText: StringsManager.expenses,
-                  hintText: StringsManager.valuesHint,
+                  hintText: StringsManager.expansesHint,
                   onChanged: (value) => cubit.expenses = value,
                 ),
 
@@ -156,7 +159,7 @@ class HomeView extends StatelessWidget {
                   controller: extraController,
                   fontWeight: FontWeight.normal,
                   labelText: StringsManager.extra,
-                  hintText: StringsManager.valuesHint,
+                  hintText: StringsManager.expansesHint,
                   onChanged: (value) => cubit.extra = value,
                 ),
 

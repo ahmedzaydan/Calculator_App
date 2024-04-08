@@ -1,17 +1,13 @@
-import 'package:calculator/app/resources/color_manager.dart';
 import 'package:calculator/app/resources/strings_manager.dart';
 import 'package:calculator/app/utils/cache_controller.dart';
 import 'package:calculator/app/utils/extensions.dart';
-import 'package:calculator/app/utils/functions.dart';
+import 'package:calculator/features/app_layout/app_layout_cubit/app_states.dart';
 import 'package:calculator/features/persons/models/person_model.dart';
 import 'package:calculator/features/persons/person_cubit/persons_states.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class PersonsCubit extends Cubit<PersonsStates> {
+class PersonsCubit extends Cubit<AppStates> {
   PersonsCubit() : super(PersonInitialState());
-
-  // final ProfitCubit profitCubit;
 
   // keys
   final String personKeysKey = 'personKeys';
@@ -25,7 +21,7 @@ class PersonsCubit extends Cubit<PersonsStates> {
   Future<void> loadData(List<String> personKeys) async {
     try {
       // load admin percentage
-      adminPercentage = CacheController.getDoubleData(amdinKey).orZero;
+      adminPercentage = CacheController.getDoubleData(amdinKey) ?? 30;
 
       for (String key in personKeys) {
         List<String> personData =
@@ -43,12 +39,6 @@ class PersonsCubit extends Cubit<PersonsStates> {
     }
   }
 
-  void handleAdminPercentage() async {
-    adminPercentage = CacheController.getDoubleData(amdinKey) ?? 30;
-
-    await CacheController.saveData(amdinKey, adminPercentage);
-  }
-
   Future<void> addPerson({
     required String name,
     required double percentage,
@@ -59,41 +49,27 @@ class PersonsCubit extends Cubit<PersonsStates> {
       String? errorMessage = _validatePersonData(name, percentage);
       if (errorMessage == null) {
         // create person object
-        // DateTime startDate = DateTime.now();
-        DateTime startDate = DateTime(
-          2022,
-          11,
-          7,
-        );
-        int futureMonth = startDate.month + 6;
-        
-        int futureYear = startDate.year + 2 + (futureMonth ~/ 12);
-        futureMonth %= 12;
-
-        int futureDay = startDate.day;
-        // handle future day
-        DateTime endDate = DateTime(
-          futureYear,
-          futureMonth,
-        );
-
         PersonModel person = PersonModel(
           name: name,
           percentage: percentage,
-          startDate: startDate,
-          endDate: endDate,
         );
-
-        totalPercentage += percentage;
-        personItems.add(person);
 
         // add person to shared preferences
         await CacheController.saveData(
           person.name,
           person.toStringList(),
+        ).then(
+          (result) {
+            // if person is added successfully
+            if (result) {
+              totalPercentage += percentage;
+              personItems.add(person);
+              emit(AddPersonSuccessState());
+            } else {
+              emit(AddPersonErrorState(StringsManager.defaultError));
+            }
+          },
         );
-
-        emit(AddPersonSuccessState());
       } else {
         emit(AddPersonErrorState(errorMessage));
       }
@@ -137,30 +113,21 @@ class PersonsCubit extends Cubit<PersonsStates> {
     }
   }
 
-  void calculatePersonShareValues(double totalNetProfit) {
-    for (var person in personItems) {
-      person.calculateShareValue(totalNetProfit);
-    }
+  void updateAdminPercentage() async {
+    CacheController.saveData(amdinKey, adminPercentage).then(
+      (response) {
+        if (response) {
+          emit(UpdateAdminPercentageSuccessState());
+        } else {
+          emit(UpdateAdminPercentageErrorState(StringsManager.defaultError));
+        }
+      },
+    );
   }
 
-  Color getPersonColor(PersonModel person) {
-    DateTime now = DateTime.now();
-    DateTime endDate = person.endDate;
-
-    kprint("Person: ${person.name}");
-    kprint("Start Date: ${person.startDate}");
-    kprint("End Date: $endDate");
-    kprint("Now: $now");
-    kprint("Date difference ${endDate.month - now.month}\n\n");
-    // if the remaining months are 1 month
-    if (endDate.month - now.month == 1) {
-      return ColorManager.red;
-    } else if (endDate.month - now.month == 7 && endDate.day - now.day <= 10) {
-      return ColorManager.organe;
-    } else if (endDate.month - now.month == 18 && endDate.day - now.day <= 10) {
-      return ColorManager.green;
-    } else {
-      return ColorManager.transparent;
+  void calculatePersonsShareValues(double totalNetProfit) {
+    for (var person in personItems) {
+      person.calculateShareValue(totalNetProfit);
     }
   }
 

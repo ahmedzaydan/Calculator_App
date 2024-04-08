@@ -16,3 +16,15 @@ void main() async {
 
   runApp(const CalculatorApp());
 }
+
+/// ToDos:
+// TODO: finish kits screen
+  // coloring, sorting based on color
+// TODO: Persons screen
+  // admin field like other persons with some highlighted color
+// TODO: Calculator screen
+  // kits scrollable section 
+// TODO: Report screen (choose better name?)
+  // share button
+  // back arrow ios
+// TODO: all icons should be FaIcons

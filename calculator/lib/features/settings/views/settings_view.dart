@@ -7,11 +7,11 @@ import 'package:calculator/app/utils/functions.dart';
 import 'package:calculator/app/widgets/custom_elevated_button.dart';
 import 'package:calculator/app/widgets/custom_list_view.dart';
 import 'package:calculator/app/widgets/custom_text_form_field.dart';
+import 'package:calculator/features/app_layout/app_layout_cubit/app_states.dart';
 import 'package:calculator/features/kits/kit_cubit/kit_cubit.dart';
 import 'package:calculator/features/kits/views/kits_view.dart';
 import 'package:calculator/features/persons/models/person_model.dart';
 import 'package:calculator/features/persons/person_cubit/persons_cubit.dart';
-import 'package:calculator/features/persons/person_cubit/persons_states.dart';
 import 'package:calculator/features/persons/views/persons_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -23,7 +23,7 @@ class SttingsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<PersonsCubit, PersonsStates>(
+    return BlocBuilder<PersonsCubit, AppStates>(
       builder: (context2, state) {
         var cubit = locator<PersonsCubit>();
         return Scaffold(
@@ -91,7 +91,7 @@ class SttingsView extends StatelessWidget {
                         vertical: AppPadding.p10,
                       ),
                       width: double.infinity,
-                      color: (index % 2 != 0) ? ColorManager.lightGrey2 : null,
+                      color: (index % 2 != 0) ? ColorManager.lightGrey3 : null,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [

@@ -4,15 +4,11 @@ class PersonModel {
   String name;
   double percentage;
   double shareValue;
-  DateTime startDate;
-  DateTime endDate;
 
   PersonModel({
     required this.name,
     required this.percentage,
     this.shareValue = 0.0,
-    required this.startDate,
-    required this.endDate,
   });
 
   // Constructor that takes list<String> as parameter
@@ -20,9 +16,7 @@ class PersonModel {
   PersonModel.fromJson(List<String> data)
       : name = data[0],
         percentage = double.parse(data[1]),
-        shareValue = double.parse(data[2]),
-        startDate = DateTime.parse(data[3]),
-        endDate = DateTime.parse(data[4]);
+        shareValue = double.parse(data[2]);
 
   void setPercentage(double value) {
     percentage = value;
@@ -38,8 +32,6 @@ class PersonModel {
       name,
       percentage.toString(),
       shareValue.toString(),
-      startDate.toString(),
-      endDate.toString(),
     ];
   }
 }

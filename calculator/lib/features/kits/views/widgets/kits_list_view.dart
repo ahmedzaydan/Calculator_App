@@ -28,7 +28,7 @@ class KitsListView extends StatelessWidget {
             navigateTo(
               context: sourceContext,
               dest: EditItemView(
-                label: kit.id,
+                label: kit.name,
                 value: kit.value,
                 updateKits: true,
                 sourceContext: sourceContext,
@@ -40,7 +40,7 @@ class KitsListView extends StatelessWidget {
         );
       },
       itemCount: cubit.kitItems.length,
-      separatorBuilder: (context, index) => const Gap(0),
+      separatorBuilder: (context, index) => const Gap(10),
     );
   }
 }

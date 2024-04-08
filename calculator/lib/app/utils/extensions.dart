@@ -1,5 +1,8 @@
+import 'package:calculator/app/resources/color_manager.dart';
 import 'package:calculator/app/resources/constants_manager.dart';
 import 'package:calculator/app/resources/strings_manager.dart';
+import 'package:calculator/features/kits/kit_cubit/kit_cubit.dart';
+import 'package:calculator/features/kits/models/kit_type.dart';
 
 extension NonNullString on String? {
   String get orEmpty {
@@ -28,5 +31,34 @@ extension NonNullDouble on double? {
 extension NonNullBool on bool? {
   bool get orFalse {
     return this ?? false;
+  }
+}
+
+extension KitTypeExtension on KitStatus {
+  KitType get kitType {
+    switch (this) {
+      case KitStatus.transparent:
+        return KitType();
+      case KitStatus.month12:
+        return KitType(
+          typeString: StringsManager.month12,
+          backgroundColor: ColorManager.month12,
+        );
+      case KitStatus.month24:
+        return KitType(
+          typeString: StringsManager.month24,
+          backgroundColor: ColorManager.month24,
+        );
+      case KitStatus.month30:
+        return KitType(
+          typeString: StringsManager.month30,
+          backgroundColor: ColorManager.month30,
+        );
+      case KitStatus.expired:
+        return KitType(
+          typeString: StringsManager.expired,
+          backgroundColor: ColorManager.expired,
+        );
+    }
   }
 }

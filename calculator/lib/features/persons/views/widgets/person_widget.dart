@@ -1,4 +1,3 @@
-import 'package:calculator/app/resources/values_manager.dart';
 import 'package:calculator/app/utils/dependency_injection.dart';
 import 'package:calculator/app/utils/functions.dart';
 import 'package:calculator/features/persons/models/person_model.dart';
@@ -22,39 +21,33 @@ class PersonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: cubit.getPersonColor(person),
-      ),
-      padding: const EdgeInsets.symmetric(horizontal: AppPadding.p10),
-      child: Row(
-        children: [
-          Expanded(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                // person name
-                Text(
-                  person.name,
-                  style: getTextStyle(),
-                ),
+    return Row(
+      children: [
+        Expanded(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              // person name
+              Text(
+                person.name,
+                style: getTextStyle(),
+              ),
 
-                // person percentage
-                Text(
-                  '${person.percentage}%',
-                  style: getTextStyle(),
-                ),
-              ],
-            ),
+              // person percentage
+              Text(
+                '${person.percentage}%',
+                style: getTextStyle(),
+              ),
+            ],
           ),
+        ),
 
-          // edit + delete buttons
-          ActionsWidget(
-            editOnPressed: editOnPressed,
-            deleteOnPressed: deleteOnPressed,
-          ),
-        ],
-      ),
+        // edit + delete buttons
+        ActionsWidget(
+          editOnPressed: editOnPressed,
+          deleteOnPressed: deleteOnPressed,
+        ),
+      ],
     );
   }
 }
