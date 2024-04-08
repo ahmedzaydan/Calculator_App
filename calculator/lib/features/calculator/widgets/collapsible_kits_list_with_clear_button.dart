@@ -1,12 +1,10 @@
-import 'package:calculator/app/resources/color_manager.dart';
 import 'package:calculator/app/resources/strings_manager.dart';
 import 'package:calculator/app/resources/styles_manager.dart';
 import 'package:calculator/app/utils/dependency_injection.dart';
 import 'package:calculator/app/widgets/custom_elevated_button.dart';
-import 'package:calculator/app/widgets/custom_icon_button.dart';
 import 'package:calculator/features/calculator/calculator_cubit/calculator_cubit.dart';
+import 'package:calculator/features/widgets/collapse_button.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 
 class CollapsibleKitsListWithClearButton extends StatelessWidget {
@@ -24,14 +22,11 @@ class CollapsibleKitsListWithClearButton extends StatelessWidget {
       child: Row(
         children: [
           // collapse button
-          CustomIconButton(
-            onPressed: () => cubit.toggleKitsListVisibility(),
-            icon: FaIcon(
-              cubit.isKitsListCollapsed
-                  ? FontAwesomeIcons.circleChevronDown
-                  : FontAwesomeIcons.circleChevronUp,
-              color: ColorManager.primary,
-            ),
+          CollapseButton(
+            onPressed: () {
+              cubit.toggleKitsListVisibility();
+            },
+            isCollapsed: cubit.isKitsListCollapsed,
           ),
 
           const Gap(15),

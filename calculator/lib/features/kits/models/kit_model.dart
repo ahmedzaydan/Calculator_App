@@ -1,9 +1,12 @@
+import 'package:calculator/features/kits/kit_cubit/kit_cubit.dart';
+
 class KitModel {
   String name;
   double value;
   bool isChecked;
   DateTime startDate;
   DateTime endDate;
+  KitStatus? status;
 
   KitModel({
     required this.name,
@@ -11,6 +14,7 @@ class KitModel {
     this.isChecked = false,
     required this.startDate,
     required this.endDate,
+    this.status,
   });
 
   // Constructor that takes list<String> as parameter
@@ -24,9 +28,11 @@ class KitModel {
 
   void setValue(double val) => value = val;
 
-  void setStatus(bool status) => isChecked = status;
+  void setIsChecked(bool status) => isChecked = status;
 
   void toggleStatus() => isChecked = !isChecked;
+
+  void setStatus(KitStatus kitStatus) => status = kitStatus;
 
   String get format {
     String spaces = '  ';

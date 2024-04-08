@@ -61,3 +61,6 @@ class DeleteKitErrorState extends AppStates {
 
   DeleteKitErrorState(this.message);
 }
+
+// toggle kit lists visibility
+class ToggleKitListVisibilityState extends AppStates {}

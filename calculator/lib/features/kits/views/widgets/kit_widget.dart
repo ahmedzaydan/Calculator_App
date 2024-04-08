@@ -2,6 +2,7 @@ import 'package:calculator/app/resources/color_manager.dart';
 import 'package:calculator/app/resources/constants_manager.dart';
 import 'package:calculator/app/resources/values_manager.dart';
 import 'package:calculator/app/utils/dependency_injection.dart';
+import 'package:calculator/app/utils/extensions.dart';
 import 'package:calculator/app/utils/functions.dart';
 import 'package:calculator/features/kits/kit_cubit/kit_cubit.dart';
 import 'package:calculator/features/kits/models/kit_model.dart';
@@ -27,7 +28,7 @@ class KitWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    KitType type = cubit.getKitType(kit);
+    KitType type = cubit.getKitStatus(kit).kitType;
     return Container(
       decoration: BoxDecoration(
         color: type.backgroundColor,

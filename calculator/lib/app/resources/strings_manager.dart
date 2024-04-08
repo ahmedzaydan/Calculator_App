@@ -52,7 +52,7 @@ abstract class StringsManager {
   static const String month24 = '2° reajuste';
   static const String month30 = 'RENOVAR';
   // TODO: what is the correct string value in portuguese
-  static const String expired = 'Contract expired';
+  static const String expired = 'Expired';
 
   // output screen strings
   static const String reportScreen = 'Report Screen';

@@ -1,6 +1,7 @@
 import 'package:calculator/app/resources/strings_manager.dart';
 import 'package:calculator/app/utils/cache_controller.dart';
 import 'package:calculator/features/app_layout/app_layout_cubit/app_states.dart';
+import 'package:calculator/features/calculator/calculator_cubit/calculator_cubit.dart';
 import 'package:calculator/features/calculator/views/calculator_view.dart';
 import 'package:calculator/features/kits/kit_cubit/kit_cubit.dart';
 import 'package:calculator/features/kits/views/kits_view.dart';
@@ -12,29 +13,22 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class AppCubit extends Cubit<AppStates> {
   AppCubit(
+    this.calculatorCubit,
     this.personsCubit,
     this.kitsCubit,
   ) : super(AppLayoutInitialState());
 
+  final CalculatorCubit calculatorCubit;
   final PersonsCubit personsCubit;
   final KitsCubit kitsCubit;
+
+  List<String> kitsKeys = [];
+  List<String> personKeys = [];
 
   Future<void> init() async {
     emit(LoadingDataState());
 
-    List<String> keys = CacheController.getAllKeys();
-    List<String> kitsKeys = [];
-    List<String> personKeys = [];
-
-    for (var key in keys) {
-      if (key == personsCubit.amdinKey) {
-        continue;
-      } else if (key.startsWith(kitsCubit.kitKeyPrefix)) {
-        kitsKeys.add(key);
-      } else {
-        personKeys.add(key);
-      }
-    }
+    getKeys();
 
     kitsCubit.loadData(kitsKeys).then((_) {
       personsCubit.loadData(personKeys).then((_) {
@@ -45,6 +39,20 @@ class AppCubit extends Cubit<AppStates> {
     }).catchError((error) {
       emit(LoadingDataErrorState(StringsManager.dataLoadingError));
     });
+  }
+
+  void getKeys() {
+    List<String> keys = CacheController.getAllKeys();
+
+    for (var key in keys) {
+      if (key == personsCubit.amdinKey) {
+        continue;
+      } else if (key.startsWith(kitsCubit.kitKeyPrefix)) {
+        kitsKeys.add(key);
+      } else {
+        personKeys.add(key);
+      }
+    }
   }
 
   final List<AppBar> appBars = [
@@ -90,6 +98,13 @@ class AppCubit extends Cubit<AppStates> {
 
   void changeIndex(int index) {
     currentIndex = index;
+    if (currentIndex == 1) {
+      getKeys();
+      kitsCubit.loadData(kitsKeys);
+    } else if (currentIndex == 2) {
+      getKeys();
+      personsCubit.loadData(personKeys);
+    }
     emit(ChangeBottomNavIndexState(index));
   }
 }

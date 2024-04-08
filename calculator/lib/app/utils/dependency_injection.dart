@@ -7,14 +7,6 @@ import 'package:get_it/get_it.dart';
 final GetIt locator = GetIt.instance;
 
 void getAppModules() {
-  // AppLayoutCubit instance
-  locator.registerLazySingleton<AppCubit>(
-    () => AppCubit(
-      locator<PersonsCubit>(),
-      locator<KitsCubit>(),
-    ),
-  );
-
   // CalculatorCubit instance
   locator.registerLazySingleton<CalculatorCubit>(
     () => CalculatorCubit(
@@ -28,4 +20,13 @@ void getAppModules() {
 
   // KitsCubit instance
   locator.registerLazySingleton<KitsCubit>(() => KitsCubit());
+
+  // AppLayoutCubit instance
+  locator.registerLazySingleton<AppCubit>(
+    () => AppCubit(
+      locator<CalculatorCubit>(),
+      locator<PersonsCubit>(),
+      locator<KitsCubit>(),
+    ),
+  );
 }

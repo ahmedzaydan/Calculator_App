@@ -5,7 +5,6 @@ import 'package:calculator/app/utils/functions.dart';
 import 'package:calculator/features/app_layout/app_layout_cubit/app_states.dart';
 import 'package:calculator/features/kits/kit_cubit/kit_states.dart';
 import 'package:calculator/features/kits/models/kit_model.dart';
-import 'package:calculator/features/kits/models/kit_type.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 enum KitStatus {
@@ -25,6 +24,18 @@ class KitsCubit extends Cubit<AppStates> {
 
   List<KitModel> kitItems = [];
 
+  List<KitModel> expiredKitsItems = [];
+  List<KitModel> month30KitsItems = [];
+  List<KitModel> month24KitsItems = [];
+  List<KitModel> month12KitsItems = [];
+  List<KitModel> transparentKitsItems = [];
+
+  bool isExpiredListCollapsed = true;
+  bool isMonth30ListCollapsed = true;
+  bool isMonth24ListCollapsed = true;
+  bool isMonth12ListCollapsed = true;
+  bool isTransperantListCollapsed = true;
+
   Future<void> loadData(List<String> kitKeys) async {
     try {
       emit(LoadKitsDataLoadingState());
@@ -33,10 +44,12 @@ class KitsCubit extends Cubit<AppStates> {
 
         if (kitData.isNotEmpty) {
           KitModel kit = KitModel.fromStringList(kitData);
+          kit.setStatus(getKitStatus(kit));
           kitItems.add(kit);
         }
       }
       emit(LoadKitsDataSuccessState());
+      fillLists();
       sortKits();
     } catch (e) {
       emit(LoadKitsDataErrorState(e.toString()));
@@ -54,25 +67,7 @@ class KitsCubit extends Cubit<AppStates> {
 
       // ensure that the key is not already stored
       if (CacheController.checkKey(storingKey) == false) {
-        // DateTime startDate = DateTime.now();
-
-        // TODO: remove these lines
-        // Define start dates for different cases
-        // Contract expired
-        DateTime date1 = DateTime(2020, 10, 9);
-
-        // Contract in the month 30
-        DateTime date2 = DateTime(2021, 10, 9);
-
-        // Contract in the month 24 (within last 10 days of month 24)
-        DateTime date3 = DateTime(2022, 4, 8);
-
-        // Contract in the month 12 (within last 10 days of month 12)
-        DateTime date4 = DateTime(2023, 4, 8);
-
-        DateTime date5 = DateTime(2023, 3, 10);
-
-        DateTime startDate = date2;
+        DateTime startDate = DateTime.now();
         DateTime endDate = _getKitEndDate(startDate);
 
         // create kit object
@@ -91,9 +86,10 @@ class KitsCubit extends Cubit<AppStates> {
           (saveResult) {
             if (saveResult) {
               // add kit to the kitItems list
+              kit.setStatus(getKitStatus(kit));
               kitItems.add(kit);
               emit(AddKitSuccessState());
-
+              fillLists();
               sortKits();
             } else {
               emit(AddKitErrorState(StringsManager.defaultError));
@@ -152,8 +148,7 @@ class KitsCubit extends Cubit<AppStates> {
     return DateTime(futureYear, futureMonth, futureDay);
   }
 
-  // TODO: month(12, 24, 30) or (11, 23, 29) ?
-  KitType getKitType(KitModel kit) {
+  KitStatus getKitStatus(KitModel kit) {
     KitStatus status = KitStatus.transparent;
 
     DateTime now = DateTime.now();
@@ -183,6 +178,7 @@ class KitsCubit extends Cubit<AppStates> {
           (lastDay < 30 && (now.day >= (lastDay - 10)))) {
         status = KitStatus.month24;
       }
+      status = KitStatus.month24; // TODO: remove this line
     }
 
     // contract is in the month 12
@@ -196,9 +192,10 @@ class KitsCubit extends Cubit<AppStates> {
           (lastDay < 30 && (now.day >= (lastDay - 10)))) {
         status = KitStatus.month12;
       }
+      status = KitStatus.month12; // TODO: remove this line
     }
 
-    return status.kitType;
+    return status;
   }
 
   Future<bool?> updateKitValue({
@@ -216,6 +213,7 @@ class KitsCubit extends Cubit<AppStates> {
 
             emit(UpdateKitDataSuccessState());
             sortKits();
+            fillLists();
 
             return true;
           } else {
@@ -228,6 +226,7 @@ class KitsCubit extends Cubit<AppStates> {
       emit(UpdateKitDataErrorState(e.toString()));
       return false;
     }
+    return null;
   }
 
   Future<void> changeKitStatus(int index) async {
@@ -247,7 +246,7 @@ class KitsCubit extends Cubit<AppStates> {
   Future<void> clearKits() async {
     try {
       for (KitModel kit in kitItems) {
-        kit.setStatus(false);
+        kit.setIsChecked(false);
 
         await CacheController.saveData(
           kit.name,
@@ -261,10 +260,31 @@ class KitsCubit extends Cubit<AppStates> {
     }
   }
 
-  sortKits() {
-    // TODO: divide the list into three lists based on remaining months
-    // then sort all, then combine them
-    // add type parameter to kitmodel class
+  void fillLists() {
+    for (var kit in kitItems) {
+      switch (kit.status) {
+        case KitStatus.expired:
+          expiredKitsItems.add(kit);
+          break;
+        case KitStatus.month12:
+          month12KitsItems.add(kit);
+          break;
+        case KitStatus.month24:
+          month24KitsItems.add(kit);
+          break;
+        case KitStatus.month30:
+          month30KitsItems.add(kit);
+          break;
+        case KitStatus.transparent:
+          transparentKitsItems.add(kit);
+          break;
+        default:
+          break;
+      }
+    }
+  }
+
+  void sortKits() {
     kitItems.sort(
       (a, b) {
         int aIndex = int.parse(a.name.substring(kitKeyPrefix.length));
@@ -293,6 +313,31 @@ class KitsCubit extends Cubit<AppStates> {
     totalKits = roundDouble(totalKits);
   }
 
+  void toggleExpiredListVisibility() {
+    isExpiredListCollapsed = !isExpiredListCollapsed;
+    emit(ToggleKitListVisibilityState());
+  }
+
+  void toggleMonth30ListVisibility() {
+    isMonth30ListCollapsed = !isMonth30ListCollapsed;
+    emit(ToggleKitListVisibilityState());
+  }
+
+  void toggleMonth24ListVisibility() {
+    isMonth24ListCollapsed = !isMonth24ListCollapsed;
+    emit(ToggleKitListVisibilityState());
+  }
+
+  void toggleMonth12ListVisibility() {
+    isMonth12ListCollapsed = !isMonth12ListCollapsed;
+    emit(ToggleKitListVisibilityState());
+  }
+
+  void toggleTransparentListVisibility() {
+    isTransperantListCollapsed = !isTransperantListCollapsed;
+    emit(ToggleKitListVisibilityState());
+  }
+
   Future<void> deleteKitItem(int index) async {
     try {
       CacheController.removeData(kitItems[index].name).then((result) {
@@ -300,6 +345,7 @@ class KitsCubit extends Cubit<AppStates> {
           emit(DeleteKitSuccessState());
           kitItems.removeAt(index);
           sortKits();
+          fillLists();
         } else {
           emit(DeleteKitErrorState(StringsManager.defaultError));
         }
@@ -311,3 +357,13 @@ class KitsCubit extends Cubit<AppStates> {
     }
   }
 }
+
+// TODO: remove these lines
+// // Contract expired
+// DateTime date1 = DateTime(2020, 10, 9);
+// // Contract in the month 30
+// DateTime date2 = DateTime(2021, 10, 9);
+// // Contract in the month 24 (within last 10 days of month 24)
+// DateTime date3 = DateTime(2022, 4, 8);
+// // Contract in the month 12 (within last 10 days of month 12)
+// DateTime date4 = DateTime(2023, 4, 8);
