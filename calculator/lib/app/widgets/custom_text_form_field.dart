@@ -17,7 +17,7 @@ class CustomTextFormField extends StatelessWidget {
     this.validator,
     this.hintText,
     this.inputFormatters,
-    this.fontWeight = FontWeight.bold,
+    this.fontWeight = FontWeight.normal,
     this.fontSize = FontSize.s18,
   });
 

@@ -1,16 +1,13 @@
 import 'package:calculator/app/resources/strings_manager.dart';
-import 'package:calculator/app/resources/styles_manager.dart';
 import 'package:calculator/app/utils/dependency_injection.dart';
 import 'package:calculator/app/utils/functions.dart';
 import 'package:calculator/app/widgets/custom_elevated_button.dart';
-import 'package:calculator/app/widgets/custom_list_view.dart';
 import 'package:calculator/app/widgets/custom_text_form_field.dart';
 import 'package:calculator/features/app_layout/app_layout_cubit/app_states.dart';
 import 'package:calculator/features/calculator/calculator_cubit/calculator_cubit.dart';
 import 'package:calculator/features/calculator/views/report_view.dart';
-import 'package:calculator/features/calculator/widgets/kit_item_with_checkbox.dart';
-import 'package:calculator/features/kits/kit_cubit/kit_cubit.dart';
-import 'package:calculator/features/kits/models/kit_model.dart';
+import 'package:calculator/features/calculator/widgets/collapsible_kits_list_with_clear_button.dart';
+import 'package:calculator/features/calculator/widgets/kits_list_with_checkbox.dart';
 import 'package:calculator/features/widgets/custom_error_widget.dart';
 import 'package:calculator/features/widgets/loading_widget.dart';
 import 'package:flutter/material.dart';
@@ -41,71 +38,28 @@ class CalculatorView extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                Padding(
-                  padding: EdgeInsets.only(
-                    left: MediaQuery.of(context).size.width * 0.02,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        StringsManager.kits,
-                        style: TextStylesManager.textStyle20.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-
-                      // clera button
-                      SizedBox(
-                        height: MediaQuery.of(context).size.width * 0.12,
-                        child: CustomElevatedButton(
-                          onPressed: () async {
-                            expensesController.clear();
-                            extraController.clear();
-                            noteController.clear();
-                            await cubit.clear();
-                          },
-                          text: StringsManager.clear,
-                        ),
-                      ),
-                    ],
-                  ),
+                CollapsibleKitsListWithClearButton(
+                  clearOnPressed: () async {
+                    expensesController.clear();
+                    extraController.clear();
+                    noteController.clear();
+                    await cubit.clear();
+                  },
                 ),
 
                 const Gap(10),
 
-                // kits list
-                BlocBuilder<KitsCubit, AppStates>(
-                  builder: (context, state) {
-                    var profitCubit = locator<KitsCubit>();
-                    return CustomListView(
-                      itemBuilder: (context, index) {
-                        KitModel profit = profitCubit.kitItems[index];
-                        return KitItemWithCheckbox(
-                          profitId: profit.name,
-                          profitValue: profit.value,
-                          value: profit.isChecked,
-                          onChanged: (_) async {
-                            await profitCubit.changeKitStatus(index);
-                          },
-                        );
-                      },
-                      separatorBuilder: (context, index) => const Gap(1),
-                      itemCount: profitCubit.kitItems.length,
-                    );
-                  },
-                ),
+                KitsListWithCheckbox(),
 
                 const Gap(25),
 
                 // expense section
                 CustomTextFormField(
                   controller: expensesController,
-                  fontWeight: FontWeight.normal,
+                  keyboardType: TextInputType.text,
                   labelText: StringsManager.expenses,
                   hintText: StringsManager.expansesHint,
                   onChanged: (value) => cubit.expenses = value,
-                  keyboardType: TextInputType.text,
                 ),
 
                 const Gap(25),
@@ -113,11 +67,10 @@ class CalculatorView extends StatelessWidget {
                 // extra section
                 CustomTextFormField(
                   controller: extraController,
-                  fontWeight: FontWeight.normal,
+                  keyboardType: TextInputType.text,
                   labelText: StringsManager.extra,
                   hintText: StringsManager.expansesHint,
                   onChanged: (value) => cubit.extra = value,
-                  keyboardType: TextInputType.text,
                 ),
 
                 const Gap(25),
@@ -125,7 +78,6 @@ class CalculatorView extends StatelessWidget {
                 // note
                 CustomTextFormField(
                   controller: noteController,
-                  fontWeight: FontWeight.normal,
                   keyboardType: TextInputType.text,
                   labelText: StringsManager.note,
                   onChanged: (note) => cubit.note = note,
@@ -144,7 +96,7 @@ class CalculatorView extends StatelessWidget {
                         dest: ReportView(),
                       );
                     },
-                    text: 'Calculate',
+                    text: StringsManager.calculate,
                   ),
                 ),
               ],

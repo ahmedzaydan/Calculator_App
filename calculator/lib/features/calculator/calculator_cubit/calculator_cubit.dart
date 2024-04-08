@@ -27,8 +27,14 @@ class CalculatorCubit extends Cubit<AppStates> {
 
   double totalExpense = 0.0;
   double totalExtra = 0.0;
-
   double netProfit = 0.0;
+
+  bool isKitsListCollapsed = false;
+
+  void toggleKitsListVisibility() {
+    isKitsListCollapsed = !isKitsListCollapsed;
+    emit(ToggleKitsListVisibilityState());
+  }
 
   double calculateString(String s) {
     double total = 0.0;

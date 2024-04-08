@@ -17,3 +17,5 @@ class ChangeBottomNavIndexState extends AppStates {
 
   ChangeBottomNavIndexState(this.index);
 }
+
+class ToggleKitsListVisibilityState extends AppStates {}

@@ -13,6 +13,7 @@ abstract class StringsManager {
   static const String extra = 'Extra';
   static const String note = 'Note';
   static const String clear = 'Clear';
+  static const String calculate = 'Calculate';
 
   static const String name = 'Name';
   static const String enterName = 'Enter name';
