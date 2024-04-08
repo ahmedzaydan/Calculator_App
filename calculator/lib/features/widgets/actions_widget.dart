@@ -1,6 +1,6 @@
-import 'package:calculator/app/resources/color_manager.dart';
 import 'package:calculator/app/widgets/custom_icon_button.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 
 class ActionsWidget extends StatelessWidget {
@@ -8,10 +8,19 @@ class ActionsWidget extends StatelessWidget {
     super.key,
     this.editOnPressed,
     this.deleteOnPressed,
+    this.isEditVisible = true,
+    this.isDeleteVisible = true,
+    this.editButtonStyle,
+    this.deleteButtonStyle,
   });
 
   final void Function()? editOnPressed;
   final void Function()? deleteOnPressed;
+  final bool isEditVisible;
+  final bool isDeleteVisible;
+
+  final ButtonStyle? editButtonStyle;
+  final ButtonStyle? deleteButtonStyle;
 
   @override
   Widget build(BuildContext context) {
@@ -19,28 +28,23 @@ class ActionsWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         // edit button
-        CustomIconButton(
-          onPressed: editOnPressed,
-          icon: const Icon(Icons.edit),
-          style: ButtonStyle(
-            backgroundColor:
-                MaterialStateProperty.all(ColorManager.transparent),
-            iconColor: MaterialStateProperty.all(ColorManager.black),
+        if (isEditVisible)
+          CustomIconButton(
+            onPressed: editOnPressed,
+            icon: const FaIcon(FontAwesomeIcons.penToSquare),
+            style: editButtonStyle ?? Theme.of(context).iconButtonTheme.style,
           ),
-        ),
 
-        const Gap(10),
+        if (isDeleteVisible) ...[
+          const Gap(15),
 
-        // delete button
-        CustomIconButton(
-          onPressed: deleteOnPressed,
-          icon: const Icon(Icons.delete),
-          style: ButtonStyle(
-            backgroundColor:
-                MaterialStateProperty.all(ColorManager.transparent),
-            iconColor: MaterialStateProperty.all(ColorManager.black),
+          // delete button
+          CustomIconButton(
+            onPressed: deleteOnPressed,
+            icon: const FaIcon(FontAwesomeIcons.trashCan),
+            style: deleteButtonStyle ?? Theme.of(context).iconButtonTheme.style,
           ),
-        ),
+        ]
       ],
     );
   }

@@ -53,8 +53,8 @@ abstract class StringsManager {
   // TODO: what is the correct string value in portuguese
   static const String expired = 'Contract expired';
 
-  // output screen strings // TODO: while in output screen try to go to kits screen and back to output screen, what will happen
-  static const String outputScreen = 'Output Screen';
+  // output screen strings
+  static const String reportScreen = 'Report Screen';
   static const String date = 'Date';
   static const String totalProfit = 'Total kit';
   static const String totalExpense = 'Total expense';

@@ -26,5 +26,5 @@ void main() async {
   // kits scrollable section 
 // TODO: Report screen (choose better name?)
   // share button
-  // back arrow ios
-// TODO: all icons should be FaIcons
+// TODO: choose colors for all screens 
+// TODO: should I increase the font size?? 

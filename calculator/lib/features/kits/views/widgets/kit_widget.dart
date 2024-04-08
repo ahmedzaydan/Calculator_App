@@ -37,45 +37,51 @@ class KitWidget extends StatelessWidget {
           width: 1.5,
         ),
       ),
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppPadding.p20,
-        vertical: AppPadding.p8,
-      ),
+      padding: const EdgeInsets.symmetric(vertical: AppPadding.p8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // actions + label
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                flex: 4,
-                child: Text(type.typeString, style: getTextStyle()),
-              ),
-
-              // edit and delete buttons
-              Expanded(
-                flex: 1,
-                child: ActionsWidget(
-                  editOnPressed: editOnPressed,
-                  deleteOnPressed: deleteOnPressed,
+          Padding(
+            padding: const EdgeInsets.only(
+              left: AppPadding.p20,
+              right: AppPadding.p18,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  flex: 4,
+                  child: Text(type.typeString, style: getTextStyle()),
                 ),
-              ),
-            ],
+
+                // edit and delete buttons
+                Expanded(
+                  flex: 1,
+                  child: ActionsWidget(
+                    editOnPressed: editOnPressed,
+                    deleteOnPressed: deleteOnPressed,
+                  ),
+                ),
+              ],
+            ),
           ),
 
           const Gap(2),
 
           // kit name + value
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              // kit name
-              Text(kit.name, style: getTextStyle()),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: AppPadding.p20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                // kit name
+                Text(kit.name, style: getTextStyle()),
 
-              // kit value
-              Text('${kit.value}', style: getTextStyle()),
-            ],
+                // kit value
+                Text('${kit.value}', style: getTextStyle()),
+              ],
+            ),
           ),
         ],
       ),

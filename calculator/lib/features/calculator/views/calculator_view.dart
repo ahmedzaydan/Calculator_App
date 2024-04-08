@@ -1,3 +1,4 @@
+import 'package:calculator/app/resources/constants_manager.dart';
 import 'package:calculator/app/resources/strings_manager.dart';
 import 'package:calculator/app/resources/styles_manager.dart';
 import 'package:calculator/app/utils/dependency_injection.dart';
@@ -7,60 +8,15 @@ import 'package:calculator/app/widgets/custom_list_view.dart';
 import 'package:calculator/app/widgets/custom_text_form_field.dart';
 import 'package:calculator/features/app_layout/app_layout_cubit/app_states.dart';
 import 'package:calculator/features/calculator/calculator_cubit/calculator_cubit.dart';
-import 'package:calculator/features/calculator/widgets/profit_item.dart';
+import 'package:calculator/features/calculator/views/report_view.dart';
+import 'package:calculator/features/calculator/widgets/kit_item_with_checkbox.dart';
 import 'package:calculator/features/kits/kit_cubit/kit_cubit.dart';
 import 'package:calculator/features/kits/models/kit_model.dart';
-import 'package:calculator/features/output/views/output_view.dart';
 import 'package:calculator/features/widgets/custom_error_widget.dart';
 import 'package:calculator/features/widgets/loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
-// TODO: amdin code
-
-// adminstration percentage
-// Padding(
-//   padding: const EdgeInsets.all(
-//     AppPadding.p20,
-//   ),
-//   child: Row(
-//     children: [
-//       Expanded(
-//         flex: 4,
-//         child: CustomTextFormField(
-//           controller: TextEditingController(
-//             text: cubit.adminPercentage.toString(),
-//           ),
-//           fontSize: FontSize.s22,
-//           labelText: StringsManager.adminPercentage,
-//           keyboardType: const TextInputType.numberWithOptions(
-//               decimal: true),
-//           inputFormatters: [
-//             FilteringTextInputFormatter.allow(
-//               RegExp(r'^\d*\.?\d{0,2}'),
-//             ),
-//           ],
-//           onChanged: (value) {
-//             cubit.adminPercentage = double.parse(value);
-//           },
-//         ),
-//       ),
-
-//       const Gap(10),
-
-//       // save button
-//       Expanded(
-//         flex: 2,
-//         child: CustomElevatedButton(
-//           onPressed: () {
-//             // cubit.savePersonsData();
-//           },
-//           text: StringsManager.save,
-//         ),
-//       ),
-//     ],
-//   ),
-// ),
 
 class CalculatorView extends StatelessWidget {
   CalculatorView({super.key});
@@ -126,7 +82,7 @@ class CalculatorView extends StatelessWidget {
                     return CustomListView(
                       itemBuilder: (context, index) {
                         KitModel profit = profitCubit.kitItems[index];
-                        return ProfitItem(
+                        return KitItemWithCheckbox(
                           profitId: profit.name,
                           profitValue: profit.value,
                           value: profit.isChecked,
@@ -150,6 +106,10 @@ class CalculatorView extends StatelessWidget {
                   labelText: StringsManager.expenses,
                   hintText: StringsManager.expansesHint,
                   onChanged: (value) => cubit.expenses = value,
+                  keyboardType: TextInputType.text,
+                  inputFormatters: getInputFormatters(
+                    ConstantsManager.calculatorRegex,
+                  ),
                 ),
 
                 const Gap(25),
@@ -184,7 +144,7 @@ class CalculatorView extends StatelessWidget {
                       cubit.calculate();
                       navigateTo(
                         context: context,
-                        dest: const OutputView(),
+                        dest: ReportView(),
                       );
                     },
                     text: 'Calculate',

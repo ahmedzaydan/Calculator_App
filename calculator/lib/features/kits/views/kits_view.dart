@@ -1,5 +1,4 @@
 import 'package:calculator/app/resources/constants_manager.dart';
-import 'package:calculator/app/resources/strings_manager.dart';
 import 'package:calculator/app/resources/values_manager.dart';
 import 'package:calculator/app/utils/functions.dart';
 import 'package:calculator/features/app_layout/app_layout_cubit/app_states.dart';
@@ -46,28 +45,13 @@ class KitsView extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // add kit widget
-            Text(
-              StringsManager.addKit,
-              style: getTextStyle(),
-            ),
-
-            const Gap(20),
-
             AddItemWidget(
-              name: StringsManager.kitNumber,
-              nameValidator: StringsManager.enterNumber,
-              value: StringsManager.kitValue,
-              valueValidator: StringsManager.enterValue,
-              inputType: const TextInputType.numberWithOptions(
-                decimal: false,
-              ),
-              inputFormatters: getInputFormatters(ConstantsManager.kitsRegex),
-              isPerson: false,
+              labelInputType:
+                  const TextInputType.numberWithOptions(decimal: false),
+              labelInputFormatters:
+                  getInputFormatters(ConstantsManager.kitsRegex),
             ),
-
             const Gap(40),
-
             KitsListView(sourceContext: context),
           ],
         ),

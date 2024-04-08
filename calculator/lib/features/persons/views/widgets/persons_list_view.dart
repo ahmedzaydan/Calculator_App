@@ -1,3 +1,4 @@
+import 'package:calculator/app/resources/color_manager.dart';
 import 'package:calculator/app/utils/dependency_injection.dart';
 import 'package:calculator/app/utils/functions.dart';
 import 'package:calculator/app/widgets/custom_list_view.dart';
@@ -24,6 +25,9 @@ class PersonsListView extends StatelessWidget {
         PersonModel person = cubit.personItems[index];
         return PersonWidget(
           person: person,
+          backgroundColor: index % 2 == 0
+              ? ColorManager.lightGrey
+              : ColorManager.transparent,
           editOnPressed: () {
             navigateTo(
               context: context,

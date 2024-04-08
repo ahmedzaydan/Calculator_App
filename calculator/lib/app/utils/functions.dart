@@ -28,14 +28,14 @@ TextStyle getTextStyle({
 }
 
 AppBar customAppBar({
-  required String text,
+  required String title,
   List<Widget>? actions,
-  void Function()? onPressed,
+  void Function()? leadingOnPressed,
   bool leading = true,
 }) {
   return AppBar(
     title: Text(
-      text,
+      title,
       style: const TextStyle(
         fontSize: AppSize.s24,
         fontWeight: FontWeight.bold,
@@ -49,7 +49,7 @@ AppBar customAppBar({
               color: Colors.white,
               size: 32,
             ),
-            onPressed: onPressed,
+            onPressed: leadingOnPressed,
           )
         : null,
   );

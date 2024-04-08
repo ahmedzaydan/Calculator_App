@@ -201,7 +201,7 @@ class KitsCubit extends Cubit<AppStates> {
     return status.kitType;
   }
 
-  Future<void> updateKitValue({
+  Future<bool?> updateKitValue({
     required int index,
     required double value,
   }) async {
@@ -209,17 +209,24 @@ class KitsCubit extends Cubit<AppStates> {
       CacheController.saveData(
         kitItems[index].name,
         kitItems[index].toStringList(),
-      ).then((updateResult) {
-        if (updateResult) {
-          kitItems[index].setValue(value);
-          emit(UpdateKitDataSuccessState());
-          sortKits();
-        } else {
-          emit(UpdateKitDataErrorState(StringsManager.defaultError));
-        }
-      });
+      ).then(
+        (updateResult) {
+          if (updateResult) {
+            kitItems[index].setValue(value);
+
+            emit(UpdateKitDataSuccessState());
+            sortKits();
+
+            return true;
+          } else {
+            emit(UpdateKitDataErrorState(StringsManager.defaultError));
+            return false;
+          }
+        },
+      );
     } catch (e) {
       emit(UpdateKitDataErrorState(e.toString()));
+      return false;
     }
   }
 

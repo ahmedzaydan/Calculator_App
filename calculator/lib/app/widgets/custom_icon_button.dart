@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CustomIconButton extends StatelessWidget {
   const CustomIconButton({
@@ -11,14 +12,14 @@ class CustomIconButton extends StatelessWidget {
   });
 
   final void Function()? onPressed;
-  final Icon icon;
+  final FaIcon icon;
   final ButtonStyle? style;
   final double? height;
   final double? width;
 
   @override
   Widget build(BuildContext context) {
-    var newWidth = width ?? MediaQuery.sizeOf(context).width * 0.060;
+    var newWidth = width ?? MediaQuery.sizeOf(context).width * 0.054;
     var newHeight = height ?? MediaQuery.sizeOf(context).height * 0.05;
 
     return SizedBox(

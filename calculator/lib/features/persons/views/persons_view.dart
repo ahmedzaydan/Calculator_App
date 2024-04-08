@@ -1,10 +1,10 @@
 import 'package:calculator/app/resources/constants_manager.dart';
-import 'package:calculator/app/resources/strings_manager.dart';
 import 'package:calculator/app/resources/values_manager.dart';
 import 'package:calculator/app/utils/functions.dart';
 import 'package:calculator/features/app_layout/app_layout_cubit/app_states.dart';
 import 'package:calculator/features/persons/person_cubit/persons_cubit.dart';
 import 'package:calculator/features/persons/person_cubit/persons_states.dart';
+import 'package:calculator/features/persons/views/widgets/admin_widget.dart';
 import 'package:calculator/features/persons/views/widgets/persons_list_view.dart';
 import 'package:calculator/features/widgets/add_item_widget.dart';
 import 'package:calculator/features/widgets/custom_error_widget.dart';
@@ -19,7 +19,7 @@ class PersonsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<PersonsCubit, AppStates>(
-      listener: (context, state) {
+      listener: (_, state) {
         if (state is AddPersonErrorState) {
           showCustomToast(
             message: state.message,
@@ -37,29 +37,24 @@ class PersonsView extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // admin widget
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: AppMargin.m10),
+                child: AdminWidget(sourceContext: context),
+              ),
+
+              // add item widget
               Padding(
-                padding: const EdgeInsets.all(AppPadding.p10),
-                // add person widget
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      StringsManager.addPerson,
-                      style: getTextStyle(),
-                    ),
-                    const Gap(20),
-                    AddItemWidget(
-                      name: StringsManager.name,
-                      nameValidator: StringsManager.enterName,
-                      value: StringsManager.percentage,
-                      valueValidator: StringsManager.enterPercentage,
-                      isPerson: true,
-                      inputType: TextInputType.text,
-                    ),
-                  ],
+                padding: const EdgeInsets.symmetric(horizontal: AppPadding.p10),
+                child: AddItemWidget(
+                  isPerson: true,
+                  labelInputType: TextInputType.text,
                 ),
               ),
-              const Gap(10),
+
+              const Gap(20),
+
+              // persons list view
               PersonsListView(sourceContext: context),
             ],
           ),

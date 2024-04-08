@@ -46,7 +46,7 @@ class PersonsCubit extends Cubit<AppStates> {
     try {
       emit(AddPersonLoadingState());
 
-      String? errorMessage = _validatePersonData(name, percentage);
+      String? errorMessage = _validateNewPersonData(name, percentage);
       if (errorMessage == null) {
         // create person object
         PersonModel person = PersonModel(
@@ -78,12 +78,16 @@ class PersonsCubit extends Cubit<AppStates> {
     }
   }
 
-  String? _validatePersonData(String name, double percentage) {
+  String? _validateNewPersonData(String name, double percentage) {
     // check if person name already exists
     if (CacheController.checkKey(name)) {
       return StringsManager.personExists;
     }
 
+    return _validatePercentage(percentage);
+  }
+
+  String? _validatePercentage(double percentage) {
     // check if perecentage is valid or not
     if (percentage < 0 || percentage > 100) {
       return StringsManager.invalidPercentage;
@@ -96,33 +100,74 @@ class PersonsCubit extends Cubit<AppStates> {
     return null;
   }
 
-  Future<void> updatePersonPercentage({
+  Future<bool?> updatePersonPercentage({
     required int index,
     required double value,
   }) async {
     try {
-      personItems[index].setPercentage(value);
-      CacheController.saveData(
-        personItems[index].name,
-        personItems[index].toStringList(),
-      );
-
-      emit(SavePersonDataSuccessState());
+      String? errorMessage = _validatePercentage(value);
+      double tempPercentage = personItems[index].percentage;
+      if (errorMessage == null) {
+        CacheController.saveData(
+          personItems[index].name,
+          personItems[index].toStringList(),
+        ).then(
+          (response) {
+            if (response) {
+              personItems[index].setPercentage(value);
+              totalPercentage += value - tempPercentage;
+              emit(SavePersonDataSuccessState());
+              return true;
+            } else {
+              emit(AddPersonErrorState(StringsManager.defaultError));
+              return false;
+            }
+          },
+        );
+      } else {
+        emit(AddPersonErrorState(errorMessage));
+        return false;
+      }
     } catch (e) {
       emit(SavePersonDataErrorState(e.toString()));
+      return false;
     }
+    return null;
   }
 
-  void updateAdminPercentage() async {
-    CacheController.saveData(amdinKey, adminPercentage).then(
-      (response) {
-        if (response) {
-          emit(UpdateAdminPercentageSuccessState());
-        } else {
-          emit(UpdateAdminPercentageErrorState(StringsManager.defaultError));
-        }
-      },
-    );
+  Future<bool?> updateAdminPercentage(double value) async {
+    try {
+      String? errorMessage = _validatePercentage(value);
+      double oldAdminPercentage = adminPercentage;
+
+      if (errorMessage == null) {
+        CacheController.saveData(amdinKey, value).then(
+          (response) {
+            if (response) {
+              adminPercentage = value;
+              totalPercentage += value - oldAdminPercentage;
+
+              emit(UpdateAdminPercentageSuccessState());
+              return true;
+            } else {
+              emit(
+                UpdateAdminPercentageErrorState(
+                  StringsManager.defaultError,
+                ),
+              );
+              return false;
+            }
+          },
+        );
+      } else {
+        emit(AddPersonErrorState(errorMessage));
+        return false;
+      }
+    } catch (error) {
+      emit(UpdateAdminPercentageErrorState(error.toString()));
+      return false;
+    }
+    return null;
   }
 
   void calculatePersonsShareValues(double totalNetProfit) {

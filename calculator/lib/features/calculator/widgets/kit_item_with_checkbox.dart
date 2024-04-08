@@ -2,8 +2,8 @@ import 'package:calculator/app/resources/color_manager.dart';
 import 'package:calculator/app/utils/functions.dart';
 import 'package:flutter/material.dart';
 
-class ProfitItem extends StatelessWidget {
-  const ProfitItem({
+class KitItemWithCheckbox extends StatelessWidget {
+  const KitItemWithCheckbox({
     super.key,
     required this.profitId,
     required this.value,

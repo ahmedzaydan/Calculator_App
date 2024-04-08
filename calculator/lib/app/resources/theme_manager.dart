@@ -54,7 +54,7 @@ ThemeData getApplicationTheme() {
           ColorManager.transparent,
         ),
         iconColor: MaterialStateProperty.all(
-          ColorManager.primary,
+          ColorManager.black,
         ),
         iconSize: MaterialStateProperty.all(
           ConstantsManager.iconSize,
