@@ -18,7 +18,6 @@ class CalculatorCubit extends Cubit<AppStates> {
     this.kitCubit,
   ) : super(CalculatorInitialState());
 
-  static CalculatorCubit get(context) => BlocProvider.of(context);
   final PersonsCubit personsCubit;
   final KitsCubit kitCubit;
 
@@ -36,7 +35,12 @@ class CalculatorCubit extends Cubit<AppStates> {
     List<String> values = s.split(',');
     for (var i = 0; i < values.length; i++) {
       if (values[i].isNotEmpty) {
-        total += double.parse(values[i]);
+        try {
+          total += double.parse(values[i]);
+        } catch (e) {
+          kprint("\nError Parsing Value: $e\n");
+        }
+        kprint("\nTotal: $total\n");
       }
     }
     total = roundDouble(total);

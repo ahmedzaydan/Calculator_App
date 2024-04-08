@@ -52,7 +52,7 @@ class ReportView extends StatelessWidget {
           child: SingleChildScrollView(
             child: BlocBuilder<CalculatorCubit, AppStates>(
               builder: (context, state) {
-                var cubit = CalculatorCubit.get(context);
+                var cubit = locator<CalculatorCubit>();
                 return Column(
                   children: [
                     const BasicInfo(),

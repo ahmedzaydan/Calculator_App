@@ -1,4 +1,3 @@
-import 'package:calculator/app/resources/constants_manager.dart';
 import 'package:calculator/app/resources/strings_manager.dart';
 import 'package:calculator/app/resources/styles_manager.dart';
 import 'package:calculator/app/utils/dependency_injection.dart';
@@ -28,8 +27,8 @@ class CalculatorView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<CalculatorCubit, AppStates>(
       builder: (context, state) {
-        var cubit = CalculatorCubit.get(context);
-        // var personsCubit = locator<PersonsCubit>();
+        var cubit = locator<CalculatorCubit>();
+
         if (state is LoadingDataState) {
           return const LoadingWidget();
         } else if (state is LoadingDataErrorState) {
@@ -107,9 +106,6 @@ class CalculatorView extends StatelessWidget {
                   hintText: StringsManager.expansesHint,
                   onChanged: (value) => cubit.expenses = value,
                   keyboardType: TextInputType.text,
-                  inputFormatters: getInputFormatters(
-                    ConstantsManager.calculatorRegex,
-                  ),
                 ),
 
                 const Gap(25),
@@ -121,6 +117,7 @@ class CalculatorView extends StatelessWidget {
                   labelText: StringsManager.extra,
                   hintText: StringsManager.expansesHint,
                   onChanged: (value) => cubit.extra = value,
+                  keyboardType: TextInputType.text,
                 ),
 
                 const Gap(25),
