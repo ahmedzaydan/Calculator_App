@@ -17,7 +17,7 @@ class CustomTextFormField extends StatelessWidget {
     this.validator,
     this.hintText,
     this.inputFormatters,
-    this.fontWeight = FontWeight.bold,
+    this.fontWeight = FontWeight.normal,
     this.fontSize = FontSize.s18,
   });
 
@@ -53,8 +53,8 @@ class CustomTextFormField extends StatelessWidget {
         ),
         enabledBorder: _decorateBorder(color: ColorManager.lightGrey),
         focusedBorder: _decorateBorder(color: ColorManager.primary),
-        errorBorder: _decorateBorder(color: ColorManager.error),
-        focusedErrorBorder: _decorateBorder(color: ColorManager.error),
+        errorBorder: _decorateBorder(color: ColorManager.red),
+        focusedErrorBorder: _decorateBorder(color: ColorManager.red),
         disabledBorder: _decorateBorder(color: ColorManager.black),
         border: _decorateBorder(color: ColorManager.black),
       ),

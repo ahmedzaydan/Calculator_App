@@ -1,22 +1,27 @@
 abstract class StringsManager {
   // general strings
   static const String emptyString = '';
+  static const String loading = 'Loading...';
+  static const String dataLoadingError =
+      'An error occurred while loading data, please try again later';
 
-  // home screen
-  static const String homeScreen = 'Home Screen';
+  // Calculator screen
+  static const String calculatorScreen = 'Calculator';
   static const String kits = 'Kits';
   static const String expenses = 'Expenses';
+  static const expansesHint = 'value1,  value2,';
   static const String extra = 'Extra';
   static const String note = 'Note';
   static const String clear = 'Clear';
-  static const valuesHint = 'value1,  value2,';
+  static const String calculate = 'Calculate';
 
   static const String name = 'Name';
   static const String enterName = 'Enter name';
 
-  // edit persons screen strings
+  // persons screen
   static const String personsScreen = 'Persons Screen';
-  static const String editPersons = 'Edit Persons';
+  static const String editPersons =
+      'Edit Persons'; // TODO: delete unused strings
   static const String add = 'Add';
   static const String addPerson = 'Add New Person';
   static const String percentage = 'Percentage';
@@ -33,10 +38,9 @@ abstract class StringsManager {
   static const String save = 'Save';
   static const String editKits = 'Edit Kits';
 
-  // edit kit list strings
+  // kits screen
   static const String kitsScreen = 'Kits Screen';
   static const String editKitList = 'Edit Kit List';
-  static const String clearList = 'Clear kit list';
   static const String kitNumber = 'Kit number';
   static const String kitValue = 'Kit value';
   static const String enterValue = 'Enter value';
@@ -44,9 +48,14 @@ abstract class StringsManager {
   static const String kitExists = 'Kit id already exists';
   static const String invalidProfitId = 'Kit number must be an integer';
   static const String addKit = 'Add New Kit';
+  static const String month12 = '1° reajuste';
+  static const String month24 = '2° reajuste';
+  static const String month30 = 'RENOVAR';
+  // TODO: what is the correct string value in portuguese
+  static const String expired = 'Expired';
 
   // output screen strings
-  static const String outputScreen = 'Output Screen';
+  static const String reportScreen = 'Report Screen';
   static const String date = 'Date';
   static const String totalProfit = 'Total kit';
   static const String totalExpense = 'Total expense';

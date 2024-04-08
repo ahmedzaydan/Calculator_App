@@ -36,7 +36,7 @@ ThemeData getApplicationTheme() {
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         textStyle: TextStyle(
-          color: ColorManager.error,
+          color: ColorManager.red,
         ),
         backgroundColor: ColorManager.primary,
         shape: RoundedRectangleBorder(
@@ -54,7 +54,7 @@ ThemeData getApplicationTheme() {
           ColorManager.transparent,
         ),
         iconColor: MaterialStateProperty.all(
-          ColorManager.primary,
+          ColorManager.black,
         ),
         iconSize: MaterialStateProperty.all(
           ConstantsManager.iconSize,

@@ -2,17 +2,17 @@ import 'package:calculator/app/resources/color_manager.dart';
 import 'package:calculator/app/utils/functions.dart';
 import 'package:flutter/material.dart';
 
-class ProfitItem extends StatelessWidget {
-  const ProfitItem({
+class KitWithCheckbox extends StatelessWidget {
+  const KitWithCheckbox({
     super.key,
-    required this.profitId,
+    required this.kitName,
     required this.value,
-    required this.profitValue,
+    required this.kitValue,
     required this.onChanged,
   });
 
-  final String profitId;
-  final double profitValue;
+  final String kitName;
+  final double kitValue;
   final bool value;
   final void Function(bool?)? onChanged;
 
@@ -37,17 +37,18 @@ class ProfitItem extends StatelessWidget {
           ),
         ),
         Text(
-          profitId,
+          kitName,
           style: getTextStyle().copyWith(
             color: color,
           ),
         ),
         const Spacer(),
         Text(
-          '$profitValue',
+          '$kitValue',
           style: getTextStyle(),
         ),
       ],
     );
   }
 }
+// TODO: what is this?? 

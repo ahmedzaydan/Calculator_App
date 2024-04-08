@@ -1,4 +1,5 @@
 import 'package:calculator/app/resources/constants_manager.dart';
+import 'package:calculator/app/resources/font_manager.dart';
 import 'package:calculator/app/resources/values_manager.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -17,22 +18,24 @@ void navigateTo({
   );
 }
 
-TextStyle getTextStyle() {
-  return const TextStyle(
-    fontSize: 22,
+TextStyle getTextStyle({
+  double fontSize = FontSize.s22,
+}) {
+  return TextStyle(
+    fontSize: fontSize,
     color: Colors.black,
   );
 }
 
 AppBar customAppBar({
-  required String text,
+  required String title,
   List<Widget>? actions,
-  void Function()? onPressed,
+  void Function()? leadingOnPressed,
   bool leading = true,
 }) {
   return AppBar(
     title: Text(
-      text,
+      title,
       style: const TextStyle(
         fontSize: AppSize.s24,
         fontWeight: FontWeight.bold,
@@ -46,7 +49,7 @@ AppBar customAppBar({
               color: Colors.white,
               size: 32,
             ),
-            onPressed: onPressed,
+            onPressed: leadingOnPressed,
           )
         : null,
   );
