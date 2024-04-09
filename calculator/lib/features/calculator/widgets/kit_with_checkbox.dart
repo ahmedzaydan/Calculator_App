@@ -1,5 +1,5 @@
 import 'package:calculator/app/resources/color_manager.dart';
-import 'package:calculator/app/utils/functions.dart';
+import 'package:calculator/app/resources/font_manager.dart';
 import 'package:flutter/material.dart';
 
 class KitWithCheckbox extends StatelessWidget {
@@ -22,7 +22,7 @@ class KitWithCheckbox extends StatelessWidget {
     return Row(
       children: [
         Transform.scale(
-          scale: 1.3,
+          scale: 1.6,
           child: Checkbox(
             side: BorderSide(
               color: Theme.of(context).primaryColor,
@@ -38,17 +38,20 @@ class KitWithCheckbox extends StatelessWidget {
         ),
         Text(
           kitName,
-          style: getTextStyle().copyWith(
+          style: TextStyle(
+            fontSize: FontSize.s28,
             color: color,
           ),
         ),
         const Spacer(),
         Text(
           '$kitValue',
-          style: getTextStyle(),
+          style: TextStyle(
+            fontSize: FontSize.s28,
+            color: color,
+          ),
         ),
       ],
     );
   }
 }
-// TODO: what is this?? 

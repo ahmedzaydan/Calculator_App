@@ -18,7 +18,11 @@ class AddKitErrorState extends AppStates {
 }
 
 // LoadKitsData states
-class LoadKitsDataLoadingState extends AppStates {}
+class LoadKitsDataLoadingState extends AppStates {
+  final String message;
+
+  LoadKitsDataLoadingState(this.message);
+}
 
 class LoadKitsDataSuccessState extends AppStates {}
 
@@ -29,7 +33,11 @@ class LoadKitsDataErrorState extends AppStates {
 }
 
 // UpdateKitsData states
-class UpdateKitSuccessState extends AppStates {}
+class UpdateKitSuccessState extends AppStates {
+  final String message;
+
+  UpdateKitSuccessState(this.message);
+}
 
 class UpdateKitErrorState extends AppStates {
   final String message;
@@ -58,7 +66,11 @@ class ClearKitItemsErrorState extends AppStates {
 class KitsSortedState extends AppStates {}
 
 // DeleteKit states
-class DeleteKitSuccessState extends AppStates {}
+class DeleteKitSuccessState extends AppStates {
+  final String message;
+
+  DeleteKitSuccessState(this.message);
+}
 
 class DeleteKitErrorState extends AppStates {
   final String message;

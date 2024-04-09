@@ -90,7 +90,6 @@ class AppCubit extends Cubit<AppStates> {
   void changeIndex(int index) {
     currentIndex = index;
     if (currentIndex == 0) {
-      kitsCubit.sortKits(sortingType: SortingType.name);
     } else if (currentIndex == 1) {
       getKeys();
       kitsCubit.loadData(kitsKeys);

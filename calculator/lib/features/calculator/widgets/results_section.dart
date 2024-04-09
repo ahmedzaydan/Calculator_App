@@ -4,6 +4,7 @@ import 'package:calculator/app/utils/functions.dart';
 import 'package:calculator/app/widgets/custom_list_view.dart';
 import 'package:calculator/features/persons/models/person_model.dart';
 import 'package:calculator/features/persons/person_cubit/persons_cubit.dart';
+import 'package:calculator/features/widgets/custom_divider.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -29,22 +30,11 @@ class ResultsSection extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            // admin profit
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  StringsManager.adminPercentage,
-                  style: getTextStyle(),
-                ),
-                Text(
-                  '${cubit.adminProfit}',
-                  style: getTextStyle(),
-                ),
-              ],
-            ),
+            _adminProfit(),
 
-            const Divider(color: Colors.black),
+            const CustomDivider(thickness: 1.6),
+
+            const Gap(30),
 
             // person net profit
             CustomListView(
@@ -66,13 +56,30 @@ class ResultsSection extends StatelessWidget {
                 );
               },
               separatorBuilder: (context, index) {
-                return const Divider(color: Colors.black);
+                return const CustomDivider(thickness: 1.6);
               },
               itemCount: cubit.personItems.length,
             ),
           ],
         ),
       ),
+    );
+  }
+
+  Row _adminProfit() {
+    var cubit = locator<PersonsCubit>();
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          StringsManager.adminPercentage,
+          style: getTextStyle(),
+        ),
+        Text(
+          '${cubit.adminProfit}',
+          style: getTextStyle(),
+        ),
+      ],
     );
   }
 }

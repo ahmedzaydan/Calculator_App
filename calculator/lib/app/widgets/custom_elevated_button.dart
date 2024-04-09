@@ -8,11 +8,13 @@ class CustomElevatedButton extends StatelessWidget {
     required this.onPressed,
     required this.text,
     this.width,
+    this.textStyle,
   });
 
   final void Function()? onPressed;
   final String text;
   final double? width;
+  final TextStyle? textStyle;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +32,7 @@ class CustomElevatedButton extends StatelessWidget {
         onPressed: onPressed,
         child: Text(
           text,
-          style: TextStyle(
+          style: textStyle ?? TextStyle(
             color: ColorManager.white,
             fontSize: 24,
             fontWeight: FontWeight.bold,

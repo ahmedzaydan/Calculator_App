@@ -20,7 +20,6 @@ abstract class ColorManager {
   // 0x26 for the alpha channel
   static Color black26 = const Color(0x26000000);
 
-  // TODO: change the colors to the correct ones
   static Color expired = const Color(0xffBFBFBF);
   static Color month30 = const Color(0xffe00b0b);
   static Color month24 = const Color(0xfff0C559);

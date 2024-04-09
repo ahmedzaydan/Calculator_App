@@ -4,7 +4,7 @@ import 'package:calculator/app/utils/functions.dart';
 import 'package:calculator/app/widgets/custom_list_view.dart';
 import 'package:calculator/features/persons/models/person_model.dart';
 import 'package:calculator/features/persons/person_cubit/persons_cubit.dart';
-import 'package:calculator/features/persons/views/widgets/person_widget.dart';
+import 'package:calculator/features/widgets/data_item.dart';
 import 'package:calculator/features/widgets/edit_item_view.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -23,10 +23,11 @@ class PersonsListView extends StatelessWidget {
     return CustomListView(
       itemBuilder: (context, index) {
         PersonModel person = cubit.personItems[index];
-        return PersonWidget(
-          person: person,
-          backgroundColor:
+        return DataItem(
+          color:
               index % 2 == 0 ? ColorManager.expired : ColorManager.transparent,
+          name: person.name,
+          value: person.percentage.toString(),
           editOnPressed: () {
             navigateTo(
               context: context,
@@ -42,7 +43,7 @@ class PersonsListView extends StatelessWidget {
         );
       },
       itemCount: cubit.personItems.length,
-      separatorBuilder: (context, index) => const Gap(0),
+      separatorBuilder: (context, index) => const Gap(20),
     );
   }
 }

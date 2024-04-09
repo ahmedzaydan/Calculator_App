@@ -1,6 +1,5 @@
 import 'package:calculator/app/resources/constants_manager.dart';
 import 'package:calculator/app/resources/font_manager.dart';
-import 'package:calculator/app/resources/values_manager.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -18,42 +17,12 @@ void navigateTo({
   );
 }
 
-// TODO: remove this function
 TextStyle getTextStyle({
-  double fontSize = FontSize.s24,
+  double fontSize = FontSize.s28,
 }) {
   return TextStyle(
     fontSize: fontSize,
     color: Colors.black,
-  );
-}
-
-// TODO: remove this function
-AppBar customAppBar({
-  required String title,
-  List<Widget>? actions,
-  void Function()? leadingOnPressed,
-  bool leading = true,
-}) {
-  return AppBar(
-    title: Text(
-      title,
-      style: const TextStyle(
-        fontSize: AppSize.s24,
-        fontWeight: FontWeight.bold,
-      ),
-    ),
-    actions: actions,
-    leading: leading
-        ? IconButton(
-            icon: const Icon(
-              Icons.arrow_back_outlined,
-              color: Colors.white,
-              size: 32,
-            ),
-            onPressed: leadingOnPressed,
-          )
-        : null,
   );
 }
 
@@ -85,18 +54,15 @@ Color colorToast(ToastStates state) {
 }
 
 // custom showToast
-void showCustomToast({
-  required String message,
-  required ToastStates state,
-}) {
+void showCustomToast(String message, ToastStates state) {
   Fluttertoast.showToast(
     msg: message,
-    toastLength: Toast.LENGTH_LONG,
-    gravity: ToastGravity.BOTTOM,
-    timeInSecForIosWeb: 5,
-    backgroundColor: colorToast(state),
-    textColor: Colors.white,
     fontSize: 18,
+    timeInSecForIosWeb: 5,
+    textColor: Colors.white,
+    gravity: ToastGravity.BOTTOM,
+    toastLength: Toast.LENGTH_LONG,
+    backgroundColor: colorToast(state),
   );
 }
 
@@ -111,5 +77,71 @@ TextDirection getTextDirection(String text) {
 void kprint(dynamic message) {
   if (kDebugMode) {
     print('\n$message\n');
+  }
+}
+
+String getStateMessage({
+  required AppState state,
+  required ItemType itemType,
+  ItemAction? action,
+  String label = '',
+  String? error,
+}) {
+  switch (itemType) {
+    case ItemType.kit:
+      switch (state) {
+        case AppState.loading:
+          return 'Loading kits data...';
+        case AppState.success:
+          switch (action!) {
+            case ItemAction.add:
+              return '$label added successfully';
+            case ItemAction.update:
+              return '$label value updated successfully';
+            case ItemAction.delete:
+              return '$label deleted successfully';
+            case ItemAction.load:
+              return 'Kits data loaded successfully';
+          }
+        case AppState.error:
+          switch (action!) {
+            case ItemAction.add:
+              return error ?? 'Failed to add $label';
+            case ItemAction.update:
+              return 'Failed to update $label value';
+            case ItemAction.delete:
+              return 'Failed to delete $label';
+            case ItemAction.load:
+              return 'Failed to load kits data';
+          }
+      }
+
+    case ItemType.person:
+      switch (state) {
+        case AppState.loading:
+          return 'Loading persons data...';
+        case AppState.success:
+          switch (action!) {
+            case ItemAction.add:
+              return '$label added successfully';
+            case ItemAction.update:
+              return '$label perecentage updated successfully';
+            case ItemAction.delete:
+              return '$label deleted successfully';
+            case ItemAction.load:
+              return 'Persons data loaded successfully';
+          }
+        case AppState.error:
+          switch (action!) {
+            case ItemAction.add:
+              return 'Failed to add $label';
+            case ItemAction.update:
+              return 'Failed to update $label perecentage';
+            case ItemAction.delete:
+              return 'Failed to delete $label';
+            case ItemAction.load:
+              return 'Failed to load persons data';
+          }
+      }
   }
 }

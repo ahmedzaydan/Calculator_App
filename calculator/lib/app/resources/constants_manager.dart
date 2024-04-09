@@ -12,3 +12,21 @@ abstract class ConstantsManager {
 }
 
 enum ToastStates { success, error }
+
+enum AppState {
+  loading,
+  success,
+  error,
+}
+
+enum ItemType {
+  kit,
+  person,
+}
+
+enum ItemAction {
+  add,
+  load,
+  update,
+  delete,
+}

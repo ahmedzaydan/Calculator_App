@@ -25,18 +25,18 @@ class KitsListWithCheckbox extends StatelessWidget {
           visible: !cubit.isKitsListCollapsed,
           child: CustomListView(
             itemBuilder: (_, index) {
-              KitModel kit = kitsCubit.kitItems[index];
+              KitModel kit = kitsCubit.kits[index];
               return KitWithCheckbox(
                 kitName: kit.name,
                 kitValue: kit.value,
                 value: kit.isChecked,
                 onChanged: (_) async {
-                  await kitsCubit.toggleKitIsChecked(index);
+                  await kitsCubit.toggleKitIsChecked(kit);
                 },
               );
             },
-            separatorBuilder: (_, index) => const Gap(1),
-            itemCount: kitsCubit.kitItems.length,
+            separatorBuilder: (_, index) => const Gap(5),
+            itemCount: kitsCubit.kits.length,
           ),
         );
       },

@@ -11,7 +11,6 @@ import 'package:calculator/features/widgets/custom_error_widget.dart';
 import 'package:calculator/features/widgets/loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gap/gap.dart';
 
 class PersonsView extends StatelessWidget {
   const PersonsView({super.key});
@@ -21,10 +20,31 @@ class PersonsView extends StatelessWidget {
     return BlocConsumer<PersonsCubit, AppStates>(
       listener: (_, state) {
         if (state is AddPersonErrorState) {
-          showCustomToast(
-            message: state.message,
-            state: ToastStates.error,
-          );
+          showCustomToast(state.message, ToastStates.error);
+        }
+
+        if (state is AddPersonSuccessState) {
+          showCustomToast(state.message, ToastStates.success);
+        }
+
+        if (state is UpdatePersonErrorState) {
+          showCustomToast(state.message, ToastStates.error);
+        }
+
+        if (state is UpdatePersonSuccessState) {
+          showCustomToast(state.message, ToastStates.success);
+        }
+
+        if (state is DeletePersonErrorState) {
+          showCustomToast(state.message, ToastStates.error);
+        }
+
+        if (state is DeletePersonSuccessState) {
+          showCustomToast(state.message, ToastStates.success);
+        }
+
+        if (state is LoadPersonsDataErrorState) {
+          showCustomToast(state.message, ToastStates.error);
         }
       },
       builder: (_, state) {
@@ -39,24 +59,24 @@ class PersonsView extends StatelessWidget {
             children: [
               // admin widget
               Container(
-                margin: const EdgeInsets.symmetric(vertical: AppMargin.m10),
+                margin: const EdgeInsets.only(top: AppMargin.m20),
                 child: AdminWidget(sourceContext: context),
               ),
 
-              const Gap(20),
-
               // add item widget
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: AppPadding.p10),
+                padding: const EdgeInsets.only(
+                  left: AppPadding.p10,
+                  right: AppPadding.p10,
+                  top: AppPadding.p24,
+                  bottom: AppPadding.p50,
+                ),
                 child: AddItemWidget(
                   isPerson: true,
                   labelInputType: TextInputType.text,
                 ),
               ),
 
-              const Gap(40),
-
-              // persons list view
               PersonsListView(sourceContext: context),
             ],
           ),

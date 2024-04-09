@@ -4,11 +4,13 @@ import 'package:calculator/app/resources/font_manager.dart';
 import 'package:calculator/app/resources/strings_manager.dart';
 import 'package:calculator/app/resources/values_manager.dart';
 import 'package:calculator/app/utils/dependency_injection.dart';
+import 'package:calculator/app/utils/extensions.dart';
 import 'package:calculator/app/utils/functions.dart';
 import 'package:calculator/app/widgets/custom_elevated_button.dart';
 import 'package:calculator/app/widgets/custom_icon_button.dart';
 import 'package:calculator/app/widgets/custom_text_form_field.dart';
 import 'package:calculator/features/kits/kit_cubit/kit_cubit.dart';
+import 'package:calculator/features/kits/models/kit_model.dart';
 import 'package:calculator/features/persons/person_cubit/persons_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -22,7 +24,8 @@ class EditItemView extends StatelessWidget {
     required this.sourceContext,
     this.updateKits = false,
     // indcates that we are updating admin data
-    this.index = -1, 
+    this.index = -1,
+    this.kitModel,
   });
 
   final String label;
@@ -30,6 +33,7 @@ class EditItemView extends StatelessWidget {
   final int index;
   final bool updateKits;
   final BuildContext sourceContext;
+  final KitModel? kitModel;
 
   final TextEditingController valueController = TextEditingController();
   final formKey = GlobalKey<FormState>();
@@ -40,6 +44,13 @@ class EditItemView extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
+        title: Text(
+          updateKits ? 'Edit $label Value' : 'Edit $label Percentage',
+          style: TextStyle(
+            fontSize: FontSize.s24,
+            color: ColorManager.white,
+          ),
+        ),
         leading: CustomIconButton(
           style: ButtonStyle(
             iconColor: MaterialStateProperty.all(ColorManager.white),
@@ -61,7 +72,8 @@ class EditItemView extends StatelessWidget {
               CustomTextFormField(
                 controller: valueController,
                 labelText: label,
-                fontSize: FontSize.s28,
+                fontSize: FontSize.s32,
+                fontWeight: FontWeight.bold,
                 validator: (value) {
                   if (value!.isEmpty) {
                     return updateKits
@@ -79,12 +91,16 @@ class EditItemView extends StatelessWidget {
               // save button
               CustomElevatedButton(
                 onPressed: () async {
+                  var kitsCubit = locator<KitsCubit>();
                   if (formKey.currentState!.validate()) {
                     if (updateKits) {
-                      locator<KitsCubit>()
-                          .updateKitValue(
-                        index: index,
-                        value: double.parse(valueController.text),
+                      kprint(
+                        'From EditItemView: ${locator<KitsCubit>().kits[index].name}',
+                      );
+                      kitsCubit
+                          .updateKit(
+                        kitModel: kitModel!,
+                        value: valueController.text.toDouble(),
                       )
                           .then((response) {
                         if ((response == null || response == true) &&

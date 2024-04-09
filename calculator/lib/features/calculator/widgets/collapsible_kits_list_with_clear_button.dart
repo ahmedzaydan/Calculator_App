@@ -1,5 +1,5 @@
+import 'package:calculator/app/resources/font_manager.dart';
 import 'package:calculator/app/resources/strings_manager.dart';
-import 'package:calculator/app/resources/styles_manager.dart';
 import 'package:calculator/app/utils/dependency_injection.dart';
 import 'package:calculator/app/widgets/custom_elevated_button.dart';
 import 'package:calculator/features/calculator/calculator_cubit/calculator_cubit.dart';
@@ -29,12 +29,13 @@ class CollapsibleKitsListWithClearButton extends StatelessWidget {
             isCollapsed: cubit.isKitsListCollapsed,
           ),
 
-          const Gap(15),
+          const Gap(30),
 
           // kits text
-          Text(
+          const Text(
             StringsManager.kits,
-            style: TextStylesManager.textStyle20.copyWith(
+            style: TextStyle(
+              fontSize: FontSize.s28,
               fontWeight: FontWeight.bold,
             ),
           ),

@@ -5,7 +5,11 @@ class KitModel {
   double value;
   bool isChecked;
   DateTime startDate;
-  DateTime endDate;
+
+  // endDate and status are always non null
+  // as they will be assigned in the constructor
+  // when calling their methods
+  DateTime? endDate;
   KitStatus? status;
 
   KitModel({
@@ -13,8 +17,9 @@ class KitModel {
     required this.value,
     this.isChecked = false,
     required this.startDate,
-    required this.endDate,
+    this.endDate,
   }) {
+    getKitEndDate();
     selectStatus();
   }
 
@@ -31,7 +36,7 @@ class KitModel {
 
   void setIsChecked(bool status) => isChecked = status;
 
-  void toggleStatus() => isChecked = !isChecked;
+  void toggleIsChecked() => isChecked = !isChecked;
 
   String get format {
     String spaces = '  ';
@@ -55,16 +60,16 @@ class KitModel {
     DateTime now = DateTime.now();
 
     // contract is expired
-    if (now.year > endDate.year ||
-        (now.year == endDate.year && now.month > endDate.month) ||
-        (now.year == endDate.year &&
-            now.month == endDate.month &&
-            now.day > endDate.day)) {
+    if (now.year > endDate!.year ||
+        (now.year == endDate!.year && now.month > endDate!.month) ||
+        (now.year == endDate!.year &&
+            now.month == endDate!.month &&
+            now.day > endDate!.day)) {
       status = KitStatus.expired;
     }
 
     // contract is in the month 30
-    else if (now.year == endDate.year && now.month == endDate.month) {
+    else if (now.year == endDate!.year && now.month == endDate!.month) {
       status = KitStatus.month30;
     }
 
@@ -93,5 +98,47 @@ class KitModel {
       }
       status = KitStatus.month12; // TODO: remove this line
     }
+  }
+
+  void getKitEndDate() {
+    int futureMonth = startDate.month + 6;
+
+    // contract duration is 2 years and 6 months
+    int futureYear = startDate.year + 2;
+
+    // if the future month is greater than 12
+    // then the future year will be the next year
+    futureYear += (futureMonth ~/ 12);
+
+    // if the future month is greater than 12
+    futureMonth %= 12;
+
+    int futureDay = startDate.day - 1;
+
+    // if future day = 0
+    if (futureDay == 0) {
+      // future day will be the last day of the previous month
+      futureDay = DateTime(futureYear, futureMonth, 0).day;
+
+      // future month will be the previous month
+      futureMonth -= 1;
+
+      // if the future month is January
+      if (futureMonth == 0) {
+        // future month will be December
+        futureMonth = 12;
+
+        // future year will be the previous year
+        futureYear -= 1;
+      }
+    }
+
+    // if the future day is greater than the last day of the future month
+    else if (futureDay > DateTime(futureYear, futureMonth + 1, 0).day) {
+      // then the future day will be the last day of future the month
+      futureDay = DateTime(futureYear, futureMonth + 1, 0).day;
+    }
+
+    endDate = DateTime(futureYear, futureMonth, futureDay);
   }
 }

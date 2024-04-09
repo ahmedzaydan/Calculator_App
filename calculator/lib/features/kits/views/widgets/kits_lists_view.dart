@@ -5,8 +5,8 @@ import 'package:calculator/features/kits/views/widgets/kits_list_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
-class KitsListView extends StatelessWidget {
-  KitsListView({
+class KitsListsView extends StatelessWidget {
+  KitsListsView({
     super.key,
     required this.sourceContext,
   });
@@ -18,7 +18,7 @@ class KitsListView extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomListView(
       itemBuilder: (context, index) {
-        return KitsListWidget(
+        return KitsListsWidget(
           sourceContext: sourceContext,
           list: cubit.getCollapsableList(index),
           title: cubit.listsTitles[index],
@@ -26,7 +26,7 @@ class KitsListView extends StatelessWidget {
           collapseOnPressed: () => cubit.toggleListVisibility(index),
         );
       },
-      itemCount: cubit.collapsedLists.length,
+      itemCount: 5,
       separatorBuilder: (_, __) => const Gap(0),
     );
   }

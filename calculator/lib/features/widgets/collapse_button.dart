@@ -20,8 +20,8 @@ class CollapseButton extends StatelessWidget {
       onPressed: onPressed,
       icon: FaIcon(
         isCollapsed
-            ? FontAwesomeIcons.circleChevronUp
-            : FontAwesomeIcons.circleChevronDown,
+            ? FontAwesomeIcons.circleChevronDown
+            : FontAwesomeIcons.circleChevronUp,
         color: ColorManager.black,
         size: ConstantsManager.iconSize,
       ),

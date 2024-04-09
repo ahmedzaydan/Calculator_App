@@ -11,8 +11,8 @@ import 'package:calculator/features/widgets/edit_item_view.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
-class KitsListWidget extends StatelessWidget {
-  KitsListWidget({
+class KitsListsWidget extends StatelessWidget {
+  KitsListsWidget({
     super.key,
     required this.sourceContext,
     required this.list,
@@ -33,10 +33,7 @@ class KitsListWidget extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.only(
-            left: 10,
-            right: 20,
-          ),
+          padding: const EdgeInsets.only(right: 10),
           child: KitsListHeader(
             title: title,
             counter: list.length.toString(),
@@ -60,6 +57,7 @@ class KitsListWidget extends StatelessWidget {
                   navigateTo(
                     context: sourceContext,
                     dest: EditItemView(
+                      kitModel: kit,
                       label: kit.name,
                       value: kit.value,
                       updateKits: true,
@@ -68,9 +66,7 @@ class KitsListWidget extends StatelessWidget {
                     ),
                   );
                 },
-                deleteOnPressed: () async {
-                  await cubit.deleteKitItem(index);
-                },
+                deleteOnPressed: () async => await cubit.deleteKit(kit),
               );
             },
             itemCount: list.length,

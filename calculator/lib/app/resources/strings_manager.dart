@@ -4,6 +4,9 @@ abstract class StringsManager {
   static const String loading = 'Loading...';
   static const String dataLoadingError =
       'An error occurred while loading data, please try again later';
+  static const String adminPercentage = 'Teresa';
+  static const String save = 'Save';
+  static const String defaultError = 'An error occurred';
 
   // Calculator screen
   static const String calculatorScreen = 'Calculator';
@@ -20,8 +23,6 @@ abstract class StringsManager {
 
   // persons screen
   static const String personsScreen = 'Persons Screen';
-  static const String editPersons =
-      'Edit Persons'; // TODO: delete unused strings
   static const String add = 'Add';
   static const String addPerson = 'Add New Person';
   static const String percentage = 'Percentage';
@@ -32,12 +33,6 @@ abstract class StringsManager {
   static const String invalidPercentage =
       'Percentage must be a number between 0 and 100';
 
-  // settings screen strings
-  static const String settings = 'Settings';
-  static const String adminPercentage = 'Teresa';
-  static const String save = 'Save';
-  static const String editKits = 'Edit Kits';
-
   // kits screen
   static const String kitsScreen = 'Kits Screen';
   static const String editKitList = 'Edit Kit List';
@@ -45,7 +40,7 @@ abstract class StringsManager {
   static const String kitValue = 'Kit value';
   static const String enterValue = 'Enter value';
   static const String enterNumber = 'Enter kit number';
-  static const String kitExists = 'Kit id already exists';
+  static const String kitExists = 'Kit already exists';
   static const String invalidProfitId = 'Kit number must be an integer';
   static const String addKit = 'Add New Kit';
   static const String month12 = '1° reajuste';
@@ -55,7 +50,7 @@ abstract class StringsManager {
   static const String expired = 'Expired';
   static const String pickMeAColour = 'Pick me a colour';
 
-  // output screen strings
+  // report screen strings
   static const String reportScreen = 'Report Screen';
   static const String date = 'Date';
   static const String totalProfit = 'Total kit';
@@ -67,5 +62,4 @@ abstract class StringsManager {
   // cubit strings
   static const String status = 'status';
   static const String admin = 'Teresa';
-  static const String defaultError = 'An error occurred';
 }
