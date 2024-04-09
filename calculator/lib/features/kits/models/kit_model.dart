@@ -14,8 +14,9 @@ class KitModel {
     this.isChecked = false,
     required this.startDate,
     required this.endDate,
-    this.status,
-  });
+  }) {
+    selectStatus();
+  }
 
   // Constructor that takes list<String> as parameter
   // and assigns the values to the class properties
@@ -32,14 +33,12 @@ class KitModel {
 
   void toggleStatus() => isChecked = !isChecked;
 
-  void setStatus(KitStatus kitStatus) => status = kitStatus;
-
   String get format {
     String spaces = '  ';
     return '$name,$spaces';
   }
 
-  // Returns a list of strings that represent the class properties
+  // returns a list of strings represent the class properties
   List<String> toStringList() {
     return [
       name,
@@ -48,5 +47,51 @@ class KitModel {
       startDate.toString(),
       endDate.toString(),
     ];
+  }
+
+  void selectStatus() {
+    status = KitStatus.transparent;
+
+    DateTime now = DateTime.now();
+
+    // contract is expired
+    if (now.year > endDate.year ||
+        (now.year == endDate.year && now.month > endDate.month) ||
+        (now.year == endDate.year &&
+            now.month == endDate.month &&
+            now.day > endDate.day)) {
+      status = KitStatus.expired;
+    }
+
+    // contract is in the month 30
+    else if (now.year == endDate.year && now.month == endDate.month) {
+      status = KitStatus.month30;
+    }
+
+    // contract is in the month 24
+    else if (now.year - startDate.year == 2 && startDate.month == now.month) {
+      // get the last day of the current month
+      int lastDay = DateTime(now.year, now.month + 1, 0).day;
+
+      // if the contract within last 10 days of month 24
+      if ((lastDay >= 30 && now.day >= 20) ||
+          (lastDay < 30 && (now.day >= (lastDay - 10)))) {
+        status = KitStatus.month24;
+      }
+      status = KitStatus.month24; // TODO: remove this line
+    }
+
+    // contract is in the month 12
+    else if (now.year - startDate.year == 1 && now.month == startDate.month) {
+      // get the last day of the current month
+      int lastDay = DateTime(now.year, now.month + 1, 0).day;
+
+      // if the contract within last 10 days of month 12
+      if ((lastDay >= 30 && now.day >= 20) ||
+          (lastDay < 30 && (now.day >= (lastDay - 10)))) {
+        status = KitStatus.month12;
+      }
+      status = KitStatus.month12; // TODO: remove this line
+    }
   }
 }

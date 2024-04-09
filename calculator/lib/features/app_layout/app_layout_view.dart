@@ -13,17 +13,19 @@ class AppLayout extends StatelessWidget {
     return BlocBuilder<AppCubit, AppStates>(
       builder: (_, __) {
         var cubit = locator<AppCubit>();
-        return Scaffold(
-          appBar: cubit.appBars[cubit.currentIndex],
-          body: cubit.screens[cubit.currentIndex],
-          bottomNavigationBar: BottomNavigationBar(
-            items: cubit.bottomNavItems,
-            currentIndex: cubit.currentIndex,
-            onTap: (index) {
-              cubit.changeIndex(index);
-            },
-            selectedItemColor: ColorManager.primary,
-            unselectedItemColor: ColorManager.lightGrey,
+        return SafeArea(
+          child: Scaffold(
+            // appBar: cubit.appBars[cubit.currentIndex],
+            body: cubit.screens[cubit.currentIndex],
+            bottomNavigationBar: BottomNavigationBar(
+              items: cubit.bottomNavItems,
+              currentIndex: cubit.currentIndex,
+              onTap: (index) {
+                cubit.changeIndex(index);
+              },
+              selectedItemColor: ColorManager.primary,
+              unselectedItemColor: ColorManager.lightGrey,
+            ),
           ),
         );
       },

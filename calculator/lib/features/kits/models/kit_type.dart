@@ -6,7 +6,7 @@ class KitType {
   Color backgroundColor;
 
   KitType({
-    this.typeString = StringsManager.emptyString,
+    this.typeString = StringsManager.pickMeAColour,
     this.backgroundColor = Colors.transparent,
   });
 }

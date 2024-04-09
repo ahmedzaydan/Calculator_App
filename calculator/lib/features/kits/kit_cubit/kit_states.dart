@@ -5,7 +5,11 @@ class KitsInitialState extends AppStates {}
 // AddKit states
 class AddKitLoadingState extends AppStates {}
 
-class AddKitSuccessState extends AppStates {}
+class AddKitSuccessState extends AppStates {
+  final String message;
+
+  AddKitSuccessState(this.message);
+}
 
 class AddKitErrorState extends AppStates {
   final String message;
@@ -25,21 +29,21 @@ class LoadKitsDataErrorState extends AppStates {
 }
 
 // UpdateKitsData states
-class UpdateKitDataSuccessState extends AppStates {}
+class UpdateKitSuccessState extends AppStates {}
 
-class UpdateKitDataErrorState extends AppStates {
+class UpdateKitErrorState extends AppStates {
   final String message;
 
-  UpdateKitDataErrorState(this.message);
+  UpdateKitErrorState(this.message);
 }
 
 // Change Kit status states
-class KitStatusChangedSuccessState extends AppStates {}
+class KitCheckedStatusChangedSuccessState extends AppStates {}
 
-class KitStatusChangedErrorState extends AppStates {
+class KitCheckedStatusChangedErrorState extends AppStates {
   final String message;
 
-  KitStatusChangedErrorState(this.message);
+  KitCheckedStatusChangedErrorState(this.message);
 }
 
 // Clear Kit items states

@@ -53,6 +53,7 @@ abstract class StringsManager {
   static const String month30 = 'RENOVAR';
   // TODO: what is the correct string value in portuguese
   static const String expired = 'Expired';
+  static const String pickMeAColour = 'Pick me a colour';
 
   // output screen strings
   static const String reportScreen = 'Report Screen';

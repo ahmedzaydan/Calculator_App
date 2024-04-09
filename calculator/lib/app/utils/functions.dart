@@ -18,8 +18,9 @@ void navigateTo({
   );
 }
 
+// TODO: remove this function
 TextStyle getTextStyle({
-  double fontSize = FontSize.s22,
+  double fontSize = FontSize.s24,
 }) {
   return TextStyle(
     fontSize: fontSize,
@@ -27,6 +28,7 @@ TextStyle getTextStyle({
   );
 }
 
+// TODO: remove this function
 AppBar customAppBar({
   required String title,
   List<Widget>? actions,
@@ -55,7 +57,7 @@ AppBar customAppBar({
   );
 }
 
-double roundDouble(double value) {
+double formatDobule(double value) {
   return double.parse(value.toStringAsFixed(2));
 }
 

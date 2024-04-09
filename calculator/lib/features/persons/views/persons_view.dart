@@ -43,6 +43,8 @@ class PersonsView extends StatelessWidget {
                 child: AdminWidget(sourceContext: context),
               ),
 
+              const Gap(20),
+
               // add item widget
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: AppPadding.p10),
@@ -52,7 +54,7 @@ class PersonsView extends StatelessWidget {
                 ),
               ),
 
-              const Gap(20),
+              const Gap(40),
 
               // persons list view
               PersonsListView(sourceContext: context),

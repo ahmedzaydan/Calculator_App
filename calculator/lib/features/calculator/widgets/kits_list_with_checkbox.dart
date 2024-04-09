@@ -31,7 +31,7 @@ class KitsListWithCheckbox extends StatelessWidget {
                 kitValue: kit.value,
                 value: kit.isChecked,
                 onChanged: (_) async {
-                  await kitsCubit.changeKitStatus(index);
+                  await kitsCubit.toggleKitIsChecked(index);
                 },
               );
             },

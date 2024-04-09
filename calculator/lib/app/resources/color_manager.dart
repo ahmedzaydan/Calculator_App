@@ -21,8 +21,9 @@ abstract class ColorManager {
   static Color black26 = const Color(0x26000000);
 
   // TODO: change the colors to the correct ones
-  static Color month12 = const Color(0xff4CAF50);
-  static Color month24 = Colors.yellow;
-  static Color month30 = Colors.red;
-  static Color expired = const Color(0xff9E9E9E);
+  static Color expired = const Color(0xffBFBFBF);
+  static Color month30 = const Color(0xffe00b0b);
+  static Color month24 = const Color(0xfff0C559);
+  static Color month24Lighter = const Color(0xffffD640);
+  static Color month12 = const Color(0xff39E53F);
 }

@@ -10,7 +10,6 @@ import 'package:calculator/features/widgets/custom_error_widget.dart';
 import 'package:calculator/features/widgets/loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gap/gap.dart';
 
 class KitsView extends StatelessWidget {
   const KitsView({super.key});
@@ -26,6 +25,13 @@ class KitsView extends StatelessWidget {
             state: ToastStates.error,
           );
         }
+
+        if (state is AddKitSuccessState) {
+          showCustomToast(
+            message: state.message,
+            state: ToastStates.success,
+          );
+        }
       },
       builder: (_, state) {
         if (state is LoadingDataState) {
@@ -39,22 +45,24 @@ class KitsView extends StatelessWidget {
   }
 
   Widget _buildKitsView(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(AppPadding.p10),
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            AddItemWidget(
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppPadding.p10,
+              vertical: AppPadding.p24,
+            ),
+            child: AddItemWidget(
               labelInputType:
                   const TextInputType.numberWithOptions(decimal: false),
               labelInputFormatters:
                   getInputFormatters(ConstantsManager.kitsRegex),
             ),
-            const Gap(40),
-            KitsListView(sourceContext: context),
-          ],
-        ),
+          ),
+          KitsListView(sourceContext: context),
+        ],
       ),
     );
   }

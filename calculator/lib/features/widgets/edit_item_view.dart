@@ -21,7 +21,8 @@ class EditItemView extends StatelessWidget {
     required this.value,
     required this.sourceContext,
     this.updateKits = false,
-    this.index = -1, // indcates that we are updating admin data
+    // indcates that we are updating admin data
+    this.index = -1, 
   });
 
   final String label;
@@ -60,7 +61,7 @@ class EditItemView extends StatelessWidget {
               CustomTextFormField(
                 controller: valueController,
                 labelText: label,
-                fontSize: FontSize.s22,
+                fontSize: FontSize.s28,
                 validator: (value) {
                   if (value!.isEmpty) {
                     return updateKits
@@ -98,24 +99,30 @@ class EditItemView extends StatelessWidget {
                             .updateAdminPercentage(
                           double.parse(valueController.text),
                         )
-                            .then((response) {
-                          if ((response == null || response == true) && sourceContext.mounted) {
-                            kprint('update admin percentage success');
-                            Navigator.pop(sourceContext);
-                          }
-                        });
+                            .then(
+                          (response) {
+                            if ((response == null || response == true) &&
+                                sourceContext.mounted) {
+                              kprint('update admin percentage success');
+                              Navigator.pop(sourceContext);
+                            }
+                          },
+                        );
                       } else {
                         locator<PersonsCubit>()
                             .updatePersonPercentage(
                           index: index,
                           value: double.parse(valueController.text),
                         )
-                            .then((response) {
-                          if ((response == null || response == true) && sourceContext.mounted) {
-                            kprint('update person percentage success');
-                            Navigator.pop(sourceContext);
-                          }
-                        });
+                            .then(
+                          (response) {
+                            if ((response == null || response == true) &&
+                                sourceContext.mounted) {
+                              kprint('update person percentage success');
+                              Navigator.pop(sourceContext);
+                            }
+                          },
+                        );
                       }
                     }
                   }

@@ -49,7 +49,7 @@ class CalculatorCubit extends Cubit<AppStates> {
         kprint("\nTotal: $total\n");
       }
     }
-    total = roundDouble(total);
+    total = formatDobule(total);
     return total;
   }
 
@@ -61,13 +61,13 @@ class CalculatorCubit extends Cubit<AppStates> {
 
     personsCubit.adminProfit =
         kitCubit.totalKits * (personsCubit.adminPercentage / 100);
-    personsCubit.adminProfit = roundDouble(personsCubit.adminProfit);
+    personsCubit.adminProfit = formatDobule(personsCubit.adminProfit);
 
     netProfit = kitCubit.totalKits -
         totalExpense -
         personsCubit.adminProfit +
         totalExtra;
-    netProfit = roundDouble(netProfit);
+    netProfit = formatDobule(netProfit);
 
     personsCubit.calculatePersonsShareValues(netProfit);
 

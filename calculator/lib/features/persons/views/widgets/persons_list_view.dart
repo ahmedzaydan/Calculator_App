@@ -25,9 +25,8 @@ class PersonsListView extends StatelessWidget {
         PersonModel person = cubit.personItems[index];
         return PersonWidget(
           person: person,
-          backgroundColor: index % 2 == 0
-              ? ColorManager.lightGrey
-              : ColorManager.transparent,
+          backgroundColor:
+              index % 2 == 0 ? ColorManager.expired : ColorManager.transparent,
           editOnPressed: () {
             navigateTo(
               context: context,
