@@ -16,15 +16,3 @@ void main() async {
 
   runApp(const CalculatorApp());
 }
-
-/// ToDos:
-// TODO: finish kits screen
-  // coloring, sorting based on color
-// TODO: Persons screen
-  // admin field like other persons with some highlighted color
-// TODO: Calculator screen
-  // kits scrollable section 
-// TODO: Report screen (choose better name?)
-  // share button
-// TODO: choose colors for all screens 
-// TODO: should I increase the font size?? 

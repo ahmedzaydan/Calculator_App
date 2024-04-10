@@ -2,7 +2,6 @@ import 'package:calculator/app/resources/color_manager.dart';
 import 'package:calculator/app/resources/strings_manager.dart';
 import 'package:calculator/app/resources/values_manager.dart';
 import 'package:calculator/app/utils/dependency_injection.dart';
-import 'package:calculator/app/utils/functions.dart';
 import 'package:calculator/app/widgets/custom_icon_button.dart';
 import 'package:calculator/features/app_layout/app_layout_cubit/app_states.dart';
 import 'package:calculator/features/calculator/calculator_cubit/calculator_cubit.dart';
@@ -22,51 +21,69 @@ class ReportView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: customAppBar(
-        leadingOnPressed: () {
-          Navigator.pop(context);
-        },
-        title: StringsManager.reportScreen,
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: AppPadding.p10),
-            child: CustomIconButton(
-              onPressed: () {
-                locator<CalculatorCubit>()
-                    .captureAndShare(screenshotController);
-              },
-              icon: FaIcon(
-                Icons.share,
-                color: ColorManager.white,
+    return SafeArea(
+      child: Scaffold(
+        appBar: _appBar(context),
+        body: Screenshot(
+          controller: screenshotController,
+          child: Container(
+            color: ColorManager.white,
+            padding: const EdgeInsets.all(20.0),
+            child: SingleChildScrollView(
+              child: BlocBuilder<CalculatorCubit, AppStates>(
+                builder: (context, state) {
+                  var cubit = locator<CalculatorCubit>();
+                  return Column(
+                    children: [
+                      const Gap(10),
+                      const BasicInfo(),
+                      const ResultsSection(),
+                      const Gap(50),
+                      Note(cubit: cubit),
+                      const Gap(50),
+                    ],
+                  );
+                },
               ),
-            ),
-          )
-        ],
-      ),
-      body: Screenshot(
-        controller: screenshotController,
-        child: Container(
-          color: ColorManager.white,
-          padding: const EdgeInsets.all(20.0),
-          child: SingleChildScrollView(
-            child: BlocBuilder<CalculatorCubit, AppStates>(
-              builder: (context, state) {
-                var cubit = locator<CalculatorCubit>();
-                return Column(
-                  children: [
-                    const BasicInfo(),
-                    const Gap(50),
-                    const ResultsSection(),
-                    const Gap(50),
-                    Note(cubit: cubit),
-                  ],
-                );
-              },
             ),
           ),
         ),
       ),
     );
+  }
+
+  AppBar _appBar(BuildContext context) {
+    return AppBar(
+        toolbarHeight: MediaQuery.sizeOf(context).height * 0.09,
+        title: const Text(
+          StringsManager.reportScreen,
+          style: TextStyle(
+            fontSize: AppSize.s24,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: AppPadding.p30),
+            child: CustomIconButton(
+              onPressed: () => locator<CalculatorCubit>()
+                  .captureAndShare(screenshotController),
+              icon: FaIcon(
+                FontAwesomeIcons.solidShareFromSquare,
+                color: ColorManager.white,
+                size: AppSize.s32,
+              ),
+            ),
+          )
+        ],
+        leading: IconButton(
+          icon: const FaIcon(
+            FontAwesomeIcons.arrowLeft,
+            color: Colors.white,
+            size: 32,
+          ),
+          onPressed: () => Navigator.pop(context),
+        ),
+      );
   }
 }

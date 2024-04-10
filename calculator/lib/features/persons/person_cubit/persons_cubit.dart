@@ -1,6 +1,8 @@
+import 'package:calculator/app/resources/constants_manager.dart';
 import 'package:calculator/app/resources/strings_manager.dart';
 import 'package:calculator/app/utils/cache_controller.dart';
 import 'package:calculator/app/utils/extensions.dart';
+import 'package:calculator/app/utils/functions.dart';
 import 'package:calculator/features/app_layout/app_layout_cubit/app_states.dart';
 import 'package:calculator/features/persons/models/person_model.dart';
 import 'package:calculator/features/persons/person_cubit/persons_states.dart';
@@ -20,8 +22,20 @@ class PersonsCubit extends Cubit<AppStates> {
 
   Future<void> loadData(List<String> personKeys) async {
     try {
+      emit(
+        LoadPersonsDataLoadingState(
+          getStateMessage(
+            state: AppState.loading,
+            itemType: ItemType.person,
+          ),
+        ),
+      );
+
       // load admin percentage
       adminPercentage = CacheController.getDoubleData(amdinKey) ?? 30;
+
+      // load persons data
+      personItems.clear();
 
       for (String key in personKeys) {
         List<String> personData =
@@ -35,7 +49,15 @@ class PersonsCubit extends Cubit<AppStates> {
       }
       emit(LoadPersonsDataSuccessState());
     } catch (e) {
-      emit(LoadPersonsDataErrorState(e.toString()));
+      emit(
+        LoadPersonsDataErrorState(
+          getStateMessage(
+            state: AppState.error,
+            itemType: ItemType.person,
+            action: ItemAction.load,
+          ),
+        ),
+      );
     }
   }
 
@@ -64,17 +86,53 @@ class PersonsCubit extends Cubit<AppStates> {
             if (result) {
               totalPercentage += percentage;
               personItems.add(person);
-              emit(AddPersonSuccessState());
+              emit(
+                AddPersonSuccessState(
+                  getStateMessage(
+                    state: AppState.success,
+                    itemType: ItemType.person,
+                    action: ItemAction.add,
+                    label: name,
+                  ),
+                ),
+              );
             } else {
-              emit(AddPersonErrorState(StringsManager.defaultError));
+              emit(
+                AddPersonErrorState(
+                  getStateMessage(
+                    state: AppState.error,
+                    itemType: ItemType.person,
+                    action: ItemAction.add,
+                    label: name,
+                  ),
+                ),
+              );
             }
           },
         );
       } else {
-        emit(AddPersonErrorState(errorMessage));
+        emit(
+          AddPersonErrorState(
+            getStateMessage(
+              state: AppState.error,
+              itemType: ItemType.person,
+              action: ItemAction.add,
+              label: name,
+            ),
+          ),
+        );
       }
     } catch (e) {
-      emit(AddPersonErrorState(e.toString()));
+      emit(
+        AddPersonErrorState(
+          getStateMessage(
+            state: AppState.error,
+            itemType: ItemType.person,
+            action: ItemAction.add,
+            label: name,
+          ),
+        ),
+      );
     }
   }
 
@@ -84,17 +142,20 @@ class PersonsCubit extends Cubit<AppStates> {
       return StringsManager.personExists;
     }
 
-    return _validatePercentage(percentage);
+    return _validatePercentage(0, percentage);
   }
 
-  String? _validatePercentage(double percentage) {
+  String? _validatePercentage(
+    double oldPercentage,
+    double newPercentage,
+  ) {
     // check if perecentage is valid or not
-    if (percentage < 0 || percentage > 100) {
+    if (newPercentage < 0 || newPercentage > 100) {
       return StringsManager.invalidPercentage;
     }
 
     // check if total percentage is less than 100
-    if (totalPercentage + percentage > 100) {
+    if (totalPercentage - oldPercentage + newPercentage > 100) {
       return StringsManager.percentageError;
     }
     return null;
@@ -105,31 +166,69 @@ class PersonsCubit extends Cubit<AppStates> {
     required double value,
   }) async {
     try {
-      String? errorMessage = _validatePercentage(value);
-      double tempPercentage = personItems[index].percentage;
+      double oldPercentage = personItems[index].percentage;
+      String? errorMessage = _validatePercentage(oldPercentage, value);
+
       if (errorMessage == null) {
+        personItems[index].setPercentage(value);
+
         CacheController.saveData(
           personItems[index].name,
           personItems[index].toStringList(),
         ).then(
           (response) {
             if (response) {
-              personItems[index].setPercentage(value);
-              totalPercentage += value - tempPercentage;
-              emit(SavePersonDataSuccessState());
+              totalPercentage += value - oldPercentage;
+              emit(
+                UpdatePersonSuccessState(
+                  getStateMessage(
+                    state: AppState.success,
+                    itemType: ItemType.person,
+                    action: ItemAction.update,
+                    label: personItems[index].name,
+                  ),
+                ),
+              );
               return true;
             } else {
-              emit(AddPersonErrorState(StringsManager.defaultError));
+              emit(
+                UpdatePersonErrorState(
+                  getStateMessage(
+                    state: AppState.error,
+                    itemType: ItemType.person,
+                    action: ItemAction.update,
+                    label: personItems[index].name,
+                  ),
+                ),
+              );
               return false;
             }
           },
         );
       } else {
-        emit(AddPersonErrorState(errorMessage));
+        emit(
+          UpdatePersonErrorState(
+            getStateMessage(
+              state: AppState.error,
+              itemType: ItemType.person,
+              action: ItemAction.update,
+              label: personItems[index].name,
+            ),
+          ),
+        );
         return false;
       }
     } catch (e) {
-      emit(SavePersonDataErrorState(e.toString()));
+      emit(
+        UpdatePersonErrorState(
+          getStateMessage(
+            state: AppState.error,
+            itemType: ItemType.person,
+            action: ItemAction.update,
+            label: personItems[index].name,
+          ),
+        ),
+      );
       return false;
     }
     return null;
@@ -137,8 +236,8 @@ class PersonsCubit extends Cubit<AppStates> {
 
   Future<bool?> updateAdminPercentage(double value) async {
     try {
-      String? errorMessage = _validatePercentage(value);
       double oldAdminPercentage = adminPercentage;
+      String? errorMessage = _validatePercentage(oldAdminPercentage, value);
 
       if (errorMessage == null) {
         CacheController.saveData(amdinKey, value).then(
@@ -147,12 +246,26 @@ class PersonsCubit extends Cubit<AppStates> {
               adminPercentage = value;
               totalPercentage += value - oldAdminPercentage;
 
-              emit(UpdateAdminPercentageSuccessState());
+              emit(
+                UpdateAdminSuccessState(
+                  getStateMessage(
+                    state: AppState.success,
+                    itemType: ItemType.person,
+                    action: ItemAction.update,
+                    label: StringsManager.admin,
+                  ),
+                ),
+              );
               return true;
             } else {
               emit(
                 UpdateAdminPercentageErrorState(
-                  StringsManager.defaultError,
+                  getStateMessage(
+                    state: AppState.error,
+                    itemType: ItemType.person,
+                    action: ItemAction.update,
+                    label: StringsManager.admin,
+                  ),
                 ),
               );
               return false;
@@ -160,11 +273,29 @@ class PersonsCubit extends Cubit<AppStates> {
           },
         );
       } else {
-        emit(AddPersonErrorState(errorMessage));
+        emit(
+          UpdateAdminPercentageErrorState(
+            getStateMessage(
+              state: AppState.error,
+              itemType: ItemType.person,
+              action: ItemAction.update,
+              label: StringsManager.admin,
+            ),
+          ),
+        );
         return false;
       }
     } catch (error) {
-      emit(UpdateAdminPercentageErrorState(error.toString()));
+      emit(
+        UpdateAdminPercentageErrorState(
+          getStateMessage(
+            state: AppState.error,
+            itemType: ItemType.person,
+            action: ItemAction.update,
+            label: StringsManager.admin,
+          ),
+        ),
+      );
       return false;
     }
     return null;
@@ -183,9 +314,25 @@ class PersonsCubit extends Cubit<AppStates> {
 
       // remove person from the personItems list
       personItems.removeAt(index);
-      emit(DeletePersonSuccessState());
+      emit(
+        DeletePersonSuccessState(
+          getStateMessage(
+            state: AppState.success,
+            itemType: ItemType.person,
+            action: ItemAction.delete,
+          ),
+        ),
+      );
     } catch (e) {
-      emit(DeletePersonErrorState(e.toString()));
+      emit(
+        DeletePersonErrorState(
+          getStateMessage(
+            state: AppState.error,
+            itemType: ItemType.person,
+            action: ItemAction.delete,
+          ),
+        ),
+      );
     }
   }
 }

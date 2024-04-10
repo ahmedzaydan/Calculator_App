@@ -1,3 +1,4 @@
+import 'package:calculator/app/resources/constants_manager.dart';
 import 'package:calculator/app/resources/strings_manager.dart';
 import 'package:calculator/app/utils/cache_controller.dart';
 import 'package:calculator/app/utils/extensions.dart';
@@ -7,14 +8,6 @@ import 'package:calculator/features/kits/kit_cubit/kit_states.dart';
 import 'package:calculator/features/kits/models/kit_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-enum KitStatus {
-  transparent, // transparent
-  month12, // green
-  month24, // orange
-  month30, // red
-  expired, // gray
-}
-
 class KitsCubit extends Cubit<AppStates> {
   KitsCubit() : super(KitsInitialState());
 
@@ -22,37 +15,58 @@ class KitsCubit extends Cubit<AppStates> {
   String checkedKits = '';
   String kitKeyPrefix = 'Kit';
 
-  List<KitModel> kitItems = [];
+  List<bool> collapsedLists = [false, false, false, false, false];
 
-  List<KitModel> expiredKitsItems = [];
-  List<KitModel> month30KitsItems = [];
-  List<KitModel> month24KitsItems = [];
-  List<KitModel> month12KitsItems = [];
-  List<KitModel> transparentKitsItems = [];
+  List<String> listsTitles = [
+    StringsManager.expired,
+    StringsManager.month30,
+    StringsManager.month24,
+    StringsManager.month12,
+    StringsManager.pickMeAColour, // TODO: change to better name please
+  ];
 
-  bool isExpiredListCollapsed = true;
-  bool isMonth30ListCollapsed = true;
-  bool isMonth24ListCollapsed = true;
-  bool isMonth12ListCollapsed = true;
-  bool isTransperantListCollapsed = true;
+  List<KitModel> kits = [];
+  List<KitModel> expiredKits = [];
+  List<KitModel> month30Kits = [];
+  List<KitModel> month24Kits = [];
+  List<KitModel> month12Kits = [];
+  List<KitModel> transparentKits = [];
 
   Future<void> loadData(List<String> kitKeys) async {
     try {
-      emit(LoadKitsDataLoadingState());
+      emit(
+        LoadKitsDataLoadingState(
+          getStateMessage(
+            state: AppState.loading,
+            itemType: ItemType.kit,
+          ),
+        ),
+      );
+
+      kits.clear();
+      clearLists();
+
       for (String key in kitKeys) {
         List<String> kitData = CacheController.getStringListData(key).orEmpty;
 
         if (kitData.isNotEmpty) {
           KitModel kit = KitModel.fromStringList(kitData);
-          kit.setStatus(getKitStatus(kit));
-          kitItems.add(kit);
+          kit.selectStatus();
+          addKitToCorrectList(kit);
         }
       }
+
       emit(LoadKitsDataSuccessState());
-      fillLists();
-      sortKits();
     } catch (e) {
-      emit(LoadKitsDataErrorState(e.toString()));
+      emit(
+        LoadKitsDataErrorState(
+          getStateMessage(
+            state: AppState.error,
+            itemType: ItemType.kit,
+            action: ItemAction.load,
+          ),
+        ),
+      );
     }
   }
 
@@ -60,246 +74,336 @@ class KitsCubit extends Cubit<AppStates> {
     required String name,
     required double value,
   }) async {
-    try {
-      emit(AddKitLoadingState());
+    emit(AddKitLoadingState());
 
-      String storingKey = _getStoringKey(name);
+    String storingKey = _getStoringKey(name);
 
-      // ensure that the key is not already stored
-      if (CacheController.checkKey(storingKey) == false) {
-        DateTime startDate = DateTime.now();
-        DateTime endDate = _getKitEndDate(startDate);
+    // ensure that the key is not already stored
+    if (CacheController.checkKey(storingKey) == false) {
+      // DateTime startDate = DateTime.now();
 
-        // create kit object
-        KitModel kit = KitModel(
-          name: storingKey,
-          value: value,
-          startDate: startDate,
-          endDate: endDate,
-        );
+      // TODO: remove these lines
+      List<DateTime> temp = [
+        DateTime(2020, 10, 9), // expired
+        DateTime(2021, 10, 10), // month30
+        DateTime(2022, 4, 8), // month24
+        DateTime(2023, 4, 8), // month12
+        DateTime(2023, 10, 8), // transparent
+      ];
 
-        // add kit to shared preferences
-        CacheController.saveData(
-          kit.name,
-          kit.toStringList(),
-        ).then(
-          (saveResult) {
-            if (saveResult) {
-              // add kit to the kitItems list
-              kit.setStatus(getKitStatus(kit));
-              kitItems.add(kit);
-              emit(AddKitSuccessState());
-              fillLists();
-              sortKits();
-            } else {
-              emit(AddKitErrorState(StringsManager.defaultError));
-            }
-          },
-        );
-      } else {
-        emit(AddKitErrorState(StringsManager.kitExists));
-      }
-    } catch (e) {
-      emit(AddKitErrorState(e.toString()));
+      DateTime startDate = temp[0];
+
+      // create kit object
+      KitModel kit = KitModel(
+        name: storingKey,
+        value: value,
+        startDate: startDate,
+      );
+
+      // add kit to shared preferences
+      CacheController.saveData(
+        kit.name,
+        kit.toStringList(),
+      ).then((saveResult) {
+        if (saveResult) {
+          addKitToCorrectList(kit);
+
+          emit(
+            AddKitSuccessState(
+              getStateMessage(
+                state: AppState.success,
+                itemType: ItemType.kit,
+                action: ItemAction.add,
+                label: kit.name,
+              ),
+            ),
+          );
+        } else {
+          emit(
+            AddKitErrorState(
+              getStateMessage(
+                state: AppState.error,
+                itemType: ItemType.kit,
+                action: ItemAction.add,
+                label: name,
+              ),
+            ),
+          );
+        }
+      }).catchError(
+        (e) {
+          emit(
+            AddKitErrorState(
+              getStateMessage(
+                state: AppState.error,
+                itemType: ItemType.kit,
+                action: ItemAction.add,
+                label: name,
+              ),
+            ),
+          );
+        },
+      );
+    } else {
+      emit(
+        AddKitErrorState(
+          getStateMessage(
+            state: AppState.error,
+            itemType: ItemType.kit,
+            action: ItemAction.add,
+            label: name,
+            error: StringsManager.kitExists,
+          ),
+        ),
+      );
     }
   }
 
-  String _getStoringKey(String id) => '$kitKeyPrefix$id';
-
-  DateTime _getKitEndDate(DateTime startDate) {
-    int futureMonth = startDate.month + 6;
-
-    // contract duration is 2 years and 6 months
-    int futureYear = startDate.year + 2;
-
-    // if the future month is greater than 12
-    // then the future year will be the next year
-    futureYear += (futureMonth ~/ 12);
-
-    // if the future month is greater than 12
-    futureMonth %= 12;
-
-    int futureDay = startDate.day - 1;
-
-    // if future day = 0
-    if (futureDay == 0) {
-      // future day will be the last day of the previous month
-      futureDay = DateTime(futureYear, futureMonth, 0).day;
-
-      // future month will be the previous month
-      futureMonth -= 1;
-
-      // if the future month is January
-      if (futureMonth == 0) {
-        // future month will be December
-        futureMonth = 12;
-
-        // future year will be the previous year
-        futureYear -= 1;
-      }
+  void addKitToCorrectList(KitModel kitModel) {
+    switch (kitModel.status!) {
+      case KitStatus.expired:
+        expiredKits.add(kitModel);
+        break;
+      case KitStatus.month30:
+        month30Kits.add(kitModel);
+        break;
+      case KitStatus.month24:
+        month24Kits.add(kitModel);
+        break;
+      case KitStatus.month12:
+        month12Kits.add(kitModel);
+        break;
+      case KitStatus.transparent:
+        transparentKits.add(kitModel);
+        break;
     }
 
-    // if the future day is greater than the last day of the future month
-    else if (futureDay > DateTime(futureYear, futureMonth + 1, 0).day) {
-      // then the future day will be the last day of future the month
-      futureDay = DateTime(futureYear, futureMonth + 1, 0).day;
+    if (kitModel.status! != KitStatus.expired) {
+      kits.add(kitModel);
+      sortKits();
     }
-
-    return DateTime(futureYear, futureMonth, futureDay);
   }
 
-  KitStatus getKitStatus(KitModel kit) {
-    KitStatus status = KitStatus.transparent;
-
-    DateTime now = DateTime.now();
-
-    // contract is expired
-    if (now.year > kit.endDate.year ||
-        (now.year == kit.endDate.year && now.month > kit.endDate.month) ||
-        (now.year == kit.endDate.year &&
-            now.month == kit.endDate.month &&
-            now.day > kit.endDate.day)) {
-      status = KitStatus.expired;
-    }
-
-    // contract is in the month 30
-    else if (now.year == kit.endDate.year && now.month == kit.endDate.month) {
-      status = KitStatus.month30;
-    }
-
-    // contract is in the month 24
-    else if (now.year - kit.startDate.year == 2 &&
-        kit.startDate.month == now.month) {
-      // get the last day of the current month
-      int lastDay = DateTime(now.year, now.month + 1, 0).day;
-
-      // if the contract within last 10 days of month 24
-      if ((lastDay >= 30 && now.day >= 20) ||
-          (lastDay < 30 && (now.day >= (lastDay - 10)))) {
-        status = KitStatus.month24;
-      }
-      status = KitStatus.month24; // TODO: remove this line
-    }
-
-    // contract is in the month 12
-    else if (now.year - kit.startDate.year == 1 &&
-        now.month == kit.startDate.month) {
-      // get the last day of the current month
-      int lastDay = DateTime(now.year, now.month + 1, 0).day;
-
-      // if the contract within last 10 days of month 12
-      if ((lastDay >= 30 && now.day >= 20) ||
-          (lastDay < 30 && (now.day >= (lastDay - 10)))) {
-        status = KitStatus.month12;
-      }
-      status = KitStatus.month12; // TODO: remove this line
-    }
-
-    return status;
-  }
-
-  Future<bool?> updateKitValue({
-    required int index,
+  Future<bool?> updateKit({
+    required KitModel kitModel,
     required double value,
   }) async {
+    kitModel.setValue(value);
+
+    CacheController.saveData(
+      kitModel.name,
+      kitModel.toStringList(),
+    ).then((updateResult) {
+      if (updateResult) {
+        emit(
+          UpdateKitSuccessState(
+            getStateMessage(
+              state: AppState.success,
+              itemType: ItemType.kit,
+              action: ItemAction.update,
+              label: kitModel.name,
+            ),
+          ),
+        );
+
+        updateKitInList(kitModel);
+        return true;
+      } else {
+        emit(
+          UpdateKitErrorState(
+            getStateMessage(
+              state: AppState.error,
+              itemType: ItemType.kit,
+              action: ItemAction.update,
+              label: kitModel.name,
+            ),
+          ),
+        );
+        return false;
+      }
+    }).catchError(
+      (e) {
+        kprint('update failed from catch block');
+        kprint(e.toString());
+        emit(
+          UpdateKitErrorState(
+            getStateMessage(
+              state: AppState.error,
+              itemType: ItemType.kit,
+              action: ItemAction.update,
+              label: kitModel.name,
+            ),
+          ),
+        );
+        return false;
+      },
+    );
+
+    return null;
+  }
+
+  void updateKitInList(KitModel kit) {
+    switch (kit.status!) {
+      case KitStatus.expired:
+        expiredKits[expiredKits.indexWhere((ele) => ele.name == kit.name)] =
+            kit;
+        break;
+      case KitStatus.month30:
+        month30Kits[month30Kits.indexWhere((ele) => ele.name == kit.name)] =
+            kit;
+        break;
+      case KitStatus.month24:
+        month24Kits[month24Kits.indexWhere((ele) => ele.name == kit.name)] =
+            kit;
+        break;
+      case KitStatus.month12:
+        month12Kits[month12Kits.indexWhere((ele) => ele.name == kit.name)] =
+            kit;
+        break;
+      case KitStatus.transparent:
+        transparentKits[
+            transparentKits.indexWhere((ele) => ele.name == kit.name)] = kit;
+        break;
+    }
+
+    if (kit.status != KitStatus.expired) {
+      kits[kits.indexWhere((ele) => ele.name == kit.name)] = kit;
+    }
+  }
+
+  Future<void> toggleKitIsChecked(KitModel kitModel) async {
     try {
+      kitModel.toggleIsChecked();
+
       CacheController.saveData(
-        kitItems[index].name,
-        kitItems[index].toStringList(),
+        kitModel.name,
+        kitModel.toStringList(),
       ).then(
-        (updateResult) {
-          if (updateResult) {
-            kitItems[index].setValue(value);
+        (result) {
+          if (result) {
+            updateKitInList(kitModel);
 
-            emit(UpdateKitDataSuccessState());
-            sortKits();
-            fillLists();
-
-            return true;
+            emit(KitCheckedStatusChangedSuccessState());
           } else {
-            emit(UpdateKitDataErrorState(StringsManager.defaultError));
-            return false;
+            emit(
+              KitCheckedStatusChangedErrorState(StringsManager.defaultError),
+            );
           }
         },
       );
     } catch (e) {
-      emit(UpdateKitDataErrorState(e.toString()));
-      return false;
-    }
-    return null;
-  }
-
-  Future<void> changeKitStatus(int index) async {
-    try {
-      kitItems[index].toggleStatus();
-      await CacheController.saveData(
-        kitItems[index].name,
-        kitItems[index].toStringList(),
-      );
-
-      emit(KitStatusChangedSuccessState());
-    } catch (e) {
-      emit(KitStatusChangedErrorState(e.toString()));
+      emit(KitCheckedStatusChangedErrorState(e.toString()));
     }
   }
 
-  Future<void> clearKits() async {
-    try {
-      for (KitModel kit in kitItems) {
-        kit.setIsChecked(false);
+  Future<void> clearCheckedKits() async {
+    for (KitModel kit in kits) {
+      kit.setIsChecked(false);
 
-        await CacheController.saveData(
-          kit.name,
-          kit.toStringList(),
-        );
-
-        emit(ClearKitItemsSuccessState());
-      }
-    } catch (e) {
-      emit(ClearKitItemsErrorState(e.toString()));
-    }
-  }
-
-  void fillLists() {
-    for (var kit in kitItems) {
-      switch (kit.status) {
-        case KitStatus.expired:
-          expiredKitsItems.add(kit);
-          break;
-        case KitStatus.month12:
-          month12KitsItems.add(kit);
-          break;
-        case KitStatus.month24:
-          month24KitsItems.add(kit);
-          break;
-        case KitStatus.month30:
-          month30KitsItems.add(kit);
-          break;
-        case KitStatus.transparent:
-          transparentKitsItems.add(kit);
-          break;
-        default:
-          break;
-      }
+      CacheController.saveData(
+        kit.name,
+        kit.toStringList(),
+      ).then((saveResult) {
+        if (saveResult) {
+          emit(ClearKitItemsSuccessState());
+        } else {
+          emit(ClearKitItemsErrorState(StringsManager.defaultError));
+        }
+      }).catchError((e) {
+        emit(ClearKitItemsErrorState(e.toString()));
+      });
     }
   }
 
   void sortKits() {
-    kitItems.sort(
+    kits.sort(
       (a, b) {
         int aIndex = int.parse(a.name.substring(kitKeyPrefix.length));
         int bIndex = int.parse(b.name.substring(kitKeyPrefix.length));
         return aIndex.compareTo(bIndex);
       },
     );
+
     emit(KitsSortedState());
+  }
+
+  void toggleListVisibility(int index) {
+    collapsedLists[index] = !collapsedLists[index];
+    emit(ToggleKitListVisibilityState());
+  }
+
+  void deleteKitFromList(KitModel kitModel) {
+    switch (kitModel.status!) {
+      case KitStatus.expired:
+        expiredKits.remove(kitModel);
+        break;
+      case KitStatus.month30:
+        month30Kits.remove(kitModel);
+        break;
+      case KitStatus.month24:
+        month24Kits.remove(kitModel);
+        break;
+      case KitStatus.month12:
+        month12Kits.remove(kitModel);
+        break;
+      default:
+        transparentKits.remove(kitModel);
+        break;
+    }
+
+    kits.remove(kitModel);
+  }
+
+  Future<void> deleteKit(KitModel kit) async {
+    CacheController.removeData(kit.name).then(
+      (result) {
+        if (result) {
+          emit(
+            DeleteKitSuccessState(
+              getStateMessage(
+                state: AppState.success,
+                itemType: ItemType.kit,
+                action: ItemAction.delete,
+                label: kit.name,
+              ),
+            ),
+          );
+
+          deleteKitFromList(kit);
+        } else {
+          emit(
+            DeleteKitErrorState(
+              getStateMessage(
+                state: AppState.error,
+                itemType: ItemType.kit,
+                action: ItemAction.delete,
+                label: kit.name,
+              ),
+            ),
+          );
+        }
+      },
+    ).catchError(
+      (e) {
+        emit(
+          DeleteKitErrorState(
+            getStateMessage(
+              state: AppState.error,
+              itemType: ItemType.kit,
+              action: ItemAction.delete,
+              label: kit.name,
+            ),
+          ),
+        );
+      },
+    );
   }
 
   void calculateKits() {
     totalKits = 0;
     checkedKits = '';
 
-    for (var kit in kitItems) {
+    for (var kit in kits) {
       if (kit.isChecked) {
         totalKits += kit.value;
         checkedKits += kit.format;
@@ -310,60 +414,45 @@ class KitsCubit extends Cubit<AppStates> {
       checkedKits = checkedKits.substring(0, checkedKits.length - 3);
     }
 
-    totalKits = roundDouble(totalKits);
+    totalKits = formatDobule(totalKits);
   }
 
-  void toggleExpiredListVisibility() {
-    isExpiredListCollapsed = !isExpiredListCollapsed;
-    emit(ToggleKitListVisibilityState());
-  }
-
-  void toggleMonth30ListVisibility() {
-    isMonth30ListCollapsed = !isMonth30ListCollapsed;
-    emit(ToggleKitListVisibilityState());
-  }
-
-  void toggleMonth24ListVisibility() {
-    isMonth24ListCollapsed = !isMonth24ListCollapsed;
-    emit(ToggleKitListVisibilityState());
-  }
-
-  void toggleMonth12ListVisibility() {
-    isMonth12ListCollapsed = !isMonth12ListCollapsed;
-    emit(ToggleKitListVisibilityState());
-  }
-
-  void toggleTransparentListVisibility() {
-    isTransperantListCollapsed = !isTransperantListCollapsed;
-    emit(ToggleKitListVisibilityState());
-  }
-
-  Future<void> deleteKitItem(int index) async {
-    try {
-      CacheController.removeData(kitItems[index].name).then((result) {
-        if (result) {
-          emit(DeleteKitSuccessState());
-          kitItems.removeAt(index);
-          sortKits();
-          fillLists();
-        } else {
-          emit(DeleteKitErrorState(StringsManager.defaultError));
-        }
-      });
-
-      emit(DeleteKitSuccessState());
-    } catch (e) {
-      emit(DeleteKitErrorState(e.toString()));
+  List<KitModel> getCollapsableList(int index) {
+    switch (index) {
+      case 0:
+        return expiredKits;
+      case 1:
+        return month30Kits;
+      case 2:
+        return month24Kits;
+      case 3:
+        return month12Kits;
+      default:
+        return transparentKits;
     }
   }
+
+  /// utility functions
+  void clearLists() {
+    expiredKits.clear();
+    month30Kits.clear();
+    month24Kits.clear();
+    month12Kits.clear();
+    transparentKits.clear();
+  }
+
+  String _getStoringKey(String id) => '$kitKeyPrefix$id';
 }
 
-// TODO: remove these lines
-// // Contract expired
-// DateTime date1 = DateTime(2020, 10, 9);
-// // Contract in the month 30
-// DateTime date2 = DateTime(2021, 10, 9);
-// // Contract in the month 24 (within last 10 days of month 24)
-// DateTime date3 = DateTime(2022, 4, 8);
-// // Contract in the month 12 (within last 10 days of month 12)
-// DateTime date4 = DateTime(2023, 4, 8);
+enum KitStatus {
+  expired,
+  transparent,
+  month12,
+  month24,
+  month30,
+}
+
+enum SortingType {
+  name,
+  kitStatus,
+}

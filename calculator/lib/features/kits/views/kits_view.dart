@@ -4,10 +4,10 @@ import 'package:calculator/app/utils/functions.dart';
 import 'package:calculator/features/app_layout/app_layout_cubit/app_states.dart';
 import 'package:calculator/features/kits/kit_cubit/kit_cubit.dart';
 import 'package:calculator/features/kits/kit_cubit/kit_states.dart';
-import 'package:calculator/features/kits/views/widgets/kits_list_view.dart';
-import 'package:calculator/features/widgets/add_item_widget.dart';
-import 'package:calculator/features/widgets/custom_error_widget.dart';
-import 'package:calculator/features/widgets/loading_widget.dart';
+import 'package:calculator/features/kits/views/widgets/kits_lists_view.dart';
+import 'package:calculator/app/widgets/add_item_widget.dart';
+import 'package:calculator/app/widgets/custom_error_widget.dart';
+import 'package:calculator/app/widgets/loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
@@ -20,15 +20,36 @@ class KitsView extends StatelessWidget {
     return BlocConsumer<KitsCubit, AppStates>(
       listener: (_, state) {
         if (state is AddKitErrorState) {
+          showCustomToast(state.message, ToastStates.error);
+        }
+
+        if (state is AddKitSuccessState) {
+          showCustomToast(state.message, ToastStates.success);
+        }
+
+        if (state is UpdateKitErrorState) {
           kprint(state.message);
-          showCustomToast(
-            message: state.message,
-            state: ToastStates.error,
-          );
+          showCustomToast(state.message, ToastStates.error);
+        }
+
+        if (state is UpdateKitSuccessState) {
+          showCustomToast(state.message, ToastStates.success);
+        }
+
+        if (state is DeleteKitErrorState) {
+          showCustomToast(state.message, ToastStates.error);
+        }
+
+        if (state is DeleteKitSuccessState) {
+          showCustomToast(state.message, ToastStates.success);
+        }
+
+        if (state is LoadKitsDataErrorState) {
+          showCustomToast(state.message, ToastStates.error);
         }
       },
       builder: (_, state) {
-        if (state is LoadingDataState) {
+        if (state is LoadingDataState || state is LoadKitsDataLoadingState) {
           return const LoadingWidget();
         } else if (state is LoadingDataErrorState) {
           return CustomErrorWidget(state.message);
@@ -39,9 +60,12 @@ class KitsView extends StatelessWidget {
   }
 
   Widget _buildKitsView(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(AppPadding.p10),
-      child: SingleChildScrollView(
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppPadding.p14,
+          vertical: AppPadding.p24,
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -52,7 +76,7 @@ class KitsView extends StatelessWidget {
                   getInputFormatters(ConstantsManager.kitsRegex),
             ),
             const Gap(40),
-            KitsListView(sourceContext: context),
+            KitsListsView(sourceContext: context),
           ],
         ),
       ),

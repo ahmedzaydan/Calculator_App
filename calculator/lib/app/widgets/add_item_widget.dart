@@ -1,5 +1,6 @@
 import 'package:calculator/app/resources/color_manager.dart';
 import 'package:calculator/app/resources/constants_manager.dart';
+import 'package:calculator/app/resources/font_manager.dart';
 import 'package:calculator/app/resources/strings_manager.dart';
 import 'package:calculator/app/resources/values_manager.dart';
 import 'package:calculator/app/utils/dependency_injection.dart';
@@ -48,7 +49,11 @@ class AddItemWidget extends StatelessWidget {
           margin: const EdgeInsets.only(left: AppPadding.p5),
           child: Text(
             isPerson ? StringsManager.addPerson : StringsManager.addKit,
-            style: getTextStyle(),
+            style: TextStyle(
+              color: ColorManager.black,
+              fontSize: FontSize.s32,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
 

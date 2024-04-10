@@ -5,7 +5,11 @@ class KitsInitialState extends AppStates {}
 // AddKit states
 class AddKitLoadingState extends AppStates {}
 
-class AddKitSuccessState extends AppStates {}
+class AddKitSuccessState extends AppStates {
+  final String message;
+
+  AddKitSuccessState(this.message);
+}
 
 class AddKitErrorState extends AppStates {
   final String message;
@@ -14,7 +18,11 @@ class AddKitErrorState extends AppStates {
 }
 
 // LoadKitsData states
-class LoadKitsDataLoadingState extends AppStates {}
+class LoadKitsDataLoadingState extends AppStates {
+  final String message;
+
+  LoadKitsDataLoadingState(this.message);
+}
 
 class LoadKitsDataSuccessState extends AppStates {}
 
@@ -25,21 +33,25 @@ class LoadKitsDataErrorState extends AppStates {
 }
 
 // UpdateKitsData states
-class UpdateKitDataSuccessState extends AppStates {}
-
-class UpdateKitDataErrorState extends AppStates {
+class UpdateKitSuccessState extends AppStates {
   final String message;
 
-  UpdateKitDataErrorState(this.message);
+  UpdateKitSuccessState(this.message);
+}
+
+class UpdateKitErrorState extends AppStates {
+  final String message;
+
+  UpdateKitErrorState(this.message);
 }
 
 // Change Kit status states
-class KitStatusChangedSuccessState extends AppStates {}
+class KitCheckedStatusChangedSuccessState extends AppStates {}
 
-class KitStatusChangedErrorState extends AppStates {
+class KitCheckedStatusChangedErrorState extends AppStates {
   final String message;
 
-  KitStatusChangedErrorState(this.message);
+  KitCheckedStatusChangedErrorState(this.message);
 }
 
 // Clear Kit items states
@@ -54,7 +66,11 @@ class ClearKitItemsErrorState extends AppStates {
 class KitsSortedState extends AppStates {}
 
 // DeleteKit states
-class DeleteKitSuccessState extends AppStates {}
+class DeleteKitSuccessState extends AppStates {
+  final String message;
+
+  DeleteKitSuccessState(this.message);
+}
 
 class DeleteKitErrorState extends AppStates {
   final String message;

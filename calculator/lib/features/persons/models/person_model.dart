@@ -23,7 +23,7 @@ class PersonModel {
   }
 
   void calculateShareValue(double totalNetProfit) {
-    shareValue = roundDouble(totalNetProfit * (percentage / 100));
+    shareValue = formatDobule(totalNetProfit * (percentage / 100));
   }
 
   // Returns a list of strings that represent the class properties

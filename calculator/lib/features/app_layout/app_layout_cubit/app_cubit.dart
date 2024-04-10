@@ -43,6 +43,8 @@ class AppCubit extends Cubit<AppStates> {
 
   void getKeys() {
     List<String> keys = CacheController.getAllKeys();
+    kitsKeys.clear();
+    personKeys.clear();
 
     for (var key in keys) {
       if (key == personsCubit.amdinKey) {
@@ -54,17 +56,6 @@ class AppCubit extends Cubit<AppStates> {
       }
     }
   }
-
-  final List<AppBar> appBars = [
-    // home
-    AppBar(title: const Text(StringsManager.calculatorScreen)),
-
-    // kits
-    AppBar(title: const Text(StringsManager.kitsScreen)),
-
-    // persons
-    AppBar(title: const Text(StringsManager.personsScreen)),
-  ];
 
   int currentIndex = 1;
 
@@ -91,14 +82,15 @@ class AppCubit extends Cubit<AppStates> {
     // persons
     const BottomNavigationBarItem(
       // TODO: what is the screen title?!
-      icon: FaIcon(FontAwesomeIcons.userSecret),
+      icon: FaIcon(FontAwesomeIcons.briefcase),
       label: StringsManager.personsScreen,
     ),
   ];
 
   void changeIndex(int index) {
     currentIndex = index;
-    if (currentIndex == 1) {
+    if (currentIndex == 0) {
+    } else if (currentIndex == 1) {
       getKeys();
       kitsCubit.loadData(kitsKeys);
     } else if (currentIndex == 2) {

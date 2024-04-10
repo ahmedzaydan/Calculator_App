@@ -2,10 +2,10 @@ import 'package:calculator/app/resources/color_manager.dart';
 import 'package:calculator/app/utils/dependency_injection.dart';
 import 'package:calculator/app/utils/functions.dart';
 import 'package:calculator/app/widgets/custom_list_view.dart';
+import 'package:calculator/app/widgets/data_item.dart';
+import 'package:calculator/app/widgets/edit_item_view.dart';
 import 'package:calculator/features/persons/models/person_model.dart';
 import 'package:calculator/features/persons/person_cubit/persons_cubit.dart';
-import 'package:calculator/features/persons/views/widgets/person_widget.dart';
-import 'package:calculator/features/widgets/edit_item_view.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -23,11 +23,12 @@ class PersonsListView extends StatelessWidget {
     return CustomListView(
       itemBuilder: (context, index) {
         PersonModel person = cubit.personItems[index];
-        return PersonWidget(
-          person: person,
-          backgroundColor: index % 2 == 0
-              ? ColorManager.lightGrey
-              : ColorManager.transparent,
+        return DataItem(
+          color: index % 2 == 0
+              ? ColorManager.transparent
+              : ColorManager.lightGrey4,
+          name: person.name,
+          value: '${person.percentage}%',
           editOnPressed: () {
             navigateTo(
               context: context,
@@ -43,7 +44,7 @@ class PersonsListView extends StatelessWidget {
         );
       },
       itemCount: cubit.personItems.length,
-      separatorBuilder: (context, index) => const Gap(0),
+      separatorBuilder: (context, index) => const Gap(20),
     );
   }
 }

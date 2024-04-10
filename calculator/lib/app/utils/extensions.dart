@@ -10,6 +10,12 @@ extension NonNullString on String? {
   }
 }
 
+extension ToDouble on String {
+  double toDouble() {
+    return double.parse(this);
+  }
+}
+
 extension NonNullStringList on List<String>? {
   List<String> get orEmpty {
     return this ?? [];
@@ -59,6 +65,23 @@ extension KitTypeExtension on KitStatus {
           typeString: StringsManager.expired,
           backgroundColor: ColorManager.expired,
         );
+    }
+  }
+}
+
+extension NumericKitStatusExtension on KitStatus {
+  int get numericValue {
+    switch (this) {
+      case KitStatus.transparent:
+        return 0;
+      case KitStatus.month12:
+        return 1;
+      case KitStatus.month24:
+        return 2;
+      case KitStatus.month30:
+        return 3;
+      case KitStatus.expired:
+        return 4;
     }
   }
 }

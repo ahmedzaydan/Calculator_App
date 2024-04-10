@@ -1,9 +1,12 @@
+import 'package:calculator/app/resources/font_manager.dart';
 import 'package:calculator/app/resources/strings_manager.dart';
+import 'package:calculator/app/resources/values_manager.dart';
 import 'package:calculator/app/utils/dependency_injection.dart';
 import 'package:calculator/app/utils/functions.dart';
+import 'package:calculator/app/widgets/custom_divider.dart';
 import 'package:calculator/features/calculator/calculator_cubit/calculator_cubit.dart';
-import 'package:calculator/features/kits/kit_cubit/kit_cubit.dart';
 import 'package:calculator/features/calculator/widgets/info_item.dart';
+import 'package:calculator/features/kits/kit_cubit/kit_cubit.dart';
 import 'package:flutter/material.dart';
 
 class BasicInfo extends StatelessWidget {
@@ -21,7 +24,7 @@ class BasicInfo extends StatelessWidget {
           value: getCurrentDate(),
         ),
 
-        const Divider(),
+        _reportDivider(),
 
         // total kit
         InfoItem(
@@ -34,10 +37,13 @@ class BasicInfo extends StatelessWidget {
             alignment: Alignment.centerLeft,
             child: Text(
               '(${kitsCubit.checkedKits})',
+              style: const TextStyle(
+                fontSize: FontSize.s18,
+              ),
             ),
           ),
 
-        const Divider(),
+        _reportDivider(),
 
         // total expense
         InfoItem(
@@ -45,7 +51,7 @@ class BasicInfo extends StatelessWidget {
           value: cubit.totalExpense.toString(),
         ),
 
-        const Divider(),
+        _reportDivider(),
 
         // total extra
         InfoItem(
@@ -53,7 +59,7 @@ class BasicInfo extends StatelessWidget {
           value: cubit.totalExtra.toString(),
         ),
 
-        const Divider(),
+        _reportDivider(),
 
         // net profit
         InfoItem(
@@ -61,8 +67,13 @@ class BasicInfo extends StatelessWidget {
           value: cubit.netProfit.toString(),
         ),
 
-        const Divider(),
+        _reportDivider(),
       ],
     );
   }
+
+  Widget _reportDivider() => const Padding(
+        padding: EdgeInsets.symmetric(vertical: AppPadding.p8),
+        child: CustomDivider(),
+      );
 }
