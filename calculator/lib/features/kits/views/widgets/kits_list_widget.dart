@@ -44,44 +44,46 @@ class KitsListsWidget extends StatelessWidget {
           ),
         ),
         const Gap(20),
-        Visibility(
-          visible: !isCollapsed,
-          child: CustomListView(
-            itemBuilder: (_, index) {
-              KitModel kit = list[index];
-              return DataItem(
-                color: kit.status!.kitType.backgroundColor,
-                name: kit.name,
-                value: kit.value.toString(),
-                editOnPressed: () {
-                  navigateTo(
-                    context: sourceContext,
-                    dest: EditItemView(
-                      kitModel: kit,
-                      label: kit.name,
-                      value: kit.value,
-                      updateKits: true,
-                      sourceContext: sourceContext,
-                      index: index,
-                    ),
-                  );
-                },
-                deleteOnPressed: () async {
-                  showCustomDialog(
-                    context: context,
-                    message: 'Are you sure you want to delete this kit?',
-                    onOk: () async {
-                      await cubit.deleteKit(kit);
-                    },
-                  );
-                },
-              );
-            },
-            itemCount: list.length,
-            separatorBuilder: (context, index) => const Gap(10),
+        if (list.isNotEmpty) ...[
+          Visibility(
+            visible: !isCollapsed,
+            child: CustomListView(
+              itemBuilder: (_, index) {
+                KitModel kit = list[index];
+                return DataItem(
+                  color: kit.status!.kitType.backgroundColor,
+                  name: kit.name,
+                  value: kit.value.toString(),
+                  editOnPressed: () {
+                    navigateTo(
+                      context: sourceContext,
+                      dest: EditItemView(
+                        kitModel: kit,
+                        label: kit.name,
+                        value: kit.value,
+                        updateKits: true,
+                        sourceContext: sourceContext,
+                        index: index,
+                      ),
+                    );
+                  },
+                  deleteOnPressed: () async {
+                    showCustomDialog(
+                      context: context,
+                      message: 'Are you sure you want to delete this kit?',
+                      onOk: () async {
+                        await cubit.deleteKit(kit);
+                      },
+                    );
+                  },
+                );
+              },
+              itemCount: list.length,
+              separatorBuilder: (context, index) => const Gap(10),
+            ),
           ),
-        ),
-        isCollapsed ? const Gap(0) : const Gap(50),
+          isCollapsed ? const Gap(0) : const Gap(50),
+        ],
       ],
     );
   }

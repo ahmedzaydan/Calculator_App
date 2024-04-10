@@ -1,3 +1,4 @@
+import 'package:calculator/app/utils/functions.dart';
 import 'package:calculator/features/kits/kit_cubit/kit_cubit.dart';
 
 class KitModel {
@@ -57,14 +58,10 @@ class KitModel {
   void selectStatus() {
     status = KitStatus.transparent;
 
-    DateTime now = DateTime.now();
+    DateTime now = getCurrentDate();
 
     // contract is expired
-    if (now.year > endDate!.year ||
-        (now.year == endDate!.year && now.month > endDate!.month) ||
-        (now.year == endDate!.year &&
-            now.month == endDate!.month &&
-            now.day > endDate!.day)) {
+    if (now.isAfter(endDate!)) {
       status = KitStatus.expired;
     }
 
@@ -79,8 +76,7 @@ class KitModel {
       int lastDay = DateTime(now.year, now.month + 1, 0).day;
 
       // if the contract within last 10 days of month 24
-      if ((lastDay >= 30 && now.day >= 20) ||
-          (lastDay < 30 && (now.day >= (lastDay - 10)))) {
+      if (now.day >= (lastDay - 10)) {
         status = KitStatus.month24;
       }
       status = KitStatus.month24; // TODO: remove this line
@@ -92,8 +88,7 @@ class KitModel {
       int lastDay = DateTime(now.year, now.month + 1, 0).day;
 
       // if the contract within last 10 days of month 12
-      if ((lastDay >= 30 && now.day >= 20) ||
-          (lastDay < 30 && (now.day >= (lastDay - 10)))) {
+      if (now.day >= (lastDay - 10)) {
         status = KitStatus.month12;
       }
       status = KitStatus.month12; // TODO: remove this line

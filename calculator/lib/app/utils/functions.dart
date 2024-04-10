@@ -117,9 +117,17 @@ List<TextInputFormatter>? getInputFormatters(String regex) {
   ];
 }
 
-String getCurrentDate() {
+String getCurrentDateAsString() {
   DateTime now = DateTime.now();
   return '${now.day}/${now.month}/${now.year}';
+}
+
+DateTime getCurrentDate() {
+  return DateTime(
+    DateTime.now().year,
+    DateTime.now().month,
+    DateTime.now().day,
+  );
 }
 
 TextDirection getTextDirection(String text) {

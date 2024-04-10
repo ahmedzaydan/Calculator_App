@@ -74,7 +74,7 @@ class AppCubit extends Cubit<AppStates> {
 
     // kits
     const BottomNavigationBarItem(
-      // TODO: what is the suitable icon for kits?
+      // TODO: what is the suitable icon for kits? and for persons?
       icon: FaIcon(FontAwesomeIcons.users),
       label: StringsManager.kitsScreen,
     ),

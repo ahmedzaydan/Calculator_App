@@ -15,7 +15,7 @@ class KitsCubit extends Cubit<AppStates> {
   String checkedKits = '';
   String kitKeyPrefix = 'Kit';
 
-  List<bool> collapsedLists = [false, false, false, false, false];
+  List<bool> collapsedLists = [true, true, true, true, true];
 
   List<String> listsTitles = [
     StringsManager.expired,
@@ -80,18 +80,18 @@ class KitsCubit extends Cubit<AppStates> {
 
     // ensure that the key is not already stored
     if (CacheController.checkKey(storingKey) == false) {
-      // DateTime startDate = DateTime.now();
+      // DateTime startDate = getCurrentDate();
 
       // TODO: remove these lines
       List<DateTime> temp = [
         DateTime(2020, 10, 9), // expired
-        DateTime(2021, 10, 10), // month30
+        DateTime(2021, 10, 11), // month30
         DateTime(2022, 4, 8), // month24
         DateTime(2023, 4, 8), // month12
         DateTime(2023, 10, 8), // transparent
       ];
 
-      DateTime startDate = temp[0];
+      DateTime startDate = temp[1];
 
       // create kit object
       KitModel kit = KitModel(

@@ -49,7 +49,9 @@ abstract class StringsManager {
   static const String month12 = '1° reajuste';
   static const String month24 = '2° reajuste';
   static const String month30 = 'RENOVAR';
+
   // TODO: what is the correct string value in portuguese
+  // for expired and transperant status
   static const String expired = 'Expired';
   static const String pickMeAColour = 'Pick me a colour';
 

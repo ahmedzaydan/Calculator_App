@@ -21,7 +21,7 @@ class BasicInfo extends StatelessWidget {
         // date
         InfoItem(
           label: StringsManager.date,
-          value: getCurrentDate(),
+          value: getCurrentDateAsString(),
         ),
 
         _reportDivider(),
