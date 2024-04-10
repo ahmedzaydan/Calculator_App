@@ -34,6 +34,9 @@ class PersonsCubit extends Cubit<AppStates> {
       // load admin percentage
       adminPercentage = CacheController.getDoubleData(amdinKey) ?? 30;
 
+      // load persons data
+      personItems.clear();
+
       for (String key in personKeys) {
         List<String> personData =
             CacheController.getStringListData(key).orEmpty;

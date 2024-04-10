@@ -23,38 +23,7 @@ class ReportView extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          toolbarHeight: MediaQuery.sizeOf(context).height * 0.09,
-          title: const Text(
-            StringsManager.reportScreen,
-            style: TextStyle(
-              fontSize: AppSize.s24,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          actions: [
-            Padding(
-              padding: const EdgeInsets.only(right: AppPadding.p30),
-              child: CustomIconButton(
-                onPressed: () => locator<CalculatorCubit>()
-                    .captureAndShare(screenshotController),
-                icon: FaIcon(
-                  FontAwesomeIcons.solidShareFromSquare,
-                  color: ColorManager.white,
-                  size: AppSize.s32,
-                ),
-              ),
-            )
-          ],
-          leading: IconButton(
-            icon: const FaIcon(
-              FontAwesomeIcons.arrowLeft,
-              color: Colors.white,
-              size: 32,
-            ),
-            onPressed: () => Navigator.pop(context),
-          ),
-        ),
+        appBar: _appBar(context),
         body: Screenshot(
           controller: screenshotController,
           child: Container(
@@ -81,5 +50,40 @@ class ReportView extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  AppBar _appBar(BuildContext context) {
+    return AppBar(
+        toolbarHeight: MediaQuery.sizeOf(context).height * 0.09,
+        title: const Text(
+          StringsManager.reportScreen,
+          style: TextStyle(
+            fontSize: AppSize.s24,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: AppPadding.p30),
+            child: CustomIconButton(
+              onPressed: () => locator<CalculatorCubit>()
+                  .captureAndShare(screenshotController),
+              icon: FaIcon(
+                FontAwesomeIcons.solidShareFromSquare,
+                color: ColorManager.white,
+                size: AppSize.s32,
+              ),
+            ),
+          )
+        ],
+        leading: IconButton(
+          icon: const FaIcon(
+            FontAwesomeIcons.arrowLeft,
+            color: Colors.white,
+            size: 32,
+          ),
+          onPressed: () => Navigator.pop(context),
+        ),
+      );
   }
 }

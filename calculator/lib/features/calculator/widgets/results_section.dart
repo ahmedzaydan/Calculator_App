@@ -4,7 +4,7 @@ import 'package:calculator/app/utils/functions.dart';
 import 'package:calculator/app/widgets/custom_list_view.dart';
 import 'package:calculator/features/persons/models/person_model.dart';
 import 'package:calculator/features/persons/person_cubit/persons_cubit.dart';
-import 'package:calculator/features/widgets/custom_divider.dart';
+import 'package:calculator/app/widgets/custom_divider.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 

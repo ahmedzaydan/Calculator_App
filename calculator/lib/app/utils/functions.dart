@@ -1,10 +1,13 @@
+import 'package:calculator/app/resources/color_manager.dart';
 import 'package:calculator/app/resources/constants_manager.dart';
 import 'package:calculator/app/resources/font_manager.dart';
+import 'package:calculator/app/resources/strings_manager.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+/// UI functions
 void navigateTo({
   required BuildContext context,
   required Widget dest,
@@ -15,30 +18,6 @@ void navigateTo({
       builder: (context) => dest,
     ),
   );
-}
-
-TextStyle getTextStyle({
-  double fontSize = FontSize.s28,
-}) {
-  return TextStyle(
-    fontSize: fontSize,
-    color: Colors.black,
-  );
-}
-
-double formatDobule(double value) {
-  return double.parse(value.toStringAsFixed(2));
-}
-
-List<TextInputFormatter>? getInputFormatters(String regex) {
-  return [
-    FilteringTextInputFormatter.allow(RegExp(regex)),
-  ];
-}
-
-String getCurrentDate() {
-  DateTime now = DateTime.now();
-  return '${now.day}/${now.month}/${now.year}';
 }
 
 Color colorToast(ToastStates state) {
@@ -64,6 +43,83 @@ void showCustomToast(String message, ToastStates state) {
     toastLength: Toast.LENGTH_LONG,
     backgroundColor: colorToast(state),
   );
+}
+
+// custom alert dialog
+void showCustomDialog({
+  required BuildContext context,
+  required String message,
+  required Function onOk,
+}) {
+  showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        backgroundColor: ColorManager.white,
+        actionsAlignment: MainAxisAlignment.spaceBetween,
+        content: Text(
+          message,
+          style: const TextStyle(
+            fontSize: FontSize.s24,
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              onOk();
+              Navigator.pop(context);
+            },
+            child: const Text(
+              StringsManager.delete,
+              style: TextStyle(
+                color: Colors.red,
+                fontSize: FontSize.s20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: const Text(
+              StringsManager.cancel,
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: FontSize.s20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ],
+      );
+    },
+  );
+}
+
+TextStyle getTextStyle({
+  double fontSize = FontSize.s28,
+}) {
+  return TextStyle(
+    fontSize: fontSize,
+    color: Colors.black,
+  );
+}
+
+/// Logic functions
+double formatDobule(double value) {
+  return double.parse(value.toStringAsFixed(2));
+}
+
+List<TextInputFormatter>? getInputFormatters(String regex) {
+  return [
+    FilteringTextInputFormatter.allow(RegExp(regex)),
+  ];
+}
+
+String getCurrentDate() {
+  DateTime now = DateTime.now();
+  return '${now.day}/${now.month}/${now.year}';
 }
 
 TextDirection getTextDirection(String text) {

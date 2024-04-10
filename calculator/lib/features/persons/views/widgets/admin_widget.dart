@@ -3,9 +3,9 @@ import 'package:calculator/app/resources/strings_manager.dart';
 import 'package:calculator/app/resources/values_manager.dart';
 import 'package:calculator/app/utils/dependency_injection.dart';
 import 'package:calculator/app/utils/functions.dart';
+import 'package:calculator/app/widgets/actions_widget.dart';
+import 'package:calculator/app/widgets/edit_item_view.dart';
 import 'package:calculator/features/persons/person_cubit/persons_cubit.dart';
-import 'package:calculator/features/widgets/actions_widget.dart';
-import 'package:calculator/features/widgets/edit_item_view.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -25,7 +25,7 @@ class AdminWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         border: Border.all(
           color: ColorManager.black,
-          width: 1.5,
+          width: 1.3,
         ),
       ),
       padding: const EdgeInsets.all(AppPadding.p20),
@@ -61,21 +61,26 @@ class AdminWidget extends StatelessWidget {
             ),
           ),
           const Gap(15),
-          ActionsWidget(
-            isDeleteVisible: false,
-            editButtonStyle: ButtonStyle(
-              iconColor: MaterialStateProperty.all(ColorManager.white),
+          Padding(
+            padding: const EdgeInsets.only(
+              right: AppPadding.p10,
             ),
-            editOnPressed: () {
-              navigateTo(
-                context: sourceContext,
-                dest: EditItemView(
-                  label: StringsManager.admin,
-                  value: locator<PersonsCubit>().adminPercentage,
-                  sourceContext: sourceContext,
-                ),
-              );
-            },
+            child: ActionsWidget(
+              isDeleteVisible: false,
+              editButtonStyle: ButtonStyle(
+                iconColor: MaterialStateProperty.all(ColorManager.white),
+              ),
+              editOnPressed: () {
+                navigateTo(
+                  context: sourceContext,
+                  dest: EditItemView(
+                    label: StringsManager.admin,
+                    value: locator<PersonsCubit>().adminPercentage,
+                    sourceContext: sourceContext,
+                  ),
+                );
+              },
+            ),
           ),
         ],
       ),

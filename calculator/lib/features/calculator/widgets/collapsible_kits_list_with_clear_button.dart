@@ -3,7 +3,7 @@ import 'package:calculator/app/resources/strings_manager.dart';
 import 'package:calculator/app/utils/dependency_injection.dart';
 import 'package:calculator/app/widgets/custom_elevated_button.dart';
 import 'package:calculator/features/calculator/calculator_cubit/calculator_cubit.dart';
-import 'package:calculator/features/widgets/collapse_button.dart';
+import 'package:calculator/app/widgets/collapse_button.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 

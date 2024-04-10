@@ -2,8 +2,8 @@ import 'package:calculator/app/resources/color_manager.dart';
 import 'package:calculator/app/resources/constants_manager.dart';
 import 'package:calculator/app/resources/font_manager.dart';
 import 'package:calculator/app/resources/values_manager.dart';
-import 'package:calculator/features/widgets/actions_widget.dart';
-import 'package:calculator/features/widgets/custom_divider.dart';
+import 'package:calculator/app/widgets/actions_widget.dart';
+import 'package:calculator/app/widgets/custom_divider.dart';
 import 'package:flutter/material.dart';
 
 class DataItem extends StatelessWidget {

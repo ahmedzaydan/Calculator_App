@@ -1,14 +1,14 @@
 import 'package:calculator/app/resources/constants_manager.dart';
 import 'package:calculator/app/resources/values_manager.dart';
 import 'package:calculator/app/utils/functions.dart';
+import 'package:calculator/app/widgets/add_item_widget.dart';
+import 'package:calculator/app/widgets/custom_error_widget.dart';
+import 'package:calculator/app/widgets/loading_widget.dart';
 import 'package:calculator/features/app_layout/app_layout_cubit/app_states.dart';
 import 'package:calculator/features/persons/person_cubit/persons_cubit.dart';
 import 'package:calculator/features/persons/person_cubit/persons_states.dart';
 import 'package:calculator/features/persons/views/widgets/admin_widget.dart';
 import 'package:calculator/features/persons/views/widgets/persons_list_view.dart';
-import 'package:calculator/features/widgets/add_item_widget.dart';
-import 'package:calculator/features/widgets/custom_error_widget.dart';
-import 'package:calculator/features/widgets/loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -54,31 +54,34 @@ class PersonsView extends StatelessWidget {
           return CustomErrorWidget(state.message);
         }
         return SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // admin widget
-              Container(
-                margin: const EdgeInsets.only(top: AppMargin.m20),
-                child: AdminWidget(sourceContext: context),
-              ),
-
-              // add item widget
-              Padding(
-                padding: const EdgeInsets.only(
-                  left: AppPadding.p10,
-                  right: AppPadding.p10,
-                  top: AppPadding.p24,
-                  bottom: AppPadding.p50,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppPadding.p14,
+              vertical: AppPadding.p20,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // admin widget
+                Container(
+                  margin: const EdgeInsets.only(top: AppMargin.m20),
+                  child: AdminWidget(sourceContext: context),
                 ),
-                child: AddItemWidget(
-                  isPerson: true,
-                  labelInputType: TextInputType.text,
-                ),
-              ),
 
-              PersonsListView(sourceContext: context),
-            ],
+                Padding(
+                  padding: const EdgeInsets.only(
+                    top: AppPadding.p24,
+                    bottom: AppPadding.p40,
+                  ),
+                  child: AddItemWidget(
+                    isPerson: true,
+                    labelInputType: TextInputType.text,
+                  ),
+                ),
+
+                PersonsListView(sourceContext: context),
+              ],
+            ),
           ),
         );
       },

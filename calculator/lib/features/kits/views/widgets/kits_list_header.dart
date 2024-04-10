@@ -1,5 +1,5 @@
 import 'package:calculator/app/resources/values_manager.dart';
-import 'package:calculator/features/widgets/collapse_button.dart';
+import 'package:calculator/app/widgets/collapse_button.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 

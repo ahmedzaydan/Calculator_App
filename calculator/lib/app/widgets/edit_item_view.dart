@@ -45,7 +45,7 @@ class EditItemView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          updateKits ? 'Edit $label Value' : 'Edit $label Percentage',
+          updateKits ? 'Update $label Value' : 'Update $label Percentage',
           style: TextStyle(
             fontSize: FontSize.s24,
             color: ColorManager.white,
@@ -88,68 +88,90 @@ class EditItemView extends StatelessWidget {
 
               const Gap(30),
 
-              // save button
-              CustomElevatedButton(
-                onPressed: () async {
-                  var kitsCubit = locator<KitsCubit>();
-                  if (formKey.currentState!.validate()) {
-                    if (updateKits) {
-                      kprint(
-                        'From EditItemView: ${locator<KitsCubit>().kits[index].name}',
-                      );
-                      kitsCubit
-                          .updateKit(
-                        kitModel: kitModel!,
-                        value: valueController.text.toDouble(),
-                      )
-                          .then((response) {
-                        if ((response == null || response == true) &&
-                            sourceContext.mounted) {
-                          Navigator.pop(sourceContext);
-                        }
-                      });
-                    } else {
-                      if (index == -1) {
-                        // update admin data
-                        locator<PersonsCubit>()
-                            .updateAdminPercentage(
-                          double.parse(valueController.text),
-                        )
-                            .then(
-                          (response) {
-                            if ((response == null || response == true) &&
-                                sourceContext.mounted) {
-                              kprint('update admin percentage success');
-                              Navigator.pop(sourceContext);
-                            }
-                          },
-                        );
-                      } else {
-                        locator<PersonsCubit>()
-                            .updatePersonPercentage(
-                          index: index,
-                          value: double.parse(valueController.text),
-                        )
-                            .then(
-                          (response) {
-                            if ((response == null || response == true) &&
-                                sourceContext.mounted) {
-                              kprint('update person percentage success');
-                              Navigator.pop(sourceContext);
-                            }
-                          },
-                        );
-                      }
-                    }
-                  }
-                },
-                text: StringsManager.save,
-                width: double.infinity,
-              )
+              _actions(),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget _actions() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        // update button
+        Expanded(
+          child: CustomElevatedButton(
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all(
+                ColorManager.green,
+              ),
+            ),
+            onPressed: () async {
+              var kitsCubit = locator<KitsCubit>();
+              if (formKey.currentState!.validate()) {
+                if (updateKits) {
+                  kitsCubit
+                      .updateKit(
+                    kitModel: kitModel!,
+                    value: valueController.text.toDouble(),
+                  )
+                      .then((response) {
+                    if ((response == null || response == true) &&
+                        sourceContext.mounted) {
+                      Navigator.pop(sourceContext);
+                    }
+                  });
+                } else {
+                  if (index == -1) {
+                    // update admin data
+                    locator<PersonsCubit>()
+                        .updateAdminPercentage(
+                      double.parse(valueController.text),
+                    )
+                        .then(
+                      (response) {
+                        if ((response == null || response == true) &&
+                            sourceContext.mounted) {
+                          kprint('update admin percentage success');
+                          Navigator.pop(sourceContext);
+                        }
+                      },
+                    );
+                  } else {
+                    locator<PersonsCubit>()
+                        .updatePersonPercentage(
+                      index: index,
+                      value: double.parse(valueController.text),
+                    )
+                        .then(
+                      (response) {
+                        if ((response == null || response == true) &&
+                            sourceContext.mounted) {
+                          kprint('update person percentage success');
+                          Navigator.pop(sourceContext);
+                        }
+                      },
+                    );
+                  }
+                }
+              }
+            },
+            text: StringsManager.update,
+          ),
+        ),
+
+        const Gap(20),
+
+        // cancel button
+        Expanded(
+          child: CustomElevatedButton(
+            onPressed: () => Navigator.pop(sourceContext),
+            text: StringsManager.cancel,
+          ),
+        ),
+      ],
     );
   }
 }

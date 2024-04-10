@@ -10,8 +10,8 @@ import 'package:calculator/features/calculator/calculator_cubit/calculator_cubit
 import 'package:calculator/features/calculator/views/report_view.dart';
 import 'package:calculator/features/calculator/widgets/collapsible_kits_list_with_clear_button.dart';
 import 'package:calculator/features/calculator/widgets/kits_list_with_checkbox.dart';
-import 'package:calculator/features/widgets/custom_error_widget.dart';
-import 'package:calculator/features/widgets/loading_widget.dart';
+import 'package:calculator/app/widgets/custom_error_widget.dart';
+import 'package:calculator/app/widgets/loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';

@@ -1,13 +1,13 @@
 import 'package:calculator/app/utils/dependency_injection.dart';
 import 'package:calculator/app/utils/extensions.dart';
 import 'package:calculator/app/utils/functions.dart';
+import 'package:calculator/app/widgets/collapse_button.dart';
 import 'package:calculator/app/widgets/custom_list_view.dart';
+import 'package:calculator/app/widgets/data_item.dart';
+import 'package:calculator/app/widgets/edit_item_view.dart';
 import 'package:calculator/features/kits/kit_cubit/kit_cubit.dart';
 import 'package:calculator/features/kits/models/kit_model.dart';
 import 'package:calculator/features/kits/views/widgets/kits_list_header.dart';
-import 'package:calculator/features/widgets/collapse_button.dart';
-import 'package:calculator/features/widgets/data_item.dart';
-import 'package:calculator/features/widgets/edit_item_view.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -66,7 +66,15 @@ class KitsListsWidget extends StatelessWidget {
                     ),
                   );
                 },
-                deleteOnPressed: () async => await cubit.deleteKit(kit),
+                deleteOnPressed: () async {
+                  showCustomDialog(
+                    context: context,
+                    message: 'Are you sure you want to delete this kit?',
+                    onOk: () async {
+                      await cubit.deleteKit(kit);
+                    },
+                  );
+                },
               );
             },
             itemCount: list.length,

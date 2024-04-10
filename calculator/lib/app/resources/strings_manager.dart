@@ -5,8 +5,11 @@ abstract class StringsManager {
   static const String dataLoadingError =
       'An error occurred while loading data, please try again later';
   static const String adminPercentage = 'Teresa';
-  static const String save = 'Save';
   static const String defaultError = 'An error occurred';
+  static const String delete = 'Delete';
+  static const String update = 'Update';
+  static const String cancel = 'Cancel';
+
 
   // Calculator screen
   static const String calculatorScreen = 'Calculator';
