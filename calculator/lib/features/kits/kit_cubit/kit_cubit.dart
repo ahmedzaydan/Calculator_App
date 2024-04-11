@@ -18,11 +18,11 @@ class KitsCubit extends Cubit<AppStates> {
   List<bool> collapsedLists = [true, true, true, true, true];
 
   List<String> listsTitles = [
-    StringsManager.expired,
-    StringsManager.month30,
-    StringsManager.month24,
-    StringsManager.month12,
-    StringsManager.pickMeAColour, // TODO: change to better name please
+    KitsStrings.expired,
+    KitsStrings.month30,
+    KitsStrings.month24,
+    KitsStrings.month12,
+    KitsStrings.normal,
   ];
 
   List<KitModel> kits = [];
@@ -152,7 +152,7 @@ class KitsCubit extends Cubit<AppStates> {
             itemType: ItemType.kit,
             action: ItemAction.add,
             label: name,
-            error: StringsManager.kitExists,
+            error: KitsStrings.kitExists,
           ),
         ),
       );
@@ -173,7 +173,7 @@ class KitsCubit extends Cubit<AppStates> {
       case KitStatus.month12:
         month12Kits.add(kitModel);
         break;
-      case KitStatus.transparent:
+      case KitStatus.normal:
         transparentKits.add(kitModel);
         break;
     }
@@ -223,8 +223,6 @@ class KitsCubit extends Cubit<AppStates> {
       }
     }).catchError(
       (e) {
-        kprint('update failed from catch block');
-        kprint(e.toString());
         emit(
           UpdateKitErrorState(
             getStateMessage(
@@ -260,7 +258,7 @@ class KitsCubit extends Cubit<AppStates> {
         month12Kits[month12Kits.indexWhere((ele) => ele.name == kit.name)] =
             kit;
         break;
-      case KitStatus.transparent:
+      case KitStatus.normal:
         transparentKits[
             transparentKits.indexWhere((ele) => ele.name == kit.name)] = kit;
         break;
@@ -446,10 +444,10 @@ class KitsCubit extends Cubit<AppStates> {
 
 enum KitStatus {
   expired,
-  transparent,
   month12,
   month24,
   month30,
+  normal,
 }
 
 enum SortingType {

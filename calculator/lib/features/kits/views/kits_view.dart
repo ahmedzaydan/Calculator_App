@@ -1,13 +1,14 @@
 import 'package:calculator/app/resources/constants_manager.dart';
+import 'package:calculator/app/resources/strings_manager.dart';
 import 'package:calculator/app/resources/values_manager.dart';
 import 'package:calculator/app/utils/functions.dart';
+import 'package:calculator/app/widgets/add_item_widget.dart';
+import 'package:calculator/app/widgets/custom_error_widget.dart';
+import 'package:calculator/app/widgets/loading_widget.dart';
 import 'package:calculator/features/app_layout/app_layout_cubit/app_states.dart';
 import 'package:calculator/features/kits/kit_cubit/kit_cubit.dart';
 import 'package:calculator/features/kits/kit_cubit/kit_states.dart';
 import 'package:calculator/features/kits/views/widgets/kits_lists_view.dart';
-import 'package:calculator/app/widgets/add_item_widget.dart';
-import 'package:calculator/app/widgets/custom_error_widget.dart';
-import 'package:calculator/app/widgets/loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
@@ -50,7 +51,9 @@ class KitsView extends StatelessWidget {
       },
       builder: (_, state) {
         if (state is LoadingDataState || state is LoadKitsDataLoadingState) {
-          return const LoadingWidget();
+          return const LoadingWidget(
+            message: KitsStrings.loadingKits,
+          );
         } else if (state is LoadingDataErrorState) {
           return CustomErrorWidget(state.message);
         }

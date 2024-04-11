@@ -1,5 +1,6 @@
 import 'package:calculator/app/resources/constants_manager.dart';
 import 'package:calculator/app/resources/strings_manager.dart';
+// import 'package:calculator/app/resources/strings_manager.dart';
 import 'package:calculator/app/utils/cache_controller.dart';
 import 'package:calculator/app/utils/extensions.dart';
 import 'package:calculator/app/utils/functions.dart';
@@ -13,7 +14,7 @@ class PersonsCubit extends Cubit<AppStates> {
 
   // keys
   final String personKeysKey = 'personKeys';
-  final String amdinKey = 'adminPercentage';
+  final String amdinKey = 'adminKey';
 
   double adminPercentage = 0.0;
   double totalPercentage = 0.0;
@@ -112,14 +113,7 @@ class PersonsCubit extends Cubit<AppStates> {
         );
       } else {
         emit(
-          AddPersonErrorState(
-            getStateMessage(
-              state: AppState.error,
-              itemType: ItemType.person,
-              action: ItemAction.add,
-              label: name,
-            ),
-          ),
+          AddPersonErrorState(errorMessage),
         );
       }
     } catch (e) {
@@ -139,7 +133,7 @@ class PersonsCubit extends Cubit<AppStates> {
   String? _validateNewPersonData(String name, double percentage) {
     // check if person name already exists
     if (CacheController.checkKey(name)) {
-      return StringsManager.personExists;
+      return PersonsStrings.personExists;
     }
 
     return _validatePercentage(0, percentage);
@@ -151,12 +145,12 @@ class PersonsCubit extends Cubit<AppStates> {
   ) {
     // check if perecentage is valid or not
     if (newPercentage < 0 || newPercentage > 100) {
-      return StringsManager.invalidPercentage;
+      return PersonsStrings.invalidPercentage;
     }
 
     // check if total percentage is less than 100
     if (totalPercentage - oldPercentage + newPercentage > 100) {
-      return StringsManager.percentageError;
+      return PersonsStrings.percentageError;
     }
     return null;
   }
@@ -252,7 +246,7 @@ class PersonsCubit extends Cubit<AppStates> {
                     state: AppState.success,
                     itemType: ItemType.person,
                     action: ItemAction.update,
-                    label: StringsManager.admin,
+                    label: PersonsStrings.admin,
                   ),
                 ),
               );
@@ -264,7 +258,7 @@ class PersonsCubit extends Cubit<AppStates> {
                     state: AppState.error,
                     itemType: ItemType.person,
                     action: ItemAction.update,
-                    label: StringsManager.admin,
+                    label: PersonsStrings.admin,
                   ),
                 ),
               );
@@ -279,7 +273,7 @@ class PersonsCubit extends Cubit<AppStates> {
               state: AppState.error,
               itemType: ItemType.person,
               action: ItemAction.update,
-              label: StringsManager.admin,
+              label: PersonsStrings.admin,
             ),
           ),
         );
@@ -292,7 +286,7 @@ class PersonsCubit extends Cubit<AppStates> {
             state: AppState.error,
             itemType: ItemType.person,
             action: ItemAction.update,
-            label: StringsManager.admin,
+            label: PersonsStrings.admin,
           ),
         ),
       );
@@ -308,31 +302,37 @@ class PersonsCubit extends Cubit<AppStates> {
   }
 
   Future<void> deletePerson(int index) async {
-    try {
-      // remove person from shared preferences
-      await CacheController.removeData(personItems[index].name);
+    String personName = personItems[index].name;
+
+    // remove person from shared preferences
+    CacheController.removeData(personItems[index].name).then((deletionResult) {
+      // update total percentage
+      totalPercentage -= personItems[index].percentage;
 
       // remove person from the personItems list
       personItems.removeAt(index);
+
       emit(
         DeletePersonSuccessState(
           getStateMessage(
             state: AppState.success,
             itemType: ItemType.person,
             action: ItemAction.delete,
+            label: personName,
           ),
         ),
       );
-    } catch (e) {
+    }).catchError((e) {
       emit(
         DeletePersonErrorState(
           getStateMessage(
             state: AppState.error,
             itemType: ItemType.person,
             action: ItemAction.delete,
+            label: personName,
           ),
         ),
       );
-    }
+    });
   }
 }

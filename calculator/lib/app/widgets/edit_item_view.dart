@@ -45,7 +45,9 @@ class EditItemView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          updateKits ? 'Update $label Value' : 'Update $label Percentage',
+          updateKits
+              ? 'Atualizar valor de $label'
+              : 'Atualizar porcentagem de $label',
           style: TextStyle(
             fontSize: FontSize.s24,
             color: ColorManager.white,
@@ -77,8 +79,8 @@ class EditItemView extends StatelessWidget {
                 validator: (value) {
                   if (value!.isEmpty) {
                     return updateKits
-                        ? StringsManager.enterValue
-                        : StringsManager.enterPercentage;
+                        ? KitsStrings.enterValue
+                        : PersonsStrings.enterPercentage;
                   }
                   return null;
                 },
@@ -134,7 +136,6 @@ class EditItemView extends StatelessWidget {
                       (response) {
                         if ((response == null || response == true) &&
                             sourceContext.mounted) {
-                          kprint('update admin percentage success');
                           Navigator.pop(sourceContext);
                         }
                       },
@@ -149,7 +150,6 @@ class EditItemView extends StatelessWidget {
                       (response) {
                         if ((response == null || response == true) &&
                             sourceContext.mounted) {
-                          kprint('update person percentage success');
                           Navigator.pop(sourceContext);
                         }
                       },

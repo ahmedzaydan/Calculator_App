@@ -15,7 +15,6 @@ class AppLayout extends StatelessWidget {
         var cubit = locator<AppCubit>();
         return SafeArea(
           child: Scaffold(
-            // appBar: cubit.appBars[cubit.currentIndex],
             body: cubit.screens[cubit.currentIndex],
             bottomNavigationBar: BottomNavigationBar(
               items: cubit.bottomNavItems,

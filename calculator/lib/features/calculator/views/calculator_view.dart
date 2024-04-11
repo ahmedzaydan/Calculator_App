@@ -29,7 +29,7 @@ class CalculatorView extends StatelessWidget {
         var cubit = locator<CalculatorCubit>();
 
         if (state is LoadingDataState) {
-          return const LoadingWidget();
+          return const LoadingWidget(); // TODO: why loading widgets not working?!!
         } else if (state is LoadingDataErrorState) {
           return CustomErrorWidget(state.message);
         }
@@ -60,8 +60,8 @@ class CalculatorView extends StatelessWidget {
                 CustomTextFormField(
                   controller: expensesController,
                   keyboardType: TextInputType.text,
-                  labelText: StringsManager.expenses,
-                  hintText: StringsManager.expansesHint,
+                  labelText: CalculatorStrings.expenses,
+                  hintText: CalculatorStrings.expansesHint,
                   onChanged: (value) => cubit.expenses = value,
                 ),
 
@@ -71,8 +71,8 @@ class CalculatorView extends StatelessWidget {
                 CustomTextFormField(
                   controller: extraController,
                   keyboardType: TextInputType.text,
-                  labelText: StringsManager.extra,
-                  hintText: StringsManager.expansesHint,
+                  labelText: CalculatorStrings.extra,
+                  hintText: CalculatorStrings.expansesHint,
                   onChanged: (value) => cubit.extra = value,
                 ),
 
@@ -82,7 +82,7 @@ class CalculatorView extends StatelessWidget {
                 CustomTextFormField(
                   controller: noteController,
                   keyboardType: TextInputType.text,
-                  labelText: StringsManager.note,
+                  labelText: CalculatorStrings.note,
                   onChanged: (note) => cubit.note = note,
                 ),
 
@@ -99,7 +99,7 @@ class CalculatorView extends StatelessWidget {
                         dest: ReportView(),
                       );
                     },
-                    text: StringsManager.calculate,
+                    text: CalculatorStrings.calculate,
                     textStyle: TextStyle(
                       fontSize: FontSize.s28,
                       fontWeight: FontWeight.bold,

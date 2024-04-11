@@ -155,56 +155,56 @@ String getStateMessage({
     case ItemType.kit:
       switch (state) {
         case AppState.loading:
-          return 'Loading kits data...';
+          return KitsStrings.loadingKits;
         case AppState.success:
           switch (action!) {
             case ItemAction.add:
-              return '$label added successfully';
+              return '$label adicionado com sucesso';
             case ItemAction.update:
-              return '$label value updated successfully';
+              return 'Valor $label atualizado com sucesso';
             case ItemAction.delete:
-              return '$label deleted successfully';
+              return '$label excluído com sucesso';
             case ItemAction.load:
-              return 'Kits data loaded successfully';
+              return 'Dados dos kits carregados com sucesso';
           }
         case AppState.error:
           switch (action!) {
             case ItemAction.add:
-              return error ?? 'Failed to add $label';
+              return error ?? 'Falha ao adicionar $label';
             case ItemAction.update:
-              return 'Failed to update $label value';
+              return 'Falha ao atualizar o valor de $label';
             case ItemAction.delete:
-              return 'Failed to delete $label';
+              return 'Falha ao excluir $label';
             case ItemAction.load:
-              return 'Failed to load kits data';
+              return 'Falha ao carregar os dados dos kits';
           }
       }
 
     case ItemType.person:
       switch (state) {
         case AppState.loading:
-          return 'Loading persons data...';
+          return PersonsStrings.loadingPersons;
         case AppState.success:
           switch (action!) {
             case ItemAction.add:
-              return '$label added successfully';
+              return '$label adicionado com sucesso';
             case ItemAction.update:
-              return '$label perecentage updated successfully';
+              return 'Porcentagem de $label atualizada com sucesso';
             case ItemAction.delete:
-              return '$label deleted successfully';
+              return '$label excluído com sucesso';
             case ItemAction.load:
-              return 'Persons data loaded successfully';
+              return 'Dados das pessoas carregados com sucesso';
           }
         case AppState.error:
           switch (action!) {
             case ItemAction.add:
-              return 'Failed to add $label';
+              return 'Falha ao adicionar $label';
             case ItemAction.update:
-              return 'Failed to update $label perecentage';
+              return 'Falha ao atualizar a porcentagem de $label';
             case ItemAction.delete:
-              return 'Failed to delete $label';
+              return 'Falha ao excluir $label';
             case ItemAction.load:
-              return 'Failed to load persons data';
+              return 'Falha ao carregar os dados das pessoas';
           }
       }
   }

@@ -1,10 +1,10 @@
 import 'package:calculator/app/resources/strings_manager.dart';
 import 'package:calculator/app/utils/dependency_injection.dart';
 import 'package:calculator/app/utils/functions.dart';
+import 'package:calculator/app/widgets/custom_divider.dart';
 import 'package:calculator/app/widgets/custom_list_view.dart';
 import 'package:calculator/features/persons/models/person_model.dart';
 import 'package:calculator/features/persons/person_cubit/persons_cubit.dart';
-import 'package:calculator/app/widgets/custom_divider.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -72,12 +72,16 @@ class ResultsSection extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          StringsManager.adminPercentage,
-          style: getTextStyle(),
+          PersonsStrings.admin,
+          style: getTextStyle().copyWith(
+            fontWeight: FontWeight.bold,
+          ),
         ),
         Text(
           '${cubit.adminProfit}',
-          style: getTextStyle(),
+          style: getTextStyle().copyWith(
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ],
     );

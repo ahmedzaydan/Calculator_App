@@ -1,4 +1,5 @@
 import 'package:calculator/app/resources/constants_manager.dart';
+import 'package:calculator/app/resources/strings_manager.dart';
 import 'package:calculator/app/resources/values_manager.dart';
 import 'package:calculator/app/utils/functions.dart';
 import 'package:calculator/app/widgets/add_item_widget.dart';
@@ -48,43 +49,49 @@ class PersonsView extends StatelessWidget {
         }
       },
       builder: (_, state) {
-        if (state is LoadingDataState) {
-          return const LoadingWidget();
+        if (state is LoadingDataState || state is LoadPersonsDataLoadingState) {
+          return const LoadingWidget(
+            message: PersonsStrings.loadingPersons,
+          );
         } else if (state is LoadingDataErrorState) {
           return CustomErrorWidget(state.message);
         }
-        return SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppPadding.p14,
-              vertical: AppPadding.p20,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // admin widget
-                Container(
-                  margin: const EdgeInsets.only(top: AppMargin.m20),
-                  child: AdminWidget(sourceContext: context),
-                ),
-
-                Padding(
-                  padding: const EdgeInsets.only(
-                    top: AppPadding.p24,
-                    bottom: AppPadding.p40,
-                  ),
-                  child: AddItemWidget(
-                    isPerson: true,
-                    labelInputType: TextInputType.text,
-                  ),
-                ),
-
-                PersonsListView(sourceContext: context),
-              ],
-            ),
-          ),
-        );
+        return _buildPersonsViewBody(context);
       },
+    );
+  }
+
+  SingleChildScrollView _buildPersonsViewBody(BuildContext context) {
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppPadding.p14,
+          vertical: AppPadding.p20,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // admin widget
+            Container(
+              margin: const EdgeInsets.only(top: AppMargin.m20),
+              child: AdminWidget(sourceContext: context),
+            ),
+
+            Padding(
+              padding: const EdgeInsets.only(
+                top: AppPadding.p24,
+                bottom: AppPadding.p40,
+              ),
+              child: AddItemWidget(
+                isPerson: true,
+                labelInputType: TextInputType.text,
+              ),
+            ),
+
+            PersonsListView(sourceContext: context),
+          ],
+        ),
+      ),
     );
   }
 }

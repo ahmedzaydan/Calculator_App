@@ -20,7 +20,7 @@ class BasicInfo extends StatelessWidget {
       children: [
         // date
         InfoItem(
-          label: StringsManager.date,
+          label: CalculatorStrings.date,
           value: getCurrentDateAsString(),
         ),
 
@@ -28,7 +28,7 @@ class BasicInfo extends StatelessWidget {
 
         // total kit
         InfoItem(
-          label: StringsManager.totalProfit,
+          label: CalculatorStrings.totalProfit,
           value: kitsCubit.totalKits.toString(),
         ),
 
@@ -47,7 +47,7 @@ class BasicInfo extends StatelessWidget {
 
         // total expense
         InfoItem(
-          label: StringsManager.totalExpense,
+          label: CalculatorStrings.totalExpense,
           value: cubit.totalExpense.toString(),
         ),
 
@@ -55,7 +55,7 @@ class BasicInfo extends StatelessWidget {
 
         // total extra
         InfoItem(
-          label: StringsManager.extra,
+          label: CalculatorStrings.extra,
           value: cubit.totalExtra.toString(),
         ),
 
@@ -63,7 +63,7 @@ class BasicInfo extends StatelessWidget {
 
         // net profit
         InfoItem(
-          label: StringsManager.netProfit,
+          label: CalculatorStrings.netProfit,
           value: cubit.netProfit.toString(),
         ),
 

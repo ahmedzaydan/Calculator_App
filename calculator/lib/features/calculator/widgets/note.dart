@@ -18,7 +18,7 @@ class Note extends StatelessWidget {
           Align(
             alignment: Alignment.centerLeft,
             child: Text(
-              StringsManager.note,
+              CalculatorStrings.note,
               style: getTextStyle(),
             ),
           ),

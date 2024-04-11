@@ -33,7 +33,7 @@ class CollapsibleKitsListWithClearButton extends StatelessWidget {
 
           // kits text
           const Text(
-            StringsManager.kits,
+            CalculatorStrings.kits,
             style: TextStyle(
               fontSize: FontSize.s28,
               fontWeight: FontWeight.bold,
@@ -47,7 +47,7 @@ class CollapsibleKitsListWithClearButton extends StatelessWidget {
             height: MediaQuery.of(context).size.width * 0.12,
             child: CustomElevatedButton(
               onPressed: clearOnPressed,
-              text: StringsManager.clear,
+              text: CalculatorStrings.clear,
             ),
           ),
         ],

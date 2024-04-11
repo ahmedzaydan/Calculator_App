@@ -48,7 +48,7 @@ class AddItemWidget extends StatelessWidget {
         Container(
           margin: const EdgeInsets.only(left: AppPadding.p5),
           child: Text(
-            isPerson ? StringsManager.addPerson : StringsManager.addKit,
+            isPerson ? PersonsStrings.addPerson : KitsStrings.addKit,
             style: TextStyle(
               color: ColorManager.black,
               fontSize: FontSize.s32,
@@ -73,14 +73,14 @@ class AddItemWidget extends StatelessWidget {
                   controller: nameController,
                   fontWeight: FontWeight.normal,
                   labelText:
-                      isPerson ? StringsManager.name : StringsManager.kitNumber,
+                      isPerson ? StringsManager.name : KitsStrings.kitNumber,
                   keyboardType: labelInputType,
                   inputFormatters: labelInputFormatters,
                   validator: (value) {
                     if (value!.isEmpty) {
                       return isPerson
                           ? StringsManager.enterName
-                          : StringsManager.enterNumber;
+                          : KitsStrings.enterNumber;
                     }
                     return null;
                   },
@@ -96,8 +96,8 @@ class AddItemWidget extends StatelessWidget {
                   controller: valueController,
                   fontWeight: FontWeight.normal,
                   labelText: isPerson
-                      ? StringsManager.percentage
-                      : StringsManager.kitValue,
+                      ? PersonsStrings.percentage
+                      : KitsStrings.kitValue,
                   keyboardType:
                       const TextInputType.numberWithOptions(decimal: true),
                   inputFormatters:
@@ -105,8 +105,8 @@ class AddItemWidget extends StatelessWidget {
                   validator: (value) {
                     if (value!.isEmpty) {
                       return isPerson
-                          ? StringsManager.enterPercentage
-                          : StringsManager.enterValue;
+                          ? PersonsStrings.enterPercentage
+                          : KitsStrings.enterValue;
                     }
                     return null;
                   },

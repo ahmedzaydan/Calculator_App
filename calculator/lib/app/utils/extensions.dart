@@ -43,26 +43,26 @@ extension NonNullBool on bool? {
 extension KitTypeExtension on KitStatus {
   KitType get kitType {
     switch (this) {
-      case KitStatus.transparent:
+      case KitStatus.normal:
         return KitType();
       case KitStatus.month12:
         return KitType(
-          typeString: StringsManager.month12,
+          typeString: KitsStrings.month12,
           backgroundColor: ColorManager.month12,
         );
       case KitStatus.month24:
         return KitType(
-          typeString: StringsManager.month24,
+          typeString: KitsStrings.month24,
           backgroundColor: ColorManager.month24,
         );
       case KitStatus.month30:
         return KitType(
-          typeString: StringsManager.month30,
+          typeString: KitsStrings.month30,
           backgroundColor: ColorManager.month30,
         );
       case KitStatus.expired:
         return KitType(
-          typeString: StringsManager.expired,
+          typeString: KitsStrings.expired,
           backgroundColor: ColorManager.expired,
         );
     }
@@ -72,7 +72,7 @@ extension KitTypeExtension on KitStatus {
 extension NumericKitStatusExtension on KitStatus {
   int get numericValue {
     switch (this) {
-      case KitStatus.transparent:
+      case KitStatus.normal:
         return 0;
       case KitStatus.month12:
         return 1;

@@ -1,4 +1,5 @@
 import 'package:calculator/app/resources/color_manager.dart';
+import 'package:calculator/app/resources/strings_manager.dart';
 import 'package:calculator/app/utils/dependency_injection.dart';
 import 'package:calculator/app/utils/functions.dart';
 import 'package:calculator/app/widgets/custom_list_view.dart';
@@ -24,24 +25,31 @@ class PersonsListView extends StatelessWidget {
       itemBuilder: (context, index) {
         PersonModel person = cubit.personItems[index];
         return DataItem(
-          color: index % 2 == 0
-              ? ColorManager.transparent
-              : ColorManager.lightGrey4,
-          name: person.name,
-          value: '${person.percentage}%',
-          editOnPressed: () {
-            navigateTo(
-              context: context,
-              dest: EditItemView(
-                label: person.name,
-                value: person.percentage,
-                sourceContext: sourceContext,
-                index: index,
-              ),
-            );
-          },
-          deleteOnPressed: () async => await cubit.deletePerson(index),
-        );
+            color: index % 2 == 0
+                ? ColorManager.transparent
+                : ColorManager.lightGrey4,
+            name: person.name,
+            value: '${person.percentage}%',
+            editOnPressed: () {
+              navigateTo(
+                context: context,
+                dest: EditItemView(
+                  label: person.name,
+                  value: person.percentage,
+                  sourceContext: sourceContext,
+                  index: index,
+                ),
+              );
+            },
+            deleteOnPressed: () {
+              showCustomDialog(
+                context: context,
+                message: PersonsStrings.deleteConfirmation,
+                onOk: () async {
+                  await cubit.deletePerson(index);
+                },
+              );
+            });
       },
       itemCount: cubit.personItems.length,
       separatorBuilder: (context, index) => const Gap(20),

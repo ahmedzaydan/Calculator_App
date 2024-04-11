@@ -3,7 +3,12 @@ import 'package:calculator/app/utils/functions.dart';
 import 'package:flutter/material.dart';
 
 class LoadingWidget extends StatelessWidget {
-  const LoadingWidget({super.key});
+  const LoadingWidget({
+    super.key,
+    this.message = StringsManager.loading,
+  });
+
+  final String message;
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +20,7 @@ class LoadingWidget extends StatelessWidget {
         ),
         const SizedBox(height: 20),
         Text(
-          StringsManager.loading,
+          message,
           style: getTextStyle(),
         ),
       ],

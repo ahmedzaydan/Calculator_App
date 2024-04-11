@@ -1,70 +1,73 @@
 abstract class StringsManager {
-  // general strings
   static const String emptyString = '';
-  static const String loading = 'Loading...';
+  static const String loading = 'Carregando...';
   static const String dataLoadingError =
-      'An error occurred while loading data, please try again later';
-  static const String adminPercentage = 'Teresa';
-  static const String defaultError = 'An error occurred';
-  static const String delete = 'Delete';
-  static const String update = 'Update';
-  static const String cancel = 'Cancel';
+      'Ocorreu um erro ao carregar os dados, por favor, tente novamente mais tarde';
+  static const String defaultError = 'Ocorreu um erro';
+  static const String delete = 'Excluir';
+  static const String update = 'Atualizar';
+  static const String cancel = 'Cancelar';
+  static const String name = 'Nome';
+  static const String enterName = 'Digite o nome';
 
+  static const String status = 'status';
+}
 
-  // Calculator screen
-  static const String calculatorScreen = 'Calculator';
-  static const String kits = 'Kits';
-  static const String expenses = 'Expenses';
-  static const expansesHint = 'value1,  value2,';
-  static const String extra = 'Extra';
-  static const String note = 'Note';
-  static const String clear = 'Clear';
-  static const String calculate = 'Calculate';
-
-  static const String name = 'Name';
-  static const String enterName = 'Enter name';
-
-  // persons screen
-  static const String personsScreen = 'Persons Screen';
-  static const String add = 'Add';
-  static const String addPerson = 'Add New Person';
-  static const String percentage = 'Percentage';
-  static const String enterPercentage = 'Enter percentage';
-  static const String personExists = 'Person name already exists';
+abstract class PersonsStrings {
+  static const String admin = 'Teresa';
+  static const String personsScreen = 'Tela de Pessoas';
+  static const String add = 'Adicionar';
+  static const String addPerson = 'Adicionar Nova Pessoa';
+  static const String percentage = 'Porcentagem';
+  static const String enterPercentage = 'Digite a porcentagem';
+  static const String personExists = 'Nome da pessoa já existe';
   static const String percentageError =
-      'Total percentage must be less than 100';
+      'A porcentagem total deve ser inferior a 100';
   static const String invalidPercentage =
-      'Percentage must be a number between 0 and 100';
+      'A porcentagem deve ser um número entre 0 e 100';
+  static const String loadingPersons = 'Carregando dados das pessoas...';
+  static const String deleteConfirmation =
+      'Você tem certeza de que deseja excluir esta pessoa?';
+}
 
-  // kits screen
-  static const String kitsScreen = 'Kits Screen';
-  static const String editKitList = 'Edit Kit List';
-  static const String kitNumber = 'Kit number';
-  static const String kitValue = 'Kit value';
-  static const String enterValue = 'Enter value';
-  static const String enterNumber = 'Enter kit number';
-  static const String kitExists = 'Kit already exists';
-  static const String invalidProfitId = 'Kit number must be an integer';
-  static const String addKit = 'Add New Kit';
+abstract class KitsStrings {
+  static const String kitsScreen = 'Tela de Kits';
+  static const String editKitList = 'Editar Lista de Kits';
+  static const String kitNumber = 'Número do Kit';
+  static const String kitValue = 'Valor do Kit';
+  static const String enterValue = 'Digite o valor';
+  static const String enterNumber = 'Digite o número do kit';
+  static const String kitExists = 'Kit já existe';
+  static const String invalidProfitId =
+      'Número do kit deve ser um número inteiro';
+  static const String addKit = 'Adicionar Novo Kit';
+  static const String loadingKits = 'Carregando dados dos kits...';
   static const String month12 = '1° reajuste';
   static const String month24 = '2° reajuste';
   static const String month30 = 'RENOVAR';
+  static const String expired = 'Expirado';
+  static const String normal = 'Normal';
+  static const String deleteConfirmation =
+      'Você tem certeza de que deseja excluir este kit?';
+}
 
-  // TODO: what is the correct string value in portuguese
-  // for expired and transperant status
-  static const String expired = 'Expired';
-  static const String pickMeAColour = 'Pick me a colour';
+abstract class CalculatorStrings {
+  // calculator screen strings
+  static const String calculatorScreen = 'Calculadora';
+  static const String kits = 'Kits';
+  static const String expenses = 'Despesas';
+  static const expansesHint = 'valor1, valor2,';
+  static const String extra = 'Extra';
+  static const String note = 'Nota';
+  static const String clear = 'Limpar';
+  static const String calculate = 'Calcular';
 
   // report screen strings
-  static const String reportScreen = 'Report Screen';
-  static const String date = 'Date';
+  static const String reportScreen = 'Tela de Relatório';
+  static const String date = 'Data';
   static const String totalProfit = 'Total kit';
-  static const String totalExpense = 'Total expense';
-  static const String netProfit = 'Net profit';
+  static const String totalExpense = 'Despesa total';
+  static const String netProfit = 'Lucro líquido';
   static const String adminProfit = 'Teresa';
-  static const String personNetProfit = 'Person net kit';
-
-  // cubit strings
-  static const String status = 'status';
-  static const String admin = 'Teresa';
+  static const String personNetProfit = 'Lucro líquido da pessoa';
 }

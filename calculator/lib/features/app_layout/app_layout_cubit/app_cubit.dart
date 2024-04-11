@@ -26,19 +26,16 @@ class AppCubit extends Cubit<AppStates> {
   List<String> personKeys = [];
 
   Future<void> init() async {
-    emit(LoadingDataState());
+    try {
+      emit(LoadingDataState());
 
-    getKeys();
+      getKeys();
 
-    kitsCubit.loadData(kitsKeys).then((_) {
-      personsCubit.loadData(personKeys).then((_) {
-        emit(LoadingDataSuccessState());
-      }).catchError((error) {
-        emit(LoadingDataErrorState(StringsManager.dataLoadingError));
-      });
-    }).catchError((error) {
+      await kitsCubit.loadData(kitsKeys);
+      await personsCubit.loadData(personKeys);
+    } catch (e) {
       emit(LoadingDataErrorState(StringsManager.dataLoadingError));
-    });
+    }
   }
 
   void getKeys() {
@@ -69,21 +66,19 @@ class AppCubit extends Cubit<AppStates> {
     // calculator
     const BottomNavigationBarItem(
       icon: FaIcon(FontAwesomeIcons.calculator),
-      label: StringsManager.calculatorScreen,
+      label: CalculatorStrings.calculatorScreen,
     ),
 
     // kits
     const BottomNavigationBarItem(
-      // TODO: what is the suitable icon for kits? and for persons?
       icon: FaIcon(FontAwesomeIcons.users),
-      label: StringsManager.kitsScreen,
+      label: KitsStrings.kitsScreen,
     ),
 
     // persons
     const BottomNavigationBarItem(
-      // TODO: what is the screen title?!
       icon: FaIcon(FontAwesomeIcons.briefcase),
-      label: StringsManager.personsScreen,
+      label: PersonsStrings.personsScreen,
     ),
   ];
 

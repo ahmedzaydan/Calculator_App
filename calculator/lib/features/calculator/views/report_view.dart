@@ -37,6 +37,7 @@ class ReportView extends StatelessWidget {
                     children: [
                       const Gap(10),
                       const BasicInfo(),
+                      const Gap(50),
                       const ResultsSection(),
                       const Gap(50),
                       Note(cubit: cubit),
@@ -54,36 +55,36 @@ class ReportView extends StatelessWidget {
 
   AppBar _appBar(BuildContext context) {
     return AppBar(
-        toolbarHeight: MediaQuery.sizeOf(context).height * 0.09,
-        title: const Text(
-          StringsManager.reportScreen,
-          style: TextStyle(
-            fontSize: AppSize.s24,
-            fontWeight: FontWeight.bold,
-          ),
+      toolbarHeight: MediaQuery.sizeOf(context).height * 0.09,
+      title: const Text(
+        CalculatorStrings.reportScreen,
+        style: TextStyle(
+          fontSize: AppSize.s24,
+          fontWeight: FontWeight.bold,
         ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: AppPadding.p30),
-            child: CustomIconButton(
-              onPressed: () => locator<CalculatorCubit>()
-                  .captureAndShare(screenshotController),
-              icon: FaIcon(
-                FontAwesomeIcons.solidShareFromSquare,
-                color: ColorManager.white,
-                size: AppSize.s32,
-              ),
+      ),
+      actions: [
+        Padding(
+          padding: const EdgeInsets.only(right: AppPadding.p30),
+          child: CustomIconButton(
+            onPressed: () => locator<CalculatorCubit>()
+                .captureAndShare(screenshotController),
+            icon: FaIcon(
+              FontAwesomeIcons.solidShareFromSquare,
+              color: ColorManager.white,
+              size: AppSize.s32,
             ),
-          )
-        ],
-        leading: IconButton(
-          icon: const FaIcon(
-            FontAwesomeIcons.arrowLeft,
-            color: Colors.white,
-            size: 32,
           ),
-          onPressed: () => Navigator.pop(context),
+        )
+      ],
+      leading: IconButton(
+        icon: const FaIcon(
+          FontAwesomeIcons.arrowLeft,
+          color: Colors.white,
+          size: 32,
         ),
-      );
+        onPressed: () => Navigator.pop(context),
+      ),
+    );
   }
 }

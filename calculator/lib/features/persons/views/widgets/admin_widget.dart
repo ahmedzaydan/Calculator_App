@@ -39,7 +39,7 @@ class AdminWidget extends StatelessWidget {
               children: [
                 // admin text
                 Text(
-                  StringsManager.admin,
+                  PersonsStrings.admin,
                   // style: getTextStyle(),
                   style: TextStyle(
                     color: ColorManager.white,
@@ -74,7 +74,7 @@ class AdminWidget extends StatelessWidget {
                 navigateTo(
                   context: sourceContext,
                   dest: EditItemView(
-                    label: StringsManager.admin,
+                    label: PersonsStrings.admin,
                     value: locator<PersonsCubit>().adminPercentage,
                     sourceContext: sourceContext,
                   ),

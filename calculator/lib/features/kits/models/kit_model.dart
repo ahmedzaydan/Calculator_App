@@ -56,7 +56,7 @@ class KitModel {
   }
 
   void selectStatus() {
-    status = KitStatus.transparent;
+    status = KitStatus.normal;
 
     DateTime now = getCurrentDate();
 

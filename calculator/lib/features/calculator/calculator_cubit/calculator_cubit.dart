@@ -7,6 +7,7 @@ import 'package:calculator/features/calculator/calculator_cubit/calculator_state
 import 'package:calculator/features/kits/kit_cubit/kit_cubit.dart';
 import 'package:calculator/features/persons/person_cubit/persons_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:share_plus/share_plus.dart';
@@ -97,25 +98,28 @@ class CalculatorCubit extends Cubit<AppStates> {
     );
   }
 
-  // Future<void> _saveToGallery(Uint8List image) async {
-  //   try {
-  //     await ImageGallerySaver.saveImage(image);
-  //     kprint("File Saved to Gallery\n");
-  //   } catch (e) {
-  //     kprint("Error Saving File:\n$e");
-  //   }
-  // }
+  // TODO: want to save it to gallery also??
+  Future<void> _saveToGallery(Uint8List image) async {
+    // specific folder
+    try {
+      await ImageGallerySaver.saveImage(image);
+      kprint("File Saved to Gallery\n");
+    } catch (e) {
+      kprint("Error Saving File:\n$e");
+    }
+  }
 
   void _share(Uint8List image) async {
     try {
       final directory = await getApplicationDocumentsDirectory();
 
-      final imagePath = File('${directory.path}/image.png');
+      // TODO: test if image saved to this folder
+      final imagePath = File('${directory.path}/Azulzinho +/image.png');
 
       imagePath.writeAsBytes(image).then((file) {
         Share.shareXFiles([XFile(file.path)]).then((_) {
           emit(ShareSuccessState());
-          _deleteImage(file);
+          // _deleteImage(file);
         });
       });
     } catch (error) {

@@ -1,3 +1,4 @@
+import 'package:calculator/app/resources/strings_manager.dart';
 import 'package:calculator/app/utils/dependency_injection.dart';
 import 'package:calculator/app/utils/extensions.dart';
 import 'package:calculator/app/utils/functions.dart';
@@ -70,7 +71,7 @@ class KitsListsWidget extends StatelessWidget {
                   deleteOnPressed: () async {
                     showCustomDialog(
                       context: context,
-                      message: 'Are you sure you want to delete this kit?',
+                      message: KitsStrings.deleteConfirmation,
                       onOk: () async {
                         await cubit.deleteKit(kit);
                       },

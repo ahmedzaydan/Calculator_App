@@ -24,7 +24,7 @@ class CustomErrorWidget extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             Text(
-              "${message}lksdjfaldkfladkfjla;dfkladj lkdfl aj",
+              message,
               style: const TextStyle(
                 color: Colors.black,
                 fontSize: FontSize.s32,
