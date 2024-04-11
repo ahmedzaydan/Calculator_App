@@ -82,10 +82,7 @@ class PersonsView extends StatelessWidget {
                 top: AppPadding.p24,
                 bottom: AppPadding.p40,
               ),
-              child: AddItemWidget(
-                isPerson: true,
-                labelInputType: TextInputType.text,
-              ),
+              child: AddItemWidget(labelInputType: TextInputType.text),
             ),
 
             PersonsListView(sourceContext: context),

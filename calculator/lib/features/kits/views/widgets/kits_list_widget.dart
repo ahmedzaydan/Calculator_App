@@ -62,7 +62,7 @@ class KitsListsWidget extends StatelessWidget {
                         kitModel: kit,
                         label: kit.name,
                         value: kit.value,
-                        updateKits: true,
+                        updateKit: true,
                         sourceContext: sourceContext,
                         index: index,
                       ),

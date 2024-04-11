@@ -1,16 +1,19 @@
+import 'package:calculator/app/resources/color_manager.dart';
 import 'package:calculator/app/resources/constants_manager.dart';
+import 'package:calculator/app/resources/font_manager.dart';
 import 'package:calculator/app/resources/strings_manager.dart';
 import 'package:calculator/app/resources/values_manager.dart';
 import 'package:calculator/app/utils/functions.dart';
-import 'package:calculator/app/widgets/add_item_widget.dart';
 import 'package:calculator/app/widgets/custom_error_widget.dart';
 import 'package:calculator/app/widgets/loading_widget.dart';
 import 'package:calculator/features/app_layout/app_layout_cubit/app_states.dart';
 import 'package:calculator/features/kits/kit_cubit/kit_cubit.dart';
 import 'package:calculator/features/kits/kit_cubit/kit_states.dart';
+import 'package:calculator/features/kits/views/add_kit_view.dart';
 import 'package:calculator/features/kits/views/widgets/kits_lists_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 
 class KitsView extends StatelessWidget {
@@ -72,13 +75,43 @@ class KitsView extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            AddItemWidget(
-              labelInputType:
-                  const TextInputType.numberWithOptions(decimal: false),
-              labelInputFormatters:
-                  getInputFormatters(ConstantsManager.kitsRegex),
+            // add kit inkwell
+            SizedBox(
+              height: MediaQuery.sizeOf(context).height * 0.1,
+              child: InkWell(
+                highlightColor: ColorManager.transparent,
+                onTap: () {
+                  navigateTo(
+                    context: context,
+                    dest: AddKitView(sourceContext: context),
+                  );
+                },
+                child: Row(
+                  children: [
+                    const Text(
+                      KitsStrings.addKit,
+                      style: TextStyle(
+                        fontSize: FontSize.s28,
+                        // fontWeight: FontWeight.bold,
+                      ),
+                    ),
+
+                    const Spacer(),
+
+                    // arrow
+                    FaIcon(
+                      FontAwesomeIcons.angleRight,
+                      color: ColorManager.black,
+                      size: 32,
+                    ),
+
+                    const Gap(10),
+                  ],
+                ),
+              ),
             ),
-            const Gap(40),
+
+            const Gap(20),
             KitsListsView(sourceContext: context),
           ],
         ),

@@ -17,6 +17,7 @@ class AppLayout extends StatelessWidget {
           child: Scaffold(
             body: cubit.screens[cubit.currentIndex],
             bottomNavigationBar: BottomNavigationBar(
+              type: BottomNavigationBarType.fixed,
               items: cubit.bottomNavItems,
               currentIndex: cubit.currentIndex,
               onTap: (index) {
@@ -24,6 +25,7 @@ class AppLayout extends StatelessWidget {
               },
               selectedItemColor: ColorManager.primary,
               unselectedItemColor: ColorManager.lightGrey,
+              unselectedLabelStyle: TextStyle(color: ColorManager.red),
             ),
           ),
         );

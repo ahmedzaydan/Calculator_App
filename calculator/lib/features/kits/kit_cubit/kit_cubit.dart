@@ -11,9 +11,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class KitsCubit extends Cubit<AppStates> {
   KitsCubit() : super(KitsInitialState());
 
+  // keys
+  String kitKeyPrefix = 'Kit';
+  String expiredKitKeyPrefix = 'ek';
+  String expiredKitsCounterKey = 'ekc';
+
   double totalKits = 0.0;
   String checkedKits = '';
-  String kitKeyPrefix = 'Kit';
+  DateTime selectedDate = DateTime.now();
 
   List<bool> collapsedLists = [true, true, true, true, true];
 
@@ -32,8 +37,11 @@ class KitsCubit extends Cubit<AppStates> {
   List<KitModel> month12Kits = [];
   List<KitModel> transparentKits = [];
 
+// TODO: make state message handler for this cubit only
+
   Future<void> loadData(List<String> kitKeys) async {
     try {
+      kprint('Keys: $kitKeys');
       emit(
         LoadKitsDataLoadingState(
           getStateMessage(
@@ -47,17 +55,13 @@ class KitsCubit extends Cubit<AppStates> {
       clearLists();
 
       for (String key in kitKeys) {
-        List<String> kitData = CacheController.getStringListData(key).orEmpty;
-
-        if (kitData.isNotEmpty) {
-          KitModel kit = KitModel.fromStringList(kitData);
-          kit.selectStatus();
-          addKitToCorrectList(kit);
-        }
+        if (key == expiredKitsCounterKey) continue;
+        loadKit(key);
       }
 
       emit(LoadKitsDataSuccessState());
     } catch (e) {
+      kprint(e.toString());
       emit(
         LoadKitsDataErrorState(
           getStateMessage(
@@ -70,7 +74,65 @@ class KitsCubit extends Cubit<AppStates> {
     }
   }
 
-  Future<void> addKit({
+  void loadKit(String kitKey) {
+    List<String>? kitData = Prefs.getStringList(kitKey);
+
+    if (kitData != null && kitData.isNotEmpty) {
+      KitModel kit = KitModel.fromStringList(kitData);
+      kit.selectStatus();
+
+      if (kit.status == KitStatus.expired) {
+        _handleExpiredKit(kit);
+      }
+      addKitToList(kit);
+    }
+  }
+
+  Future<void> _handleExpiredKit(KitModel kit) async {
+    // delete kit from shared pref
+    // to allow add new kits with the same name
+    if (Prefs.checkKey(kit.name) == true) {
+      kprint('kit ${kit.name} is exist in shared pref');
+      Prefs.remove(kit.name).then(
+        (result) {
+          // if kit deleted successfully
+          if (result) {
+            saveExpiredKitToSharedPref(kit);
+          }
+
+          // if kit not deleted, probably because kit is not exist
+          else {
+            kprint('--- Handling expired kit error: kit not deleted ---');
+          }
+        },
+      ).catchError(
+        (e) {
+          kprint('--- Handling expired kit error: $e ---');
+        },
+      );
+    }
+  }
+
+  Future<void> saveExpiredKitToSharedPref(KitModel kit) async {
+    // get expired kits counter
+    int counter = Prefs.getInt(expiredKitsCounterKey).orZero;
+
+    // increment counter
+    counter++;
+
+    kit.fillExpiredKey(counter);
+
+    kprint('Expired key: ${kit.expiredKey}');
+    Prefs.save(
+      kit.expiredKey!,
+      kit.toStringList(),
+    ).then((_) async {
+      // update counter value in shared pref
+      await Prefs.save(expiredKitsCounterKey, counter);
+    });
+  }
+
+  Future<bool?> addKit({
     required String name,
     required double value,
   }) async {
@@ -79,87 +141,85 @@ class KitsCubit extends Cubit<AppStates> {
     String storingKey = _getStoringKey(name);
 
     // ensure that the key is not already stored
-    if (CacheController.checkKey(storingKey) == false) {
-      // DateTime startDate = getCurrentDate();
-
-      // TODO: remove these lines
-      List<DateTime> temp = [
-        DateTime(2020, 10, 9), // expired
-        DateTime(2021, 10, 11), // month30
-        DateTime(2022, 4, 8), // month24
-        DateTime(2023, 4, 8), // month12
-        DateTime(2023, 10, 8), // transparent
-      ];
-
-      DateTime startDate = temp[1];
-
+    if (Prefs.checkKey(storingKey) == false) {
       // create kit object
       KitModel kit = KitModel(
         name: storingKey,
         value: value,
-        startDate: startDate,
+        startDate: selectedDate,
       );
 
-      // add kit to shared preferences
-      CacheController.saveData(
-        kit.name,
-        kit.toStringList(),
-      ).then((saveResult) {
-        if (saveResult) {
-          addKitToCorrectList(kit);
+      // if kit is expired
+      if (kit.status == KitStatus.expired) {
+        saveExpiredKitToSharedPref(kit);
+        addKitToList(kit);
+      }
 
-          emit(
-            AddKitSuccessState(
-              getStateMessage(
-                state: AppState.success,
-                itemType: ItemType.kit,
-                action: ItemAction.add,
-                label: kit.name,
+      // if kit is not expired
+      else {
+        // add kit to shared preferences
+        Prefs.save(kit.name, kit.toStringList()).then((saveResult) {
+          if (saveResult) {
+            addKitToList(kit);
+
+            emit(
+              AddKitSuccessState(
+                getStateMessage(
+                  state: AppState.success,
+                  itemType: ItemType.kit,
+                  action: ItemAction.add,
+                  label: kit.name,
+                ),
               ),
-            ),
-          );
-        } else {
-          emit(
-            AddKitErrorState(
-              getStateMessage(
-                state: AppState.error,
-                itemType: ItemType.kit,
-                action: ItemAction.add,
-                label: name,
+            );
+
+            return true;
+          }
+
+          // if kit not saved successfully
+          else {
+            emit(
+              AddKitErrorState(
+                getStateMessage(
+                  state: AppState.error,
+                  itemType: ItemType.kit,
+                  action: ItemAction.add,
+                  label: name,
+                ),
               ),
-            ),
-          );
-        }
-      }).catchError(
-        (e) {
-          emit(
-            AddKitErrorState(
-              getStateMessage(
-                state: AppState.error,
-                itemType: ItemType.kit,
-                action: ItemAction.add,
-                label: name,
+            );
+
+            return false;
+          }
+        }).catchError(
+          (e) {
+            emit(
+              AddKitErrorState(
+                getStateMessage(
+                  state: AppState.error,
+                  itemType: ItemType.kit,
+                  action: ItemAction.add,
+                  label: name,
+                ),
               ),
-            ),
-          );
-        },
-      );
-    } else {
-      emit(
-        AddKitErrorState(
-          getStateMessage(
-            state: AppState.error,
-            itemType: ItemType.kit,
-            action: ItemAction.add,
-            label: name,
-            error: KitsStrings.kitExists,
-          ),
-        ),
-      );
+            );
+
+            return false;
+          },
+        );
+      }
     }
+
+    // if key already exists
+    else {
+      emit(AddKitErrorState(KitsStrings.kitExists));
+      return false;
+    }
+
+    return null;
   }
 
-  void addKitToCorrectList(KitModel kitModel) {
+  void addKitToList(KitModel kitModel) {
     switch (kitModel.status!) {
       case KitStatus.expired:
         expiredKits.add(kitModel);
@@ -190,7 +250,7 @@ class KitsCubit extends Cubit<AppStates> {
   }) async {
     kitModel.setValue(value);
 
-    CacheController.saveData(
+    Prefs.save(
       kitModel.name,
       kitModel.toStringList(),
     ).then((updateResult) {
@@ -273,7 +333,7 @@ class KitsCubit extends Cubit<AppStates> {
     try {
       kitModel.toggleIsChecked();
 
-      CacheController.saveData(
+      Prefs.save(
         kitModel.name,
         kitModel.toStringList(),
       ).then(
@@ -298,7 +358,7 @@ class KitsCubit extends Cubit<AppStates> {
     for (KitModel kit in kits) {
       kit.setIsChecked(false);
 
-      CacheController.saveData(
+      Prefs.save(
         kit.name,
         kit.toStringList(),
       ).then((saveResult) {
@@ -353,8 +413,14 @@ class KitsCubit extends Cubit<AppStates> {
   }
 
   Future<void> deleteKit(KitModel kit) async {
-    CacheController.removeData(kit.name).then(
+    String key = kit.name;
+    if (kit.status == KitStatus.expired) {
+      key = kit.expiredKey!;
+    }
+
+    Prefs.remove(key).then(
       (result) {
+        // if kit deleted successfully
         if (result) {
           emit(
             DeleteKitSuccessState(
@@ -368,7 +434,10 @@ class KitsCubit extends Cubit<AppStates> {
           );
 
           deleteKitFromList(kit);
-        } else {
+        }
+
+        // if kit not deleted probably because kit is not exist
+        else {
           emit(
             DeleteKitErrorState(
               getStateMessage(
@@ -430,7 +499,6 @@ class KitsCubit extends Cubit<AppStates> {
     }
   }
 
-  /// utility functions
   void clearLists() {
     expiredKits.clear();
     month30Kits.clear();

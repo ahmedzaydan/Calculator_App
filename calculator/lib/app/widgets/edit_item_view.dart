@@ -6,15 +6,16 @@ import 'package:calculator/app/resources/values_manager.dart';
 import 'package:calculator/app/utils/dependency_injection.dart';
 import 'package:calculator/app/utils/extensions.dart';
 import 'package:calculator/app/utils/functions.dart';
+import 'package:calculator/app/widgets/custom_back_arrow.dart';
 import 'package:calculator/app/widgets/custom_elevated_button.dart';
-import 'package:calculator/app/widgets/custom_icon_button.dart';
 import 'package:calculator/app/widgets/custom_text_form_field.dart';
 import 'package:calculator/features/kits/kit_cubit/kit_cubit.dart';
 import 'package:calculator/features/kits/models/kit_model.dart';
 import 'package:calculator/features/persons/person_cubit/persons_cubit.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
+
+// TODO: do we need to update start date also?!
 
 class EditItemView extends StatelessWidget {
   EditItemView({
@@ -22,7 +23,7 @@ class EditItemView extends StatelessWidget {
     required this.label,
     required this.value,
     required this.sourceContext,
-    this.updateKits = false,
+    this.updateKit = false,
     // indcates that we are updating admin data
     this.index = -1,
     this.kitModel,
@@ -31,7 +32,7 @@ class EditItemView extends StatelessWidget {
   final String label;
   final double value;
   final int index;
-  final bool updateKits;
+  final bool updateKit;
   final BuildContext sourceContext;
   final KitModel? kitModel;
 
@@ -45,7 +46,7 @@ class EditItemView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          updateKits
+          updateKit
               ? 'Atualizar valor de $label'
               : 'Atualizar porcentagem de $label',
           style: TextStyle(
@@ -53,13 +54,7 @@ class EditItemView extends StatelessWidget {
             color: ColorManager.white,
           ),
         ),
-        leading: CustomIconButton(
-          style: ButtonStyle(
-            iconColor: MaterialStateProperty.all(ColorManager.white),
-          ),
-          icon: const FaIcon(FontAwesomeIcons.arrowLeft),
-          onPressed: () => Navigator.pop(sourceContext),
-        ),
+        leading: CustomBackArrow(sourceContext),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(
@@ -78,7 +73,7 @@ class EditItemView extends StatelessWidget {
                 fontWeight: FontWeight.bold,
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return updateKits
+                    return updateKit
                         ? KitsStrings.enterValue
                         : PersonsStrings.enterPercentage;
                   }
@@ -113,7 +108,7 @@ class EditItemView extends StatelessWidget {
             onPressed: () async {
               var kitsCubit = locator<KitsCubit>();
               if (formKey.currentState!.validate()) {
-                if (updateKits) {
+                if (updateKit) {
                   kitsCubit
                       .updateKit(
                     kitModel: kitModel!,
@@ -142,7 +137,7 @@ class EditItemView extends StatelessWidget {
                     );
                   } else {
                     locator<PersonsCubit>()
-                        .updatePersonPercentage(
+                        .updatePerson(
                       index: index,
                       value: double.parse(valueController.text),
                     )

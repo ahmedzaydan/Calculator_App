@@ -17,7 +17,6 @@ import 'package:gap/gap.dart';
 class AddItemWidget extends StatelessWidget {
   AddItemWidget({
     super.key,
-    this.isPerson = false,
     this.labelInputType,
     this.labelInputFormatters,
   });
@@ -32,9 +31,6 @@ class AddItemWidget extends StatelessWidget {
 
   final _formKey = GlobalKey<FormState>();
 
-  // properties
-  final bool isPerson;
-
   // input properties
   final TextInputType? labelInputType;
   final List<TextInputFormatter>? labelInputFormatters;
@@ -48,7 +44,7 @@ class AddItemWidget extends StatelessWidget {
         Container(
           margin: const EdgeInsets.only(left: AppPadding.p5),
           child: Text(
-            isPerson ? PersonsStrings.addPerson : KitsStrings.addKit,
+            PersonsStrings.addPerson,
             style: TextStyle(
               color: ColorManager.black,
               fontSize: FontSize.s32,
@@ -72,15 +68,12 @@ class AddItemWidget extends StatelessWidget {
                 child: CustomTextFormField(
                   controller: nameController,
                   fontWeight: FontWeight.normal,
-                  labelText:
-                      isPerson ? StringsManager.name : KitsStrings.kitNumber,
+                  labelText: StringsManager.name,
                   keyboardType: labelInputType,
                   inputFormatters: labelInputFormatters,
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return isPerson
-                          ? StringsManager.enterName
-                          : KitsStrings.enterNumber;
+                      return StringsManager.enterName;
                     }
                     return null;
                   },
@@ -95,18 +88,14 @@ class AddItemWidget extends StatelessWidget {
                 child: CustomTextFormField(
                   controller: valueController,
                   fontWeight: FontWeight.normal,
-                  labelText: isPerson
-                      ? PersonsStrings.percentage
-                      : KitsStrings.kitValue,
+                  labelText: PersonsStrings.percentage,
                   keyboardType:
                       const TextInputType.numberWithOptions(decimal: true),
                   inputFormatters:
                       getInputFormatters(ConstantsManager.valueRegex),
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return isPerson
-                          ? PersonsStrings.enterPercentage
-                          : KitsStrings.enterValue;
+                      return PersonsStrings.enterPercentage;
                     }
                     return null;
                   },
@@ -130,17 +119,10 @@ class AddItemWidget extends StatelessWidget {
                 ),
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
-                    if (isPerson) {
-                      await personsCubit.addPerson(
-                        name: nameController.text,
-                        percentage: double.parse(valueController.text),
-                      );
-                    } else {
-                      await profitsCubit.addKit(
-                        name: nameController.text,
-                        value: double.parse(valueController.text),
-                      );
-                    }
+                    await personsCubit.addPerson(
+                      name: nameController.text,
+                      percentage: double.parse(valueController.text),
+                    );
                   }
                 },
               ),

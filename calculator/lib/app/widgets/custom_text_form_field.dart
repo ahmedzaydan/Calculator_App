@@ -19,6 +19,8 @@ class CustomTextFormField extends StatelessWidget {
     this.inputFormatters,
     this.fontWeight = FontWeight.normal,
     this.fontSize = FontSize.s20,
+    this.readOnly = false,
+    this.onTap,
   });
 
   final Key? formKey;
@@ -31,10 +33,14 @@ class CustomTextFormField extends StatelessWidget {
   final String? Function(String?)? validator;
   final FontWeight fontWeight;
   final double? fontSize;
+  final bool readOnly;
+  final void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      onTap: onTap,
+      readOnly: readOnly,
       cursorColor: Theme.of(context).primaryColor,
       key: formKey,
       controller: controller,

@@ -33,14 +33,14 @@ class PersonsCubit extends Cubit<AppStates> {
       );
 
       // load admin percentage
-      adminPercentage = CacheController.getDoubleData(amdinKey) ?? 30;
+      adminPercentage = Prefs.getDouble(amdinKey) ?? 30;
+      totalPercentage = 0;
 
       // load persons data
       personItems.clear();
 
       for (String key in personKeys) {
-        List<String> personData =
-            CacheController.getStringListData(key).orEmpty;
+        List<String> personData = Prefs.getStringList(key).orEmpty;
 
         if (personData.isNotEmpty) {
           PersonModel person = PersonModel.fromJson(personData);
@@ -78,7 +78,7 @@ class PersonsCubit extends Cubit<AppStates> {
         );
 
         // add person to shared preferences
-        await CacheController.saveData(
+        await Prefs.save(
           person.name,
           person.toStringList(),
         ).then(
@@ -132,7 +132,7 @@ class PersonsCubit extends Cubit<AppStates> {
 
   String? _validateNewPersonData(String name, double percentage) {
     // check if person name already exists
-    if (CacheController.checkKey(name)) {
+    if (Prefs.checkKey(name)) {
       return PersonsStrings.personExists;
     }
 
@@ -155,7 +155,7 @@ class PersonsCubit extends Cubit<AppStates> {
     return null;
   }
 
-  Future<bool?> updatePersonPercentage({
+  Future<bool?> updatePerson({
     required int index,
     required double value,
   }) async {
@@ -166,7 +166,7 @@ class PersonsCubit extends Cubit<AppStates> {
       if (errorMessage == null) {
         personItems[index].setPercentage(value);
 
-        CacheController.saveData(
+        Prefs.save(
           personItems[index].name,
           personItems[index].toStringList(),
         ).then(
@@ -201,14 +201,7 @@ class PersonsCubit extends Cubit<AppStates> {
         );
       } else {
         emit(
-          UpdatePersonErrorState(
-            getStateMessage(
-              state: AppState.error,
-              itemType: ItemType.person,
-              action: ItemAction.update,
-              label: personItems[index].name,
-            ),
-          ),
+          UpdatePersonErrorState(errorMessage),
         );
         return false;
       }
@@ -234,7 +227,7 @@ class PersonsCubit extends Cubit<AppStates> {
       String? errorMessage = _validatePercentage(oldAdminPercentage, value);
 
       if (errorMessage == null) {
-        CacheController.saveData(amdinKey, value).then(
+        Prefs.save(amdinKey, value).then(
           (response) {
             if (response) {
               adminPercentage = value;
@@ -268,14 +261,7 @@ class PersonsCubit extends Cubit<AppStates> {
         );
       } else {
         emit(
-          UpdateAdminPercentageErrorState(
-            getStateMessage(
-              state: AppState.error,
-              itemType: ItemType.person,
-              action: ItemAction.update,
-              label: PersonsStrings.admin,
-            ),
-          ),
+          UpdateAdminPercentageErrorState(errorMessage),
         );
         return false;
       }
@@ -305,7 +291,7 @@ class PersonsCubit extends Cubit<AppStates> {
     String personName = personItems[index].name;
 
     // remove person from shared preferences
-    CacheController.removeData(personItems[index].name).then((deletionResult) {
+    Prefs.remove(personName).then((deletionResult) {
       // update total percentage
       totalPercentage -= personItems[index].percentage;
 

@@ -2,6 +2,7 @@ import 'package:calculator/app/resources/color_manager.dart';
 import 'package:calculator/app/resources/constants_manager.dart';
 import 'package:calculator/app/resources/font_manager.dart';
 import 'package:calculator/app/resources/strings_manager.dart';
+import 'package:calculator/app/widgets/custom_back_arrow.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -106,6 +107,25 @@ TextStyle getTextStyle({
   );
 }
 
+AppBar customAppBar({
+  required BuildContext context,
+  required String title,
+  List<Widget>? actions,
+}) {
+  return AppBar(
+    toolbarHeight: MediaQuery.sizeOf(context).height * 0.09,
+    title: Text(
+      title,
+      style: const TextStyle(
+        fontSize: FontSize.s24,
+        fontWeight: FontWeight.bold,
+      ),
+    ),
+    actions: actions,
+    leading: CustomBackArrow(context),
+  );
+}
+
 /// Logic functions
 double formatDobule(double value) {
   return double.parse(value.toStringAsFixed(2));
@@ -117,16 +137,21 @@ List<TextInputFormatter>? getInputFormatters(String regex) {
   ];
 }
 
-String getCurrentDateAsString() {
-  DateTime now = DateTime.now();
-  return '${now.day}/${now.month}/${now.year}';
+String getDateAsString({
+  DateTime? date,
+}) {
+  date = date ?? DateTime.now();
+  return '${date.day}/${date.month}/${date.year}';
 }
 
-DateTime getCurrentDate() {
+DateTime getFormattedDate({
+  DateTime? date,
+}) {
+  date = date ?? DateTime.now();
   return DateTime(
-    DateTime.now().year,
-    DateTime.now().month,
-    DateTime.now().day,
+    date.year,
+    date.month,
+    date.day,
   );
 }
 

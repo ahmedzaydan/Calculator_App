@@ -7,6 +7,7 @@ ThemeData getApplicationTheme() {
     // Main colors
     primaryColor: ColorManager.primary,
     primarySwatch: Colors.primaries[0],
+    // primarySwatch: Colors.blue,
     primaryColorLight: ColorManager.primary,
     disabledColor: ColorManager.primary,
 

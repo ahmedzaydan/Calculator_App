@@ -12,8 +12,8 @@ class DataItem extends StatelessWidget {
     this.color,
     required this.name,
     required this.value,
-    required this.editOnPressed,
-    required this.deleteOnPressed,
+    this.editOnPressed,
+    this.deleteOnPressed,
     this.isEditVisible = true,
     this.isDeleteVisible = true,
   });
@@ -46,12 +46,13 @@ class DataItem extends StatelessWidget {
             name: name,
             value: value,
           ),
-          const Padding(
-            padding: EdgeInsets.symmetric(
-              vertical: AppPadding.p10,
+          if (isDeleteVisible || isEditVisible)
+            const Padding(
+              padding: EdgeInsets.symmetric(
+                vertical: AppPadding.p10,
+              ),
+              child: CustomDivider(),
             ),
-            child: CustomDivider(),
-          ),
           ActionsWidget(
             editOnPressed: editOnPressed,
             deleteOnPressed: deleteOnPressed,

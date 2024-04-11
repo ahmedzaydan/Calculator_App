@@ -1,3 +1,4 @@
+import 'package:calculator/app/utils/dependency_injection.dart';
 import 'package:calculator/app/utils/functions.dart';
 import 'package:calculator/features/kits/kit_cubit/kit_cubit.dart';
 
@@ -12,6 +13,7 @@ class KitModel {
   // when calling their methods
   DateTime? endDate;
   KitStatus? status;
+  String? expiredKey;
 
   KitModel({
     required this.name,
@@ -31,7 +33,8 @@ class KitModel {
         value = double.parse(data[1]),
         isChecked = data[2] == 'true',
         startDate = DateTime.parse(data[3]),
-        endDate = DateTime.parse(data[4]);
+        endDate = DateTime.parse(data[4]),
+        expiredKey = data[5];
 
   void setValue(double val) => value = val;
 
@@ -52,13 +55,14 @@ class KitModel {
       isChecked.toString(),
       startDate.toString(),
       endDate.toString(),
+      expiredKey ?? '',
     ];
   }
 
   void selectStatus() {
     status = KitStatus.normal;
 
-    DateTime now = getCurrentDate();
+    DateTime now = getFormattedDate();
 
     // contract is expired
     if (now.isAfter(endDate!)) {
@@ -135,5 +139,13 @@ class KitModel {
     }
 
     endDate = DateTime(futureYear, futureMonth, futureDay);
+  }
+
+  void fillExpiredKey(int counter) {
+    if (status == KitStatus.expired) {
+      expiredKey = '${locator<KitsCubit>().expiredKitKeyPrefix}$counter';
+    } else {
+      expiredKey = '';
+    }
   }
 }

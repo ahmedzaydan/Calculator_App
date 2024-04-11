@@ -15,7 +15,7 @@ abstract class StringsManager {
 
 abstract class PersonsStrings {
   static const String admin = 'Teresa';
-  static const String personsScreen = 'Tela de Pessoas';
+  static const String personsScreen = 'Pessoas';
   static const String add = 'Adicionar';
   static const String addPerson = 'Adicionar Nova Pessoa';
   static const String percentage = 'Porcentagem';
@@ -31,24 +31,29 @@ abstract class PersonsStrings {
 }
 
 abstract class KitsStrings {
-  static const String kitsScreen = 'Tela de Kits';
+  static const String kitsScreen = 'Kits';
   static const String editKitList = 'Editar Lista de Kits';
   static const String kitNumber = 'Número do Kit';
   static const String kitValue = 'Valor do Kit';
   static const String enterValue = 'Digite o valor';
   static const String enterNumber = 'Digite o número do kit';
+  static const String enterStartDate = "Digite a data";
+  static const String startDate = "data de início";
   static const String kitExists = 'Kit já existe';
   static const String invalidProfitId =
       'Número do kit deve ser um número inteiro';
   static const String addKit = 'Adicionar Novo Kit';
   static const String loadingKits = 'Carregando dados dos kits...';
-  static const String month12 = '1° reajuste';
-  static const String month24 = '2° reajuste';
-  static const String month30 = 'RENOVAR';
+  static const String month12 = '1° Reajuste';
+  static const String month24 = '2° Reajuste';
+  static const String month30 = 'Renovar';
   static const String expired = 'Expirado';
   static const String normal = 'Normal';
   static const String deleteConfirmation =
       'Você tem certeza de que deseja excluir este kit?';
+  static const String add = 'Adicionar';
+  static const String history = 'História';
+  static const String historyTitle = 'Histórico de Kits Expirados';
 }
 
 abstract class CalculatorStrings {

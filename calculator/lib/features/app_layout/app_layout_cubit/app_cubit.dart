@@ -1,9 +1,12 @@
+import 'dart:developer';
+
 import 'package:calculator/app/resources/strings_manager.dart';
 import 'package:calculator/app/utils/cache_controller.dart';
 import 'package:calculator/features/app_layout/app_layout_cubit/app_states.dart';
 import 'package:calculator/features/calculator/calculator_cubit/calculator_cubit.dart';
 import 'package:calculator/features/calculator/views/calculator_view.dart';
 import 'package:calculator/features/kits/kit_cubit/kit_cubit.dart';
+import 'package:calculator/features/kits/views/history_view.dart';
 import 'package:calculator/features/kits/views/kits_view.dart';
 import 'package:calculator/features/persons/person_cubit/persons_cubit.dart';
 import 'package:calculator/features/persons/views/persons_view.dart';
@@ -39,14 +42,15 @@ class AppCubit extends Cubit<AppStates> {
   }
 
   void getKeys() {
-    List<String> keys = CacheController.getAllKeys();
+    List<String> keys = Prefs.getAllKeys();
     kitsKeys.clear();
     personKeys.clear();
 
     for (var key in keys) {
       if (key == personsCubit.amdinKey) {
         continue;
-      } else if (key.startsWith(kitsCubit.kitKeyPrefix)) {
+      } else if (key.startsWith(kitsCubit.kitKeyPrefix) ||
+          key.startsWith(kitsCubit.expiredKitKeyPrefix)) {
         kitsKeys.add(key);
       } else {
         personKeys.add(key);
@@ -59,6 +63,7 @@ class AppCubit extends Cubit<AppStates> {
   final List<Widget> screens = [
     CalculatorView(),
     const KitsView(),
+    HistoryView(),
     const PersonsView(),
   ];
 
@@ -75,6 +80,12 @@ class AppCubit extends Cubit<AppStates> {
       label: KitsStrings.kitsScreen,
     ),
 
+    // // history
+    const BottomNavigationBarItem(
+      icon: FaIcon(FontAwesomeIcons.clockRotateLeft),
+      label: KitsStrings.history,
+    ),
+
     // persons
     const BottomNavigationBarItem(
       icon: FaIcon(FontAwesomeIcons.briefcase),
@@ -84,14 +95,20 @@ class AppCubit extends Cubit<AppStates> {
 
   void changeIndex(int index) {
     currentIndex = index;
-    if (currentIndex == 0) {
-    } else if (currentIndex == 1) {
+
+    // load kits data
+    if (currentIndex == 1) {
+      log('Test');
       getKeys();
       kitsCubit.loadData(kitsKeys);
-    } else if (currentIndex == 2) {
+    }
+
+    // load persons data
+    else if (currentIndex == 3) {
       getKeys();
       personsCubit.loadData(personKeys);
     }
+
     emit(ChangeBottomNavIndexState(index));
   }
 }

@@ -2,6 +2,7 @@ import 'package:calculator/app/resources/color_manager.dart';
 import 'package:calculator/app/resources/strings_manager.dart';
 import 'package:calculator/app/resources/values_manager.dart';
 import 'package:calculator/app/utils/dependency_injection.dart';
+import 'package:calculator/app/utils/functions.dart';
 import 'package:calculator/app/widgets/custom_icon_button.dart';
 import 'package:calculator/features/app_layout/app_layout_cubit/app_states.dart';
 import 'package:calculator/features/calculator/calculator_cubit/calculator_cubit.dart';
@@ -54,15 +55,9 @@ class ReportView extends StatelessWidget {
   }
 
   AppBar _appBar(BuildContext context) {
-    return AppBar(
-      toolbarHeight: MediaQuery.sizeOf(context).height * 0.09,
-      title: const Text(
-        CalculatorStrings.reportScreen,
-        style: TextStyle(
-          fontSize: AppSize.s24,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
+    return customAppBar(
+      context: context,
+      title: CalculatorStrings.reportScreen,
       actions: [
         Padding(
           padding: const EdgeInsets.only(right: AppPadding.p30),
@@ -77,14 +72,6 @@ class ReportView extends StatelessWidget {
           ),
         )
       ],
-      leading: IconButton(
-        icon: const FaIcon(
-          FontAwesomeIcons.arrowLeft,
-          color: Colors.white,
-          size: 32,
-        ),
-        onPressed: () => Navigator.pop(context),
-      ),
     );
   }
 }
