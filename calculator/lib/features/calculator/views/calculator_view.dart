@@ -29,7 +29,7 @@ class CalculatorView extends StatelessWidget {
         var cubit = locator<CalculatorCubit>();
 
         if (state is LoadingDataState) {
-          return const LoadingWidget(); // TODO: why loading widgets not working?!!
+          return const LoadingWidget();
         } else if (state is LoadingDataErrorState) {
           return CustomErrorWidget(state.message);
         }

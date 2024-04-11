@@ -1,3 +1,4 @@
+import 'package:calculator/app/resources/styles_manager.dart';
 import 'package:calculator/app/resources/values_manager.dart';
 import 'package:calculator/app/widgets/collapse_button.dart';
 import 'package:flutter/material.dart';
@@ -21,18 +22,14 @@ class KitsListHeader extends StatelessWidget {
       children: [
         Text(
           title,
-          style: const TextStyle(
-            fontSize: 28,
-            fontWeight: FontWeight.bold,
-          ),
+          style: TextStylesManager.textStyle28,
         ),
         const Gap(15),
         const Spacer(),
         Text(
           counter,
-          style: const TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
+          style: TextStylesManager.textStyle24.copyWith(
+            fontWeight: FontWeight.w600,
           ),
         ),
         Padding(

@@ -83,7 +83,6 @@ class KitModel {
       if (now.day >= (lastDay - 10)) {
         status = KitStatus.month24;
       }
-      status = KitStatus.month24; // TODO: remove this line
     }
 
     // contract is in the month 12
@@ -95,7 +94,6 @@ class KitModel {
       if (now.day >= (lastDay - 10)) {
         status = KitStatus.month12;
       }
-      status = KitStatus.month12; // TODO: remove this line
     }
   }
 

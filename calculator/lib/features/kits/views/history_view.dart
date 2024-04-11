@@ -1,6 +1,6 @@
 import 'package:calculator/app/resources/color_manager.dart';
-import 'package:calculator/app/resources/font_manager.dart';
 import 'package:calculator/app/resources/strings_manager.dart';
+import 'package:calculator/app/resources/styles_manager.dart';
 import 'package:calculator/app/resources/values_manager.dart';
 import 'package:calculator/app/utils/dependency_injection.dart';
 import 'package:calculator/app/widgets/custom_list_view.dart';
@@ -29,10 +29,7 @@ class HistoryView extends StatelessWidget {
                 // Title
                 const Text(
                   KitsStrings.historyTitle,
-                  style: TextStyle(
-                    fontSize: FontSize.s28,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: TextStylesManager.textStyle28,
                   // style: FontManager.titleStyle,
                 ),
 

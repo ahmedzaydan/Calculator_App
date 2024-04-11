@@ -43,9 +43,9 @@ class CalculatorCubit extends Cubit<AppStates> {
         try {
           total += double.parse(values[i]);
         } catch (e) {
-          kprint("\nError Parsing Value: $e\n");
+          klog("\nError Parsing Value: $e\n");
         }
-        kprint("\nTotal: $total\n");
+        klog("\nTotal: $total\n");
       }
     }
     total = formatDobule(total);
@@ -92,8 +92,8 @@ class CalculatorCubit extends Cubit<AppStates> {
       },
     ).catchError(
       (onError) {
-        kprint("\nError capturing visible image\n");
-        kprint("\n${onError.toString()}\n");
+        klog("\nError capturing visible image\n");
+        klog("\n${onError.toString()}\n");
       },
     );
   }
@@ -120,7 +120,7 @@ class CalculatorCubit extends Cubit<AppStates> {
         });
       });
     } catch (error) {
-      kprint("\nError Sharing Image:\n$error\n");
+      klog("\nError Sharing Image:\n$error\n");
     }
   }
 

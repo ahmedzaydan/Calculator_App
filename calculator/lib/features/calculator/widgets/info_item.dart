@@ -1,5 +1,4 @@
-import 'package:calculator/app/resources/font_manager.dart';
-import 'package:calculator/app/utils/functions.dart';
+import 'package:calculator/app/resources/styles_manager.dart';
 import 'package:flutter/material.dart';
 
 class InfoItem extends StatelessWidget {
@@ -15,11 +14,11 @@ class InfoItem extends StatelessWidget {
       children: [
         Text(
           label,
-          style: getTextStyle(fontSize: FontSize.s24),
+          style: TextStylesManager.textStyle24,
         ),
         Text(
           value,
-          style: getTextStyle(fontSize: FontSize.s24),
+          style: TextStylesManager.textStyle24,
         ),
       ],
     );

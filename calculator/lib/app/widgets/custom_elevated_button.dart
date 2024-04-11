@@ -1,5 +1,6 @@
 import 'package:calculator/app/resources/color_manager.dart';
 import 'package:calculator/app/resources/constants_manager.dart';
+import 'package:calculator/app/resources/styles_manager.dart';
 import 'package:flutter/material.dart';
 
 class CustomElevatedButton extends StatelessWidget {
@@ -24,21 +25,21 @@ class CustomElevatedButton extends StatelessWidget {
       height: MediaQuery.sizeOf(context).width * 0.13,
       width: width,
       child: ElevatedButton(
-        style: style ?? ElevatedButton.styleFrom(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(
-              ConstantsManager.borderRadius,
+        style: style ??
+            ElevatedButton.styleFrom(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(
+                  ConstantsManager.borderRadius,
+                ),
+              ),
             ),
-          ),
-        ),
         onPressed: onPressed,
         child: Text(
           text,
           style: textStyle ??
-              TextStyle(
+              TextStylesManager.textStyle24.copyWith(
                 color: ColorManager.white,
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w600,
               ),
           textAlign: TextAlign.center,
         ),

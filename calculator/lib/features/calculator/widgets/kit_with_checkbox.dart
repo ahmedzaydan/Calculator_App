@@ -1,5 +1,5 @@
 import 'package:calculator/app/resources/color_manager.dart';
-import 'package:calculator/app/resources/font_manager.dart';
+import 'package:calculator/app/resources/styles_manager.dart';
 import 'package:flutter/material.dart';
 
 class KitWithCheckbox extends StatelessWidget {
@@ -38,16 +38,14 @@ class KitWithCheckbox extends StatelessWidget {
         ),
         Text(
           kitName,
-          style: TextStyle(
-            fontSize: FontSize.s28,
+          style: TextStylesManager.textStyle26.copyWith(
             color: color,
           ),
         ),
         const Spacer(),
         Text(
           '$kitValue',
-          style: TextStyle(
-            fontSize: FontSize.s28,
+          style: TextStylesManager.textStyle26.copyWith(
             color: color,
           ),
         ),

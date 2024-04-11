@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:calculator/app/resources/strings_manager.dart';
 import 'package:calculator/app/utils/cache_controller.dart';
 import 'package:calculator/features/app_layout/app_layout_cubit/app_states.dart';
@@ -95,20 +93,6 @@ class AppCubit extends Cubit<AppStates> {
 
   void changeIndex(int index) {
     currentIndex = index;
-
-    // load kits data
-    if (currentIndex == 1) {
-      log('Test');
-      getKeys();
-      kitsCubit.loadData(kitsKeys);
-    }
-
-    // load persons data
-    else if (currentIndex == 3) {
-      getKeys();
-      personsCubit.loadData(personKeys);
-    }
-
     emit(ChangeBottomNavIndexState(index));
   }
 }

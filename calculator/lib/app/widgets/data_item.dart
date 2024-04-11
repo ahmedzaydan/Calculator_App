@@ -47,11 +47,11 @@ class DataItem extends StatelessWidget {
             value: value,
           ),
           if (isDeleteVisible || isEditVisible)
-            const Padding(
-              padding: EdgeInsets.symmetric(
+            Padding(
+              padding: const EdgeInsets.symmetric(
                 vertical: AppPadding.p10,
               ),
-              child: CustomDivider(),
+              child: CustomDivider(color: ColorManager.black),
             ),
           ActionsWidget(
             editOnPressed: editOnPressed,

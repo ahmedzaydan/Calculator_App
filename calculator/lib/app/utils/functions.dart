@@ -1,12 +1,15 @@
+import 'dart:developer';
+
 import 'package:calculator/app/resources/color_manager.dart';
 import 'package:calculator/app/resources/constants_manager.dart';
 import 'package:calculator/app/resources/font_manager.dart';
 import 'package:calculator/app/resources/strings_manager.dart';
+import 'package:calculator/app/resources/styles_manager.dart';
 import 'package:calculator/app/widgets/custom_back_arrow.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+
 
 /// UI functions
 void navigateTo({
@@ -98,15 +101,6 @@ void showCustomDialog({
   );
 }
 
-TextStyle getTextStyle({
-  double fontSize = FontSize.s28,
-}) {
-  return TextStyle(
-    fontSize: fontSize,
-    color: Colors.black,
-  );
-}
-
 AppBar customAppBar({
   required BuildContext context,
   required String title,
@@ -114,19 +108,21 @@ AppBar customAppBar({
 }) {
   return AppBar(
     toolbarHeight: MediaQuery.sizeOf(context).height * 0.09,
+    leading: CustomBackArrow(context),
     title: Text(
-      title,
-      style: const TextStyle(
-        fontSize: FontSize.s24,
+      '${title}kdlsfjlskd ',
+      style: TextStylesManager.textStyle24.copyWith(
+        color: ColorManager.white,
         fontWeight: FontWeight.bold,
       ),
+      softWrap: true,
+      maxLines: 3,
+      textAlign: TextAlign.center,
     ),
     actions: actions,
-    leading: CustomBackArrow(context),
   );
 }
 
-/// Logic functions
 double formatDobule(double value) {
   return double.parse(value.toStringAsFixed(2));
 }
@@ -164,9 +160,11 @@ TextDirection getTextDirection(String text) {
 }
 
 void kprint(dynamic message) {
-  if (kDebugMode) {
-    print('\n$message\n');
-  }
+  klog('$message\n');
+}
+
+void klog(dynamic message) {
+  log(message);
 }
 
 String getStateMessage({

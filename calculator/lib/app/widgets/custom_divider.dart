@@ -1,3 +1,4 @@
+import 'package:calculator/app/resources/color_manager.dart';
 import 'package:flutter/material.dart';
 
 class CustomDivider extends StatelessWidget {
@@ -14,7 +15,7 @@ class CustomDivider extends StatelessWidget {
   Widget build(BuildContext context) {
     return Divider(
       thickness: thickness,
-      color: color ?? Theme.of(context).dividerColor,
+      color: color ?? ColorManager.primary,
     );
   }
 }

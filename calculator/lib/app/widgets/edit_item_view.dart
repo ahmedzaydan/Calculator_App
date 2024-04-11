@@ -6,7 +6,6 @@ import 'package:calculator/app/resources/values_manager.dart';
 import 'package:calculator/app/utils/dependency_injection.dart';
 import 'package:calculator/app/utils/extensions.dart';
 import 'package:calculator/app/utils/functions.dart';
-import 'package:calculator/app/widgets/custom_back_arrow.dart';
 import 'package:calculator/app/widgets/custom_elevated_button.dart';
 import 'package:calculator/app/widgets/custom_text_form_field.dart';
 import 'package:calculator/features/kits/kit_cubit/kit_cubit.dart';
@@ -44,17 +43,11 @@ class EditItemView extends StatelessWidget {
     valueController.text = value.toString();
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          updateKit
-              ? 'Atualizar valor de $label'
-              : 'Atualizar porcentagem de $label',
-          style: TextStyle(
-            fontSize: FontSize.s24,
-            color: ColorManager.white,
-          ),
-        ),
-        leading: CustomBackArrow(sourceContext),
+      appBar: customAppBar(
+        context: sourceContext,
+        title: updateKit
+            ? 'Atualizar valor de $label'
+            : 'Atualizar porcentagem de $label',
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(

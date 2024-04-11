@@ -1,6 +1,7 @@
-import 'package:calculator/features/calculator/calculator_cubit/calculator_cubit.dart';
-import 'package:calculator/app/utils/functions.dart';
 import 'package:calculator/app/resources/strings_manager.dart';
+import 'package:calculator/app/resources/styles_manager.dart';
+import 'package:calculator/app/utils/functions.dart';
+import 'package:calculator/features/calculator/calculator_cubit/calculator_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -15,11 +16,11 @@ class Note extends StatelessWidget {
       children: [
         if (cubit.note.isNotEmpty) ...[
           // note title
-          Align(
+          const Align(
             alignment: Alignment.centerLeft,
             child: Text(
               CalculatorStrings.note,
-              style: getTextStyle(),
+              style: TextStylesManager.textStyle28,
             ),
           ),
 
@@ -40,7 +41,7 @@ class Note extends StatelessWidget {
               textDirection: getTextDirection(cubit.note),
               child: Text(
                 cubit.note,
-                style: getTextStyle().copyWith(),
+                style: TextStylesManager.textStyle24,
               ),
             ),
           ),

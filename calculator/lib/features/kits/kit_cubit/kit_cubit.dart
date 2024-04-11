@@ -37,8 +37,6 @@ class KitsCubit extends Cubit<AppStates> {
   List<KitModel> month12Kits = [];
   List<KitModel> transparentKits = [];
 
-// TODO: make state message handler for this cubit only
-
   Future<void> loadData(List<String> kitKeys) async {
     try {
       kprint('Keys: $kitKeys');
@@ -60,10 +58,11 @@ class KitsCubit extends Cubit<AppStates> {
       }
 
       emit(LoadKitsDataSuccessState());
+      sortKits();
     } catch (e) {
       kprint(e.toString());
       emit(
-        LoadKitsDataErrorState(
+        LoadingKitsDataErrorState(
           getStateMessage(
             state: AppState.error,
             itemType: ItemType.kit,
@@ -84,7 +83,7 @@ class KitsCubit extends Cubit<AppStates> {
       if (kit.status == KitStatus.expired) {
         _handleExpiredKit(kit);
       }
-      addKitToList(kit);
+      addKitToList(kit, sort: false);
     }
   }
 
@@ -219,7 +218,7 @@ class KitsCubit extends Cubit<AppStates> {
     return null;
   }
 
-  void addKitToList(KitModel kitModel) {
+  void addKitToList(KitModel kitModel, {bool sort = true}) {
     switch (kitModel.status!) {
       case KitStatus.expired:
         expiredKits.add(kitModel);
@@ -240,6 +239,8 @@ class KitsCubit extends Cubit<AppStates> {
 
     if (kitModel.status! != KitStatus.expired) {
       kits.add(kitModel);
+    }
+    if (sort) {
       sortKits();
     }
   }

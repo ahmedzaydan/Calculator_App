@@ -1,5 +1,6 @@
 import 'package:calculator/app/resources/color_manager.dart';
 import 'package:calculator/app/resources/strings_manager.dart';
+import 'package:calculator/app/resources/styles_manager.dart';
 import 'package:calculator/app/resources/values_manager.dart';
 import 'package:calculator/app/utils/dependency_injection.dart';
 import 'package:calculator/app/utils/functions.dart';
@@ -40,11 +41,8 @@ class AdminWidget extends StatelessWidget {
                 // admin text
                 Text(
                   PersonsStrings.admin,
-                  // style: getTextStyle(),
-                  style: TextStyle(
+                  style: TextStylesManager.textStyle28.copyWith(
                     color: ColorManager.white,
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold,
                   ),
                 ),
 
@@ -60,7 +58,12 @@ class AdminWidget extends StatelessWidget {
               ],
             ),
           ),
+
+
           const Gap(15),
+
+
+          
           Padding(
             padding: const EdgeInsets.only(
               right: AppPadding.p10,

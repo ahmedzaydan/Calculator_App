@@ -26,10 +26,10 @@ class LoadKitsDataLoadingState extends AppStates {
 
 class LoadKitsDataSuccessState extends AppStates {}
 
-class LoadKitsDataErrorState extends AppStates {
+class LoadingKitsDataErrorState extends AppStates {
   final String message;
 
-  LoadKitsDataErrorState(this.message);
+  LoadingKitsDataErrorState(this.message);
 }
 
 // UpdateKitsData states

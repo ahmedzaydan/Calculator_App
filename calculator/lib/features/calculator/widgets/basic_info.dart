@@ -1,5 +1,5 @@
-import 'package:calculator/app/resources/font_manager.dart';
 import 'package:calculator/app/resources/strings_manager.dart';
+import 'package:calculator/app/resources/styles_manager.dart';
 import 'package:calculator/app/resources/values_manager.dart';
 import 'package:calculator/app/utils/dependency_injection.dart';
 import 'package:calculator/app/utils/functions.dart';
@@ -37,9 +37,7 @@ class BasicInfo extends StatelessWidget {
             alignment: Alignment.centerLeft,
             child: Text(
               '(${kitsCubit.checkedKits})',
-              style: const TextStyle(
-                fontSize: FontSize.s18,
-              ),
+              style: TextStylesManager.textStyle18,
             ),
           ),
 

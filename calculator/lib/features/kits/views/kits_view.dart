@@ -1,7 +1,7 @@
 import 'package:calculator/app/resources/color_manager.dart';
 import 'package:calculator/app/resources/constants_manager.dart';
-import 'package:calculator/app/resources/font_manager.dart';
 import 'package:calculator/app/resources/strings_manager.dart';
+import 'package:calculator/app/resources/styles_manager.dart';
 import 'package:calculator/app/resources/values_manager.dart';
 import 'package:calculator/app/utils/functions.dart';
 import 'package:calculator/app/widgets/custom_error_widget.dart';
@@ -48,18 +48,25 @@ class KitsView extends StatelessWidget {
           showCustomToast(state.message, ToastStates.success);
         }
 
-        if (state is LoadKitsDataErrorState) {
+        if (state is LoadingKitsDataErrorState) {
           showCustomToast(state.message, ToastStates.error);
         }
       },
       builder: (_, state) {
-        if (state is LoadingDataState || state is LoadKitsDataLoadingState) {
-          return const LoadingWidget(
-            message: KitsStrings.loadingKits,
-          );
-        } else if (state is LoadingDataErrorState) {
+        if (state is AppLayoutInitialState ||
+            state is LoadingDataState ||
+            state is KitsInitialState ||
+            state is LoadKitsDataLoadingState) {
+          return const LoadingWidget(message: KitsStrings.loadingKits);
+        }
+
+        // in case of error
+        else if (state is LoadingDataErrorState) {
+          return CustomErrorWidget(state.message);
+        } else if (state is LoadingKitsDataErrorState) {
           return CustomErrorWidget(state.message);
         }
+
         return _buildKitsView(context);
       },
     );
@@ -76,7 +83,14 @@ class KitsView extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // add kit inkwell
-            SizedBox(
+            Container(
+              decoration: BoxDecoration(
+                color: ColorManager.primary,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppPadding.p14,
+              ),
               height: MediaQuery.sizeOf(context).height * 0.1,
               child: InkWell(
                 highlightColor: ColorManager.transparent,
@@ -88,11 +102,10 @@ class KitsView extends StatelessWidget {
                 },
                 child: Row(
                   children: [
-                    const Text(
+                    Text(
                       KitsStrings.addKit,
-                      style: TextStyle(
-                        fontSize: FontSize.s28,
-                        // fontWeight: FontWeight.bold,
+                      style: TextStylesManager.textStyle28.copyWith(
+                        color: ColorManager.white,
                       ),
                     ),
 
@@ -101,7 +114,7 @@ class KitsView extends StatelessWidget {
                     // arrow
                     FaIcon(
                       FontAwesomeIcons.angleRight,
-                      color: ColorManager.black,
+                      color: ColorManager.white,
                       size: 32,
                     ),
 

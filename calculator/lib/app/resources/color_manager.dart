@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 
 abstract class ColorManager {
   static Color primary = const Color.fromARGB(255, 67, 156, 215);
+  // static Color primary = const Color(0xff053358);
+  // static Color primary = const Color(0xff053358);
+  static Color primaryLight = const Color.fromARGB(255, 120, 181, 221);
+  static Color iconColor = primary;
 
   // general colors
   static Color white = const Color(0xffFFFFFF);
@@ -24,7 +28,7 @@ abstract class ColorManager {
   // 0x26 for the alpha channel
   static Color black26 = const Color(0x26000000);
 
-  static Color expired = const Color(0xffBFBFBF);
+  static Color expired = const Color.fromARGB(255, 219, 219, 219);
   static Color month30 = const Color(0xffe00b0b);
   static Color month24 = const Color(0xfff0C559);
   static Color month24Lighter = const Color(0xffffD640);

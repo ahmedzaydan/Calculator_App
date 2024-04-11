@@ -1,7 +1,7 @@
 import 'package:calculator/app/resources/color_manager.dart';
 import 'package:calculator/app/resources/constants_manager.dart';
-import 'package:calculator/app/resources/font_manager.dart';
 import 'package:calculator/app/resources/strings_manager.dart';
+import 'package:calculator/app/resources/styles_manager.dart';
 import 'package:calculator/app/resources/values_manager.dart';
 import 'package:calculator/app/utils/dependency_injection.dart';
 import 'package:calculator/app/utils/functions.dart';
@@ -43,13 +43,9 @@ class AddItemWidget extends StatelessWidget {
         // item title
         Container(
           margin: const EdgeInsets.only(left: AppPadding.p5),
-          child: Text(
+          child: const Text(
             PersonsStrings.addPerson,
-            style: TextStyle(
-              color: ColorManager.black,
-              fontSize: FontSize.s32,
-              fontWeight: FontWeight.bold,
-            ),
+            style: TextStylesManager.textStyle28,
           ),
         ),
 

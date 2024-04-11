@@ -22,7 +22,7 @@ class CollapseButton extends StatelessWidget {
         isCollapsed
             ? FontAwesomeIcons.circleChevronDown
             : FontAwesomeIcons.circleChevronUp,
-        color: ColorManager.black,
+        color: ColorManager.iconColor,
         size: ConstantsManager.iconSize,
       ),
     );

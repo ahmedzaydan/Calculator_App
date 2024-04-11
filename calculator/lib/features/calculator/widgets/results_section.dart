@@ -1,6 +1,6 @@
 import 'package:calculator/app/resources/strings_manager.dart';
+import 'package:calculator/app/resources/styles_manager.dart';
 import 'package:calculator/app/utils/dependency_injection.dart';
-import 'package:calculator/app/utils/functions.dart';
 import 'package:calculator/app/widgets/custom_divider.dart';
 import 'package:calculator/app/widgets/custom_list_view.dart';
 import 'package:calculator/features/persons/models/person_model.dart';
@@ -45,12 +45,12 @@ class ResultsSection extends StatelessWidget {
                   children: [
                     Text(
                       person.name,
-                      style: getTextStyle(),
+                      style: TextStylesManager.textStyle26,
                     ),
                     const Gap(10),
                     Text(
                       '${person.shareValue}',
-                      style: getTextStyle(),
+                      style: TextStylesManager.textStyle26,
                     ),
                   ],
                 );
@@ -73,13 +73,13 @@ class ResultsSection extends StatelessWidget {
       children: [
         Text(
           PersonsStrings.admin,
-          style: getTextStyle().copyWith(
+          style: TextStylesManager.textStyle26.copyWith(
             fontWeight: FontWeight.bold,
           ),
         ),
         Text(
           '${cubit.adminProfit}',
-          style: getTextStyle().copyWith(
+          style: TextStylesManager.textStyle26.copyWith(
             fontWeight: FontWeight.bold,
           ),
         ),

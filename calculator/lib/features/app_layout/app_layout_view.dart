@@ -25,7 +25,6 @@ class AppLayout extends StatelessWidget {
               },
               selectedItemColor: ColorManager.primary,
               unselectedItemColor: ColorManager.lightGrey,
-              unselectedLabelStyle: TextStyle(color: ColorManager.red),
             ),
           ),
         );

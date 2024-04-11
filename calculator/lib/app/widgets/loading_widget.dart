@@ -1,5 +1,6 @@
 import 'package:calculator/app/resources/strings_manager.dart';
-import 'package:calculator/app/utils/functions.dart';
+import 'package:calculator/app/resources/styles_manager.dart';
+import 'package:calculator/app/resources/values_manager.dart';
 import 'package:flutter/material.dart';
 
 class LoadingWidget extends StatelessWidget {
@@ -12,18 +13,23 @@ class LoadingWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        const CircularProgressIndicator(
-          color: Colors.blue,
-        ),
-        const SizedBox(height: 20),
-        Text(
-          message,
-          style: getTextStyle(),
-        ),
-      ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: AppPadding.p18),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const CircularProgressIndicator(
+            color: Colors.blue,
+          ),
+          const SizedBox(height: 20),
+          Text(
+            message,
+            style: TextStylesManager.textStyle28,
+            textAlign: TextAlign.center,
+            softWrap: true,
+          ),
+        ],
+      ),
     );
   }
 }
