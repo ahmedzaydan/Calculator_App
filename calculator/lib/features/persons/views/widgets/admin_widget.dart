@@ -4,7 +4,7 @@ import 'package:calculator/app/resources/styles_manager.dart';
 import 'package:calculator/app/resources/values_manager.dart';
 import 'package:calculator/app/utils/dependency_injection.dart';
 import 'package:calculator/app/utils/functions.dart';
-import 'package:calculator/app/widgets/actions_widget.dart';
+import 'package:calculator/app/widgets/data_item_actions_widget.dart';
 import 'package:calculator/app/widgets/edit_item_view.dart';
 import 'package:calculator/features/persons/person_cubit/persons_cubit.dart';
 import 'package:flutter/material.dart';
@@ -58,17 +58,12 @@ class AdminWidget extends StatelessWidget {
               ],
             ),
           ),
-
-
           const Gap(15),
-
-
-          
           Padding(
             padding: const EdgeInsets.only(
               right: AppPadding.p10,
             ),
-            child: ActionsWidget(
+            child: DataItemActionsWidget(
               isDeleteVisible: false,
               editButtonStyle: ButtonStyle(
                 iconColor: MaterialStateProperty.all(ColorManager.white),

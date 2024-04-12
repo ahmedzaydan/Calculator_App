@@ -49,21 +49,16 @@ class PersonsView extends StatelessWidget {
         }
       },
       builder: (_, state) {
-        if (
-            state is PersonInitialState ||
+        if (state is PersonInitialState ||
             state is LoadingDataState ||
             state is LoadPersonsDataLoadingState) {
-          return const LoadingWidget(
-            message: PersonsStrings.loadingPersons,
-          );
-        } 
-        
+          return const LoadingWidget(message: PersonsStrings.loadingPersons);
+        }
+
         // in case of error
         else if (state is LoadingDataErrorState) {
           return CustomErrorWidget(state.message);
-        }
-
-        else if (state is LoadPersonsDataErrorState) {
+        } else if (state is LoadPersonsDataErrorState) {
           return CustomErrorWidget(state.message);
         }
 

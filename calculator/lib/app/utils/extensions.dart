@@ -48,17 +48,17 @@ extension KitTypeExtension on KitStatus {
       case KitStatus.month12:
         return KitType(
           typeString: KitsStrings.month12,
-          backgroundColor: ColorManager.month12,
+          backgroundColor: ColorManager.green,
         );
       case KitStatus.month24:
         return KitType(
           typeString: KitsStrings.month24,
-          backgroundColor: ColorManager.month24,
+          backgroundColor: ColorManager.yellow,
         );
       case KitStatus.month30:
         return KitType(
           typeString: KitsStrings.month30,
-          backgroundColor: ColorManager.month30,
+          backgroundColor: ColorManager.red2,
         );
       case KitStatus.expired:
         return KitType(

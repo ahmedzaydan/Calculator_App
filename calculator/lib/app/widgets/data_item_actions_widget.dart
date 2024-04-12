@@ -2,8 +2,8 @@ import 'package:calculator/app/widgets/custom_icon_button.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class ActionsWidget extends StatelessWidget {
-  const ActionsWidget({
+class DataItemActionsWidget extends StatelessWidget {
+  const DataItemActionsWidget({
     super.key,
     this.editOnPressed,
     this.deleteOnPressed,

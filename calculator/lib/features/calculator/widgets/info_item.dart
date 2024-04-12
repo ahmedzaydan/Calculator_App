@@ -14,11 +14,11 @@ class InfoItem extends StatelessWidget {
       children: [
         Text(
           label,
-          style: TextStylesManager.textStyle24,
+          style: TextStylesManager.textStyle26,
         ),
         Text(
           value,
-          style: TextStylesManager.textStyle24,
+          style: TextStylesManager.textStyle26,
         ),
       ],
     );

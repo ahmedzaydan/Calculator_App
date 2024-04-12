@@ -23,11 +23,11 @@ class KitsCubit extends Cubit<AppStates> {
   List<bool> collapsedLists = [true, true, true, true, true];
 
   List<String> listsTitles = [
-    KitsStrings.expired,
-    KitsStrings.month30,
-    KitsStrings.month24,
-    KitsStrings.month12,
     KitsStrings.normal,
+    KitsStrings.month12,
+    KitsStrings.month24,
+    KitsStrings.month30,
+    KitsStrings.expired,
   ];
 
   List<KitModel> kits = [];
@@ -35,7 +35,7 @@ class KitsCubit extends Cubit<AppStates> {
   List<KitModel> month30Kits = [];
   List<KitModel> month24Kits = [];
   List<KitModel> month12Kits = [];
-  List<KitModel> transparentKits = [];
+  List<KitModel> normalKits = [];
 
   Future<void> loadData(List<String> kitKeys) async {
     try {
@@ -148,6 +148,8 @@ class KitsCubit extends Cubit<AppStates> {
         startDate: selectedDate,
       );
 
+      kprint('KitEndDate: ${kit.endDate}');
+
       // if kit is expired
       if (kit.status == KitStatus.expired) {
         saveExpiredKitToSharedPref(kit);
@@ -233,7 +235,7 @@ class KitsCubit extends Cubit<AppStates> {
         month12Kits.add(kitModel);
         break;
       case KitStatus.normal:
-        transparentKits.add(kitModel);
+        normalKits.add(kitModel);
         break;
     }
 
@@ -320,8 +322,7 @@ class KitsCubit extends Cubit<AppStates> {
             kit;
         break;
       case KitStatus.normal:
-        transparentKits[
-            transparentKits.indexWhere((ele) => ele.name == kit.name)] = kit;
+        normalKits[normalKits.indexWhere((ele) => ele.name == kit.name)] = kit;
         break;
     }
 
@@ -406,7 +407,7 @@ class KitsCubit extends Cubit<AppStates> {
         month12Kits.remove(kitModel);
         break;
       default:
-        transparentKits.remove(kitModel);
+        normalKits.remove(kitModel);
         break;
     }
 
@@ -488,15 +489,15 @@ class KitsCubit extends Cubit<AppStates> {
   List<KitModel> getCollapsableList(int index) {
     switch (index) {
       case 0:
-        return expiredKits;
+        return normalKits;
       case 1:
-        return month30Kits;
+        return month12Kits;
       case 2:
         return month24Kits;
       case 3:
-        return month12Kits;
+        return month30Kits;
       default:
-        return transparentKits;
+        return expiredKits;
     }
   }
 
@@ -505,7 +506,7 @@ class KitsCubit extends Cubit<AppStates> {
     month30Kits.clear();
     month24Kits.clear();
     month12Kits.clear();
-    transparentKits.clear();
+    normalKits.clear();
   }
 
   String _getStoringKey(String id) => '$kitKeyPrefix$id';

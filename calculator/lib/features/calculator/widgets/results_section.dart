@@ -32,7 +32,7 @@ class ResultsSection extends StatelessWidget {
           children: [
             _adminProfit(),
 
-            const CustomDivider(thickness: 1.6),
+            const CustomDivider(),
 
             const Gap(30),
 
@@ -56,7 +56,7 @@ class ResultsSection extends StatelessWidget {
                 );
               },
               separatorBuilder: (context, index) {
-                return const CustomDivider(thickness: 1.6);
+                return const CustomDivider();
               },
               itemCount: cubit.personItems.length,
             ),
@@ -71,17 +71,13 @@ class ResultsSection extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
+        const Text(
           PersonsStrings.admin,
-          style: TextStylesManager.textStyle26.copyWith(
-            fontWeight: FontWeight.bold,
-          ),
+          style: TextStylesManager.textStyle28,
         ),
         Text(
           '${cubit.adminProfit}',
-          style: TextStylesManager.textStyle26.copyWith(
-            fontWeight: FontWeight.bold,
-          ),
+          style: TextStylesManager.textStyle28,
         ),
       ],
     );

@@ -59,6 +59,82 @@ class KitModel {
     ];
   }
 
+  // helper method in deterimining the kit status
+  // method return true if the now is in the last 10 days
+  // of year 2 or year 1 of the contract
+  bool inRange(DateTime date) {
+    DateTime now = getFormattedDate();
+
+    // 10 days range start date
+    DateTime rangeStart = DateTime(
+      date.year,
+      date.month,
+      date.day - 10,
+    );
+
+    // 10 days range end date
+    DateTime rangeEnd = DateTime(
+      date.year,
+      date.month,
+      date.day,
+    );
+
+    // the 10 days are in the same month
+    if (date.day >= 10) {
+      // date: 18/5/2023
+      // range is from 8 --> 18
+      if ((now.month == date.month) &&
+          (rangeStart.day <= now.day) &&
+          (now.day <= rangeEnd.day)) {
+        // now.day = 16 for example
+        return true;
+      }
+    }
+
+    // the 10 days are divided into two months
+    else if (date.day < 10) {
+      // the two months are in the same year
+      // date: 5/5/2023
+      // the range is 25/4/2023 --> 5/5/2023
+      // now: 28/4/2023 or now: 2/5/2023
+      if (date.month > 1) {
+        bool condition1 =
+            (now.month == rangeStart.month) && (now.day >= rangeStart.day);
+
+        bool condition2 =
+            (now.month == rangeEnd.month) && (now.day <= rangeEnd.day);
+
+        if (condition1 || condition2) {
+          return true;
+        }
+      }
+
+      // else tow months are in different years
+      // the previous month is in the previous year
+      // date: 3/1/2023
+      // now.day = 28/12/2022 or 2/1/2023
+      else if (date.month == 1) {
+        // rangeStart.year == date.year - 1
+        // rangeStart.day == date.day
+        bool condition1 = (now.year == rangeStart.year) &&
+            (now.month == 12) &&
+            (now.day >= rangeStart.day);
+
+        // rangeEnd.year == date.year
+        // rangeEnd.day == date.day
+        bool condition2 = (now.year == rangeEnd.year) &&
+            (now.month == 1) &&
+            (now.day <= rangeEnd.day);
+
+        if (condition1 || condition2) {
+          return true;
+        }
+      }
+    }
+
+    return false;
+  }
+
   void selectStatus() {
     status = KitStatus.normal;
 
@@ -75,23 +151,27 @@ class KitModel {
     }
 
     // contract is in the month 24
-    else if (now.year - startDate.year == 2 && startDate.month == now.month) {
-      // get the last day of the current month
-      int lastDay = DateTime(now.year, now.month + 1, 0).day;
-
-      // if the contract within last 10 days of month 24
-      if (now.day >= (lastDay - 10)) {
+    else if (now.year - startDate.year == 2) {
+      if (inRange(
+        DateTime(
+          startDate.year + 2,
+          startDate.month,
+          startDate.day,
+        ),
+      )) {
         status = KitStatus.month24;
       }
     }
 
     // contract is in the month 12
-    else if (now.year - startDate.year == 1 && now.month == startDate.month) {
-      // get the last day of the current month
-      int lastDay = DateTime(now.year, now.month + 1, 0).day;
-
-      // if the contract within last 10 days of month 12
-      if (now.day >= (lastDay - 10)) {
+    else if (now.year - startDate.year == 1) {
+      if (inRange(
+        DateTime(
+          startDate.year + 1,
+          startDate.month,
+          startDate.day,
+        ),
+      )) {
         status = KitStatus.month12;
       }
     }

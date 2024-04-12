@@ -5,7 +5,7 @@ class CustomDivider extends StatelessWidget {
   const CustomDivider({
     super.key,
     this.color,
-    this.thickness = 2.1,
+    this.thickness = 1.5,
   });
 
   final Color? color;
@@ -15,7 +15,7 @@ class CustomDivider extends StatelessWidget {
   Widget build(BuildContext context) {
     return Divider(
       thickness: thickness,
-      color: color ?? ColorManager.primary,
+      color: color ?? ColorManager.black,
     );
   }
 }

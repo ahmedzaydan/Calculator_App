@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-
 /// UI functions
 void navigateTo({
   required BuildContext context,
@@ -110,7 +109,7 @@ AppBar customAppBar({
     toolbarHeight: MediaQuery.sizeOf(context).height * 0.09,
     leading: CustomBackArrow(context),
     title: Text(
-      '${title}kdlsfjlskd ',
+      title,
       style: TextStylesManager.textStyle24.copyWith(
         color: ColorManager.white,
         fontWeight: FontWeight.bold,

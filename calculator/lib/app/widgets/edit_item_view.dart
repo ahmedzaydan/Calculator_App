@@ -1,4 +1,3 @@
-import 'package:calculator/app/resources/color_manager.dart';
 import 'package:calculator/app/resources/constants_manager.dart';
 import 'package:calculator/app/resources/font_manager.dart';
 import 'package:calculator/app/resources/strings_manager.dart';
@@ -6,15 +5,13 @@ import 'package:calculator/app/resources/values_manager.dart';
 import 'package:calculator/app/utils/dependency_injection.dart';
 import 'package:calculator/app/utils/extensions.dart';
 import 'package:calculator/app/utils/functions.dart';
-import 'package:calculator/app/widgets/custom_elevated_button.dart';
+import 'package:calculator/app/widgets/add_or_update_cancel_widget.dart';
 import 'package:calculator/app/widgets/custom_text_form_field.dart';
 import 'package:calculator/features/kits/kit_cubit/kit_cubit.dart';
 import 'package:calculator/features/kits/models/kit_model.dart';
 import 'package:calculator/features/persons/person_cubit/persons_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-
-// TODO: do we need to update start date also?!
 
 class EditItemView extends StatelessWidget {
   EditItemView({
@@ -87,79 +84,57 @@ class EditItemView extends StatelessWidget {
   }
 
   Widget _actions() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        // update button
-        Expanded(
-          child: CustomElevatedButton(
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(
-                ColorManager.green,
-              ),
-            ),
-            onPressed: () async {
-              var kitsCubit = locator<KitsCubit>();
-              if (formKey.currentState!.validate()) {
-                if (updateKit) {
-                  kitsCubit
-                      .updateKit(
-                    kitModel: kitModel!,
-                    value: valueController.text.toDouble(),
-                  )
-                      .then((response) {
-                    if ((response == null || response == true) &&
-                        sourceContext.mounted) {
-                      Navigator.pop(sourceContext);
-                    }
-                  });
-                } else {
-                  if (index == -1) {
-                    // update admin data
-                    locator<PersonsCubit>()
-                        .updateAdminPercentage(
-                      double.parse(valueController.text),
-                    )
-                        .then(
-                      (response) {
-                        if ((response == null || response == true) &&
-                            sourceContext.mounted) {
-                          Navigator.pop(sourceContext);
-                        }
-                      },
-                    );
-                  } else {
-                    locator<PersonsCubit>()
-                        .updatePerson(
-                      index: index,
-                      value: double.parse(valueController.text),
-                    )
-                        .then(
-                      (response) {
-                        if ((response == null || response == true) &&
-                            sourceContext.mounted) {
-                          Navigator.pop(sourceContext);
-                        }
-                      },
-                    );
-                  }
-                }
+    return AddUpdateCancelWidget(
+      onPressed: () async {
+        var kitsCubit = locator<KitsCubit>();
+        if (formKey.currentState!.validate()) {
+          if (updateKit) {
+            kitsCubit
+                .updateKit(
+              kitModel: kitModel!,
+              value: valueController.text.toDouble(),
+            )
+                .then((response) {
+              if ((response == null || response == true) &&
+                  sourceContext.mounted) {
+                Navigator.pop(sourceContext);
               }
-            },
-            text: StringsManager.update,
-          ),
-        ),
-
-        const Gap(20),
-
-        // cancel button
-        Expanded(
-          child: CustomElevatedButton(
-            onPressed: () => Navigator.pop(sourceContext),
-            text: StringsManager.cancel,
-          ),
-        ),
-      ],
+            });
+          } else {
+            if (index == -1) {
+              // update admin data
+              locator<PersonsCubit>()
+                  .updateAdminPercentage(
+                double.parse(valueController.text),
+              )
+                  .then(
+                (response) {
+                  if ((response == null || response == true) &&
+                      sourceContext.mounted) {
+                    Navigator.pop(sourceContext);
+                  }
+                },
+              );
+            } else {
+              locator<PersonsCubit>()
+                  .updatePerson(
+                index: index,
+                value: double.parse(valueController.text),
+              )
+                  .then(
+                (response) {
+                  if ((response == null || response == true) &&
+                      sourceContext.mounted) {
+                    Navigator.pop(sourceContext);
+                  }
+                },
+              );
+            }
+          }
+        }
+      },
+      actionText: StringsManager.update,
+      sourceContext: sourceContext,
     );
   }
 }

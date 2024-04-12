@@ -3,7 +3,7 @@ import 'package:calculator/app/resources/strings_manager.dart';
 import 'package:calculator/app/resources/values_manager.dart';
 import 'package:calculator/app/utils/extensions.dart';
 import 'package:calculator/app/utils/functions.dart';
-import 'package:calculator/app/widgets/custom_elevated_button.dart';
+import 'package:calculator/app/widgets/add_or_update_cancel_widget.dart';
 import 'package:calculator/app/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -84,7 +84,7 @@ class AddKitView extends StatelessWidget {
     return CustomTextFormField(
       controller: _kitValueController,
       fontWeight: FontWeight.normal,
-      labelText: KitsStrings.kitNumber,
+      labelText: KitsStrings.kitValue,
       keyboardType: const TextInputType.numberWithOptions(decimal: true),
       inputFormatters: getInputFormatters(ConstantsManager.valueRegex),
       validator: (value) {
@@ -97,6 +97,8 @@ class AddKitView extends StatelessWidget {
   }
 
   CustomTextFormField _timePicker(BuildContext context) {
+    _startDateController.text = getDateAsString();
+
     return CustomTextFormField(
       controller: _startDateController,
       labelText: KitsStrings.startDate,
@@ -127,8 +129,9 @@ class AddKitView extends StatelessWidget {
           lastDate: DateTime(2100),
         );
         if (date != null) {
-          _startDateController.text = getDateAsString();
           locator<KitsCubit>().selectedDate = getFormattedDate(date: date);
+          _startDateController.text =
+              getDateAsString(date: getFormattedDate(date: date));
         }
       },
       validator: (value) {
@@ -141,47 +144,25 @@ class AddKitView extends StatelessWidget {
   }
 
   Widget _actions() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        // add button
-        Expanded(
-          child: CustomElevatedButton(
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(
-                ColorManager.green,
-              ),
-            ),
-            onPressed: () async {
-              var kitsCubit = locator<KitsCubit>();
-              if (_formKey.currentState!.validate()) {
-                kitsCubit
-                    .addKit(
-                  name: _kitNameController.text,
-                  value: _kitValueController.text.toDouble(),
-                )
-                    .then((response) {
-                  if ((response == null || response == true) &&
-                      sourceContext.mounted) {
-                    Navigator.pop(sourceContext);
-                  }
-                });
-              }
-            },
-            text: KitsStrings.add,
-          ),
-        ),
-
-        const Gap(20),
-
-        // cancel button
-        Expanded(
-          child: CustomElevatedButton(
-            onPressed: () => Navigator.pop(sourceContext),
-            text: StringsManager.cancel,
-          ),
-        ),
-      ],
+    return AddUpdateCancelWidget(
+      onPressed: () async {
+        var kitsCubit = locator<KitsCubit>();
+        if (_formKey.currentState!.validate()) {
+          kitsCubit
+              .addKit(
+            name: _kitNameController.text,
+            value: _kitValueController.text.toDouble(),
+          )
+              .then((response) {
+            if ((response == null || response == true) &&
+                sourceContext.mounted) {
+              Navigator.pop(sourceContext);
+            }
+          });
+        }
+      },
+      actionText: KitsStrings.add,
+      sourceContext: sourceContext,
     );
   }
 }
