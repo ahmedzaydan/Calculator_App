@@ -1,0 +1,4 @@
+#Tue Apr 23 12:21:43 EET 2024
+base.0=D\:\\Work\\Projects\\Calculator_App_Project\\Calculator_App\\azulzinho\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
+path.0=classes.dex
+renamed.0=classes.dex
