@@ -1,5 +1,6 @@
 import 'package:azulzinho/app/resources/strings_manager.dart';
 import 'package:azulzinho/app/resources/styles_manager.dart';
+import 'package:azulzinho/app/resources/values_manager.dart';
 import 'package:azulzinho/app/utils/dependency_injection.dart';
 import 'package:azulzinho/app/widgets/custom_divider.dart';
 import 'package:azulzinho/app/widgets/custom_list_view.dart';
@@ -27,7 +28,7 @@ class ResultsSection extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(AppPadding.p8),
         child: Column(
           children: [
             _adminProfit(),
@@ -71,13 +72,17 @@ class ResultsSection extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        const Text(
+        Text(
           PersonsStrings.admin,
-          style: TextStylesManager.textStyle28,
+          style: TextStylesManager.textStyle26.copyWith(
+            fontWeight: FontWeight.bold,
+          ),
         ),
         Text(
           '${cubit.adminProfit}',
-          style: TextStylesManager.textStyle28,
+          style: TextStylesManager.textStyle26.copyWith(
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ],
     );

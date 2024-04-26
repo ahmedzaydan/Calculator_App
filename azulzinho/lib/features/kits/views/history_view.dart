@@ -27,10 +27,11 @@ class HistoryView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Title
-                const Text(
+                Text(
                   KitsStrings.historyTitle,
-                  style: TextStylesManager.textStyle28,
-                  // style: FontManager.titleStyle,
+                  style: TextStylesManager.textStyle26.copyWith(
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
 
                 const Gap(40),

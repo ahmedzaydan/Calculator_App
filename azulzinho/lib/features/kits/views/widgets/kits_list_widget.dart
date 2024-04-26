@@ -44,7 +44,10 @@ class KitsListsWidget extends StatelessWidget {
             ),
           ),
         ),
+
         const Gap(20),
+
+        // If the list is not empty, show the list
         if (list.isNotEmpty) ...[
           Visibility(
             visible: !isCollapsed,

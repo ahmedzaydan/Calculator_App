@@ -1,9 +1,9 @@
 import 'package:azulzinho/app/resources/constants_manager.dart';
 import 'package:azulzinho/app/resources/strings_manager.dart';
-import 'package:azulzinho/app/resources/values_manager.dart';
 import 'package:azulzinho/app/utils/extensions.dart';
 import 'package:azulzinho/app/utils/functions.dart';
 import 'package:azulzinho/app/widgets/add_or_update_cancel_widget.dart';
+import 'package:azulzinho/app/widgets/add_view.dart';
 import 'package:azulzinho/app/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -28,37 +28,25 @@ class AddKitView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: customAppBar(
-          context: context,
-          title: KitsStrings.addKit,
-        ),
-        body: Center(
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: AppPadding.p20),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    _kitName(),
-                    const Gap(20),
+    return AddView(
+      title: KitsStrings.addKit,
+      child: Form(
+        key: _formKey,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            _kitName(),
+            const Gap(20),
 
-                    _kitValue(),
-                    const Gap(20),
+            _kitValue(),
+            const Gap(20),
 
-                    _timePicker(context),
-                    const Gap(20),
+            _timePicker(context),
+            const Gap(20),
 
-                    // add or cancel buttons
-                    _actions(),
-                  ],
-                ),
-              ),
-            ),
-          ),
+            // add or cancel buttons
+            _actions(),
+          ],
         ),
       ),
     );
@@ -153,12 +141,14 @@ class AddKitView extends StatelessWidget {
             name: _kitNameController.text,
             value: _kitValueController.text.toDouble(),
           )
-              .then((response) {
-            if ((response == null || response == true) &&
-                sourceContext.mounted) {
-              Navigator.pop(sourceContext);
-            }
-          });
+              .then(
+            (response) {
+              if ((response == null || response == true) &&
+                  sourceContext.mounted) {
+                Navigator.pop(sourceContext);
+              }
+            },
+          );
         }
       },
       actionText: KitsStrings.add,

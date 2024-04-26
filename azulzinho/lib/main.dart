@@ -4,7 +4,7 @@ import 'package:azulzinho/app/utils/cache_controller.dart';
 import 'package:azulzinho/app/utils/dependency_injection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+// TODO: minimize text a little bit
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 

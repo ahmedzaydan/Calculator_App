@@ -20,6 +20,7 @@ class KitWithCheckbox extends StatelessWidget {
     Color color = kit.isChecked ? ColorManager.lightGrey : ColorManager.black;
     return Row(
       children: [
+        // checkbox
         Transform.scale(
           scale: 1.6,
           child: Checkbox(
@@ -39,8 +40,9 @@ class KitWithCheckbox extends StatelessWidget {
         // kit name
         Text(
           kit.name,
-          style: TextStylesManager.textStyle26.copyWith(
+          style: TextStylesManager.textStyle24.copyWith(
             color: color,
+            fontWeight: FontWeight.w500,
           ),
         ),
 
@@ -49,9 +51,9 @@ class KitWithCheckbox extends StatelessWidget {
         // kit start date
         Text(
           '(${getDateAsString(date: kit.startDate)})',
-          style: TextStylesManager.textStyle18.copyWith(
+          style: TextStylesManager.textStyle14.copyWith(
             color: color,
-            fontWeight: FontWeight.bold,
+            // fontWeight: FontWeight.w300,
           ),
         ),
 
@@ -60,8 +62,9 @@ class KitWithCheckbox extends StatelessWidget {
         // kit value
         Text(
           '${kit.value}',
-          style: TextStylesManager.textStyle26.copyWith(
+          style: TextStylesManager.textStyle24.copyWith(
             color: color,
+            fontWeight: FontWeight.w500,
           ),
         ),
       ],

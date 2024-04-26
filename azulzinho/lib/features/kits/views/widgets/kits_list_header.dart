@@ -1,5 +1,4 @@
 import 'package:azulzinho/app/resources/styles_manager.dart';
-import 'package:azulzinho/app/resources/values_manager.dart';
 import 'package:azulzinho/app/widgets/collapse_button.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -20,24 +19,27 @@ class KitsListHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
+        // title
         Text(
           title,
-          style: TextStylesManager.textStyle28,
-        ),
-        const Gap(15),
-        const Spacer(),
-        Text(
-          counter,
-          style: TextStylesManager.textStyle24.copyWith(
+          style: TextStylesManager.textStyle26.copyWith(
             fontWeight: FontWeight.w600,
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(
-            left: AppPadding.p20,
+
+        const Spacer(),
+
+        // counter
+        Text(
+          counter,
+          style: TextStylesManager.textStyle26.copyWith(
+            fontWeight: FontWeight.w600,
           ),
-          child: collapseButton,
         ),
+
+        const Gap(20),
+
+        collapseButton,
       ],
     );
   }

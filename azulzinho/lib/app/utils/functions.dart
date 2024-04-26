@@ -67,6 +67,7 @@ void showCustomDialog({
           ),
         ),
         actions: [
+          // ok button
           TextButton(
             onPressed: () {
               onOk();
@@ -81,6 +82,8 @@ void showCustomDialog({
               ),
             ),
           ),
+
+          // cancel button
           TextButton(
             onPressed: () {
               Navigator.pop(context);
@@ -112,7 +115,7 @@ AppBar customAppBar({
       title,
       style: TextStylesManager.textStyle24.copyWith(
         color: ColorManager.white,
-        fontWeight: FontWeight.bold,
+        fontWeight: FontWeight.w600,
       ),
       softWrap: true,
       maxLines: 3,

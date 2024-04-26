@@ -1,4 +1,5 @@
 import 'package:azulzinho/app/resources/color_manager.dart';
+import 'package:azulzinho/app/resources/constants_manager.dart';
 import 'package:azulzinho/app/resources/strings_manager.dart';
 import 'package:azulzinho/app/resources/styles_manager.dart';
 import 'package:azulzinho/app/resources/values_manager.dart';
@@ -23,14 +24,11 @@ class AdminWidget extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: ColorManager.primary,
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(
-          color: ColorManager.black,
-          width: 1.3,
+        borderRadius: BorderRadius.circular(
+          ConstantsManager.borderRadius,
         ),
       ),
-      padding: const EdgeInsets.all(AppPadding.p20),
-      margin: const EdgeInsets.symmetric(horizontal: AppMargin.m4),
+      padding: const EdgeInsets.all(AppPadding.p14),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -41,18 +39,18 @@ class AdminWidget extends StatelessWidget {
                 // admin text
                 Text(
                   PersonsStrings.admin,
-                  style: TextStylesManager.textStyle28.copyWith(
+                  style: TextStylesManager.textStyle26.copyWith(
                     color: ColorManager.white,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
 
                 // admin percentage
                 Text(
                   '${locator<PersonsCubit>().adminPercentage}%',
-                  style: TextStyle(
+                  style: TextStylesManager.textStyle26.copyWith(
                     color: ColorManager.white,
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
               ],
@@ -67,6 +65,7 @@ class AdminWidget extends StatelessWidget {
               isDeleteVisible: false,
               editButtonStyle: ButtonStyle(
                 iconColor: MaterialStateProperty.all(ColorManager.white),
+                iconSize: MaterialStateProperty.all(28),
               ),
               editOnPressed: () {
                 navigateTo(

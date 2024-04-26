@@ -37,7 +37,7 @@ class BasicInfo extends StatelessWidget {
             alignment: Alignment.centerLeft,
             child: Text(
               '(${kitsCubit.checkedKits})',
-              style: TextStylesManager.textStyle18,
+              style: TextStylesManager.textStyle16,
             ),
           ),
 

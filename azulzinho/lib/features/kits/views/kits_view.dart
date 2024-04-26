@@ -1,9 +1,8 @@
-import 'package:azulzinho/app/resources/color_manager.dart';
 import 'package:azulzinho/app/resources/constants_manager.dart';
 import 'package:azulzinho/app/resources/strings_manager.dart';
-import 'package:azulzinho/app/resources/styles_manager.dart';
 import 'package:azulzinho/app/resources/values_manager.dart';
 import 'package:azulzinho/app/utils/functions.dart';
+import 'package:azulzinho/app/widgets/add_item_widget.dart';
 import 'package:azulzinho/app/widgets/custom_error_widget.dart';
 import 'package:azulzinho/app/widgets/loading_widget.dart';
 import 'package:azulzinho/features/app_layout/app_layout_cubit/app_states.dart';
@@ -13,7 +12,6 @@ import 'package:azulzinho/features/kits/views/add_kit_view.dart';
 import 'package:azulzinho/features/kits/views/widgets/kits_lists_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 
 class KitsView extends StatelessWidget {
@@ -83,45 +81,14 @@ class KitsView extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // add kit inkwell
-            Container(
-              decoration: BoxDecoration(
-                color: ColorManager.primary,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              padding: const EdgeInsets.symmetric(
-                horizontal: AppPadding.p14,
-              ),
-              height: MediaQuery.sizeOf(context).height * 0.1,
-              child: InkWell(
-                highlightColor: ColorManager.transparent,
-                onTap: () {
-                  navigateTo(
-                    context: context,
-                    dest: AddKitView(sourceContext: context),
-                  );
-                },
-                child: Row(
-                  children: [
-                    Text(
-                      KitsStrings.addKit,
-                      style: TextStylesManager.textStyle28.copyWith(
-                        color: ColorManager.white,
-                      ),
-                    ),
-
-                    const Spacer(),
-
-                    // arrow
-                    FaIcon(
-                      FontAwesomeIcons.angleRight,
-                      color: ColorManager.white,
-                      size: 32,
-                    ),
-
-                    const Gap(10),
-                  ],
-                ),
-              ),
+            AddItemWidget(
+              text: KitsStrings.addKit,
+              onTap: () {
+                navigateTo(
+                  context: context,
+                  dest: AddKitView(sourceContext: context),
+                );
+              },
             ),
 
             const Gap(20),

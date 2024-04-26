@@ -32,20 +32,19 @@ class CollapsibleKitsListWithClearButton extends StatelessWidget {
           const Gap(30),
 
           // kits text
-          const Text(
+          Text(
             CalculatorStrings.kits,
-            style: TextStylesManager.textStyle28,
+            style: TextStylesManager.textStyle28.copyWith(
+              fontWeight: FontWeight.w500,
+            ),
           ),
 
           const Spacer(),
 
           // clera button
-          SizedBox(
-            height: MediaQuery.of(context).size.width * 0.12,
-            child: CustomElevatedButton(
-              onPressed: clearOnPressed,
-              text: CalculatorStrings.clear,
-            ),
+          CustomElevatedButton(
+            onPressed: clearOnPressed,
+            text: CalculatorStrings.clear,
           ),
         ],
       ),

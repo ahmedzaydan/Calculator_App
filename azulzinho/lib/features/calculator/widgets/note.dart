@@ -1,3 +1,4 @@
+import 'package:azulzinho/app/resources/constants_manager.dart';
 import 'package:azulzinho/app/resources/strings_manager.dart';
 import 'package:azulzinho/app/resources/styles_manager.dart';
 import 'package:azulzinho/app/utils/functions.dart';
@@ -20,7 +21,7 @@ class Note extends StatelessWidget {
             alignment: Alignment.centerLeft,
             child: Text(
               CalculatorStrings.note,
-              style: TextStylesManager.textStyle28,
+              style: TextStylesManager.textStyle26,
             ),
           ),
 
@@ -35,13 +36,15 @@ class Note extends StatelessWidget {
                 color: Colors.grey,
                 width: 2,
               ),
-              borderRadius: BorderRadius.circular(15),
+              borderRadius: BorderRadius.circular(
+                ConstantsManager.borderRadius,
+              ),
             ),
             child: Directionality(
               textDirection: getTextDirection(cubit.note),
               child: Text(
                 cubit.note,
-                style: TextStylesManager.textStyle24,
+                style: TextStylesManager.textStyle26,
               ),
             ),
           ),

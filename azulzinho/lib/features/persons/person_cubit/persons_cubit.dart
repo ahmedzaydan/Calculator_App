@@ -62,7 +62,7 @@ class PersonsCubit extends Cubit<AppStates> {
     }
   }
 
-  Future<void> addPerson({
+  Future<bool?> addPerson({
     required String name,
     required double percentage,
   }) async {
@@ -97,6 +97,8 @@ class PersonsCubit extends Cubit<AppStates> {
                   ),
                 ),
               );
+
+              return true;
             } else {
               emit(
                 AddPersonErrorState(
@@ -108,6 +110,8 @@ class PersonsCubit extends Cubit<AppStates> {
                   ),
                 ),
               );
+
+              return false;
             }
           },
         );
@@ -115,6 +119,8 @@ class PersonsCubit extends Cubit<AppStates> {
         emit(
           AddPersonErrorState(errorMessage),
         );
+
+        return false;
       }
     } catch (e) {
       emit(
@@ -127,7 +133,11 @@ class PersonsCubit extends Cubit<AppStates> {
           ),
         ),
       );
+
+      return false;
     }
+
+    return null;
   }
 
   String? _validateNewPersonData(String name, double percentage) {

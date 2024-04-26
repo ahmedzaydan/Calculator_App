@@ -7,7 +7,6 @@ abstract class StringsManager {
   static const String delete = 'Excluir';
   static const String update = 'Atualizar';
   static const String cancel = 'Cancelar';
-  static const String name = 'Nome';
   static const String enterName = 'Digite o nome';
 
   static const String status = 'status';
@@ -15,10 +14,11 @@ abstract class StringsManager {
 
 abstract class PersonsStrings {
   static const String admin = 'Teresa';
+  static const String name = 'Nome da Pessoa';
   static const String personsScreen = 'Pessoas';
   static const String add = 'Adicionar';
   static const String addPerson = 'Adicionar Nova Pessoa';
-  static const String percentage = 'Porcentagem';
+  static const String percentage = 'Porcentagem da Pessoa';
   static const String enterPercentage = 'Digite a porcentagem';
   static const String personExists = 'Nome da pessoa já existe';
   static const String percentageError =
@@ -38,7 +38,7 @@ abstract class KitsStrings {
   static const String enterValue = 'Digite o valor';
   static const String enterNumber = 'Digite o número do kit';
   static const String enterStartDate = "Digite a data";
-  static const String startDate = "data de início";
+  static const String startDate = "Data de início";
   static const String kitExists = 'Kit já existe';
   static const String invalidProfitId =
       'Número do kit deve ser um número inteiro';

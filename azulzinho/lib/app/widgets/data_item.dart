@@ -1,6 +1,6 @@
 import 'package:azulzinho/app/resources/color_manager.dart';
 import 'package:azulzinho/app/resources/constants_manager.dart';
-import 'package:azulzinho/app/resources/font_manager.dart';
+import 'package:azulzinho/app/resources/styles_manager.dart';
 import 'package:azulzinho/app/resources/values_manager.dart';
 import 'package:azulzinho/app/widgets/custom_divider.dart';
 import 'package:azulzinho/app/widgets/data_item_actions_widget.dart';
@@ -77,19 +77,16 @@ class NameAndValue extends StatelessWidget {
     super.key,
     required this.name,
     required this.value,
-    this.textColor,
   });
 
   final String name;
   final String value;
-  final Color? textColor;
 
   @override
   Widget build(BuildContext context) {
-    final TextStyle style = TextStyle(
-      fontSize: FontSize.s24,
-      fontWeight: FontWeight.bold,
-      color: textColor ?? ColorManager.black,
+    final TextStyle style = TextStylesManager.textStyle26.copyWith(
+      fontWeight: FontWeight.w600,
+      color: ColorManager.black,
     );
 
     return Row(
