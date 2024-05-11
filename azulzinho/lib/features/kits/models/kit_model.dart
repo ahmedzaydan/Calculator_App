@@ -1,46 +1,89 @@
-import 'package:azulzinho/app/utils/dependency_injection.dart';
 import 'package:azulzinho/app/utils/functions.dart';
 import 'package:azulzinho/features/kits/kit_cubit/kit_cubit.dart';
 
 class KitModel {
-  String name;
-  double value;
-  bool isChecked;
-  DateTime startDate;
-
   // endDate and status are always non null
   // as they will be assigned in the constructor
   // when calling their methods
+  int? dbId;
+  String name;
+  double value;
+  DateTime startDate;
   DateTime? endDate;
+  bool isChecked;
+  bool isExpired;
   KitStatus? status;
-  String? expiredKey;
 
   KitModel({
+    this.dbId,
     required this.name,
     required this.value,
     this.isChecked = false,
+    this.isExpired = false,
     required this.startDate,
     this.endDate,
   }) {
     getKitEndDate();
     selectStatus();
+
+    if (status == KitStatus.expired) {
+      isExpired = true;
+    }
+  }
+
+  factory KitModel.fromMap(Map<String, Object?> data) {
+    final dbId = data['id'] as int;
+    final name = data['name'] as String;
+    final value = data['value'] as double;
+    final isChecked = data['isChecked'] as int == 1;
+    final isExpired = data['isExpired'] as int == 1;
+    final startDate = DateTime.parse(data['startDate'] as String);
+    final endDate = DateTime.parse(data['endDate'] as String);
+
+    return KitModel(
+      dbId: dbId,
+      name: name,
+      value: value,
+      isChecked: isChecked,
+      isExpired: isExpired,
+      startDate: startDate,
+      endDate: endDate,
+    );
+  }
+
+  Map<String, Object> toMap() {
+    return {
+      'id': dbId!,
+      'name': name,
+      'value': value,
+      'isChecked': isChecked ? 1 : 0,
+      'startDate': startDate.toString(),
+      'endDate': endDate!.toString(),
+    };
   }
 
   // Constructor that takes list<String> as parameter
   // and assigns the values to the class properties
-  KitModel.fromStringList(List<String> data)
-      : name = data[0],
-        value = double.parse(data[1]),
-        isChecked = data[2] == 'true',
-        startDate = DateTime.parse(data[3]),
-        endDate = DateTime.parse(data[4]),
-        expiredKey = data[5];
+  // KitModel.fromStringList(List<String> data)
+  //     : name = data[0],
+  //       value = double.parse(data[1]),
+  //       isChecked = data[2] == 'true',
+  //       startDate = DateTime.parse(data[3]),
+  //       endDate = DateTime.parse(data[4]),
+  //       expiredKey = data[5];
+
+  void setDbId(int id) => dbId = id;
 
   void setValue(double val) => value = val;
 
   void setIsChecked(bool status) => isChecked = status;
 
+  void setIsExpired(bool status) => isExpired = status;
+
   void toggleIsChecked() => isChecked = !isChecked;
+
+  /// getters
+  int get getDbId => dbId!;
 
   String get format {
     String spaces = '  ';
@@ -48,16 +91,16 @@ class KitModel {
   }
 
   // returns a list of strings represent the class properties
-  List<String> toStringList() {
-    return [
-      name,
-      value.toString(),
-      isChecked.toString(),
-      startDate.toString(),
-      endDate.toString(),
-      expiredKey ?? '',
-    ];
-  }
+  // List<String> toStringList() {
+  //   return [
+  //     name,
+  //     value.toString(),
+  //     isChecked.toString(),
+  //     startDate.toString(),
+  //     endDate.toString(),
+  //     expiredKey ?? '',
+  //   ];
+  // }
 
   // helper methods in deterimining the kit status
 
@@ -257,10 +300,10 @@ class KitModel {
   }
 
   void fillExpiredKey(int counter) {
-    if (status == KitStatus.expired) {
-      expiredKey = '${locator<KitsCubit>().expiredKitKeyPrefix}$counter';
-    } else {
-      expiredKey = '';
-    }
+    // if (status == KitStatus.expired) {
+    //   expiredKey = '${locator<KitsCubit>().expiredKitKeyPrefix}$counter';
+    // } else {
+    //   expiredKey = '';
+    // }
   }
 }

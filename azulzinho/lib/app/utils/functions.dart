@@ -181,6 +181,7 @@ String getStateMessage({
       switch (state) {
         case AppState.loading:
           return KitsStrings.loadingKits;
+          
         case AppState.success:
           switch (action!) {
             case ItemAction.add:

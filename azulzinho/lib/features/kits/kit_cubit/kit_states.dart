@@ -1,57 +1,78 @@
+import 'package:azulzinho/app/resources/strings_manager.dart';
 import 'package:azulzinho/features/app_layout/app_layout_cubit/app_states.dart';
 
 class KitsInitialState extends AppStates {}
 
-// AddKit states
-class AddKitLoadingState extends AppStates {}
-
-class AddKitSuccessState extends AppStates {
-  final String message;
-
-  AddKitSuccessState(this.message);
+/// Create kit states
+class CreateKitLoadingState extends AppStates {
+  final String message = KitsStrings.loadingKits;
 }
 
-class AddKitErrorState extends AppStates {
-  final String message;
+class CreateKitSuccessState extends AppStates {
+  final String name;
 
-  AddKitErrorState(this.message);
+  CreateKitSuccessState(this.name);
+
+  String get message {
+    return '$name adicionado com sucesso';
+  }
 }
 
-// LoadKitsData states
-class LoadKitsDataLoadingState extends AppStates {
-  final String message;
+class CreateKitErrorState extends AppStates {
+  final String name;
+  final String? error;
 
-  LoadKitsDataLoadingState(this.message);
+  CreateKitErrorState(this.name, {this.error});
+
+  String get message {
+    return error ?? 'Falha ao adicionar $name';
+  }
 }
 
-class LoadKitsDataSuccessState extends AppStates {}
-
-class LoadingKitsDataErrorState extends AppStates {
-  final String message;
-
-  LoadingKitsDataErrorState(this.message);
+/// Fetch kits data states
+class FetchKitsDataLoadingState extends AppStates {
+  String get message {
+    return KitsStrings.loadingKits;
+  }
 }
 
-// UpdateKitsData states
+class FetchKitsSuccessState extends AppStates {}
+
+class FetchKitsErrorState extends AppStates {
+  String get message {
+    return 'Falha ao carregar os dados dos kits';
+  }
+}
+
+/// Update Kit states
 class UpdateKitSuccessState extends AppStates {
-  final String message;
+  final String name;
 
-  UpdateKitSuccessState(this.message);
+  String get message {
+    return 'Valor $name atualizado com sucesso';
+  }
+
+  UpdateKitSuccessState(this.name);
 }
 
 class UpdateKitErrorState extends AppStates {
-  final String message;
+  final String? error;
+  final String name;
 
-  UpdateKitErrorState(this.message);
+  String get message {
+    return error ?? 'Falha ao atualizar o valor de $name';
+  }
+
+  UpdateKitErrorState(this.name, {this.error});
 }
 
-// Change Kit status states
-class KitCheckedStatusChangedSuccessState extends AppStates {}
+/// Change Kit status states
+class ToggleKitCheckedStatusSuccessState extends AppStates {}
 
-class KitCheckedStatusChangedErrorState extends AppStates {
+class ToggleKitCheckedStatusErrorState extends AppStates {
   final String message;
 
-  KitCheckedStatusChangedErrorState(this.message);
+  ToggleKitCheckedStatusErrorState(this.message);
 }
 
 // Clear Kit items states
@@ -63,20 +84,29 @@ class ClearKitItemsErrorState extends AppStates {
   ClearKitItemsErrorState(this.message);
 }
 
-class KitsSortedState extends AppStates {}
-
-// DeleteKit states
+/// Delete Kit states
 class DeleteKitSuccessState extends AppStates {
-  final String message;
+  final String name;
 
-  DeleteKitSuccessState(this.message);
+  String get message {
+    return '$name excluído com sucesso';
+  }
+
+  DeleteKitSuccessState(this.name);
 }
 
 class DeleteKitErrorState extends AppStates {
-  final String message;
+  final String name;
 
-  DeleteKitErrorState(this.message);
+  String get message {
+    return 'Falha ao excluir $name';
+  }
+
+  DeleteKitErrorState(this.name);
 }
 
 // toggle kit lists visibility
 class ToggleKitListVisibilityState extends AppStates {}
+
+// Kits sorted states
+class KitsSortedState extends AppStates {}

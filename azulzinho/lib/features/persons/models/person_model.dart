@@ -1,6 +1,7 @@
 import 'package:azulzinho/app/utils/functions.dart';
 
 class PersonModel {
+  // int dbId = 0; TODO: Implementar
   String name;
   double percentage;
   double shareValue;

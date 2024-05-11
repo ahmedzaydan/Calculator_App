@@ -1,5 +1,5 @@
 import 'package:azulzinho/app/resources/strings_manager.dart';
-import 'package:azulzinho/app/utils/cache_controller.dart';
+import 'package:azulzinho/app/utils/sqflite_service.dart';
 import 'package:azulzinho/features/app_layout/app_layout_cubit/app_states.dart';
 import 'package:azulzinho/features/calculator/calculator_cubit/calculator_cubit.dart';
 import 'package:azulzinho/features/calculator/views/calculator_view.dart';
@@ -23,7 +23,6 @@ class AppCubit extends Cubit<AppStates> {
   final PersonsCubit personsCubit;
   final KitsCubit kitsCubit;
 
-  List<String> kitsKeys = [];
   List<String> personKeys = [];
 
   Future<void> init() async {
@@ -32,7 +31,7 @@ class AppCubit extends Cubit<AppStates> {
 
       getKeys();
 
-      await kitsCubit.loadData(kitsKeys);
+      await kitsCubit.loadData();
       await personsCubit.loadData(personKeys);
     } catch (e) {
       emit(LoadingDataErrorState(StringsManager.dataLoadingError));
@@ -41,15 +40,11 @@ class AppCubit extends Cubit<AppStates> {
 
   void getKeys() {
     List<String> keys = Prefs.getAllKeys();
-    kitsKeys.clear();
     personKeys.clear();
 
     for (var key in keys) {
       if (key == personsCubit.amdinKey) {
         continue;
-      } else if (key.startsWith(kitsCubit.kitKeyPrefix) ||
-          key.startsWith(kitsCubit.expiredKitKeyPrefix)) {
-        kitsKeys.add(key);
       } else {
         personKeys.add(key);
       }

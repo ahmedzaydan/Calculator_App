@@ -1,8 +1,6 @@
-import 'package:azulzinho/app/resources/constants_manager.dart';
 import 'package:azulzinho/app/resources/strings_manager.dart';
-import 'package:azulzinho/app/utils/cache_controller.dart';
-import 'package:azulzinho/app/utils/extensions.dart';
 import 'package:azulzinho/app/utils/functions.dart';
+import 'package:azulzinho/app/utils/sqflite_service.dart';
 import 'package:azulzinho/features/app_layout/app_layout_cubit/app_states.dart';
 import 'package:azulzinho/features/kits/kit_cubit/kit_states.dart';
 import 'package:azulzinho/features/kits/models/kit_model.dart';
@@ -20,7 +18,13 @@ class KitsCubit extends Cubit<AppStates> {
   String checkedKits = '';
   DateTime selectedDate = DateTime.now();
 
-  List<bool> collapsedLists = [true, true, true, true, true];
+  List<bool> collapsedLists = [
+    true,
+    true,
+    true,
+    true,
+    true,
+  ];
 
   List<String> listsTitles = [
     KitsStrings.normal,
@@ -37,189 +41,203 @@ class KitsCubit extends Cubit<AppStates> {
   List<KitModel> month12Kits = [];
   List<KitModel> normalKits = [];
 
-  Future<void> loadData(List<String> kitKeys) async {
+  /// Methods deals with storage
+  Future<void> loadData() async {
     try {
-      kprint('Keys: $kitKeys');
-      emit(
-        LoadKitsDataLoadingState(
-          getStateMessage(
-            state: AppState.loading,
-            itemType: ItemType.kit,
-          ),
-        ),
+      emit(FetchKitsDataLoadingState());
+
+      // get all records from database
+      var records = await SqfliteService.getRecords(
+        KitsStrings.tableName,
       );
 
+      // clear the lists
       kits.clear();
       clearLists();
 
-      for (String key in kitKeys) {
-        if (key == expiredKitsCounterKey) continue;
-        loadKit(key);
+      kprint('Records: $records');
+
+      // extract the data from the records
+      for (var kitRecord in records) {
+        // create a new KitModel object
+        KitModel kitModel = KitModel.fromMap(kitRecord);
+
+        kitModel.selectStatus();
+
+        addKitToList(kitModel, sort: false);
       }
 
-      emit(LoadKitsDataSuccessState());
+      emit(FetchKitsSuccessState());
+
       sortKits();
-    } catch (e) {
-      kprint(e.toString());
-      emit(
-        LoadingKitsDataErrorState(
-          getStateMessage(
-            state: AppState.error,
-            itemType: ItemType.kit,
-            action: ItemAction.load,
-          ),
-        ),
-      );
+    } catch (error) {
+      kprint('From Load Kits function, error:\n${error.toString()}');
+      emit(FetchKitsErrorState());
     }
   }
 
-  void loadKit(String kitKey) {
-    List<String>? kitData = Prefs.getStringList(kitKey);
-
-    if (kitData!.isNotEmpty) {
-      KitModel kit = KitModel.fromStringList(kitData);
-      kit.selectStatus();
-
-      if (kit.status == KitStatus.expired) {
-        _handleExpiredKit(kit);
-      }
-      addKitToList(kit, sort: false);
-    }
-  }
-
-  Future<void> _handleExpiredKit(KitModel kit) async {
-    // delete kit from shared pref
-    // to allow add new kits with the same name
-    if (Prefs.checkKey(kit.name) == true) {
-      kprint('kit ${kit.name} is exist in shared pref');
-      Prefs.remove(kit.name).then(
-        (result) {
-          // if kit deleted successfully
-          if (result) {
-            saveExpiredKitToSharedPref(kit);
-          }
-
-          // if kit not deleted, probably because kit is not exist
-          else {
-            kprint('--- Handling expired kit error: kit not deleted ---');
-          }
-        },
-      ).catchError(
-        (e) {
-          kprint('--- Handling expired kit error: $e ---');
-        },
-      );
-    }
-  }
-
-  Future<void> saveExpiredKitToSharedPref(KitModel kit) async {
-    // get expired kits counter
-    int counter = Prefs.getInt(expiredKitsCounterKey).orZero;
-
-    // increment counter
-    counter++;
-
-    kit.fillExpiredKey(counter);
-
-    kprint('Expired key: ${kit.expiredKey}');
-    Prefs.save(
-      kit.expiredKey!,
-      kit.toStringList(),
-    ).then((_) async {
-      // update counter value in shared pref
-      await Prefs.save(expiredKitsCounterKey, counter);
-    });
-  }
-
-  Future<bool?> addKit({
+  Future<bool> createKit({
     required String name,
     required double value,
   }) async {
-    emit(AddKitLoadingState());
+    try {
+      emit(CreateKitLoadingState());
 
-    String storingKey = _getStoringKey(name);
-
-    // ensure that the key is not already stored
-    if (Prefs.checkKey(storingKey) == false) {
-      // create kit object
-      KitModel kit = KitModel(
-        name: storingKey,
-        value: value,
-        startDate: selectedDate,
+      // check if the kit name is not already exist
+      var rows = await SqfliteService.getMatchedRecords(
+        tableName: KitsStrings.tableName,
+        condition: "name = $name",
       );
 
-      kprint('KitEndDate: ${kit.endDate}');
-
-      // if kit is expired
-      if (kit.status == KitStatus.expired) {
-        saveExpiredKitToSharedPref(kit);
-        addKitToList(kit);
+      // if kit name already exists
+      if (rows.isNotEmpty) {
+        emit(CreateKitErrorState(KitsStrings.kitExists));
+        return false;
       }
 
-      // if kit is not expired
+      // if kit name is not exists
       else {
-        // add kit to shared preferences
-        Prefs.save(kit.name, kit.toStringList()).then((saveResult) {
-          if (saveResult) {
-            addKitToList(kit);
-
-            emit(
-              AddKitSuccessState(
-                getStateMessage(
-                  state: AppState.success,
-                  itemType: ItemType.kit,
-                  action: ItemAction.add,
-                  label: kit.name,
-                ),
-              ),
-            );
-
-            return true;
-          }
-
-          // if kit not saved successfully
-          else {
-            emit(
-              AddKitErrorState(
-                getStateMessage(
-                  state: AppState.error,
-                  itemType: ItemType.kit,
-                  action: ItemAction.add,
-                  label: name,
-                ),
-              ),
-            );
-
-            return false;
-          }
-        }).catchError(
-          (e) {
-            emit(
-              AddKitErrorState(
-                getStateMessage(
-                  state: AppState.error,
-                  itemType: ItemType.kit,
-                  action: ItemAction.add,
-                  label: name,
-                ),
-              ),
-            );
-
-            return false;
-          },
+        // create kit object
+        KitModel kit = KitModel(
+          name: name,
+          value: value,
+          startDate: getFormattedDate(date: selectedDate),
         );
-      }
-    }
 
-    // if key already exists
-    else {
-      emit(AddKitErrorState(KitsStrings.kitExists));
+        kprint('KitEndDate: ${kit.endDate}');
+
+        int kitId = await SqfliteService.insertRow(
+          '''INSERT INTO ${KitsStrings.tableName}
+          (name, value, isChecked, isExpired, startDate, endDate)
+          VALUES (
+            '${kit.name}',
+            '${kit.value}',
+            '${kit.isChecked ? 1 : 0}',
+            '${kit.isExpired ? 1 : 0}',
+            '${kit.startDate}',
+            '${kit.endDate}'
+            )''',
+        );
+
+        // if kit is not inserted successfully
+        if (kitId == -1) {
+          emit(CreateKitErrorState(name)); // TODO: check this
+
+          return false;
+        }
+
+        // if kit is inserted successfully
+        else {
+          kit.setDbId(kitId);
+          addKitToList(kit);
+          emit(CreateKitSuccessState(name));
+          return true;
+        }
+      }
+    } catch (e) {
+      emit(CreateKitErrorState(name)); // TODO: check this
+
       return false;
     }
-
-    return null;
   }
 
+  Future<bool> updateKit({
+    required KitModel kitModel,
+    required double value,
+  }) async {
+    bool isUpdated = false;
+    try {
+      kitModel.setValue(value);
+
+      isUpdated = await SqfliteService.updateRecord(
+        tableName: KitsStrings.tableName,
+        data: '''value = ${kitModel.value}''',
+        id: kitModel.getDbId,
+      );
+
+      if (isUpdated) {
+        emit(UpdateKitSuccessState(kitModel.name));
+        updateKitInList(kitModel);
+        return isUpdated;
+      } else {
+        emit(UpdateKitErrorState(kitModel.name));
+        return isUpdated;
+      }
+    } catch (error) {
+      emit(UpdateKitErrorState(kitModel.name));
+      return isUpdated;
+    }
+  }
+
+  Future<void> toggleKitChecked(KitModel kitModel) async {
+    try {
+      kitModel.toggleIsChecked();
+
+      bool isUpdated = await SqfliteService.updateRecord(
+        tableName: KitsStrings.tableName,
+        data: '''isChecked = ${kitModel.isChecked ? 1 : 0}''',
+        id: kitModel.getDbId,
+      );
+
+      if (isUpdated) {
+        updateKitInList(kitModel);
+        emit(ToggleKitCheckedStatusSuccessState());
+      } else {
+        emit(ToggleKitCheckedStatusErrorState(
+          StringsManager.defaultError,
+        ));
+      }
+    } catch (e) {
+      kprint('Error in toggleKitChecked: $e');
+      emit(ToggleKitCheckedStatusErrorState(
+        StringsManager.defaultError,
+      ));
+    }
+  }
+
+  Future<void> clearCheckedKits() async {
+    bool isCleared = true;
+
+    for (KitModel kit in kits) {
+      try {
+        kit.setIsChecked(false);
+
+        isCleared = await SqfliteService.updateRecord(
+          tableName: KitsStrings.tableName,
+          data: '''isChecked = 0''',
+          id: kit.getDbId,
+        );
+      } catch (error) {
+        kprint('Error in clearCheckedKits with item ${kit.name}: $error');
+      }
+    }
+
+    if(isCleared) {
+      emit(ClearKitItemsSuccessState());
+    } else {
+      emit(ClearKitItemsErrorState(StringsManager.defaultError));
+    }
+  }
+
+  Future<void> deleteKit(KitModel kit) async {
+    try {
+      bool isDeleted = await SqfliteService.deleteRecord(
+        tableName: KitsStrings.tableName,
+        id: kit.getDbId,
+      );
+
+      if (isDeleted) {
+        emit(DeleteKitSuccessState(kit.name));
+        deleteKitFromList(kit);
+      } else {
+        emit(DeleteKitErrorState(kit.name));
+      }
+    } catch (error) {
+      emit(DeleteKitErrorState(kit.name));
+    }
+  }
+
+  /// Helper methods
   void addKitToList(KitModel kitModel, {bool sort = true}) {
     switch (kitModel.status!) {
       case KitStatus.expired:
@@ -242,65 +260,10 @@ class KitsCubit extends Cubit<AppStates> {
     if (kitModel.status != KitStatus.expired) {
       kits.add(kitModel);
     }
+
     if (sort) {
       sortKits();
     }
-  }
-
-  Future<bool?> updateKit({
-    required KitModel kitModel,
-    required double value,
-  }) async {
-    kitModel.setValue(value);
-
-    Prefs.save(
-      kitModel.name,
-      kitModel.toStringList(),
-    ).then((updateResult) {
-      if (updateResult) {
-        emit(
-          UpdateKitSuccessState(
-            getStateMessage(
-              state: AppState.success,
-              itemType: ItemType.kit,
-              action: ItemAction.update,
-              label: kitModel.name,
-            ),
-          ),
-        );
-
-        updateKitInList(kitModel);
-        return true;
-      } else {
-        emit(
-          UpdateKitErrorState(
-            getStateMessage(
-              state: AppState.error,
-              itemType: ItemType.kit,
-              action: ItemAction.update,
-              label: kitModel.name,
-            ),
-          ),
-        );
-        return false;
-      }
-    }).catchError(
-      (e) {
-        emit(
-          UpdateKitErrorState(
-            getStateMessage(
-              state: AppState.error,
-              itemType: ItemType.kit,
-              action: ItemAction.update,
-              label: kitModel.name,
-            ),
-          ),
-        );
-        return false;
-      },
-    );
-
-    return null;
   }
 
   void updateKitInList(KitModel kit) {
@@ -331,55 +294,11 @@ class KitsCubit extends Cubit<AppStates> {
     }
   }
 
-  Future<void> toggleKitIsChecked(KitModel kitModel) async {
-    try {
-      kitModel.toggleIsChecked();
-
-      Prefs.save(
-        kitModel.name,
-        kitModel.toStringList(),
-      ).then(
-        (result) {
-          if (result) {
-            updateKitInList(kitModel);
-
-            emit(KitCheckedStatusChangedSuccessState());
-          } else {
-            emit(
-              KitCheckedStatusChangedErrorState(StringsManager.defaultError),
-            );
-          }
-        },
-      );
-    } catch (e) {
-      emit(KitCheckedStatusChangedErrorState(e.toString()));
-    }
-  }
-
-  Future<void> clearCheckedKits() async {
-    for (KitModel kit in kits) {
-      kit.setIsChecked(false);
-
-      Prefs.save(
-        kit.name,
-        kit.toStringList(),
-      ).then((saveResult) {
-        if (saveResult) {
-          emit(ClearKitItemsSuccessState());
-        } else {
-          emit(ClearKitItemsErrorState(StringsManager.defaultError));
-        }
-      }).catchError((e) {
-        emit(ClearKitItemsErrorState(e.toString()));
-      });
-    }
-  }
-
   void sortKits() {
     kits.sort(
       (a, b) {
-        int aIndex = int.parse(a.name.substring(kitKeyPrefix.length));
-        int bIndex = int.parse(b.name.substring(kitKeyPrefix.length));
+        int aIndex = int.parse(a.name);
+        int bIndex = int.parse(b.name);
         return aIndex.compareTo(bIndex);
       },
     );
@@ -414,60 +333,6 @@ class KitsCubit extends Cubit<AppStates> {
     kits.remove(kitModel);
   }
 
-  Future<void> deleteKit(KitModel kit) async {
-    String key = kit.name;
-    if (kit.status == KitStatus.expired) {
-      key = kit.expiredKey!;
-    }
-
-    Prefs.remove(key).then(
-      (result) {
-        // if kit deleted successfully
-        if (result) {
-          emit(
-            DeleteKitSuccessState(
-              getStateMessage(
-                state: AppState.success,
-                itemType: ItemType.kit,
-                action: ItemAction.delete,
-                label: kit.name,
-              ),
-            ),
-          );
-
-          deleteKitFromList(kit);
-        }
-
-        // if kit not deleted probably because kit is not exist
-        else {
-          emit(
-            DeleteKitErrorState(
-              getStateMessage(
-                state: AppState.error,
-                itemType: ItemType.kit,
-                action: ItemAction.delete,
-                label: kit.name,
-              ),
-            ),
-          );
-        }
-      },
-    ).catchError(
-      (e) {
-        emit(
-          DeleteKitErrorState(
-            getStateMessage(
-              state: AppState.error,
-              itemType: ItemType.kit,
-              action: ItemAction.delete,
-              label: kit.name,
-            ),
-          ),
-        );
-      },
-    );
-  }
-
   void calculateKits() {
     totalKits = 0;
     checkedKits = '';
@@ -480,7 +345,10 @@ class KitsCubit extends Cubit<AppStates> {
     }
 
     if (checkedKits.isNotEmpty) {
-      checkedKits = checkedKits.substring(0, checkedKits.length - 3);
+      checkedKits = checkedKits.substring(
+        0,
+        checkedKits.length - 3,
+      );
     }
 
     totalKits = formatDobule(totalKits);
@@ -508,8 +376,6 @@ class KitsCubit extends Cubit<AppStates> {
     month12Kits.clear();
     normalKits.clear();
   }
-
-  String _getStoringKey(String id) => '$kitKeyPrefix$id';
 }
 
 enum KitStatus {

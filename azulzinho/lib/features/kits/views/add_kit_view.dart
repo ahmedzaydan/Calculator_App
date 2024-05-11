@@ -62,6 +62,14 @@ class AddKitView extends StatelessWidget {
       validator: (value) {
         if (value!.isEmpty) {
           return KitsStrings.enterNumber;
+        } else if (value.isNotEmpty) {
+          // Check if the kit number already exists
+          // TODO: perform the same logic in person form validator
+          if (locator<KitsCubit>()
+              .kits
+              .any((element) => element.name == value)) {
+            return KitsStrings.kitExists;
+          }
         }
         return null;
       },
@@ -137,14 +145,13 @@ class AddKitView extends StatelessWidget {
         var kitsCubit = locator<KitsCubit>();
         if (_formKey.currentState!.validate()) {
           kitsCubit
-              .addKit(
+              .createKit(
             name: _kitNameController.text,
             value: _kitValueController.text.toDouble(),
           )
               .then(
             (response) {
-              if ((response == null || response == true) &&
-                  sourceContext.mounted) {
+              if (response == true && sourceContext.mounted) {
                 Navigator.pop(sourceContext);
               }
             },

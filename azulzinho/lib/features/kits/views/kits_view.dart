@@ -21,11 +21,11 @@ class KitsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<KitsCubit, AppStates>(
       listener: (_, state) {
-        if (state is AddKitErrorState) {
+        if (state is CreateKitErrorState) {
           showCustomToast(state.message, ToastStates.error);
         }
 
-        if (state is AddKitSuccessState) {
+        if (state is CreateKitSuccessState) {
           showCustomToast(state.message, ToastStates.success);
         }
 
@@ -46,7 +46,7 @@ class KitsView extends StatelessWidget {
           showCustomToast(state.message, ToastStates.success);
         }
 
-        if (state is LoadingKitsDataErrorState) {
+        if (state is FetchKitsErrorState) {
           showCustomToast(state.message, ToastStates.error);
         }
       },
@@ -54,14 +54,14 @@ class KitsView extends StatelessWidget {
         if (state is AppLayoutInitialState ||
             state is LoadingDataState ||
             state is KitsInitialState ||
-            state is LoadKitsDataLoadingState) {
+            state is FetchKitsDataLoadingState) {
           return const LoadingWidget(message: KitsStrings.loadingKits);
         }
 
         // in case of error
         else if (state is LoadingDataErrorState) {
           return CustomErrorWidget(state.message);
-        } else if (state is LoadingKitsDataErrorState) {
+        } else if (state is FetchKitsErrorState) {
           return CustomErrorWidget(state.message);
         }
 

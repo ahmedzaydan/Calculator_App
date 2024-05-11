@@ -95,8 +95,7 @@ class EditItemView extends StatelessWidget {
               value: valueController.text.toDouble(),
             )
                 .then((response) {
-              if ((response == null || response == true) &&
-                  sourceContext.mounted) {
+              if (response == true && sourceContext.mounted) {
                 Navigator.pop(sourceContext);
               }
             });

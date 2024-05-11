@@ -13,6 +13,7 @@ abstract class StringsManager {
 }
 
 abstract class PersonsStrings {
+  static const tableName = 'Persons';
   static const String admin = 'Teresa';
   static const String name = 'Nome da Pessoa';
   static const String personsScreen = 'Pessoas';
@@ -31,6 +32,7 @@ abstract class PersonsStrings {
 }
 
 abstract class KitsStrings {
+  static const tableName = 'Kits';
   static const String kitsScreen = 'Kits';
   static const String editKitList = 'Editar Lista de Kits';
   static const String kitNumber = 'Número do Kit';
@@ -47,13 +49,13 @@ abstract class KitsStrings {
   static const String month12 = '1° Reajuste';
   static const String month24 = '2° Reajuste';
   static const String month30 = 'Renovar';
-  static const String expired = 'Expirado';
+  static const String expired = 'Vencido';
   static const String normal = 'Normal';
   static const String deleteConfirmation =
       'Você tem certeza de que deseja excluir este kit?';
   static const String add = 'Adicionar';
   static const String history = 'História';
-  static const String historyTitle = 'Histórico de Kits Expirados';
+  static const String historyTitle = 'Histórico das Kits Vencidos';
 }
 
 abstract class CalculatorStrings {
