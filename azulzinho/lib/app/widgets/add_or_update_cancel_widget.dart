@@ -2,6 +2,7 @@ import 'package:azulzinho/app/resources/color_manager.dart';
 import 'package:azulzinho/app/resources/strings_manager.dart';
 import 'package:azulzinho/app/widgets/custom_elevated_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
 class AddUpdateCancelWidget extends StatelessWidget {
@@ -34,7 +35,7 @@ class AddUpdateCancelWidget extends StatelessWidget {
           ),
         ),
 
-        const Gap(20),
+        Gap(7.w),
 
         // cancel button
         Expanded(

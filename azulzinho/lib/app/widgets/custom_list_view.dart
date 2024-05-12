@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
 class CustomListView extends StatelessWidget {
@@ -19,7 +20,10 @@ class CustomListView extends StatelessWidget {
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       itemBuilder: itemBuilder,
-      separatorBuilder: separatorBuilder ?? (context, index) => const Gap(10),
+      separatorBuilder: separatorBuilder ??
+          (context, index) {
+            return Gap(10.h);
+          },
       itemCount: itemCount,
     );
   }

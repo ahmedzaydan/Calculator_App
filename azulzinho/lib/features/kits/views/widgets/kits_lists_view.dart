@@ -27,7 +27,7 @@ class KitsListsView extends StatelessWidget {
         );
       },
       itemCount: 5,
-      separatorBuilder: (_, __) => const Gap(0),
+      separatorBuilder: (_, __) => Gap(0),
     );
   }
 }

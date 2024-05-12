@@ -1,7 +1,9 @@
 import 'package:azulzinho/app/resources/color_manager.dart';
+import 'package:azulzinho/app/resources/constants_manager.dart';
 import 'package:azulzinho/app/resources/styles_manager.dart';
 import 'package:azulzinho/app/resources/values_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class AddItemWidget extends StatelessWidget {
@@ -21,12 +23,12 @@ class AddItemWidget extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: color ?? ColorManager.primary,
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(ConstantsManager.borderRadius),
       ),
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppPadding.p14,
+      padding: EdgeInsets.symmetric(
+        horizontal: AppPadding.p14.w,
       ),
-      height: MediaQuery.sizeOf(context).height * 0.07,
+      height: 0.09.sh,
       child: InkWell(
         highlightColor: ColorManager.transparent,
         onTap: onTap,
@@ -35,7 +37,7 @@ class AddItemWidget extends StatelessWidget {
           children: [
             Text(
               text,
-              style: TextStylesManager.textStyle26.copyWith(
+              style: TextStylesManager.textStyle24.copyWith(
                 color: ColorManager.white,
                 fontWeight: FontWeight.w600,
               ),
@@ -45,7 +47,7 @@ class AddItemWidget extends StatelessWidget {
             FaIcon(
               FontAwesomeIcons.angleRight,
               color: ColorManager.white,
-              size: 32,
+              size: AppSize.s32,
             ),
           ],
         ),

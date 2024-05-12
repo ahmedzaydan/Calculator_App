@@ -1,9 +1,6 @@
-import 'package:azulzinho/app/resources/constants_manager.dart';
 import 'package:azulzinho/app/resources/strings_manager.dart';
-// import 'package:azulzinho/app/resources/strings_manager.dart';
-import 'package:azulzinho/app/utils/sqflite_service.dart';
-import 'package:azulzinho/app/utils/extensions.dart';
 import 'package:azulzinho/app/utils/functions.dart';
+import 'package:azulzinho/app/utils/sqflite_service.dart';
 import 'package:azulzinho/features/app_layout/app_layout_cubit/app_states.dart';
 import 'package:azulzinho/features/persons/models/person_model.dart';
 import 'package:azulzinho/features/persons/person_cubit/persons_states.dart';
@@ -12,64 +9,53 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class PersonsCubit extends Cubit<AppStates> {
   PersonsCubit() : super(PersonInitialState());
 
-  // keys
-  final String personKeysKey = 'personKeys';
-  final String amdinKey = 'adminKey';
-
-  double adminPercentage = 0.0;
   double totalPercentage = 0.0;
-  double adminProfit = 0.0;
+
+  PersonModel admin = PersonModel(
+    name: PersonsStrings.admin,
+    percentage: 30,
+  );
+
   List<PersonModel> personItems = [];
 
-  Future<void> loadData(List<String> personKeys) async {
+  /// Methods deals with storage
+  Future<void> fetchData() async {
     try {
-      emit(
-        LoadPersonsDataLoadingState(
-          getStateMessage(
-            state: AppState.loading,
-            itemType: ItemType.person,
-          ),
-        ),
-      );
+      emit(FetchPersonsLoadingState());
 
-      // load admin percentage
-      adminPercentage = Prefs.getDouble(amdinKey) ?? 30;
+      personItems.clear();
       totalPercentage = 0;
 
-      // load persons data
-      personItems.clear();
+      var records = await SqfliteService.getRecords(
+        PersonsStrings.tableName,
+      );
 
-      for (String key in personKeys) {
-        List<String> personData = Prefs.getStringList(key).orEmpty;
+      for (var record in records) {
+        PersonModel person = PersonModel.fromMap(record);
 
-        if (personData.isNotEmpty) {
-          PersonModel person = PersonModel.fromJson(personData);
+        if (person.name == PersonsStrings.admin) {
+          admin.percentage = person.percentage;
+        } else {
           totalPercentage += person.percentage;
           personItems.add(person);
         }
       }
-      emit(LoadPersonsDataSuccessState());
+
+      emit(FetchPersonsSuccessState());
     } catch (e) {
-      emit(
-        LoadPersonsDataErrorState(
-          getStateMessage(
-            state: AppState.error,
-            itemType: ItemType.person,
-            action: ItemAction.load,
-          ),
-        ),
-      );
+      emit(FetchPersonsErrorState());
     }
   }
 
-  Future<bool?> addPerson({
+  Future<bool> createPerson({
     required String name,
     required double percentage,
   }) async {
     try {
-      emit(AddPersonLoadingState());
+      emit(CreatePersonLoadingState());
 
-      String? errorMessage = _validateNewPersonData(name, percentage);
+      String? errorMessage = await _validateData(name, percentage);
+
       if (errorMessage == null) {
         // create person object
         PersonModel person = PersonModel(
@@ -77,82 +63,164 @@ class PersonsCubit extends Cubit<AppStates> {
           percentage: percentage,
         );
 
-        // add person to shared preferences
-        await Prefs.save(
-          person.name,
-          person.toStringList(),
-        ).then(
-          (result) {
-            // if person is added successfully
-            if (result) {
-              totalPercentage += percentage;
-              personItems.add(person);
-              emit(
-                AddPersonSuccessState(
-                  getStateMessage(
-                    state: AppState.success,
-                    itemType: ItemType.person,
-                    action: ItemAction.add,
-                    label: name,
-                  ),
-                ),
-              );
-
-              return true;
-            } else {
-              emit(
-                AddPersonErrorState(
-                  getStateMessage(
-                    state: AppState.error,
-                    itemType: ItemType.person,
-                    action: ItemAction.add,
-                    label: name,
-                  ),
-                ),
-              );
-
-              return false;
-            }
-          },
+        int id = await SqfliteService.insertRow(
+          '''INSERT INTO ${PersonsStrings.tableName} 
+          (name, percentage)
+          VALUES (
+            '${person.name}',
+            '${person.percentage}')''',
         );
+
+        if (id == -1) {
+          emit(CreatePersonErrorState(person.name));
+          return false;
+        } else {
+          person.setDbId(id);
+          totalPercentage += percentage;
+          personItems.add(person);
+          emit(CreatePersonSuccessState(person.name));
+          return true;
+        }
       } else {
-        emit(
-          AddPersonErrorState(errorMessage),
-        );
-
+        emit(CreatePersonErrorState(errorMessage));
         return false;
       }
     } catch (e) {
-      emit(
-        AddPersonErrorState(
-          getStateMessage(
-            state: AppState.error,
-            itemType: ItemType.person,
-            action: ItemAction.add,
-            label: name,
-          ),
-        ),
-      );
-
+      emit(CreatePersonErrorState(name));
       return false;
     }
+  }
 
+  Future<bool> updatePerson({
+    required int index,
+    required double value,
+  }) async {
+    bool isUpdated = false;
+
+    try {
+      double oldPercentage = personItems[index].percentage;
+
+      String? errorMessage = validatePercentage(
+        oldPercentage: oldPercentage,
+        newPercentage: value,
+      );
+
+      if (errorMessage == null) {
+        personItems[index].setPercentage(value);
+
+        isUpdated = await SqfliteService.updateRecord(
+          tableName: PersonsStrings.tableName,
+          data: '''percentage = ${personItems[index].percentage}''',
+          id: personItems[index].getDbId,
+        );
+
+        if (isUpdated) {
+          totalPercentage += value - oldPercentage;
+          emit(UpdatePersonSuccessState(personItems[index].name));
+          return isUpdated;
+        } else {
+          emit(UpdatePersonErrorState(personItems[index].name));
+          return isUpdated;
+        }
+      } else {
+        emit(UpdatePersonErrorState(errorMessage));
+        return isUpdated;
+      }
+    } catch (e) {
+      emit(UpdatePersonErrorState(personItems[index].name));
+      return isUpdated;
+    }
+  }
+
+  Future<bool> updateAdminPercentage(double value) async {
+    bool isUpdated = false;
+
+    try {
+      if (value < 0 || value > 100) {
+        emit(UpdatePersonErrorState(
+          PersonsStrings.admin,
+          error: PersonsStrings.invalidPercentage,
+        ));
+        return isUpdated;
+      }
+
+      isUpdated = await SqfliteService.updateRecord(
+        tableName: PersonsStrings.tableName,
+        data: '''percentage = $value''',
+        id: 1,
+      );
+
+      if (isUpdated) {
+        totalPercentage += value - admin.percentage;
+        admin.percentage = value;
+        emit(UpdatePersonSuccessState(PersonsStrings.admin));
+        return isUpdated;
+      } else {
+        emit(UpdatePersonErrorState(PersonsStrings.admin));
+        return isUpdated;
+      }
+    } catch (error) {
+      emit(
+        UpdatePersonErrorState(
+          PersonsStrings.admin,
+          error: error.toString(),
+        ),
+      );
+      return isUpdated;
+    }
+  }
+
+  Future<void> deletePerson(int index) async {
+    try {
+      String personName = personItems[index].name;
+
+      bool isDeleted = await SqfliteService.deleteRecord(
+        tableName: PersonsStrings.tableName,
+        id: personItems[index].getDbId,
+      );
+
+      if (isDeleted) {
+        // update total percentage
+        totalPercentage -= personItems[index].percentage;
+        // remove person from the personItems list
+        personItems.removeAt(index);
+        emit(DeletePersonSuccessState(personName));
+      } else {
+        emit(DeletePersonErrorState(personName));
+      }
+    } catch (error) {
+      kprint('Error in deletePerson: $error');
+      emit(DeletePersonErrorState(personItems[index].name));
+    }
+  }
+
+  /// Helper methods
+  Future<String?> _validateData(String name, double percentage) async {
+    try {
+      // check if person name already exists
+      var rows = await SqfliteService.getMatchedRecords(
+        tableName: PersonsStrings.tableName,
+        condition: "name = '$name'",
+      );
+
+      if (rows.isNotEmpty) {
+        return PersonsStrings.personExists;
+      }
+
+      return validatePercentage(
+        oldPercentage: 0,
+        newPercentage: percentage,
+      );
+    } catch (error) {
+      kprint('Error in _validateData: $error');
+    }
     return null;
   }
 
-  String? _validateNewPersonData(String name, double percentage) {
-    // check if person name already exists
-    if (Prefs.checkKey(name)) {
-      return PersonsStrings.personExists;
-    }
-
-    return _validatePercentage(0, percentage);
-  }
-
-  String? _validatePercentage(
-    double oldPercentage,
-    double newPercentage,
-  ) {
+  String? validatePercentage({
+    required double oldPercentage,
+    required double newPercentage,
+  }) {
     // check if perecentage is valid or not
     if (newPercentage < 0 || newPercentage > 100) {
       return PersonsStrings.invalidPercentage;
@@ -165,170 +233,9 @@ class PersonsCubit extends Cubit<AppStates> {
     return null;
   }
 
-  Future<bool?> updatePerson({
-    required int index,
-    required double value,
-  }) async {
-    try {
-      double oldPercentage = personItems[index].percentage;
-      String? errorMessage = _validatePercentage(oldPercentage, value);
-
-      if (errorMessage == null) {
-        personItems[index].setPercentage(value);
-
-        Prefs.save(
-          personItems[index].name,
-          personItems[index].toStringList(),
-        ).then(
-          (response) {
-            if (response) {
-              totalPercentage += value - oldPercentage;
-              emit(
-                UpdatePersonSuccessState(
-                  getStateMessage(
-                    state: AppState.success,
-                    itemType: ItemType.person,
-                    action: ItemAction.update,
-                    label: personItems[index].name,
-                  ),
-                ),
-              );
-              return true;
-            } else {
-              emit(
-                UpdatePersonErrorState(
-                  getStateMessage(
-                    state: AppState.error,
-                    itemType: ItemType.person,
-                    action: ItemAction.update,
-                    label: personItems[index].name,
-                  ),
-                ),
-              );
-              return false;
-            }
-          },
-        );
-      } else {
-        emit(
-          UpdatePersonErrorState(errorMessage),
-        );
-        return false;
-      }
-    } catch (e) {
-      emit(
-        UpdatePersonErrorState(
-          getStateMessage(
-            state: AppState.error,
-            itemType: ItemType.person,
-            action: ItemAction.update,
-            label: personItems[index].name,
-          ),
-        ),
-      );
-      return false;
-    }
-    return null;
-  }
-
-  Future<bool?> updateAdminPercentage(double value) async {
-    try {
-      double oldAdminPercentage = adminPercentage;
-      String? errorMessage = _validatePercentage(oldAdminPercentage, value);
-
-      if (errorMessage == null) {
-        Prefs.save(amdinKey, value).then(
-          (response) {
-            if (response) {
-              adminPercentage = value;
-              totalPercentage += value - oldAdminPercentage;
-
-              emit(
-                UpdateAdminSuccessState(
-                  getStateMessage(
-                    state: AppState.success,
-                    itemType: ItemType.person,
-                    action: ItemAction.update,
-                    label: PersonsStrings.admin,
-                  ),
-                ),
-              );
-              return true;
-            } else {
-              emit(
-                UpdateAdminPercentageErrorState(
-                  getStateMessage(
-                    state: AppState.error,
-                    itemType: ItemType.person,
-                    action: ItemAction.update,
-                    label: PersonsStrings.admin,
-                  ),
-                ),
-              );
-              return false;
-            }
-          },
-        );
-      } else {
-        emit(
-          UpdateAdminPercentageErrorState(errorMessage),
-        );
-        return false;
-      }
-    } catch (error) {
-      emit(
-        UpdateAdminPercentageErrorState(
-          getStateMessage(
-            state: AppState.error,
-            itemType: ItemType.person,
-            action: ItemAction.update,
-            label: PersonsStrings.admin,
-          ),
-        ),
-      );
-      return false;
-    }
-    return null;
-  }
-
   void calculatePersonsShareValues(double totalNetProfit) {
     for (var person in personItems) {
       person.calculateShareValue(totalNetProfit);
     }
-  }
-
-  Future<void> deletePerson(int index) async {
-    String personName = personItems[index].name;
-
-    // remove person from shared preferences
-    Prefs.remove(personName).then((deletionResult) {
-      // update total percentage
-      totalPercentage -= personItems[index].percentage;
-
-      // remove person from the personItems list
-      personItems.removeAt(index);
-
-      emit(
-        DeletePersonSuccessState(
-          getStateMessage(
-            state: AppState.success,
-            itemType: ItemType.person,
-            action: ItemAction.delete,
-            label: personName,
-          ),
-        ),
-      );
-    }).catchError((e) {
-      emit(
-        DeletePersonErrorState(
-          getStateMessage(
-            state: AppState.error,
-            itemType: ItemType.person,
-            action: ItemAction.delete,
-            label: personName,
-          ),
-        ),
-      );
-    });
   }
 }

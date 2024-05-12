@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 
 abstract class ColorManager {
   static Color primary = const Color.fromARGB(255, 67, 156, 215);
-  // static Color primary = const Color(0xff053358);
-  // static Color primary = const Color(0xff053358);
   static Color primaryLight = const Color.fromARGB(255, 120, 181, 221);
   static Color iconColor = primary;
 

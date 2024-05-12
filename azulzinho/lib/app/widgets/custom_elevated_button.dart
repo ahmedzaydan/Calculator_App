@@ -2,6 +2,7 @@ import 'package:azulzinho/app/resources/color_manager.dart';
 import 'package:azulzinho/app/resources/constants_manager.dart';
 import 'package:azulzinho/app/resources/styles_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomElevatedButton extends StatelessWidget {
   const CustomElevatedButton({
@@ -11,18 +12,20 @@ class CustomElevatedButton extends StatelessWidget {
     this.width,
     this.textStyle,
     this.style,
+    this.height,
   });
 
   final void Function()? onPressed;
   final String text;
   final double? width;
+  final double? height;
   final TextStyle? textStyle;
   final ButtonStyle? style;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: MediaQuery.sizeOf(context).width * 0.13,
+      height: height?.h ?? 0.09.sh,
       width: width,
       child: ElevatedButton(
         style: style ??
@@ -36,11 +39,11 @@ class CustomElevatedButton extends StatelessWidget {
         onPressed: onPressed,
         child: Text(
           text,
-          style:textStyle ??  TextStylesManager.textStyle26.copyWith(
-            color: ColorManager.white,
-            fontWeight: FontWeight.w700,
-            
-          ),
+          style: textStyle ??
+              TextStylesManager.textStyle26.copyWith(
+                color: ColorManager.white,
+                fontWeight: FontWeight.w700,
+              ),
           textAlign: TextAlign.center,
         ),
       ),

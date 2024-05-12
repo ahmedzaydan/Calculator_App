@@ -9,6 +9,7 @@ import 'package:azulzinho/features/kits/kit_cubit/kit_cubit.dart';
 import 'package:azulzinho/features/persons/person_cubit/persons_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
 class AddPersonView extends StatelessWidget {
@@ -45,31 +46,30 @@ class AddPersonView extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _personName(),
-            const Gap(20),
+            Gap(20.h),
 
             _personPercentage(),
-            const Gap(20),
+            Gap(20.h),
 
             // add or cancel buttons
-            _actions(context),
+            _actions(),
           ],
         ),
       ),
     );
   }
 
-  Widget _actions(BuildContext context) {
+  Widget _actions() {
     return AddUpdateCancelWidget(
       onPressed: () async {
         if (_formKey.currentState!.validate()) {
           await personsCubit
-              .addPerson(
+              .createPerson(
             name: nameController.text,
             percentage: double.parse(valueController.text),
           )
               .then((response) {
-            if ((response == null || response == true) &&
-                sourceContext.mounted) {
+            if (response == true && sourceContext.mounted) {
               Navigator.pop(sourceContext);
             }
           });
@@ -90,6 +90,11 @@ class AddPersonView extends StatelessWidget {
       validator: (value) {
         if (value!.isEmpty) {
           return PersonsStrings.enterPercentage;
+        } else if (value.isNotEmpty) {
+          // Check if the person percentage is valid
+          if (double.parse(value) < 0 && double.parse(value) > 100) {
+            return PersonsStrings.invalidPercentage;
+          }
         }
         return null;
       },
@@ -106,6 +111,13 @@ class AddPersonView extends StatelessWidget {
       validator: (value) {
         if (value!.isEmpty) {
           return StringsManager.enterName;
+        } else if (value.isNotEmpty) {
+          // Check if the person name already exists
+          if (personsCubit.personItems.any(
+            (element) => element.name == value,
+          )) {
+            return PersonsStrings.personExists;
+          }
         }
         return null;
       },

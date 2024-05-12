@@ -18,7 +18,7 @@ class CustomTextFormField extends StatelessWidget {
     this.hintText,
     this.inputFormatters,
     this.fontWeight = FontWeight.normal,
-    this.fontSize = FontSize.s20,
+    this.fontSize,
     this.readOnly = false,
     this.onTap,
   });
@@ -53,7 +53,7 @@ class CustomTextFormField extends StatelessWidget {
         ),
         labelText: labelText,
         labelStyle: TextStyle(
-          fontSize: fontSize,
+          fontSize: fontSize ?? FontSize.s20,
           color: ColorManager.black,
           fontWeight: fontWeight,
         ),

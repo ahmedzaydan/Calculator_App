@@ -6,6 +6,7 @@ import 'package:azulzinho/app/widgets/add_or_update_cancel_widget.dart';
 import 'package:azulzinho/app/widgets/add_view.dart';
 import 'package:azulzinho/app/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
 import '../../../app/resources/color_manager.dart';
@@ -36,13 +37,13 @@ class AddKitView extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             _kitName(),
-            const Gap(20),
+            Gap(20.h),
 
             _kitValue(),
-            const Gap(20),
+            Gap(20.h),
 
             _timePicker(context),
-            const Gap(20),
+            Gap(20.h),
 
             // add or cancel buttons
             _actions(),
@@ -64,7 +65,6 @@ class AddKitView extends StatelessWidget {
           return KitsStrings.enterNumber;
         } else if (value.isNotEmpty) {
           // Check if the kit number already exists
-          // TODO: perform the same logic in person form validator
           if (locator<KitsCubit>()
               .kits
               .any((element) => element.name == value)) {

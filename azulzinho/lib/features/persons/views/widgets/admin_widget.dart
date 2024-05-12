@@ -9,6 +9,7 @@ import 'package:azulzinho/app/widgets/data_item_actions_widget.dart';
 import 'package:azulzinho/app/widgets/edit_item_view.dart';
 import 'package:azulzinho/features/persons/person_cubit/persons_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
 class AdminWidget extends StatelessWidget {
@@ -28,7 +29,10 @@ class AdminWidget extends StatelessWidget {
           ConstantsManager.borderRadius,
         ),
       ),
-      padding: const EdgeInsets.all(AppPadding.p14),
+      padding: EdgeInsets.symmetric(
+        vertical: AppPadding.p14.h,
+        horizontal: AppPadding.p20.w,
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -47,7 +51,7 @@ class AdminWidget extends StatelessWidget {
 
                 // admin percentage
                 Text(
-                  '${locator<PersonsCubit>().adminPercentage}%',
+                  '${locator<PersonsCubit>().admin.percentage}%',
                   style: TextStylesManager.textStyle26.copyWith(
                     color: ColorManager.white,
                     fontWeight: FontWeight.w600,
@@ -56,23 +60,23 @@ class AdminWidget extends StatelessWidget {
               ],
             ),
           ),
-          const Gap(15),
+          Gap(15.h),
           Padding(
-            padding: const EdgeInsets.only(
-              right: AppPadding.p10,
+            padding: EdgeInsets.only(
+              right: AppPadding.p10.w,
             ),
             child: DataItemActionsWidget(
               isDeleteVisible: false,
               editButtonStyle: ButtonStyle(
                 iconColor: MaterialStateProperty.all(ColorManager.white),
-                iconSize: MaterialStateProperty.all(28),
+                iconSize: MaterialStateProperty.all(AppSize.s28),
               ),
               editOnPressed: () {
                 navigateTo(
                   context: sourceContext,
                   dest: EditItemView(
                     label: PersonsStrings.admin,
-                    value: locator<PersonsCubit>().adminPercentage,
+                    value: locator<PersonsCubit>().admin.percentage,
                     sourceContext: sourceContext,
                   ),
                 );

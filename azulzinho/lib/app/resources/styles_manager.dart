@@ -1,48 +1,49 @@
+import 'package:azulzinho/app/resources/font_manager.dart';
 import 'package:flutter/material.dart';
 
 abstract class TextStylesManager {
-  static const TextStyle textStyle14 = TextStyle(
-    fontSize: 14,
+  static TextStyle textStyle14 = TextStyle(
+    fontSize: FontSize.s12,
     fontWeight: FontWeight.w400,
   );
 
-  static const TextStyle textStyle16 = TextStyle(
-    fontSize: 16,
+  static  TextStyle textStyle16 = TextStyle(
+    fontSize: FontSize.s16,
     fontWeight: FontWeight.w400,
   );
 
-  static const TextStyle textStyle18 = TextStyle(
-    fontSize: 18,
+  static  TextStyle textStyle18 = TextStyle(
+    fontSize: FontSize.s18,
     fontWeight: FontWeight.w400,
   );
 
-  static const TextStyle textStyle20 = TextStyle(
-    fontSize: 20,
+  static  TextStyle textStyle20 = TextStyle(
+    fontSize:FontSize.s20,
     fontWeight: FontWeight.w400,
   );
 
-  static const TextStyle textStyle22 = TextStyle(
-    fontSize: 22,
+  static  TextStyle textStyle22 = TextStyle(
+    fontSize: FontSize.s22,
     fontWeight: FontWeight.w400,
   );
 
-  static const TextStyle textStyle24 = TextStyle(
-    fontSize: 24,
+  static  TextStyle textStyle24 = TextStyle(
+    fontSize: FontSize.s24,
     fontWeight: FontWeight.w400,
   );
 
-  static const TextStyle textStyle26 = TextStyle(
-    fontSize: 26,
+  static  TextStyle textStyle26 = TextStyle(
+    fontSize: FontSize.s26,
     fontWeight: FontWeight.w400,
   );
 
-  static const TextStyle textStyle28 = TextStyle(
-    fontSize: 28,
+  static  TextStyle textStyle28 = TextStyle(
+    fontSize: FontSize.s28,
     fontWeight: FontWeight.w400,
   );
 
-  static const TextStyle textStyle32 = TextStyle(
-    fontSize: 32,
+  static  TextStyle textStyle32 = TextStyle(
+    fontSize: FontSize.s32,
     fontWeight: FontWeight.w400,
   );
 }

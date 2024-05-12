@@ -42,7 +42,7 @@ class KitsCubit extends Cubit<AppStates> {
   List<KitModel> normalKits = [];
 
   /// Methods deals with storage
-  Future<void> loadData() async {
+  Future<void> fetchData() async {
     try {
       emit(FetchKitsDataLoadingState());
 
@@ -59,7 +59,6 @@ class KitsCubit extends Cubit<AppStates> {
 
       // extract the data from the records
       for (var kitRecord in records) {
-        // create a new KitModel object
         KitModel kitModel = KitModel.fromMap(kitRecord);
 
         kitModel.selectStatus();
@@ -121,7 +120,7 @@ class KitsCubit extends Cubit<AppStates> {
 
         // if kit is not inserted successfully
         if (kitId == -1) {
-          emit(CreateKitErrorState(name)); // TODO: check this
+          emit(CreateKitErrorState(name));
 
           return false;
         }
@@ -135,7 +134,7 @@ class KitsCubit extends Cubit<AppStates> {
         }
       }
     } catch (e) {
-      emit(CreateKitErrorState(name)); // TODO: check this
+      emit(CreateKitErrorState(name));
 
       return false;
     }
@@ -212,7 +211,7 @@ class KitsCubit extends Cubit<AppStates> {
       }
     }
 
-    if(isCleared) {
+    if (isCleared) {
       emit(ClearKitItemsSuccessState());
     } else {
       emit(ClearKitItemsErrorState(StringsManager.defaultError));

@@ -7,6 +7,7 @@ import 'package:azulzinho/app/widgets/custom_list_view.dart';
 import 'package:azulzinho/features/persons/models/person_model.dart';
 import 'package:azulzinho/features/persons/person_cubit/persons_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
 class ResultsSection extends StatelessWidget {
@@ -28,14 +29,17 @@ class ResultsSection extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(AppPadding.p8),
+        padding: EdgeInsets.symmetric(
+          vertical: AppPadding.p8.h,
+          horizontal: AppPadding.p8.w,
+        ),
         child: Column(
           children: [
             _adminProfit(),
 
             const CustomDivider(),
 
-            const Gap(30),
+            Gap(30.h),
 
             // person net profit
             CustomListView(
@@ -48,7 +52,7 @@ class ResultsSection extends StatelessWidget {
                       person.name,
                       style: TextStylesManager.textStyle26,
                     ),
-                    const Gap(10),
+                    Gap(10.h),
                     Text(
                       '${person.shareValue}',
                       style: TextStylesManager.textStyle26,
@@ -79,7 +83,7 @@ class ResultsSection extends StatelessWidget {
           ),
         ),
         Text(
-          '${cubit.adminProfit}',
+          '${cubit.admin.shareValue}',
           style: TextStylesManager.textStyle26.copyWith(
             fontWeight: FontWeight.bold,
           ),

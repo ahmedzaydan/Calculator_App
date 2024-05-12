@@ -1,5 +1,6 @@
 import 'package:azulzinho/app/resources/color_manager.dart';
 import 'package:azulzinho/app/resources/constants_manager.dart';
+import 'package:azulzinho/app/resources/font_manager.dart';
 import 'package:flutter/material.dart';
 
 ThemeData getApplicationTheme() {
@@ -17,7 +18,7 @@ ThemeData getApplicationTheme() {
       color: ColorManager.primary,
       titleTextStyle: TextStyle(
         color: ColorManager.white,
-        fontSize: 20,
+        fontSize: FontSize.s20,
         fontWeight: FontWeight.bold,
       ),
       actionsIconTheme: IconThemeData(

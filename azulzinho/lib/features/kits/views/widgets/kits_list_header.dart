@@ -1,6 +1,7 @@
 import 'package:azulzinho/app/resources/styles_manager.dart';
 import 'package:azulzinho/app/widgets/collapse_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
 class KitsListHeader extends StatelessWidget {
@@ -37,7 +38,7 @@ class KitsListHeader extends StatelessWidget {
           ),
         ),
 
-        const Gap(20),
+        Gap(20.h),
 
         collapseButton,
       ],

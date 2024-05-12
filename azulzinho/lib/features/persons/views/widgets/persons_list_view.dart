@@ -8,6 +8,7 @@ import 'package:azulzinho/app/widgets/edit_item_view.dart';
 import 'package:azulzinho/features/persons/models/person_model.dart';
 import 'package:azulzinho/features/persons/person_cubit/persons_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
 class PersonsListView extends StatelessWidget {
@@ -52,7 +53,7 @@ class PersonsListView extends StatelessWidget {
             });
       },
       itemCount: cubit.personItems.length,
-      separatorBuilder: (context, index) => const Gap(20),
+      separatorBuilder: (context, index) => Gap(20.h),
     );
   }
 }

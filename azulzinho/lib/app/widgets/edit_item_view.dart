@@ -11,6 +11,7 @@ import 'package:azulzinho/features/kits/kit_cubit/kit_cubit.dart';
 import 'package:azulzinho/features/kits/models/kit_model.dart';
 import 'package:azulzinho/features/persons/person_cubit/persons_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
 class EditItemView extends StatelessWidget {
@@ -47,9 +48,9 @@ class EditItemView extends StatelessWidget {
             : 'Atualizar porcentagem de $label',
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(
-          vertical: AppPadding.p50,
-          horizontal: AppPadding.p20,
+        padding: EdgeInsets.symmetric(
+          vertical: AppPadding.p50.h,
+          horizontal: AppPadding.p20.w,
         ),
         child: Form(
           key: formKey,
@@ -66,6 +67,13 @@ class EditItemView extends StatelessWidget {
                     return updateKit
                         ? KitsStrings.enterValue
                         : PersonsStrings.enterPercentage;
+                  } else if (value.isNotEmpty) {
+                    if (label == PersonsStrings.admin) {
+                      if (double.parse(value) < 0 ||
+                          double.parse(value) > 100) {
+                        return PersonsStrings.invalidPercentage;
+                      }
+                    }
                   }
                   return null;
                 },
@@ -73,7 +81,7 @@ class EditItemView extends StatelessWidget {
                     getInputFormatters(ConstantsManager.valueRegex),
               ),
 
-              const Gap(30),
+              Gap(30.h),
 
               _actions(),
             ],
@@ -108,8 +116,7 @@ class EditItemView extends StatelessWidget {
               )
                   .then(
                 (response) {
-                  if ((response == null || response == true) &&
-                      sourceContext.mounted) {
+                  if (response == true && sourceContext.mounted) {
                     Navigator.pop(sourceContext);
                   }
                 },
@@ -122,8 +129,7 @@ class EditItemView extends StatelessWidget {
               )
                   .then(
                 (response) {
-                  if ((response == null || response == true) &&
-                      sourceContext.mounted) {
+                  if ((response == true) && sourceContext.mounted) {
                     Navigator.pop(sourceContext);
                   }
                 },

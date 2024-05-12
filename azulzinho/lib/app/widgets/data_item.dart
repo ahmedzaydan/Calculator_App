@@ -5,6 +5,7 @@ import 'package:azulzinho/app/resources/values_manager.dart';
 import 'package:azulzinho/app/widgets/custom_divider.dart';
 import 'package:azulzinho/app/widgets/data_item_actions_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DataItem extends StatelessWidget {
   const DataItem({
@@ -29,7 +30,10 @@ class DataItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(AppPadding.p20),
+      padding: EdgeInsets.symmetric(
+        horizontal: AppPadding.p20.w,
+        vertical: AppPadding.p20.h,
+      ),
       decoration: _decorate(),
       child: Column(
         children: [
@@ -50,11 +54,11 @@ class DataItem extends StatelessWidget {
   }
 
   Padding _divider() {
-    return const Padding(
+    return Padding(
       padding: EdgeInsets.symmetric(
-        vertical: AppPadding.p10,
+        vertical: AppPadding.p10.h,
       ),
-      child: CustomDivider(thickness: 2.1),
+      child: CustomDivider(thickness: 2.1.sp),
     );
   }
 
@@ -62,7 +66,7 @@ class DataItem extends StatelessWidget {
     return BoxDecoration(
       border: Border.all(
         color: ColorManager.black,
-        width: 1.5,
+        width: 1.5.sp,
       ),
       borderRadius: BorderRadius.circular(
         ConstantsManager.borderRadius,

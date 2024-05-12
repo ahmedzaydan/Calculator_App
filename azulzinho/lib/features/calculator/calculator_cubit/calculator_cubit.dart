@@ -58,13 +58,13 @@ class CalculatorCubit extends Cubit<AppStates> {
     totalExpense = calculateString(expenses);
     totalExtra = calculateString(extra);
 
-    personsCubit.adminProfit =
-        kitCubit.totalKits * (personsCubit.adminPercentage / 100);
-    personsCubit.adminProfit = formatDobule(personsCubit.adminProfit);
+    personsCubit.admin.shareValue =
+        kitCubit.totalKits * (personsCubit.admin.percentage / 100);
+    personsCubit.admin.shareValue = formatDobule(personsCubit.admin.shareValue);
 
     netProfit = kitCubit.totalKits -
         totalExpense -
-        personsCubit.adminProfit +
+        personsCubit.admin.shareValue +
         totalExtra;
     netProfit = formatDobule(netProfit);
 

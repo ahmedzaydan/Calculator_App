@@ -14,6 +14,7 @@ import 'package:azulzinho/features/calculator/widgets/collapsible_kits_list_with
 import 'package:azulzinho/features/calculator/widgets/kits_list_with_checkbox.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
 class CalculatorView extends StatelessWidget {
@@ -35,8 +36,8 @@ class CalculatorView extends StatelessWidget {
         }
         return Padding(
           padding: EdgeInsets.symmetric(
-            horizontal: MediaQuery.of(context).size.width * 0.04,
-            vertical: MediaQuery.of(context).size.height * 0.02,
+            horizontal: 0.04.sw,
+            vertical: 0.02.sh,
           ),
           child: SingleChildScrollView(
             child: Column(
@@ -50,11 +51,11 @@ class CalculatorView extends StatelessWidget {
                   },
                 ),
 
-                const Gap(20),
+                Gap(20.h),
 
                 KitsListWithCheckbox(),
 
-                const Gap(25),
+                Gap(25.h),
 
                 // expense section
                 CustomTextFormField(
@@ -65,7 +66,7 @@ class CalculatorView extends StatelessWidget {
                   onChanged: (value) => cubit.expenses = value,
                 ),
 
-                const Gap(25),
+                Gap(25.h),
 
                 // extra section
                 CustomTextFormField(
@@ -76,7 +77,7 @@ class CalculatorView extends StatelessWidget {
                   onChanged: (value) => cubit.extra = value,
                 ),
 
-                const Gap(25),
+                Gap(25.h),
 
                 // note
                 CustomTextFormField(
@@ -86,11 +87,11 @@ class CalculatorView extends StatelessWidget {
                   onChanged: (note) => cubit.note = note,
                 ),
 
-                const Gap(25),
+                Gap(25.h),
 
                 // calculate button
                 SizedBox(
-                  width: double.infinity,
+                  width: 1.sw,
                   child: CustomElevatedButton(
                     onPressed: () {
                       cubit.calculate();

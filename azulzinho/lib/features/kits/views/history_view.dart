@@ -9,6 +9,7 @@ import 'package:azulzinho/features/app_layout/app_layout_cubit/app_states.dart';
 import 'package:azulzinho/features/kits/kit_cubit/kit_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
 class HistoryView extends StatelessWidget {
@@ -22,7 +23,10 @@ class HistoryView extends StatelessWidget {
       builder: (context, state) {
         return SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(AppPadding.p20),
+            padding: EdgeInsets.symmetric(
+              vertical: AppPadding.p20.h,
+              horizontal: AppPadding.p14.w,
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -34,7 +38,7 @@ class HistoryView extends StatelessWidget {
                   ),
                 ),
 
-                const Gap(40),
+                Gap(40.h),
 
                 CustomListView(
                   itemBuilder: (context, index) {
@@ -47,7 +51,7 @@ class HistoryView extends StatelessWidget {
                     );
                   },
                   itemCount: cubit.expiredKits.length,
-                  separatorBuilder: (context, index) => const Gap(20),
+                  separatorBuilder: (context, index) => Gap(20.h),
                 ),
               ],
             ),

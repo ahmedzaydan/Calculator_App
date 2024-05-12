@@ -1,18 +1,14 @@
 import 'package:azulzinho/app/resources/constants_manager.dart';
 import 'package:azulzinho/app/resources/strings_manager.dart';
-import 'package:azulzinho/app/resources/values_manager.dart';
 import 'package:azulzinho/app/utils/functions.dart';
-import 'package:azulzinho/app/widgets/add_item_widget.dart';
 import 'package:azulzinho/app/widgets/custom_error_widget.dart';
 import 'package:azulzinho/app/widgets/loading_widget.dart';
 import 'package:azulzinho/features/app_layout/app_layout_cubit/app_states.dart';
 import 'package:azulzinho/features/kits/kit_cubit/kit_cubit.dart';
 import 'package:azulzinho/features/kits/kit_cubit/kit_states.dart';
-import 'package:azulzinho/features/kits/views/add_kit_view.dart';
-import 'package:azulzinho/features/kits/views/widgets/kits_lists_view.dart';
+import 'package:azulzinho/features/kits/views/widgets/kits_view_body.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gap/gap.dart';
 
 class KitsView extends StatelessWidget {
   const KitsView({super.key});
@@ -65,37 +61,8 @@ class KitsView extends StatelessWidget {
           return CustomErrorWidget(state.message);
         }
 
-        return _buildKitsView(context);
+        return KitsViewBody();
       },
-    );
-  }
-
-  Widget _buildKitsView(BuildContext context) {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppPadding.p14,
-          vertical: AppPadding.p24,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // add kit inkwell
-            AddItemWidget(
-              text: KitsStrings.addKit,
-              onTap: () {
-                navigateTo(
-                  context: context,
-                  dest: AddKitView(sourceContext: context),
-                );
-              },
-            ),
-
-            const Gap(20),
-            KitsListsView(sourceContext: context),
-          ],
-        ),
-      ),
     );
   }
 }

@@ -3,6 +3,7 @@ import 'package:azulzinho/app/resources/styles_manager.dart';
 import 'package:azulzinho/app/utils/functions.dart';
 import 'package:azulzinho/features/kits/models/kit_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
 class KitWithCheckbox extends StatelessWidget {
@@ -18,15 +19,16 @@ class KitWithCheckbox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Color color = kit.isChecked ? ColorManager.lightGrey : ColorManager.black;
+
     return Row(
       children: [
         // checkbox
         Transform.scale(
-          scale: 1.6,
+          scale: 1.6.sp,
           child: Checkbox(
             side: BorderSide(
               color: Theme.of(context).primaryColor,
-              width: 2,
+              width: 2.sp,
             ),
             fillColor: MaterialStateProperty.all(
               kit.isChecked ? ColorManager.primary : ColorManager.transparent,
@@ -46,7 +48,7 @@ class KitWithCheckbox extends StatelessWidget {
           ),
         ),
 
-        const Gap(5),
+        Gap(5.h),
 
         // kit start date
         Text(

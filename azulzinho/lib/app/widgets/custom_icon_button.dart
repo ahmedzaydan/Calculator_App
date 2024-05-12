@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CustomIconButton extends StatelessWidget {
@@ -19,8 +20,8 @@ class CustomIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var newWidth = width ?? MediaQuery.sizeOf(context).width * 0.054;
-    var newHeight = height ?? MediaQuery.sizeOf(context).height * 0.05;
+    var newWidth = width?.w ?? 0.054.sw;
+    var newHeight = height?.h ?? 0.05.sh;
 
     return SizedBox(
       width: newWidth,

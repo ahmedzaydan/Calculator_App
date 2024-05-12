@@ -1,9 +1,11 @@
 import 'package:azulzinho/app/resources/constants_manager.dart';
 import 'package:azulzinho/app/resources/strings_manager.dart';
 import 'package:azulzinho/app/resources/styles_manager.dart';
+import 'package:azulzinho/app/resources/values_manager.dart';
 import 'package:azulzinho/app/utils/functions.dart';
 import 'package:azulzinho/features/calculator/calculator_cubit/calculator_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
 class Note extends StatelessWidget {
@@ -17,7 +19,7 @@ class Note extends StatelessWidget {
       children: [
         if (cubit.note.isNotEmpty) ...[
           // note title
-          const Align(
+          Align(
             alignment: Alignment.centerLeft,
             child: Text(
               CalculatorStrings.note,
@@ -25,16 +27,19 @@ class Note extends StatelessWidget {
             ),
           ),
 
-          const Gap(10),
+          Gap(10.h),
 
           // note body
           Container(
-            padding: const EdgeInsets.all(10),
+            padding: EdgeInsets.symmetric(
+              horizontal: AppPadding.p10.w,
+              vertical: AppPadding.p10.h,
+            ),
             width: double.infinity,
             decoration: BoxDecoration(
               border: Border.all(
                 color: Colors.grey,
-                width: 2,
+                width: 2.sp,
               ),
               borderRadius: BorderRadius.circular(
                 ConstantsManager.borderRadius,

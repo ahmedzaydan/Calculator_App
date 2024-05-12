@@ -5,6 +5,7 @@ import 'package:azulzinho/app/widgets/collapse_button.dart';
 import 'package:azulzinho/app/widgets/custom_elevated_button.dart';
 import 'package:azulzinho/features/calculator/calculator_cubit/calculator_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
 class CollapsibleKitsListWithClearButton extends StatelessWidget {
@@ -16,9 +17,7 @@ class CollapsibleKitsListWithClearButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(
-        left: MediaQuery.of(context).size.width * 0.02,
-      ),
+      padding: EdgeInsets.only(left: 0.02.sw),
       child: Row(
         children: [
           // collapse button
@@ -29,7 +28,7 @@ class CollapsibleKitsListWithClearButton extends StatelessWidget {
             isCollapsed: cubit.isKitsListCollapsed,
           ),
 
-          const Gap(30),
+          Gap(30.h),
 
           // kits text
           Text(
@@ -43,6 +42,7 @@ class CollapsibleKitsListWithClearButton extends StatelessWidget {
 
           // clera button
           CustomElevatedButton(
+            height: 55,
             onPressed: clearOnPressed,
             text: CalculatorStrings.clear,
           ),

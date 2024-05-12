@@ -1,1 +1,0 @@
- D:\\Work\\Projects\\Calculator_App_Project\\Calculator_App\\azulzinho\\.dart_tool\\flutter_build\\114f1c962a948e5024a6269f4900c4f9\\native_assets.yaml: 

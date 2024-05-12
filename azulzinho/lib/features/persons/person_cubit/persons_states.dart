@@ -1,72 +1,92 @@
+import 'package:azulzinho/app/resources/strings_manager.dart';
 import 'package:azulzinho/features/app_layout/app_layout_cubit/app_states.dart';
 
 class PersonInitialState extends AppStates {}
 
-// AddPerson states
-class AddPersonLoadingState extends AppStates {}
+/// Create person states
+class CreatePersonLoadingState extends AppStates {}
 
-class AddPersonSuccessState extends AppStates {
-  final String message;
+class CreatePersonSuccessState extends AppStates {
+  final String name;
 
-  AddPersonSuccessState(this.message);
+  String get message {
+    return '$name adicionado com sucesso';
+  }
+
+  CreatePersonSuccessState(this.name);
 }
 
-class AddPersonErrorState extends AppStates {
-  final String message;
+class CreatePersonErrorState extends AppStates {
+  final String? error;
+  final String name;
 
-  AddPersonErrorState(this.message);
+  String get message {
+    return error ?? 'Falha ao adicionar $name';
+  }
+
+  CreatePersonErrorState(this.name, {this.error});
 }
 
-// LoadPersonsData states
-class LoadPersonsDataLoadingState extends AppStates {
-  final String message;
+/// Fetch persons data states
+class FetchPersonsLoadingState extends AppStates {
+  String get message {
+    return PersonsStrings.loadingPersons;
+  }
 
-  LoadPersonsDataLoadingState(this.message);
+  FetchPersonsLoadingState();
 }
 
-class LoadPersonsDataSuccessState extends AppStates {}
+class FetchPersonsSuccessState extends AppStates {}
 
-class LoadPersonsDataErrorState extends AppStates {
-  final String message;
+class FetchPersonsErrorState extends AppStates {
+  String get message {
+    return 'Falha ao carregar os dados das pessoas';
+  }
 
-  LoadPersonsDataErrorState(this.message);
+  FetchPersonsErrorState();
 }
 
-// Update person states
+/// Update person states
 class UpdatePersonSuccessState extends AppStates {
-  final String message;
+  final String name;
 
-  UpdatePersonSuccessState(this.message);
+  String get message {
+    return 'Porcentagem de $name atualizada com sucesso';
+  }
+
+  UpdatePersonSuccessState(this.name);
 }
 
 class UpdatePersonErrorState extends AppStates {
-  final String message;
+  final String name;
 
-  UpdatePersonErrorState(this.message);
+  final String? error;
+
+  String get message {
+    return error ?? 'Falha ao atualizar a porcentagem de $name';
+  }
+
+  UpdatePersonErrorState(this.name, {this.error});
 }
 
-// DeletePerson states
+/// Delete person states
 class DeletePersonSuccessState extends AppStates {
-  final String message;
+  final String name;
 
-  DeletePersonSuccessState(this.message);
+  String get message {
+    return '$name excluído com sucesso';
+  }
+
+  DeletePersonSuccessState(this.name);
 }
 
 class DeletePersonErrorState extends AppStates {
-  final String message;
+  final String? error;
+  final String name;
 
-  DeletePersonErrorState(this.message);
-}
+  String get message {
+    return error ?? 'Falha ao excluir $name';
+  }
 
-// Admin states
-class UpdateAdminSuccessState extends AppStates {
-  final String message;
-
-  UpdateAdminSuccessState(this.message);
-}
-
-class UpdateAdminPercentageErrorState extends AppStates {
-  final String message;
-
-  UpdateAdminPercentageErrorState(this.message);
+  DeletePersonErrorState(this.name, {this.error});
 }

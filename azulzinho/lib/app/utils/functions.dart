@@ -8,6 +8,7 @@ import 'package:azulzinho/app/resources/styles_manager.dart';
 import 'package:azulzinho/app/widgets/custom_back_arrow.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 /// UI functions
@@ -39,9 +40,9 @@ Color colorToast(ToastStates state) {
 void showCustomToast(String message, ToastStates state) {
   Fluttertoast.showToast(
     msg: message,
-    fontSize: 18,
+    fontSize: FontSize.s18,
     timeInSecForIosWeb: 5,
-    textColor: Colors.white,
+    textColor: ColorManager.white,
     gravity: ToastGravity.BOTTOM,
     toastLength: Toast.LENGTH_LONG,
     backgroundColor: colorToast(state),
@@ -62,7 +63,7 @@ void showCustomDialog({
         actionsAlignment: MainAxisAlignment.spaceBetween,
         content: Text(
           message,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: FontSize.s24,
           ),
         ),
@@ -73,7 +74,7 @@ void showCustomDialog({
               onOk();
               Navigator.pop(context);
             },
-            child: const Text(
+            child: Text(
               StringsManager.delete,
               style: TextStyle(
                 color: Colors.red,
@@ -88,7 +89,7 @@ void showCustomDialog({
             onPressed: () {
               Navigator.pop(context);
             },
-            child: const Text(
+            child: Text(
               StringsManager.cancel,
               style: TextStyle(
                 color: Colors.black,
@@ -109,7 +110,7 @@ AppBar customAppBar({
   List<Widget>? actions,
 }) {
   return AppBar(
-    toolbarHeight: MediaQuery.sizeOf(context).height * 0.09,
+    toolbarHeight: 0.09.sh,
     leading: CustomBackArrow(context),
     title: Text(
       title,
@@ -169,69 +170,3 @@ void klog(dynamic message) {
   log(message);
 }
 
-String getStateMessage({
-  required AppState state,
-  required ItemType itemType,
-  ItemAction? action,
-  String label = '',
-  String? error,
-}) {
-  switch (itemType) {
-    case ItemType.kit:
-      switch (state) {
-        case AppState.loading:
-          return KitsStrings.loadingKits;
-          
-        case AppState.success:
-          switch (action!) {
-            case ItemAction.add:
-              return '$label adicionado com sucesso';
-            case ItemAction.update:
-              return 'Valor $label atualizado com sucesso';
-            case ItemAction.delete:
-              return '$label excluído com sucesso';
-            case ItemAction.load:
-              return 'Dados dos kits carregados com sucesso';
-          }
-        case AppState.error:
-          switch (action!) {
-            case ItemAction.add:
-              return error ?? 'Falha ao adicionar $label';
-            case ItemAction.update:
-              return 'Falha ao atualizar o valor de $label';
-            case ItemAction.delete:
-              return 'Falha ao excluir $label';
-            case ItemAction.load:
-              return 'Falha ao carregar os dados dos kits';
-          }
-      }
-
-    case ItemType.person:
-      switch (state) {
-        case AppState.loading:
-          return PersonsStrings.loadingPersons;
-        case AppState.success:
-          switch (action!) {
-            case ItemAction.add:
-              return '$label adicionado com sucesso';
-            case ItemAction.update:
-              return 'Porcentagem de $label atualizada com sucesso';
-            case ItemAction.delete:
-              return '$label excluído com sucesso';
-            case ItemAction.load:
-              return 'Dados das pessoas carregados com sucesso';
-          }
-        case AppState.error:
-          switch (action!) {
-            case ItemAction.add:
-              return 'Falha ao adicionar $label';
-            case ItemAction.update:
-              return 'Falha ao atualizar a porcentagem de $label';
-            case ItemAction.delete:
-              return 'Falha ao excluir $label';
-            case ItemAction.load:
-              return 'Falha ao carregar os dados das pessoas';
-          }
-      }
-  }
-}

@@ -1,7 +1,9 @@
+import 'package:azulzinho/app/resources/color_manager.dart';
 import 'package:azulzinho/app/resources/strings_manager.dart';
 import 'package:azulzinho/app/resources/styles_manager.dart';
 import 'package:azulzinho/app/resources/values_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class LoadingWidget extends StatelessWidget {
   const LoadingWidget({
@@ -14,14 +16,14 @@ class LoadingWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: AppPadding.p18),
+      padding: EdgeInsets.symmetric(horizontal: AppPadding.p18.w),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const CircularProgressIndicator(
-            color: Colors.blue,
+          CircularProgressIndicator(
+            color: ColorManager.primary,
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: 20.h),
           Text(
             message,
             style: TextStylesManager.textStyle28,

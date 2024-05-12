@@ -11,6 +11,7 @@ import 'package:azulzinho/features/calculator/widgets/note.dart';
 import 'package:azulzinho/features/calculator/widgets/results_section.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:screenshot/screenshot.dart';
@@ -29,20 +30,23 @@ class ReportView extends StatelessWidget {
           controller: screenshotController,
           child: Container(
             color: ColorManager.white,
-            padding: const EdgeInsets.all(20.0),
+            padding: EdgeInsets.symmetric(
+              horizontal: AppPadding.p20.w,
+              vertical: AppPadding.p20.h,
+            ),
             child: SingleChildScrollView(
               child: BlocBuilder<CalculatorCubit, AppStates>(
                 builder: (context, state) {
                   var cubit = locator<CalculatorCubit>();
                   return Column(
                     children: [
-                      const Gap(10),
+                      Gap(10.h),
                       const BasicInfo(),
-                      const Gap(50),
+                      Gap(50.h),
                       const ResultsSection(),
-                      const Gap(50),
+                      Gap(50.h),
                       Note(cubit: cubit),
-                      const Gap(50),
+                      Gap(50.h),
                     ],
                   );
                 },
@@ -60,7 +64,7 @@ class ReportView extends StatelessWidget {
       title: CalculatorStrings.reportScreen,
       actions: [
         Padding(
-          padding: const EdgeInsets.only(right: AppPadding.p30),
+          padding: EdgeInsets.only(right: AppPadding.p30.w),
           child: CustomIconButton(
             onPressed: () => locator<CalculatorCubit>()
                 .captureAndShare(screenshotController),

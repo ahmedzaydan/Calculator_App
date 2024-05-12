@@ -1,5 +1,4 @@
 import 'package:azulzinho/app/resources/strings_manager.dart';
-import 'package:azulzinho/app/utils/sqflite_service.dart';
 import 'package:azulzinho/features/app_layout/app_layout_cubit/app_states.dart';
 import 'package:azulzinho/features/calculator/calculator_cubit/calculator_cubit.dart';
 import 'package:azulzinho/features/calculator/views/calculator_view.dart';
@@ -28,26 +27,10 @@ class AppCubit extends Cubit<AppStates> {
   Future<void> init() async {
     try {
       emit(LoadingDataState());
-
-      getKeys();
-
-      await kitsCubit.loadData();
-      await personsCubit.loadData(personKeys);
+      await kitsCubit.fetchData();
+      await personsCubit.fetchData();
     } catch (e) {
       emit(LoadingDataErrorState(StringsManager.dataLoadingError));
-    }
-  }
-
-  void getKeys() {
-    List<String> keys = Prefs.getAllKeys();
-    personKeys.clear();
-
-    for (var key in keys) {
-      if (key == personsCubit.amdinKey) {
-        continue;
-      } else {
-        personKeys.add(key);
-      }
     }
   }
 

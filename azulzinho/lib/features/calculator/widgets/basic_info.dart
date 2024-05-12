@@ -8,6 +8,7 @@ import 'package:azulzinho/features/calculator/calculator_cubit/calculator_cubit.
 import 'package:azulzinho/features/calculator/widgets/info_item.dart';
 import 'package:azulzinho/features/kits/kit_cubit/kit_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class BasicInfo extends StatelessWidget {
   const BasicInfo({super.key});
@@ -70,8 +71,8 @@ class BasicInfo extends StatelessWidget {
     );
   }
 
-  Widget _reportDivider() => const Padding(
-        padding: EdgeInsets.symmetric(vertical: AppPadding.p8),
+  Widget _reportDivider() => Padding(
+        padding: EdgeInsets.symmetric(vertical: AppPadding.p8.h),
         child: CustomDivider(),
       );
 }

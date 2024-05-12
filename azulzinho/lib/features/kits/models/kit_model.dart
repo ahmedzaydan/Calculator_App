@@ -51,27 +51,6 @@ class KitModel {
     );
   }
 
-  Map<String, Object> toMap() {
-    return {
-      'id': dbId!,
-      'name': name,
-      'value': value,
-      'isChecked': isChecked ? 1 : 0,
-      'startDate': startDate.toString(),
-      'endDate': endDate!.toString(),
-    };
-  }
-
-  // Constructor that takes list<String> as parameter
-  // and assigns the values to the class properties
-  // KitModel.fromStringList(List<String> data)
-  //     : name = data[0],
-  //       value = double.parse(data[1]),
-  //       isChecked = data[2] == 'true',
-  //       startDate = DateTime.parse(data[3]),
-  //       endDate = DateTime.parse(data[4]),
-  //       expiredKey = data[5];
-
   void setDbId(int id) => dbId = id;
 
   void setValue(double val) => value = val;
@@ -89,18 +68,6 @@ class KitModel {
     String spaces = '  ';
     return '$name,$spaces';
   }
-
-  // returns a list of strings represent the class properties
-  // List<String> toStringList() {
-  //   return [
-  //     name,
-  //     value.toString(),
-  //     isChecked.toString(),
-  //     startDate.toString(),
-  //     endDate.toString(),
-  //     expiredKey ?? '',
-  //   ];
-  // }
 
   // helper methods in deterimining the kit status
 
@@ -297,13 +264,5 @@ class KitModel {
     }
 
     endDate = DateTime(futureYear, futureMonth, futureDay);
-  }
-
-  void fillExpiredKey(int counter) {
-    // if (status == KitStatus.expired) {
-    //   expiredKey = '${locator<KitsCubit>().expiredKitKeyPrefix}$counter';
-    // } else {
-    //   expiredKey = '';
-    // }
   }
 }

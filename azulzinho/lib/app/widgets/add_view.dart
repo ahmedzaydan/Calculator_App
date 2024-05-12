@@ -1,6 +1,7 @@
 import 'package:azulzinho/app/resources/values_manager.dart';
 import 'package:azulzinho/app/utils/functions.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AddView extends StatelessWidget {
   AddView({
@@ -22,8 +23,9 @@ class AddView extends StatelessWidget {
         ),
         body: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(
-              AppPadding.p20,
+            padding: EdgeInsets.symmetric(
+              horizontal: AppPadding.p20.w,
+              vertical: AppPadding.p20.h,
             ),
             child: child,
           ),

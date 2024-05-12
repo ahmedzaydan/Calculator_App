@@ -10,6 +10,7 @@ import 'package:azulzinho/features/kits/kit_cubit/kit_cubit.dart';
 import 'package:azulzinho/features/kits/models/kit_model.dart';
 import 'package:azulzinho/features/kits/views/widgets/kits_list_header.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
 class KitsListsWidget extends StatelessWidget {
@@ -34,7 +35,7 @@ class KitsListsWidget extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.only(right: 10),
+          padding: EdgeInsets.only(right: 10.w),
           child: KitsListHeader(
             title: title,
             counter: list.length.toString(),
@@ -45,7 +46,7 @@ class KitsListsWidget extends StatelessWidget {
           ),
         ),
 
-        const Gap(20),
+        Gap(20.h),
 
         // If the list is not empty, show the list
         if (list.isNotEmpty) ...[
@@ -83,10 +84,10 @@ class KitsListsWidget extends StatelessWidget {
                 );
               },
               itemCount: list.length,
-              separatorBuilder: (context, index) => const Gap(10),
+              separatorBuilder: (context, index) => Gap(10.h),
             ),
           ),
-          isCollapsed ? const Gap(0) : const Gap(50),
+          isCollapsed ? const Gap(0) : Gap(50.h),
         ],
       ],
     );

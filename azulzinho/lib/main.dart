@@ -12,8 +12,6 @@ void main() async {
 
     await SqfliteService.initialize();
 
-    await Prefs.init();
-
     Bloc.observer = MyBlocObserver();
 
     getAppModules();
