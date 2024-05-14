@@ -9,11 +9,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class KitsCubit extends Cubit<AppStates> {
   KitsCubit() : super(KitsInitialState());
 
-  // keys
-  String kitKeyPrefix = 'Kit';
-  String expiredKitKeyPrefix = 'ek';
-  String expiredKitsCounterKey = 'ekc';
-
   double totalKits = 0.0;
   String checkedKits = '';
   DateTime selectedDate = DateTime.now();

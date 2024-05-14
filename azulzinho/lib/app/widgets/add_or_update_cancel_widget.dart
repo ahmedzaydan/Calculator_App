@@ -20,7 +20,6 @@ class AddUpdateCancelWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         // add/update button
         Expanded(
@@ -35,7 +34,7 @@ class AddUpdateCancelWidget extends StatelessWidget {
           ),
         ),
 
-        Gap(7.w),
+        Gap(10.w),
 
         // cancel button
         Expanded(

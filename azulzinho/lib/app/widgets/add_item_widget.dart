@@ -37,7 +37,7 @@ class AddItemWidget extends StatelessWidget {
           children: [
             Text(
               text,
-              style: TextStylesManager.textStyle24.copyWith(
+              style: TextStylesManager.textStyle22.copyWith(
                 color: ColorManager.white,
                 fontWeight: FontWeight.w600,
               ),

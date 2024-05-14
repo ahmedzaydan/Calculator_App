@@ -10,6 +10,10 @@ abstract class StringsManager {
   static const String enterName = 'Digite o nome';
 
   static const String status = 'status';
+  static const String addedSuccessfully = 'adicionado com sucesso';
+  static const String failedToAdd = 'Falha ao adicionar';
+  static const String successfullyDeleted = 'excluído com sucesso';
+  static const String failedToDelete = 'Falha ao excluir';
 }
 
 abstract class PersonsStrings {
@@ -29,6 +33,10 @@ abstract class PersonsStrings {
   static const String loadingPersons = 'Carregando dados das pessoas...';
   static const String deleteConfirmation =
       'Você tem certeza de que deseja excluir esta pessoa?';
+  static const String failedToLoadPersons =
+      'Falha ao carregar os dados das pessoas';
+  static const String failedUpdatePercentage =
+      'Falha ao atualizar a porcentagem de';
 }
 
 abstract class KitsStrings {
@@ -42,8 +50,6 @@ abstract class KitsStrings {
   static const String enterStartDate = "Digite a data";
   static const String startDate = "Data de início";
   static const String kitExists = 'Kit já existe';
-  static const String invalidProfitId =
-      'Número do kit deve ser um número inteiro';
   static const String addKit = 'Adicionar Novo Kit';
   static const String loadingKits = 'Carregando dados dos kits...';
   static const String month12 = '1° Reajuste';
@@ -56,6 +62,8 @@ abstract class KitsStrings {
   static const String add = 'Adicionar';
   static const String history = 'História';
   static const String historyTitle = 'Histórico das Kits Vencidos';
+  static const String failedLoadingKits = 'Falha ao carregar os dados dos kits';
+  static const String failedUpdateValue = 'Falha ao atualizar o valor de';
 }
 
 abstract class CalculatorStrings {

@@ -14,7 +14,7 @@ class CreateKitSuccessState extends AppStates {
   CreateKitSuccessState(this.name);
 
   String get message {
-    return '$name adicionado com sucesso';
+    return '$name ${StringsManager.addedSuccessfully}';
   }
 }
 
@@ -25,7 +25,7 @@ class CreateKitErrorState extends AppStates {
   CreateKitErrorState(this.name, {this.error});
 
   String get message {
-    return error ?? 'Falha ao adicionar $name';
+    return error ?? '${StringsManager.failedToAdd} $name';
   }
 }
 
@@ -40,7 +40,7 @@ class FetchKitsSuccessState extends AppStates {}
 
 class FetchKitsErrorState extends AppStates {
   String get message {
-    return 'Falha ao carregar os dados dos kits';
+    return KitsStrings.failedLoadingKits;
   }
 }
 
@@ -60,7 +60,7 @@ class UpdateKitErrorState extends AppStates {
   final String name;
 
   String get message {
-    return error ?? 'Falha ao atualizar o valor de $name';
+    return error ?? '${KitsStrings.failedUpdateValue} $name';
   }
 
   UpdateKitErrorState(this.name, {this.error});
@@ -89,7 +89,7 @@ class DeleteKitSuccessState extends AppStates {
   final String name;
 
   String get message {
-    return '$name excluído com sucesso';
+    return '$name ${StringsManager.successfullyDeleted}';
   }
 
   DeleteKitSuccessState(this.name);
@@ -99,7 +99,7 @@ class DeleteKitErrorState extends AppStates {
   final String name;
 
   String get message {
-    return 'Falha ao excluir $name';
+    return '${StringsManager.failedToDelete} $name';
   }
 
   DeleteKitErrorState(this.name);

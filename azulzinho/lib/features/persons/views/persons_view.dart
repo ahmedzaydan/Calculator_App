@@ -49,7 +49,9 @@ class PersonsView extends StatelessWidget {
         if (state is PersonInitialState ||
             state is LoadingDataState ||
             state is FetchPersonsLoadingState) {
-          return const LoadingWidget(message: PersonsStrings.loadingPersons);
+          return const LoadingWidget(
+            message: PersonsStrings.loadingPersons,
+          );
         }
 
         // in case of error

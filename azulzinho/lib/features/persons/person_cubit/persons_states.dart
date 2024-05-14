@@ -10,7 +10,7 @@ class CreatePersonSuccessState extends AppStates {
   final String name;
 
   String get message {
-    return '$name adicionado com sucesso';
+    return '$name ${StringsManager.addedSuccessfully}';
   }
 
   CreatePersonSuccessState(this.name);
@@ -21,7 +21,7 @@ class CreatePersonErrorState extends AppStates {
   final String name;
 
   String get message {
-    return error ?? 'Falha ao adicionar $name';
+    return error ?? '${StringsManager.failedToAdd} $name';
   }
 
   CreatePersonErrorState(this.name, {this.error});
@@ -40,7 +40,7 @@ class FetchPersonsSuccessState extends AppStates {}
 
 class FetchPersonsErrorState extends AppStates {
   String get message {
-    return 'Falha ao carregar os dados das pessoas';
+    return PersonsStrings.failedToLoadPersons;
   }
 
   FetchPersonsErrorState();
@@ -63,7 +63,7 @@ class UpdatePersonErrorState extends AppStates {
   final String? error;
 
   String get message {
-    return error ?? 'Falha ao atualizar a porcentagem de $name';
+    return error ?? '${PersonsStrings.failedUpdatePercentage} $name';
   }
 
   UpdatePersonErrorState(this.name, {this.error});
@@ -74,7 +74,7 @@ class DeletePersonSuccessState extends AppStates {
   final String name;
 
   String get message {
-    return '$name excluído com sucesso';
+    return '$name ${StringsManager.successfullyDeleted}';
   }
 
   DeletePersonSuccessState(this.name);
@@ -85,7 +85,7 @@ class DeletePersonErrorState extends AppStates {
   final String name;
 
   String get message {
-    return error ?? 'Falha ao excluir $name';
+    return error ?? '${StringsManager.failedToDelete} $name';
   }
 
   DeletePersonErrorState(this.name, {this.error});
