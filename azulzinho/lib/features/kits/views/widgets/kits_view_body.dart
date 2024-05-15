@@ -1,7 +1,7 @@
-import 'package:azulzinho/app/resources/strings_manager.dart';
-import 'package:azulzinho/app/resources/values_manager.dart';
-import 'package:azulzinho/app/utils/functions.dart';
-import 'package:azulzinho/app/widgets/add_item_widget.dart';
+import 'package:azulzinho/core/resources/strings_manager.dart';
+import 'package:azulzinho/core/resources/values_manager.dart';
+import 'package:azulzinho/core/utils/functions.dart';
+import 'package:azulzinho/core/widgets/add_item_widget.dart';
 import 'package:azulzinho/features/kits/views/add_kit_view.dart';
 import 'package:azulzinho/features/kits/views/widgets/kits_lists_view.dart';
 import 'package:flutter/material.dart';

@@ -1,5 +1,5 @@
-import 'package:azulzinho/app/utils/dependency_injection.dart';
-import 'package:azulzinho/app/widgets/custom_list_view.dart';
+import 'package:azulzinho/core/utils/dependency_injection.dart';
+import 'package:azulzinho/core/widgets/custom_list_view.dart';
 import 'package:azulzinho/features/kits/kit_cubit/kit_cubit.dart';
 import 'package:azulzinho/features/kits/views/widgets/kits_list_widget.dart';
 import 'package:flutter/material.dart';

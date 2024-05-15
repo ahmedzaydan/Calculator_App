@@ -1,7 +1,7 @@
-import 'package:azulzinho/app/resources/color_manager.dart';
-import 'package:azulzinho/app/resources/constants_manager.dart';
-import 'package:azulzinho/app/resources/styles_manager.dart';
-import 'package:azulzinho/app/resources/values_manager.dart';
+import 'package:azulzinho/core/resources/color_manager.dart';
+import 'package:azulzinho/core/resources/constants_manager.dart';
+import 'package:azulzinho/core/resources/styles_manager.dart';
+import 'package:azulzinho/core/resources/values_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';

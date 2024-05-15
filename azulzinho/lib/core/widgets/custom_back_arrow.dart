@@ -1,6 +1,6 @@
-import 'package:azulzinho/app/resources/color_manager.dart';
-import 'package:azulzinho/app/resources/values_manager.dart';
-import 'package:azulzinho/app/widgets/custom_icon_button.dart';
+import 'package:azulzinho/core/resources/color_manager.dart';
+import 'package:azulzinho/core/resources/values_manager.dart';
+import 'package:azulzinho/core/widgets/custom_icon_button.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 

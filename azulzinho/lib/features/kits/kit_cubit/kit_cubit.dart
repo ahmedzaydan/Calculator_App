@@ -1,6 +1,6 @@
-import 'package:azulzinho/app/resources/strings_manager.dart';
-import 'package:azulzinho/app/utils/functions.dart';
-import 'package:azulzinho/app/utils/sqflite_service.dart';
+import 'package:azulzinho/core/resources/strings_manager.dart';
+import 'package:azulzinho/core/utils/functions.dart';
+import 'package:azulzinho/core/utils/sqflite_service.dart';
 import 'package:azulzinho/features/app_layout/app_layout_cubit/app_states.dart';
 import 'package:azulzinho/features/kits/kit_cubit/kit_states.dart';
 import 'package:azulzinho/features/kits/models/kit_model.dart';
@@ -74,13 +74,14 @@ class KitsCubit extends Cubit<AppStates> {
     required String name,
     required double value,
   }) async {
+    String newName = '${KitsStrings.kit} $name';
     try {
       emit(CreateKitLoadingState());
 
       // check if the kit name is not already exist
       var rows = await SqfliteService.getMatchedRecords(
         tableName: KitsStrings.tableName,
-        condition: "name = $name",
+        condition: "name = $newName",
       );
 
       // if kit name already exists
@@ -93,7 +94,7 @@ class KitsCubit extends Cubit<AppStates> {
       else {
         // create kit object
         KitModel kit = KitModel(
-          name: name,
+          name: newName,
           value: value,
           startDate: getFormattedDate(date: selectedDate),
         );
@@ -115,7 +116,7 @@ class KitsCubit extends Cubit<AppStates> {
 
         // if kit is not inserted successfully
         if (kitId == -1) {
-          emit(CreateKitErrorState(name));
+          emit(CreateKitErrorState(newName));
 
           return false;
         }
@@ -124,12 +125,12 @@ class KitsCubit extends Cubit<AppStates> {
         else {
           kit.setDbId(kitId);
           addKitToList(kit);
-          emit(CreateKitSuccessState(name));
+          emit(CreateKitSuccessState(newName));
           return true;
         }
       }
     } catch (e) {
-      emit(CreateKitErrorState(name));
+      emit(CreateKitErrorState(newName));
 
       return false;
     }

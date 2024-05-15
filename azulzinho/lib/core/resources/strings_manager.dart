@@ -17,7 +17,8 @@ abstract class StringsManager {
 }
 
 abstract class PersonsStrings {
-  static const tableName = 'Persons';
+  static const String person = 'Pessoa';
+  static const String tableName = 'Persons';
   static const String admin = 'Teresa';
   static const String name = 'Nome da Pessoa';
   static const String personsScreen = 'Pessoas';
@@ -40,7 +41,8 @@ abstract class PersonsStrings {
 }
 
 abstract class KitsStrings {
-  static const tableName = 'Kits';
+  static const String kit = 'Kit';
+  static const String tableName = 'Kits';
   static const String kitsScreen = 'Kits';
   static const String editKitList = 'Editar Lista de Kits';
   static const String kitNumber = 'Número do Kit';

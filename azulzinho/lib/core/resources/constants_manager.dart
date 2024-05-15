@@ -1,4 +1,4 @@
-import 'package:azulzinho/app/resources/values_manager.dart';
+import 'package:azulzinho/core/resources/values_manager.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 abstract class ConstantsManager {

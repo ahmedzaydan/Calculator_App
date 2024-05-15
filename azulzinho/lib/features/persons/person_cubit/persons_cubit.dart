@@ -1,6 +1,6 @@
-import 'package:azulzinho/app/resources/strings_manager.dart';
-import 'package:azulzinho/app/utils/functions.dart';
-import 'package:azulzinho/app/utils/sqflite_service.dart';
+import 'package:azulzinho/core/resources/strings_manager.dart';
+import 'package:azulzinho/core/utils/functions.dart';
+import 'package:azulzinho/core/utils/sqflite_service.dart';
 import 'package:azulzinho/features/app_layout/app_layout_cubit/app_states.dart';
 import 'package:azulzinho/features/persons/models/person_model.dart';
 import 'package:azulzinho/features/persons/person_cubit/persons_states.dart';

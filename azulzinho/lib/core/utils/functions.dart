@@ -1,11 +1,11 @@
 import 'dart:developer';
 
-import 'package:azulzinho/app/resources/color_manager.dart';
-import 'package:azulzinho/app/resources/constants_manager.dart';
-import 'package:azulzinho/app/resources/font_manager.dart';
-import 'package:azulzinho/app/resources/strings_manager.dart';
-import 'package:azulzinho/app/resources/styles_manager.dart';
-import 'package:azulzinho/app/widgets/custom_back_arrow.dart';
+import 'package:azulzinho/core/resources/color_manager.dart';
+import 'package:azulzinho/core/resources/constants_manager.dart';
+import 'package:azulzinho/core/resources/font_manager.dart';
+import 'package:azulzinho/core/resources/strings_manager.dart';
+import 'package:azulzinho/core/resources/styles_manager.dart';
+import 'package:azulzinho/core/widgets/custom_back_arrow.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

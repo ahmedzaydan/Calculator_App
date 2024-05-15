@@ -1,5 +1,5 @@
-import 'package:azulzinho/app/resources/strings_manager.dart';
-import 'package:azulzinho/app/utils/functions.dart';
+import 'package:azulzinho/core/resources/strings_manager.dart';
+import 'package:azulzinho/core/utils/functions.dart';
 import 'package:sqflite/sqflite.dart';
 
 class SqfliteService {

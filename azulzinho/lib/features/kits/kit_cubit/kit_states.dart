@@ -1,4 +1,4 @@
-import 'package:azulzinho/app/resources/strings_manager.dart';
+import 'package:azulzinho/core/resources/strings_manager.dart';
 import 'package:azulzinho/features/app_layout/app_layout_cubit/app_states.dart';
 
 class KitsInitialState extends AppStates {}

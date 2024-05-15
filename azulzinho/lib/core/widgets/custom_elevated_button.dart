@@ -1,6 +1,6 @@
-import 'package:azulzinho/app/resources/color_manager.dart';
-import 'package:azulzinho/app/resources/constants_manager.dart';
-import 'package:azulzinho/app/resources/styles_manager.dart';
+import 'package:azulzinho/core/resources/color_manager.dart';
+import 'package:azulzinho/core/resources/constants_manager.dart';
+import 'package:azulzinho/core/resources/styles_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

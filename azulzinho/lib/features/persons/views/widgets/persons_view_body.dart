@@ -1,7 +1,7 @@
-import 'package:azulzinho/app/resources/strings_manager.dart';
-import 'package:azulzinho/app/resources/values_manager.dart';
-import 'package:azulzinho/app/utils/functions.dart';
-import 'package:azulzinho/app/widgets/add_item_widget.dart';
+import 'package:azulzinho/core/resources/strings_manager.dart';
+import 'package:azulzinho/core/resources/values_manager.dart';
+import 'package:azulzinho/core/utils/functions.dart';
+import 'package:azulzinho/core/widgets/add_item_widget.dart';
 import 'package:azulzinho/features/persons/views/add_person_view.dart';
 import 'package:azulzinho/features/persons/views/widgets/admin_widget.dart';
 import 'package:azulzinho/features/persons/views/widgets/persons_list_view.dart';

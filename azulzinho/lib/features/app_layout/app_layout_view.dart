@@ -1,5 +1,5 @@
-import 'package:azulzinho/app/resources/color_manager.dart';
-import 'package:azulzinho/app/utils/dependency_injection.dart';
+import 'package:azulzinho/core/resources/color_manager.dart';
+import 'package:azulzinho/core/utils/dependency_injection.dart';
 import 'package:azulzinho/features/app_layout/app_layout_cubit/app_cubit.dart';
 import 'package:azulzinho/features/app_layout/app_layout_cubit/app_states.dart';
 import 'package:flutter/material.dart';

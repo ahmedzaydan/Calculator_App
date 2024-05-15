@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:azulzinho/app/utils/functions.dart';
+import 'package:azulzinho/core/utils/functions.dart';
 import 'package:azulzinho/features/app_layout/app_layout_cubit/app_states.dart';
 import 'package:azulzinho/features/calculator/calculator_cubit/calculator_state.dart';
 import 'package:azulzinho/features/kits/kit_cubit/kit_cubit.dart';

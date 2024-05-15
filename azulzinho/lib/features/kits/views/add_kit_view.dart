@@ -1,16 +1,16 @@
-import 'package:azulzinho/app/resources/constants_manager.dart';
-import 'package:azulzinho/app/resources/strings_manager.dart';
-import 'package:azulzinho/app/utils/extensions.dart';
-import 'package:azulzinho/app/utils/functions.dart';
-import 'package:azulzinho/app/widgets/add_or_update_cancel_widget.dart';
-import 'package:azulzinho/app/widgets/add_view.dart';
-import 'package:azulzinho/app/widgets/custom_text_form_field.dart';
+import 'package:azulzinho/core/resources/constants_manager.dart';
+import 'package:azulzinho/core/resources/strings_manager.dart';
+import 'package:azulzinho/core/utils/extensions.dart';
+import 'package:azulzinho/core/utils/functions.dart';
+import 'package:azulzinho/core/widgets/add_or_update_cancel_widget.dart';
+import 'package:azulzinho/core/widgets/add_view.dart';
+import 'package:azulzinho/core/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
-import '../../../app/resources/color_manager.dart';
-import '../../../app/utils/dependency_injection.dart';
+import '../../../core/resources/color_manager.dart';
+import '../../../core/utils/dependency_injection.dart';
 import '../kit_cubit/kit_cubit.dart';
 
 class AddKitView extends StatelessWidget {

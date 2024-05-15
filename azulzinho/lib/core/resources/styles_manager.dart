@@ -1,4 +1,4 @@
-import 'package:azulzinho/app/resources/font_manager.dart';
+import 'package:azulzinho/core/resources/font_manager.dart';
 import 'package:flutter/material.dart';
 
 abstract class TextStylesManager {

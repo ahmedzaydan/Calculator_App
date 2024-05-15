@@ -1,5 +1,5 @@
-import 'package:azulzinho/app/resources/values_manager.dart';
-import 'package:azulzinho/app/utils/functions.dart';
+import 'package:azulzinho/core/resources/values_manager.dart';
+import 'package:azulzinho/core/utils/functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

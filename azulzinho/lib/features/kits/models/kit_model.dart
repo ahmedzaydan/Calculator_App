@@ -1,4 +1,4 @@
-import 'package:azulzinho/app/utils/functions.dart';
+import 'package:azulzinho/core/utils/functions.dart';
 import 'package:azulzinho/features/kits/kit_cubit/kit_cubit.dart';
 
 class KitModel {

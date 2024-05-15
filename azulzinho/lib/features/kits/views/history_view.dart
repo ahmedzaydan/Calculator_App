@@ -1,10 +1,10 @@
-import 'package:azulzinho/app/resources/color_manager.dart';
-import 'package:azulzinho/app/resources/strings_manager.dart';
-import 'package:azulzinho/app/resources/styles_manager.dart';
-import 'package:azulzinho/app/resources/values_manager.dart';
-import 'package:azulzinho/app/utils/dependency_injection.dart';
-import 'package:azulzinho/app/widgets/custom_list_view.dart';
-import 'package:azulzinho/app/widgets/data_item.dart';
+import 'package:azulzinho/core/resources/color_manager.dart';
+import 'package:azulzinho/core/resources/strings_manager.dart';
+import 'package:azulzinho/core/resources/styles_manager.dart';
+import 'package:azulzinho/core/resources/values_manager.dart';
+import 'package:azulzinho/core/utils/dependency_injection.dart';
+import 'package:azulzinho/core/widgets/custom_list_view.dart';
+import 'package:azulzinho/core/widgets/data_item.dart';
 import 'package:azulzinho/features/app_layout/app_layout_cubit/app_states.dart';
 import 'package:azulzinho/features/kits/kit_cubit/kit_cubit.dart';
 import 'package:flutter/material.dart';

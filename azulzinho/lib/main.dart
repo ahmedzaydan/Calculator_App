@@ -1,8 +1,8 @@
-import 'package:azulzinho/app/calculator_app.dart';
-import 'package:azulzinho/app/utils/bloc_observer.dart';
-import 'package:azulzinho/app/utils/dependency_injection.dart';
-import 'package:azulzinho/app/utils/functions.dart';
-import 'package:azulzinho/app/utils/sqflite_service.dart';
+import 'package:azulzinho/core/calculator_app.dart';
+import 'package:azulzinho/core/utils/bloc_observer.dart';
+import 'package:azulzinho/core/utils/dependency_injection.dart';
+import 'package:azulzinho/core/utils/functions.dart';
+import 'package:azulzinho/core/utils/sqflite_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

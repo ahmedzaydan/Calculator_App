@@ -1,6 +1,6 @@
-import 'package:azulzinho/app/resources/color_manager.dart';
-import 'package:azulzinho/app/resources/strings_manager.dart';
-import 'package:azulzinho/app/widgets/custom_elevated_button.dart';
+import 'package:azulzinho/core/resources/color_manager.dart';
+import 'package:azulzinho/core/resources/strings_manager.dart';
+import 'package:azulzinho/core/widgets/custom_elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';

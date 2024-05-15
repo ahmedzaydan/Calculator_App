@@ -1,4 +1,4 @@
-import 'package:azulzinho/app/resources/strings_manager.dart';
+import 'package:azulzinho/core/resources/strings_manager.dart';
 import 'package:azulzinho/features/app_layout/app_layout_cubit/app_states.dart';
 import 'package:azulzinho/features/calculator/calculator_cubit/calculator_cubit.dart';
 import 'package:azulzinho/features/calculator/views/calculator_view.dart';
