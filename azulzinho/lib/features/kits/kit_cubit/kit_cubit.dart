@@ -81,7 +81,7 @@ class KitsCubit extends Cubit<AppStates> {
       // check if the kit name is not already exist
       var rows = await SqfliteService.getMatchedRecords(
         tableName: KitsStrings.tableName,
-        condition: "name = $newName",
+        condition: "name = '$newName'",
       );
 
       // if kit name already exists
@@ -117,21 +117,19 @@ class KitsCubit extends Cubit<AppStates> {
         // if kit is not inserted successfully
         if (kitId == -1) {
           emit(CreateKitErrorState(newName));
-
           return false;
         }
 
         // if kit is inserted successfully
         else {
           kit.setDbId(kitId);
-          addKitToList(kit);
           emit(CreateKitSuccessState(newName));
+          addKitToList(kit);
           return true;
         }
       }
     } catch (e) {
       emit(CreateKitErrorState(newName));
-
       return false;
     }
   }
@@ -292,8 +290,8 @@ class KitsCubit extends Cubit<AppStates> {
   void sortKits() {
     kits.sort(
       (a, b) {
-        int aIndex = int.parse(a.name);
-        int bIndex = int.parse(b.name);
+        int aIndex = int.parse(a.name.substring(4));
+        int bIndex = int.parse(b.name.substring(4));
         return aIndex.compareTo(bIndex);
       },
     );

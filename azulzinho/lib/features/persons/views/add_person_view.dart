@@ -114,7 +114,9 @@ class AddPersonView extends StatelessWidget {
         } else if (value.isNotEmpty) {
           // Check if the person name already exists
           if (personsCubit.personItems.any(
-            (element) => element.name == value,
+            (element) {
+              return element.name == value;
+            },
           )) {
             return PersonsStrings.personExists;
           }
