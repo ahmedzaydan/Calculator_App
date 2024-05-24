@@ -16,6 +16,8 @@ void main() async {
 
     getAppModules();
 
+    await Future.delayed(const Duration(milliseconds: 150));
+
     runApp(const CalculatorApp());
   } catch (error) {
     kprint('Error in main: $error');
