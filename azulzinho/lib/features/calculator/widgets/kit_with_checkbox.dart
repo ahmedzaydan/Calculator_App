@@ -1,5 +1,5 @@
-import 'package:azulzinho/core/resources/color_manager.dart';
-import 'package:azulzinho/core/resources/styles_manager.dart';
+import 'package:azulzinho/themes/color_manager.dart';
+import 'package:azulzinho/themes/styles_manager.dart';
 import 'package:azulzinho/core/utils/functions.dart';
 import 'package:azulzinho/features/kits/models/kit_model.dart';
 import 'package:flutter/material.dart';

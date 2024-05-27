@@ -1,6 +1,6 @@
 import 'package:azulzinho/core/resources/constants_manager.dart';
 import 'package:azulzinho/core/resources/strings_manager.dart';
-import 'package:azulzinho/core/resources/styles_manager.dart';
+import 'package:azulzinho/themes/styles_manager.dart';
 import 'package:azulzinho/core/resources/values_manager.dart';
 import 'package:azulzinho/core/utils/functions.dart';
 import 'package:azulzinho/features/calculator/calculator_cubit/calculator_cubit.dart';

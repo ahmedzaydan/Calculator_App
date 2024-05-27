@@ -1,4 +1,4 @@
-import 'package:azulzinho/core/resources/color_manager.dart';
+import 'package:azulzinho/themes/color_manager.dart';
 import 'package:azulzinho/core/resources/strings_manager.dart';
 import 'package:azulzinho/core/resources/values_manager.dart';
 import 'package:azulzinho/core/utils/dependency_injection.dart';

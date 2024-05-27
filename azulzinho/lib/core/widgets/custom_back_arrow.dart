@@ -1,4 +1,4 @@
-import 'package:azulzinho/core/resources/color_manager.dart';
+import 'package:azulzinho/themes/color_manager.dart';
 import 'package:azulzinho/core/resources/values_manager.dart';
 import 'package:azulzinho/core/widgets/custom_icon_button.dart';
 import 'package:flutter/material.dart';

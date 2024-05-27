@@ -1,4 +1,4 @@
-import 'package:azulzinho/core/resources/styles_manager.dart';
+import 'package:azulzinho/themes/styles_manager.dart';
 import 'package:azulzinho/core/widgets/collapse_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

@@ -1,4 +1,4 @@
-import 'package:azulzinho/core/resources/theme_manager.dart';
+import 'package:azulzinho/themes/theme_manager.dart';
 import 'package:azulzinho/core/utils/dependency_injection.dart';
 import 'package:azulzinho/features/app_layout/app_layout_cubit/app_cubit.dart';
 import 'package:azulzinho/features/app_layout/app_layout_view.dart';
@@ -15,9 +15,9 @@ class CalculatorApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      // designSize: const Size(360, 690),
-      // minTextAdapt: true,
-      // splitScreenMode: true,
+      designSize: const Size(360, 690),
+      minTextAdapt: true,
+      splitScreenMode: true,
       builder: (_, child) {
         return MultiBlocProvider(
           providers: [

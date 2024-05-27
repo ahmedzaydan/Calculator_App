@@ -1,4 +1,4 @@
-import 'package:azulzinho/core/resources/styles_manager.dart';
+import 'package:azulzinho/themes/styles_manager.dart';
 import 'package:flutter/material.dart';
 
 class InfoItem extends StatelessWidget {

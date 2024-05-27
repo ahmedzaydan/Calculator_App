@@ -14,7 +14,6 @@ class FontWeightManager {
 }
 
 class FontSize {
-  static double s8 = 8.0.sp;
   static double s12 = 12.0.sp;
   static double s16 = 16.0.sp;
   static double s18 = 18.0.sp;
@@ -25,3 +24,5 @@ class FontSize {
   static double s28 = 28.0.sp;
   static double s32 = 32.0.sp;
 }
+
+// TODO: handle text styles and font sizez

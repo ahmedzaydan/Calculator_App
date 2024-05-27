@@ -1,6 +1,6 @@
-import 'package:azulzinho/core/resources/color_manager.dart';
+import 'package:azulzinho/themes/color_manager.dart';
 import 'package:azulzinho/core/resources/constants_manager.dart';
-import 'package:azulzinho/core/resources/font_manager.dart';
+import 'package:azulzinho/themes/font_manager.dart';
 import 'package:flutter/material.dart';
 
 ThemeData getApplicationTheme() {

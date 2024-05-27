@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
-import '../../../core/resources/color_manager.dart';
+import '../../../themes/color_manager.dart';
 import '../../../core/utils/dependency_injection.dart';
 import '../kit_cubit/kit_cubit.dart';
 
