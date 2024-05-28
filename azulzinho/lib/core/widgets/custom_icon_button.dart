@@ -6,14 +6,16 @@ class CustomIconButton extends StatelessWidget {
   const CustomIconButton({
     super.key,
     required this.onPressed,
-    required this.icon,
+    this.icon,
+    this.faIcon,
     this.style,
     this.height,
     this.width,
   });
 
   final void Function()? onPressed;
-  final FaIcon icon;
+  final Icon? icon;
+  final FaIcon? faIcon;
   final ButtonStyle? style;
   final double? height;
   final double? width;
@@ -33,7 +35,7 @@ class CustomIconButton extends StatelessWidget {
           maxWidth: newWidth,
           maxHeight: newHeight,
         ),
-        icon: icon,
+        icon: icon ?? faIcon!,
         onPressed: onPressed,
         style: style ?? Theme.of(context).iconButtonTheme.style,
       ),

@@ -30,6 +30,26 @@ class PersonsCubit extends Cubit<AppStates> {
         PersonsStrings.tableName,
       );
 
+      kprint('Records: $records');
+
+      // if records is empty then insert admin
+      if (records.isEmpty) {
+        await SqfliteService.insertRow(
+          '''INSERT INTO ${PersonsStrings.tableName} 
+          (name, percentage)
+          VALUES (
+            '${PersonsStrings.admin}',
+            '${admin.percentage}')''',
+        );
+
+        // get records again
+        records = await SqfliteService.getRecords(
+          PersonsStrings.tableName,
+        );
+
+        kprint('Records after inserting admin: $records');
+      }
+
       for (var record in records) {
         PersonModel person = PersonModel.fromMap(record);
 
@@ -156,6 +176,8 @@ class PersonsCubit extends Cubit<AppStates> {
         emit(UpdatePersonSuccessState(PersonsStrings.admin));
         return isUpdated;
       } else {
+        kprint('Error in updating admin percentage');
+        kprint(isUpdated);
         emit(UpdatePersonErrorState(PersonsStrings.admin));
         return isUpdated;
       }

@@ -1,6 +1,6 @@
-import 'package:azulzinho/themes/color_manager.dart';
 import 'package:azulzinho/core/resources/constants_manager.dart';
-import 'package:azulzinho/themes/font_manager.dart';
+import 'package:azulzinho/themes/color_manager.dart';
+import 'package:azulzinho/themes/styles_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -46,16 +46,15 @@ class CustomTextFormField extends StatelessWidget {
       controller: controller,
       keyboardType: keyboardType,
       inputFormatters: inputFormatters,
+      onTapOutside: (value) => FocusScope.of(context).unfocus(),
       decoration: InputDecoration(
         hintText: hintText,
         hintStyle: TextStyle(
           color: ColorManager.lightGrey,
         ),
         labelText: labelText,
-        labelStyle: TextStyle(
-          fontSize: fontSize ?? FontSize.s20,
+        labelStyle: getMediumStyle(
           color: ColorManager.black,
-          fontWeight: fontWeight,
         ),
         enabledBorder: _decorateBorder(color: ColorManager.lightGrey),
         focusedBorder: _decorateBorder(color: ColorManager.primary),

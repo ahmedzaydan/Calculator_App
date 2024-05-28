@@ -21,9 +21,7 @@ class CustomListView extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       itemBuilder: itemBuilder,
       separatorBuilder: separatorBuilder ??
-          (context, index) {
-            return Gap(10.h);
-          },
+          (context, index) => Gap(10.h),
       itemCount: itemCount,
     );
   }

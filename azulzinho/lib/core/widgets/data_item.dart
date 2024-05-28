@@ -1,9 +1,9 @@
-import 'package:azulzinho/themes/color_manager.dart';
 import 'package:azulzinho/core/resources/constants_manager.dart';
-import 'package:azulzinho/themes/styles_manager.dart';
 import 'package:azulzinho/core/resources/values_manager.dart';
 import 'package:azulzinho/core/widgets/custom_divider.dart';
 import 'package:azulzinho/core/widgets/data_item_actions_widget.dart';
+import 'package:azulzinho/themes/color_manager.dart';
+import 'package:azulzinho/themes/styles_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -88,10 +88,7 @@ class NameAndValue extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextStyle style = TextStylesManager.textStyle26.copyWith(
-      fontWeight: FontWeight.w600,
-      color: ColorManager.black,
-    );
+    final TextStyle style = getBoldStyle();
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,

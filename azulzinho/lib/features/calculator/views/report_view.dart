@@ -68,7 +68,7 @@ class ReportView extends StatelessWidget {
           child: CustomIconButton(
             onPressed: () => locator<CalculatorCubit>()
                 .captureAndShare(screenshotController),
-            icon: FaIcon(
+            faIcon: FaIcon(
               FontAwesomeIcons.solidShareFromSquare,
               color: ColorManager.white,
               size: AppSize.s32,

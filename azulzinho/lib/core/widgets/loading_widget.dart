@@ -26,7 +26,7 @@ class LoadingWidget extends StatelessWidget {
           SizedBox(height: 20.h),
           Text(
             message,
-            style: TextStylesManager.textStyle28,
+            style:  getBoldStyle(),
             textAlign: TextAlign.center,
             softWrap: true,
           ),

@@ -1,9 +1,9 @@
 import 'package:azulzinho/core/resources/strings_manager.dart';
-import 'package:azulzinho/themes/styles_manager.dart';
 import 'package:azulzinho/core/utils/dependency_injection.dart';
 import 'package:azulzinho/core/widgets/collapse_button.dart';
 import 'package:azulzinho/core/widgets/custom_elevated_button.dart';
 import 'package:azulzinho/features/calculator/calculator_cubit/calculator_cubit.dart';
+import 'package:azulzinho/themes/styles_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -33,16 +33,14 @@ class CollapsibleKitsListWithClearButton extends StatelessWidget {
           // kits text
           Text(
             CalculatorStrings.kits,
-            style: TextStylesManager.textStyle28.copyWith(
-              fontWeight: FontWeight.w500,
-            ),
+            style: getBoldStyle(),
           ),
 
           const Spacer(),
 
-          // clera button
+          // clear button
           CustomElevatedButton(
-            height: 55,
+            height: 40,
             onPressed: clearOnPressed,
             text: CalculatorStrings.clear,
           ),

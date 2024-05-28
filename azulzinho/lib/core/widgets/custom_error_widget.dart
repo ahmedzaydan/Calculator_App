@@ -29,7 +29,7 @@ class CustomErrorWidget extends StatelessWidget {
             SizedBox(height: 20.h),
             Text(
               message,
-              style: TextStylesManager.textStyle28,
+              style: getBoldStyle(),
               softWrap: true,
               textAlign: TextAlign.center,
             ),
