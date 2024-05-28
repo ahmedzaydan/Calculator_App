@@ -1,5 +1,4 @@
 import 'package:azulzinho/core/resources/constants_manager.dart';
-import 'package:azulzinho/themes/font_manager.dart';
 import 'package:azulzinho/core/resources/strings_manager.dart';
 import 'package:azulzinho/core/resources/values_manager.dart';
 import 'package:azulzinho/core/utils/dependency_injection.dart';
@@ -60,14 +59,14 @@ class EditItemView extends StatelessWidget {
               CustomTextFormField(
                 controller: valueController,
                 labelText: label,
-                fontSize: FontSize.s32,
                 fontWeight: FontWeight.bold,
                 validator: (value) {
                   if (value!.isEmpty) {
                     return updateKit
                         ? KitsStrings.enterValue
                         : PersonsStrings.enterPercentage;
-                  } else if (value.isNotEmpty) {
+                  }
+                  else if (value.isNotEmpty) {
                     if (label == PersonsStrings.admin) {
                       if (double.parse(value) < 0 ||
                           double.parse(value) > 100) {

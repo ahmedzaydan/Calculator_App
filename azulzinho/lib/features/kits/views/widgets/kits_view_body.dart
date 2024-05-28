@@ -1,7 +1,7 @@
 import 'package:azulzinho/core/resources/strings_manager.dart';
 import 'package:azulzinho/core/resources/values_manager.dart';
 import 'package:azulzinho/core/utils/functions.dart';
-import 'package:azulzinho/core/widgets/add_item_widget.dart';
+import 'package:azulzinho/core/widgets/custom_list_tile.dart';
 import 'package:azulzinho/features/kits/views/add_kit_view.dart';
 import 'package:azulzinho/features/kits/views/widgets/kits_lists_view.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +25,7 @@ class KitsViewBody extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // add kit inkwell
-            AddItemWidget(
+            CustomListTile(
               text: KitsStrings.addKit,
               onTap: () {
                 navigateTo(

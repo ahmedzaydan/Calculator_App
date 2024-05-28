@@ -33,9 +33,7 @@ class HistoryView extends StatelessWidget {
                 // Title
                 Text(
                   KitsStrings.historyTitle,
-                  style: TextStylesManager.textStyle26.copyWith(
-                    fontWeight: FontWeight.w600,
-                  ),
+                  style: getBoldStyle(),
                 ),
 
                 Gap(40.h),

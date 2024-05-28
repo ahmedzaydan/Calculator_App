@@ -1,11 +1,11 @@
 import 'dart:developer';
 
-import 'package:azulzinho/themes/color_manager.dart';
 import 'package:azulzinho/core/resources/constants_manager.dart';
-import 'package:azulzinho/themes/font_manager.dart';
 import 'package:azulzinho/core/resources/strings_manager.dart';
-import 'package:azulzinho/themes/styles_manager.dart';
+import 'package:azulzinho/core/resources/values_manager.dart';
 import 'package:azulzinho/core/widgets/custom_back_arrow.dart';
+import 'package:azulzinho/themes/color_manager.dart';
+import 'package:azulzinho/themes/styles_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -40,7 +40,7 @@ Color colorToast(ToastStates state) {
 void showCustomToast(String message, ToastStates state) {
   Fluttertoast.showToast(
     msg: message,
-    fontSize: FontSize.s18,
+    fontSize: AppSize.s18,
     timeInSecForIosWeb: 5,
     textColor: ColorManager.white,
     gravity: ToastGravity.BOTTOM,
@@ -63,9 +63,7 @@ void showCustomDialog({
         actionsAlignment: MainAxisAlignment.spaceBetween,
         content: Text(
           message,
-          style: TextStyle(
-            fontSize: FontSize.s24,
-          ),
+          style: getMediumStyle(),
         ),
         actions: [
           // ok button
@@ -76,11 +74,7 @@ void showCustomDialog({
             },
             child: Text(
               StringsManager.delete,
-              style: TextStyle(
-                color: Colors.red,
-                fontSize: FontSize.s20,
-                fontWeight: FontWeight.bold,
-              ),
+              style: getBoldStyle(color: ColorManager.red),
             ),
           ),
 
@@ -91,11 +85,7 @@ void showCustomDialog({
             },
             child: Text(
               StringsManager.cancel,
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: FontSize.s20,
-                fontWeight: FontWeight.bold,
-              ),
+              style: getBoldStyle(),
             ),
           ),
         ],
@@ -112,15 +102,19 @@ AppBar customAppBar({
   return AppBar(
     toolbarHeight: 0.09.sh,
     leading: CustomBackArrow(context),
-    title: Text(
-      title,
-      style: TextStylesManager.textStyle24.copyWith(
-        color: ColorManager.white,
-        fontWeight: FontWeight.w600,
+    titleSpacing: 0.0,
+    title: Padding(
+      padding: EdgeInsets.only(
+        right: 10.w,
       ),
-      softWrap: true,
-      maxLines: 3,
-      textAlign: TextAlign.center,
+      child: Text(
+        title,
+        style: getBoldStyle(color: ColorManager.white),
+        softWrap: true,
+        maxLines: 3,
+        overflow: TextOverflow.ellipsis,
+        // textAlign: TextAlign.center,
+      ),
     ),
     actions: actions,
   );
@@ -169,4 +163,3 @@ void kprint(dynamic message) {
 void klog(dynamic message) {
   log(message);
 }
-

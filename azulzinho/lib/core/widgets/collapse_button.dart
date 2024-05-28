@@ -18,7 +18,7 @@ class CollapseButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomIconButton(
       onPressed: onPressed,
-      icon: FaIcon(
+      faIcon: FaIcon(
         isCollapsed
             ? FontAwesomeIcons.circleChevronDown
             : FontAwesomeIcons.circleChevronUp,

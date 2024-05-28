@@ -50,12 +50,12 @@ class ResultsSection extends StatelessWidget {
                   children: [
                     Text(
                       person.name,
-                      style: TextStylesManager.textStyle26,
+                      style:  getBoldStyle(),
                     ),
                     Gap(10.h),
                     Text(
                       '${person.shareValue}',
-                      style: TextStylesManager.textStyle26,
+                      style:  getBoldStyle(),
                     ),
                   ],
                 );
@@ -78,15 +78,11 @@ class ResultsSection extends StatelessWidget {
       children: [
         Text(
           PersonsStrings.admin,
-          style: TextStylesManager.textStyle26.copyWith(
-            fontWeight: FontWeight.bold,
-          ),
+          style:  getBoldStyle(),
         ),
         Text(
           '${cubit.admin.shareValue}',
-          style: TextStylesManager.textStyle26.copyWith(
-            fontWeight: FontWeight.bold,
-          ),
+          style:  getBoldStyle(),
         ),
       ],
     );

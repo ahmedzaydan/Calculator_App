@@ -42,10 +42,7 @@ class KitWithCheckbox extends StatelessWidget {
         // kit name
         Text(
           kit.name,
-          style: TextStylesManager.textStyle24.copyWith(
-            color: color,
-            fontWeight: FontWeight.w500,
-          ),
+          style: getBoldStyle(color: color),
         ),
 
         Gap(5.h),
@@ -53,10 +50,7 @@ class KitWithCheckbox extends StatelessWidget {
         // kit start date
         Text(
           '(${getDateAsString(date: kit.startDate)})',
-          style: TextStylesManager.textStyle14.copyWith(
-            color: color,
-            // fontWeight: FontWeight.w300,
-          ),
+          style: getRegularStyle(color: color),
         ),
 
         const Spacer(),
@@ -64,10 +58,7 @@ class KitWithCheckbox extends StatelessWidget {
         // kit value
         Text(
           '${kit.value}',
-          style: TextStylesManager.textStyle24.copyWith(
-            color: color,
-            fontWeight: FontWeight.w500,
-          ),
+          style: getBoldStyle(color: color),
         ),
       ],
     );

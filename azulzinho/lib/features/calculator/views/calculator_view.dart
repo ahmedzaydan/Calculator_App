@@ -1,6 +1,4 @@
-import 'package:azulzinho/themes/color_manager.dart';
 import 'package:azulzinho/core/resources/strings_manager.dart';
-import 'package:azulzinho/themes/styles_manager.dart';
 import 'package:azulzinho/core/utils/dependency_injection.dart';
 import 'package:azulzinho/core/utils/functions.dart';
 import 'package:azulzinho/core/widgets/custom_elevated_button.dart';
@@ -101,10 +99,6 @@ class CalculatorView extends StatelessWidget {
                       );
                     },
                     text: CalculatorStrings.calculate,
-                    textStyle: TextStylesManager.textStyle32.copyWith(
-                      color: ColorManager.white,
-                      fontWeight: FontWeight.w700,
-                    ),
                   ),
                 ),
               ],

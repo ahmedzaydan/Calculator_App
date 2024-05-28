@@ -23,9 +23,7 @@ class KitsListHeader extends StatelessWidget {
         // title
         Text(
           title,
-          style: TextStylesManager.textStyle26.copyWith(
-            fontWeight: FontWeight.w600,
-          ),
+          style:  getBoldStyle(),
         ),
 
         const Spacer(),
@@ -33,9 +31,7 @@ class KitsListHeader extends StatelessWidget {
         // counter
         Text(
           counter,
-          style: TextStylesManager.textStyle26.copyWith(
-            fontWeight: FontWeight.w600,
-          ),
+          style:  getBoldStyle(),
         ),
 
         Gap(20.h),

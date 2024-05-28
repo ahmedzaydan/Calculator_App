@@ -45,7 +45,7 @@ class CalculatorCubit extends Cubit<AppStates> {
         } catch (e) {
           klog("\nError Parsing Value: $e\n");
         }
-        klog("\nTotal: $total\n");
+        // klog("\nTotal: $total\n");
       }
     }
     total = formatDobule(total);

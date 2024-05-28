@@ -23,7 +23,7 @@ class Note extends StatelessWidget {
             alignment: Alignment.centerLeft,
             child: Text(
               CalculatorStrings.note,
-              style: TextStylesManager.textStyle26,
+              style: getBoldStyle(),
             ),
           ),
 
@@ -49,7 +49,7 @@ class Note extends StatelessWidget {
               textDirection: getTextDirection(cubit.note),
               child: Text(
                 cubit.note,
-                style: TextStylesManager.textStyle26,
+                style: getBoldStyle(),
               ),
             ),
           ),

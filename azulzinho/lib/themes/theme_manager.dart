@@ -1,26 +1,27 @@
-import 'package:azulzinho/themes/color_manager.dart';
 import 'package:azulzinho/core/resources/constants_manager.dart';
-import 'package:azulzinho/themes/font_manager.dart';
+import 'package:azulzinho/themes/color_manager.dart';
+import 'package:azulzinho/themes/styles_manager.dart';
 import 'package:flutter/material.dart';
 
 ThemeData getApplicationTheme() {
   return ThemeData(
     // Main colors
-    primaryColor: ColorManager.primary,
-    primarySwatch: Colors.primaries[0],
+    // primaryColor: ColorManager.primary,
+    // primarySwatch: Colors.primaries[0],
     // primarySwatch: Colors.blue,
-    primaryColorLight: ColorManager.primary,
-    disabledColor: ColorManager.primary,
+    // primaryColorLight: ColorManager.primary,
+    // disabledColor: ColorManager.primary,
+
+    colorScheme: ColorScheme.light(
+      primary: ColorManager.primary,
+      secondary: ColorManager.white,
+    ),
 
     // App bar theme
     appBarTheme: AppBarTheme(
       centerTitle: true,
       color: ColorManager.primary,
-      titleTextStyle: TextStyle(
-        color: ColorManager.white,
-        fontSize: FontSize.s20,
-        fontWeight: FontWeight.bold,
-      ),
+      titleTextStyle: getBoldStyle(color: ColorManager.white),
       actionsIconTheme: IconThemeData(
         color: ColorManager.white,
       ),

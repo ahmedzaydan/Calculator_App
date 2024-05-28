@@ -31,7 +31,7 @@ class DataItemActionsWidget extends StatelessWidget {
         if (isEditVisible)
           CustomIconButton(
             onPressed: editOnPressed,
-            icon: const FaIcon(FontAwesomeIcons.pen),
+            faIcon: const FaIcon(FontAwesomeIcons.pen),
             style: editButtonStyle,
           ),
 
@@ -39,7 +39,7 @@ class DataItemActionsWidget extends StatelessWidget {
         if (isDeleteVisible)
           CustomIconButton(
             onPressed: deleteOnPressed,
-            icon: const FaIcon(FontAwesomeIcons.trash),
+            faIcon: const FaIcon(FontAwesomeIcons.trash),
             style: deleteButtonStyle,
           ),
       ],
