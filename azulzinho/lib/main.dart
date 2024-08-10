@@ -1,4 +1,4 @@
-import 'package:azulzinho/core/calculator_app.dart';
+import 'package:azulzinho/calculator_app.dart';
 import 'package:azulzinho/core/utils/bloc_observer.dart';
 import 'package:azulzinho/core/utils/dependency_injection.dart';
 import 'package:azulzinho/core/utils/functions.dart';
@@ -18,8 +18,15 @@ void main() async {
 
     await Future.delayed(const Duration(milliseconds: 150));
 
+    // TODO: use the same icon family (change current)
+    // handle tablet
+    // handle report view
+    // handle laoding, error widgets and empty widgets
+    // handle bottom nav bar icons
+
     runApp(const CalculatorApp());
   } catch (error) {
     kprint('Error in main: $error');
   }
 }
+

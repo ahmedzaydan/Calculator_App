@@ -1,14 +1,15 @@
-import 'package:azulzinho/themes/color_manager.dart';
 import 'package:azulzinho/core/resources/strings_manager.dart';
 import 'package:azulzinho/core/resources/values_manager.dart';
 import 'package:azulzinho/core/utils/dependency_injection.dart';
-import 'package:azulzinho/core/utils/functions.dart';
+import 'package:azulzinho/core/widgets/custom_app_bar.dart';
 import 'package:azulzinho/core/widgets/custom_icon_button.dart';
 import 'package:azulzinho/features/app_layout/app_layout_cubit/app_states.dart';
 import 'package:azulzinho/features/calculator/calculator_cubit/calculator_cubit.dart';
-import 'package:azulzinho/features/calculator/widgets/basic_info.dart';
-import 'package:azulzinho/features/calculator/widgets/note.dart';
-import 'package:azulzinho/features/calculator/widgets/results_section.dart';
+import 'package:azulzinho/features/calculator/widgets/report/basic_info.dart';
+import 'package:azulzinho/features/calculator/widgets/report/note.dart';
+import 'package:azulzinho/features/calculator/widgets/report/results_section.dart';
+import 'package:azulzinho/themes/color_manager.dart';
+import 'package:azulzinho/themes/styles_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -61,20 +62,23 @@ class ReportView extends StatelessWidget {
   AppBar _appBar(BuildContext context) {
     return customAppBar(
       context: context,
+      style: getBoldStyle(),
       title: CalculatorStrings.reportScreen,
       actions: [
         Padding(
-          padding: EdgeInsets.only(right: AppPadding.p30.w),
+          padding: EdgeInsets.only(
+            right: AppPadding.p18.w,
+          ),
           child: CustomIconButton(
             onPressed: () => locator<CalculatorCubit>()
                 .captureAndShare(screenshotController),
             faIcon: FaIcon(
               FontAwesomeIcons.solidShareFromSquare,
               color: ColorManager.white,
-              size: AppSize.s32,
+              size: AppSize.s28,
             ),
           ),
-        )
+        ),
       ],
     );
   }

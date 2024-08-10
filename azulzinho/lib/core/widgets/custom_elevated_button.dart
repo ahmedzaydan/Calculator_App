@@ -12,6 +12,7 @@ class CustomElevatedButton extends StatelessWidget {
     this.width,
     this.height,
     this.backgroundColor,
+    this.fontSize,
   });
 
   final void Function()? onPressed;
@@ -19,12 +20,13 @@ class CustomElevatedButton extends StatelessWidget {
   final double? width;
   final double? height;
   final Color? backgroundColor;
+  final double? fontSize;
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        backgroundColor: backgroundColor,
+        backgroundColor: backgroundColor ?? ColorManager.primary,
         fixedSize: Size(
           width != null ? width!.w : double.infinity,
           height != null ? height!.h : 50.h,
@@ -41,7 +43,9 @@ class CustomElevatedButton extends StatelessWidget {
       onPressed: onPressed,
       child: Text(
         text,
-        style: getBoldStyle(color: ColorManager.white),
+        style: getBoldStyle(color: ColorManager.white).copyWith(
+          fontSize: fontSize ?? 18.sp,
+        ),
         textAlign: TextAlign.center,
       ),
     );

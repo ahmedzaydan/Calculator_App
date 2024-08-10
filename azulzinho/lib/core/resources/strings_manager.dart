@@ -73,14 +73,14 @@ abstract class CalculatorStrings {
   static const String calculatorScreen = 'Calculadora';
   static const String kits = 'Kits';
   static const String expenses = 'Despesas';
-  static const expansesHint = 'valor1, valor2,';
+  static const expansesHint = 'valor1 valor2 valor3';
   static const String extra = 'Extra';
   static const String note = 'Nota';
   static const String clear = 'Limpar';
   static const String calculate = 'Calcular';
 
   // report screen strings
-  static const String reportScreen = 'Tela de Relatório';
+  static const String reportScreen = 'Relatório';
   static const String date = 'Data';
   static const String totalProfit = 'Total kit';
   static const String totalExpense = 'Despesa total';

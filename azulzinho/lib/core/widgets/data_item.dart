@@ -1,9 +1,8 @@
 import 'package:azulzinho/core/resources/constants_manager.dart';
 import 'package:azulzinho/core/resources/values_manager.dart';
-import 'package:azulzinho/core/widgets/custom_divider.dart';
 import 'package:azulzinho/core/widgets/data_item_actions_widget.dart';
+import 'package:azulzinho/features/calculator/widgets/report/info_item.dart';
 import 'package:azulzinho/themes/color_manager.dart';
-import 'package:azulzinho/themes/styles_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -31,16 +30,13 @@ class DataItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(
-        horizontal: AppPadding.p20.w,
-        vertical: AppPadding.p20.h,
+        horizontal: AppPadding.p14.w,
+        vertical: AppPadding.p14.h,
       ),
       decoration: _decorate(),
       child: Column(
         children: [
-          NameAndValue(
-            name: name,
-            value: value,
-          ),
+          InfoItem(label: name, value: value),
           if (isDeleteVisible || isEditVisible) _divider(),
           DataItemActionsWidget(
             editOnPressed: editOnPressed,
@@ -58,7 +54,9 @@ class DataItem extends StatelessWidget {
       padding: EdgeInsets.symmetric(
         vertical: AppPadding.p10.h,
       ),
-      child: CustomDivider(thickness: 2.1.sp),
+      child: Divider(
+        thickness: 2.sp,
+      ),
     );
   }
 
@@ -72,39 +70,6 @@ class DataItem extends StatelessWidget {
         ConstantsManager.borderRadius,
       ),
       color: color ?? ColorManager.transparent,
-    );
-  }
-}
-
-class NameAndValue extends StatelessWidget {
-  const NameAndValue({
-    super.key,
-    required this.name,
-    required this.value,
-  });
-
-  final String name;
-  final String value;
-
-  @override
-  Widget build(BuildContext context) {
-    final TextStyle style = getBoldStyle();
-
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        // name
-        Text(
-          name,
-          style: style,
-        ),
-
-        // value
-        Text(
-          value,
-          style: style,
-        ),
-      ],
     );
   }
 }

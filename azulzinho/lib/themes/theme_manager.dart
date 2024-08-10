@@ -2,16 +2,10 @@ import 'package:azulzinho/core/resources/constants_manager.dart';
 import 'package:azulzinho/themes/color_manager.dart';
 import 'package:azulzinho/themes/styles_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 ThemeData getApplicationTheme() {
   return ThemeData(
-    // Main colors
-    // primaryColor: ColorManager.primary,
-    // primarySwatch: Colors.primaries[0],
-    // primarySwatch: Colors.blue,
-    // primaryColorLight: ColorManager.primary,
-    // disabledColor: ColorManager.primary,
-
     colorScheme: ColorScheme.light(
       primary: ColorManager.primary,
       secondary: ColorManager.white,
@@ -21,7 +15,7 @@ ThemeData getApplicationTheme() {
     appBarTheme: AppBarTheme(
       centerTitle: true,
       color: ColorManager.primary,
-      titleTextStyle: getBoldStyle(color: ColorManager.white),
+      titleTextStyle: getMediumStyle(color: ColorManager.white),
       actionsIconTheme: IconThemeData(
         color: ColorManager.white,
       ),
@@ -33,39 +27,25 @@ ThemeData getApplicationTheme() {
     // icon theme
     iconTheme: IconThemeData(
       color: ColorManager.white,
-    ),
-
-    // Elevated button theme
-    elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ElevatedButton.styleFrom(
-        textStyle: TextStyle(
-          color: ColorManager.red,
-        ),
-        backgroundColor: ColorManager.primary,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(
-            ConstantsManager.borderRadius,
-          ),
-        ),
-      ),
+      size: ConstantsManager.iconSize,
     ),
 
     // icon button theme
     iconButtonTheme: IconButtonThemeData(
       style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all(
+        backgroundColor: WidgetStateProperty.all(
           ColorManager.transparent,
         ),
-        iconColor: MaterialStateProperty.all(
+        iconColor: WidgetStateProperty.all(
           ColorManager.black,
         ),
-        iconSize: MaterialStateProperty.all(
+        iconSize: WidgetStateProperty.all(
           ConstantsManager.iconSize,
         ),
-        padding: MaterialStateProperty.all(
+        padding: WidgetStateProperty.all(
           const EdgeInsets.all(0),
         ),
-        shape: MaterialStateProperty.all(
+        shape: WidgetStateProperty.all(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(
               ConstantsManager.borderRadius,
@@ -76,6 +56,9 @@ ThemeData getApplicationTheme() {
     ),
 
     // divider theme
-    dividerColor: ColorManager.black,
+    dividerTheme: DividerThemeData(
+      color: ColorManager.black,
+      thickness: 1.5.sp,
+    ),
   );
 }

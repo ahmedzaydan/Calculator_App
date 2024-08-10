@@ -1,14 +1,16 @@
 import 'package:azulzinho/core/resources/strings_manager.dart';
-import 'package:azulzinho/themes/styles_manager.dart';
 import 'package:azulzinho/core/resources/values_manager.dart';
 import 'package:azulzinho/core/utils/dependency_injection.dart';
-import 'package:azulzinho/core/widgets/custom_divider.dart';
 import 'package:azulzinho/core/widgets/custom_list_view.dart';
+import 'package:azulzinho/features/calculator/widgets/report/info_item.dart';
 import 'package:azulzinho/features/persons/models/person_model.dart';
 import 'package:azulzinho/features/persons/person_cubit/persons_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+
+// TODO: capture invisble parts also
+// capture from long widget constructor
 
 class ResultsSection extends StatelessWidget {
   const ResultsSection({
@@ -35,56 +37,30 @@ class ResultsSection extends StatelessWidget {
         ),
         child: Column(
           children: [
-            _adminProfit(),
+            // Admin
+            InfoItem(
+              label: PersonsStrings.admin,
+              value: '${cubit.admin.shareValue}',
+            ),
 
-            const CustomDivider(),
-
+            Divider(),
             Gap(30.h),
 
-            // person net profit
+            // Person net profit
             CustomListView(
               itemBuilder: (context, index) {
                 PersonModel person = cubit.personItems[index];
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      person.name,
-                      style:  getBoldStyle(),
-                    ),
-                    Gap(10.h),
-                    Text(
-                      '${person.shareValue}',
-                      style:  getBoldStyle(),
-                    ),
-                  ],
+                return InfoItem(
+                  label: person.name,
+                  value: person.shareValue.toString(),
                 );
               },
-              separatorBuilder: (context, index) {
-                return const CustomDivider();
-              },
+              separatorBuilder: (context, index) => const Divider(),
               itemCount: cubit.personItems.length,
             ),
           ],
         ),
       ),
-    );
-  }
-
-  Row _adminProfit() {
-    var cubit = locator<PersonsCubit>();
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          PersonsStrings.admin,
-          style:  getBoldStyle(),
-        ),
-        Text(
-          '${cubit.admin.shareValue}',
-          style:  getBoldStyle(),
-        ),
-      ],
     );
   }
 }

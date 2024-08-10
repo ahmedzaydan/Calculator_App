@@ -1,42 +1,33 @@
-import 'package:azulzinho/themes/color_manager.dart';
-import 'package:azulzinho/themes/styles_manager.dart';
+import 'package:azulzinho/core/resources/constants_manager.dart';
 import 'package:azulzinho/core/utils/functions.dart';
 import 'package:azulzinho/features/kits/models/kit_model.dart';
+import 'package:azulzinho/themes/color_manager.dart';
+import 'package:azulzinho/themes/styles_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+
+import 'calculator_check_box.dart';
 
 class KitWithCheckbox extends StatelessWidget {
   const KitWithCheckbox({
     super.key,
     required this.kit,
-    required this.onChanged,
   });
 
   final KitModel kit;
-  final void Function(bool?)? onChanged;
 
   @override
   Widget build(BuildContext context) {
     Color color = kit.isChecked ? ColorManager.lightGrey : ColorManager.black;
 
     return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        // checkbox
-        Transform.scale(
-          scale: 1.6.sp,
-          child: Checkbox(
-            side: BorderSide(
-              color: Theme.of(context).primaryColor,
-              width: 2.sp,
-            ),
-            fillColor: MaterialStateProperty.all(
-              kit.isChecked ? ColorManager.primary : ColorManager.transparent,
-            ),
-            checkColor: ColorManager.white,
-            value: kit.isChecked,
-            onChanged: onChanged,
-          ),
+        CalculatorCheckBox(kit: kit),
+
+        Gap(
+          isTablet ? 10.w : 0,
         ),
 
         // kit name

@@ -2,7 +2,7 @@ import 'package:azulzinho/core/utils/dependency_injection.dart';
 import 'package:azulzinho/core/widgets/custom_list_view.dart';
 import 'package:azulzinho/features/app_layout/app_layout_cubit/app_states.dart';
 import 'package:azulzinho/features/calculator/calculator_cubit/calculator_cubit.dart';
-import 'package:azulzinho/features/calculator/widgets/kit_with_checkbox.dart';
+import 'package:azulzinho/features/calculator/widgets/calculator/kit_with_checkbox.dart';
 import 'package:azulzinho/features/kits/kit_cubit/kit_cubit.dart';
 import 'package:azulzinho/features/kits/models/kit_model.dart';
 import 'package:flutter/material.dart';
@@ -27,14 +27,9 @@ class KitsListWithCheckbox extends StatelessWidget {
           child: CustomListView(
             itemBuilder: (_, index) {
               KitModel kit = kitsCubit.kits[index];
-              return KitWithCheckbox(
-                kit: kit,
-                onChanged: (_) async {
-                  await kitsCubit.toggleKitChecked(kit);
-                },
-              );
+              return KitWithCheckbox(kit: kit);
             },
-            separatorBuilder: (_, index) =>  Gap(5.h),
+            separatorBuilder: (_, index) => Gap(5.h),
             itemCount: kitsCubit.kits.length,
           ),
         );

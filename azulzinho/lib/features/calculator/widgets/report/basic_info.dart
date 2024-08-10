@@ -1,12 +1,11 @@
 import 'package:azulzinho/core/resources/strings_manager.dart';
-import 'package:azulzinho/themes/styles_manager.dart';
 import 'package:azulzinho/core/resources/values_manager.dart';
 import 'package:azulzinho/core/utils/dependency_injection.dart';
 import 'package:azulzinho/core/utils/functions.dart';
-import 'package:azulzinho/core/widgets/custom_divider.dart';
 import 'package:azulzinho/features/calculator/calculator_cubit/calculator_cubit.dart';
-import 'package:azulzinho/features/calculator/widgets/info_item.dart';
+import 'package:azulzinho/features/calculator/widgets/report/info_item.dart';
 import 'package:azulzinho/features/kits/kit_cubit/kit_cubit.dart';
+import 'package:azulzinho/themes/styles_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -17,6 +16,7 @@ class BasicInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     var cubit = locator<CalculatorCubit>();
     var kitsCubit = locator<KitsCubit>();
+
     return Column(
       children: [
         // date
@@ -38,7 +38,7 @@ class BasicInfo extends StatelessWidget {
             alignment: Alignment.centerLeft,
             child: Text(
               '(${kitsCubit.checkedKits})',
-              style: getMediumStyle(),
+              style: getRegularStyle(),
             ),
           ),
 
@@ -73,6 +73,6 @@ class BasicInfo extends StatelessWidget {
 
   Widget _reportDivider() => Padding(
         padding: EdgeInsets.symmetric(vertical: AppPadding.p8.h),
-        child: CustomDivider(),
+        child: Divider(),
       );
 }

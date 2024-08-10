@@ -3,6 +3,7 @@ import 'package:azulzinho/themes/color_manager.dart';
 import 'package:azulzinho/themes/styles_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomTextFormField extends StatelessWidget {
   const CustomTextFormField({
@@ -47,10 +48,17 @@ class CustomTextFormField extends StatelessWidget {
       keyboardType: keyboardType,
       inputFormatters: inputFormatters,
       onTapOutside: (value) => FocusScope.of(context).unfocus(),
+      style: getMediumStyle(),
       decoration: InputDecoration(
         hintText: hintText,
-        hintStyle: TextStyle(
-          color: ColorManager.lightGrey,
+        contentPadding: isTablet
+            ? EdgeInsets.symmetric(
+                vertical: 10.h,
+                horizontal: 10.w,
+              )
+            : null,
+        hintStyle: getMediumStyle(
+          color: ColorManager.lightGrey2,
         ),
         labelText: labelText,
         labelStyle: getMediumStyle(
@@ -65,6 +73,7 @@ class CustomTextFormField extends StatelessWidget {
       ),
       onChanged: onChanged,
       validator: validator,
+      onFieldSubmitted: (_) => FocusScope.of(context).unfocus(),
     );
   }
 }

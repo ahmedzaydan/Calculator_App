@@ -2,33 +2,37 @@ import 'package:azulzinho/core/resources/constants_manager.dart';
 import 'package:azulzinho/core/widgets/custom_icon_button.dart';
 import 'package:azulzinho/themes/color_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CustomBackArrow extends StatelessWidget {
-  const CustomBackArrow(this.sourceContext, {super.key});
-
-  final BuildContext sourceContext;
+  const CustomBackArrow({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Transform.rotate(
-      angle: 3.14,
-      child: CustomIconButton(
-        icon: Icon(Icons.arrow_forward_ios),
-        onPressed: () {
-          Navigator.pop(sourceContext);
-          // unFocus
-          FocusScope.of(context).unfocus();
-        },
-        style: ButtonStyle(
-          padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-            EdgeInsets.all(0),
+    return CustomIconButton(
+      faIcon: FaIcon(
+        FontAwesomeIcons.chevronLeft,
+        size: 30.sp,
+      ),
+      onPressed: () {
+        Navigator.pop(context);
+        FocusScope.of(context).unfocus();
+      },
+      style: ButtonStyle(
+        padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+          EdgeInsets.only(
+            top: 0,
+            bottom: 0,
+            right: 0,
+            left: isTablet ? 10.w : 0,
           ),
-          iconColor: MaterialStateProperty.all<Color>(
-            ColorManager.white,
-          ),
-          iconSize: MaterialStateProperty.all<double>(
-            ConstantsManager.iconSize * 0.8,
-          ),
+        ),
+        iconColor: WidgetStateProperty.all<Color>(
+          ColorManager.white,
+        ),
+        iconSize: WidgetStateProperty.all<double>(
+          ConstantsManager.iconSize * 0.8,
         ),
       ),
     );

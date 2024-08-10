@@ -2,6 +2,7 @@ import 'package:azulzinho/core/resources/constants_manager.dart';
 import 'package:azulzinho/core/resources/strings_manager.dart';
 import 'package:azulzinho/core/utils/functions.dart';
 import 'package:azulzinho/core/widgets/custom_error_widget.dart';
+import 'package:azulzinho/core/widgets/custom_toast.dart';
 import 'package:azulzinho/core/widgets/loading_widget.dart';
 import 'package:azulzinho/features/app_layout/app_layout_cubit/app_states.dart';
 import 'package:azulzinho/features/kits/kit_cubit/kit_cubit.dart';

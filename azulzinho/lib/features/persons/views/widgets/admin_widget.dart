@@ -60,8 +60,8 @@ class AdminWidget extends StatelessWidget {
           DataItemActionsWidget(
             isDeleteVisible: false,
             editButtonStyle: ButtonStyle(
-              iconColor: MaterialStateProperty.all(ColorManager.white),
-              iconSize: MaterialStateProperty.all(AppSize.s24),
+              iconColor: WidgetStateProperty.all(ColorManager.white),
+              iconSize: WidgetStateProperty.all(AppSize.s24),
             ),
             editOnPressed: () {
               navigateTo(

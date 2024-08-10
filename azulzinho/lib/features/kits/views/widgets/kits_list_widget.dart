@@ -3,6 +3,7 @@ import 'package:azulzinho/core/utils/dependency_injection.dart';
 import 'package:azulzinho/core/utils/extensions.dart';
 import 'package:azulzinho/core/utils/functions.dart';
 import 'package:azulzinho/core/widgets/collapse_button.dart';
+import 'package:azulzinho/core/widgets/custom_alert_dialog.dart';
 import 'package:azulzinho/core/widgets/custom_list_view.dart';
 import 'package:azulzinho/core/widgets/data_item.dart';
 import 'package:azulzinho/core/widgets/edit_item_view.dart';
@@ -73,7 +74,7 @@ class KitsListsWidget extends StatelessWidget {
                     );
                   },
                   deleteOnPressed: () async {
-                    showCustomDialog(
+                    showCustomAlertDialog(
                       context: context,
                       message: KitsStrings.deleteConfirmation,
                       onOk: () async {

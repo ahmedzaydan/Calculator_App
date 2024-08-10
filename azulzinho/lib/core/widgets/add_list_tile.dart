@@ -3,9 +3,10 @@ import 'package:azulzinho/themes/color_manager.dart';
 import 'package:azulzinho/themes/styles_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class CustomListTile extends StatelessWidget {
-  const CustomListTile({
+class AddListTile extends StatelessWidget {
+  const AddListTile({
     super.key,
     required this.onTap,
     required this.text,
@@ -29,14 +30,16 @@ class CustomListTile extends StatelessWidget {
           text,
           style: getBoldStyle(color: ColorManager.white),
         ),
-        trailing: Icon(
-          Icons.arrow_forward_ios,
+        trailing: FaIcon(
+          FontAwesomeIcons.chevronRight,
           color: ColorManager.white,
           size: ConstantsManager.iconSize * 0.8,
         ),
         contentPadding: EdgeInsets.only(
           left: 10.w,
-          right: 10.w,
+          right: 15.w,
+          top: isTablet ? 5 : 0,
+          bottom: isTablet ? 5 : 0,
         ),
       ),
     );

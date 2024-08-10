@@ -5,6 +5,7 @@ import 'package:azulzinho/core/utils/dependency_injection.dart';
 import 'package:azulzinho/core/utils/extensions.dart';
 import 'package:azulzinho/core/utils/functions.dart';
 import 'package:azulzinho/core/widgets/add_or_update_cancel_widget.dart';
+import 'package:azulzinho/core/widgets/custom_app_bar.dart';
 import 'package:azulzinho/core/widgets/custom_text_form_field.dart';
 import 'package:azulzinho/features/kits/kit_cubit/kit_cubit.dart';
 import 'package:azulzinho/features/kits/models/kit_model.dart';
@@ -65,8 +66,7 @@ class EditItemView extends StatelessWidget {
                     return updateKit
                         ? KitsStrings.enterValue
                         : PersonsStrings.enterPercentage;
-                  }
-                  else if (value.isNotEmpty) {
+                  } else if (value.isNotEmpty) {
                     if (label == PersonsStrings.admin) {
                       if (double.parse(value) < 0 ||
                           double.parse(value) > 100) {

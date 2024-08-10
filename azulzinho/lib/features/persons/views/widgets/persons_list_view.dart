@@ -1,6 +1,7 @@
 import 'package:azulzinho/core/resources/strings_manager.dart';
 import 'package:azulzinho/core/utils/dependency_injection.dart';
 import 'package:azulzinho/core/utils/functions.dart';
+import 'package:azulzinho/core/widgets/custom_alert_dialog.dart';
 import 'package:azulzinho/core/widgets/custom_list_view.dart';
 import 'package:azulzinho/core/widgets/data_item.dart';
 import 'package:azulzinho/core/widgets/edit_item_view.dart';
@@ -43,7 +44,7 @@ class PersonsListView extends StatelessWidget {
               );
             },
             deleteOnPressed: () {
-              showCustomDialog(
+              showCustomAlertDialog(
                 context: context,
                 message: PersonsStrings.deleteConfirmation,
                 onOk: () async {

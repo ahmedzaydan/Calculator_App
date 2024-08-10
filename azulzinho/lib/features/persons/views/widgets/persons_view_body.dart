@@ -1,7 +1,8 @@
+import 'package:azulzinho/core/resources/constants_manager.dart';
 import 'package:azulzinho/core/resources/strings_manager.dart';
 import 'package:azulzinho/core/resources/values_manager.dart';
 import 'package:azulzinho/core/utils/functions.dart';
-import 'package:azulzinho/core/widgets/custom_list_tile.dart';
+import 'package:azulzinho/core/widgets/add_list_tile.dart';
 import 'package:azulzinho/features/persons/views/add_person_view.dart';
 import 'package:azulzinho/features/persons/views/widgets/admin_widget.dart';
 import 'package:azulzinho/features/persons/views/widgets/persons_list_view.dart';
@@ -30,7 +31,7 @@ class PersonsViewBody extends StatelessWidget {
             Gap(20.h),
 
             // add person inkwell
-            CustomListTile(
+            AddListTile(
               text: PersonsStrings.addPerson,
               onTap: () {
                 navigateTo(
@@ -40,7 +41,7 @@ class PersonsViewBody extends StatelessWidget {
               },
             ),
 
-            Gap(60.h),
+            Gap(isTablet ? 40.h : 60.h),
 
             PersonsListView(sourceContext: context),
           ],

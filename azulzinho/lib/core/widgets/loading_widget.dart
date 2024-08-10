@@ -17,20 +17,22 @@ class LoadingWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: AppPadding.p18.w),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          CircularProgressIndicator(
-            color: ColorManager.primary,
-          ),
-          SizedBox(height: 20.h),
-          Text(
-            message,
-            style:  getBoldStyle(),
-            textAlign: TextAlign.center,
-            softWrap: true,
-          ),
-        ],
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            CircularProgressIndicator(
+              color: ColorManager.primary,
+            ),
+            SizedBox(height: 20.h),
+            Text(
+              message,
+              style:  getBoldStyle(),
+              textAlign: TextAlign.center,
+              softWrap: true,
+            ),
+          ],
+        ),
       ),
     );
   }
