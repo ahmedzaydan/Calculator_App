@@ -23,7 +23,10 @@ class KitModel {
     required this.startDate,
     this.endDate,
   }) {
-    getKitEndDate();
+    // if user didn't provide the end date
+    if (endDate == null) {
+      getKitEndDate();
+    }
     selectStatus();
 
     if (status == KitStatus.expired) {

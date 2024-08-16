@@ -64,7 +64,7 @@ class CustomTextFormField extends StatelessWidget {
         labelStyle: getMediumStyle(
           color: ColorManager.black,
         ),
-        enabledBorder: _decorateBorder(color: ColorManager.lightGrey),
+        enabledBorder: _decorateBorder(color: ColorManager.lightGrey2),
         focusedBorder: _decorateBorder(color: ColorManager.primary),
         errorBorder: _decorateBorder(color: ColorManager.red),
         focusedErrorBorder: _decorateBorder(color: ColorManager.red),

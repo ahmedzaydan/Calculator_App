@@ -1,15 +1,17 @@
 import 'package:azulzinho/core/resources/strings_manager.dart';
-import 'package:azulzinho/core/resources/values_manager.dart';
 import 'package:azulzinho/core/utils/dependency_injection.dart';
+import 'package:azulzinho/core/utils/extensions.dart';
 import 'package:azulzinho/core/utils/functions.dart';
+import 'package:azulzinho/core/widgets/custom_divider.dart';
 import 'package:azulzinho/features/calculator/calculator_cubit/calculator_cubit.dart';
-import 'package:azulzinho/features/calculator/widgets/report/info_item.dart';
+import 'package:azulzinho/core/widgets/item_widgets/info_item.dart';
 import 'package:azulzinho/features/kits/kit_cubit/kit_cubit.dart';
+import 'package:azulzinho/themes/color_manager.dart';
 import 'package:azulzinho/themes/styles_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class BasicInfo extends StatelessWidget {
+  /// Date, total profit, total expense, total extra, net profit
   const BasicInfo({super.key});
 
   @override
@@ -25,12 +27,12 @@ class BasicInfo extends StatelessWidget {
           value: getDateAsString(),
         ),
 
-        _reportDivider(),
+        CustomDivider(),
 
         // total kit
         InfoItem(
           label: CalculatorStrings.totalProfit,
-          value: kitsCubit.totalKits.toString(),
+          value: kitsCubit.totalKits.toString().currency,
         ),
 
         if (kitsCubit.checkedKits.isNotEmpty)
@@ -42,37 +44,34 @@ class BasicInfo extends StatelessWidget {
             ),
           ),
 
-        _reportDivider(),
+        CustomDivider(),
 
         // total expense
         InfoItem(
           label: CalculatorStrings.totalExpense,
-          value: cubit.totalExpense.toString(),
+          value: cubit.totalExpense.toString().currency,
+          valueColor: ColorManager.red,
+          labelColor: ColorManager.red,
         ),
 
-        _reportDivider(),
+        CustomDivider(),
 
         // total extra
         InfoItem(
           label: CalculatorStrings.extra,
-          value: cubit.totalExtra.toString(),
+          value: cubit.totalExtra.toString().currency,
         ),
 
-        _reportDivider(),
+        CustomDivider(),
 
         // net profit
         InfoItem(
           label: CalculatorStrings.netProfit,
-          value: cubit.netProfit.toString(),
+          value: cubit.netProfit.toString().currency,
         ),
 
-        _reportDivider(),
+        CustomDivider(),
       ],
     );
   }
-
-  Widget _reportDivider() => Padding(
-        padding: EdgeInsets.symmetric(vertical: AppPadding.p8.h),
-        child: Divider(),
-      );
 }

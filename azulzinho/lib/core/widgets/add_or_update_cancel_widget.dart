@@ -5,17 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
-class AddUpdateCancelWidget extends StatelessWidget {
-  const AddUpdateCancelWidget({
+class ItemActionButtons extends StatelessWidget {
+  const ItemActionButtons({
     super.key,
-    required this.onPressed,
+    required this.onActionPressed,
     required this.actionText,
-    required this.sourceContext,
   });
 
-  final void Function()? onPressed;
+  final void Function()? onActionPressed;
   final String actionText;
-  final BuildContext sourceContext;
 
   @override
   Widget build(BuildContext context) {
@@ -24,8 +22,8 @@ class AddUpdateCancelWidget extends StatelessWidget {
         // add/update button
         Expanded(
           child: CustomElevatedButton(
-            backgroundColor: ColorManager.green,
-            onPressed: onPressed,
+            backgroundColor: ColorManager.lightGreen,
+            onPressed: onActionPressed,
             text: actionText,
           ),
         ),
@@ -36,7 +34,7 @@ class AddUpdateCancelWidget extends StatelessWidget {
         Expanded(
           child: CustomElevatedButton(
             backgroundColor: ColorManager.red,
-            onPressed: () => Navigator.pop(sourceContext),
+            onPressed: () => Navigator.pop(context),
             text: StringsManager.cancel,
           ),
         ),

@@ -10,6 +10,12 @@ extension NonNullString on String? {
   }
 }
 
+extension CurrencyString on String {
+  String get currency {
+    return '$this R\$';
+  }
+}
+
 extension ToDouble on String {
   double toDouble() {
     return double.parse(this);

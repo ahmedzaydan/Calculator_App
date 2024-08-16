@@ -13,7 +13,7 @@ class CustomBackArrow extends StatelessWidget {
     return CustomIconButton(
       faIcon: FaIcon(
         FontAwesomeIcons.chevronLeft,
-        size: 30.sp,
+        size: 24.sp,
       ),
       onPressed: () {
         Navigator.pop(context);

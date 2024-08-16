@@ -15,13 +15,27 @@ ThemeData getApplicationTheme() {
     appBarTheme: AppBarTheme(
       centerTitle: true,
       color: ColorManager.primary,
-      titleTextStyle: getMediumStyle(color: ColorManager.white),
+      titleTextStyle: getMediumStyle(
+        color: ColorManager.white,
+        fontSize: 20,
+      ),
       actionsIconTheme: IconThemeData(
         color: ColorManager.white,
       ),
       iconTheme: IconThemeData(
         color: ColorManager.white,
       ),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(
+            ConstantsManager.borderRadius * 2,
+          ),
+          bottomRight: Radius.circular(
+            ConstantsManager.borderRadius * 2,
+          ),
+        ),
+      ),
+      toolbarHeight: 70.h,
     ),
 
     // icon theme

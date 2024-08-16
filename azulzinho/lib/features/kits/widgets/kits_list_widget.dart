@@ -5,11 +5,11 @@ import 'package:azulzinho/core/utils/functions.dart';
 import 'package:azulzinho/core/widgets/collapse_button.dart';
 import 'package:azulzinho/core/widgets/custom_alert_dialog.dart';
 import 'package:azulzinho/core/widgets/custom_list_view.dart';
-import 'package:azulzinho/core/widgets/data_item.dart';
-import 'package:azulzinho/core/widgets/edit_item_view.dart';
+import 'package:azulzinho/core/widgets/item_widgets/data_item.dart';
+import 'package:azulzinho/core/widgets/item_widgets/edit_item_view.dart';
 import 'package:azulzinho/features/kits/kit_cubit/kit_cubit.dart';
 import 'package:azulzinho/features/kits/models/kit_model.dart';
-import 'package:azulzinho/features/kits/views/widgets/kits_list_header.dart';
+import 'package:azulzinho/features/kits/widgets/kits_list_header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -35,15 +35,12 @@ class KitsListsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Padding(
-          padding: EdgeInsets.only(right: 10.w),
-          child: KitsListHeader(
-            title: title,
-            counter: list.length.toString(),
-            collapseButton: CollapseButton(
-              isCollapsed: isCollapsed,
-              onPressed: collapseOnPressed,
-            ),
+        KitsListHeader(
+          title: title,
+          counter: list.length.toString(),
+          collapseButton: CollapseButton(
+            isCollapsed: isCollapsed,
+            onPressed: collapseOnPressed,
           ),
         ),
 
@@ -59,7 +56,7 @@ class KitsListsWidget extends StatelessWidget {
                 return DataItem(
                   color: kit.status!.kitType.backgroundColor,
                   name: kit.name,
-                  value: kit.value.toString(),
+                  value: '${kit.value} R\$',
                   editOnPressed: () {
                     navigateTo(
                       context: sourceContext,

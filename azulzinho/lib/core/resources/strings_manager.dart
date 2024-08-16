@@ -51,6 +51,10 @@ abstract class KitsStrings {
   static const String enterNumber = 'Digite o número do kit';
   static const String enterStartDate = "Digite a data";
   static const String startDate = "Data de início";
+  static const String enterEndDate = "Digite a data";
+  static const String endDate = "Data de término";
+  static const String endDateBeforeStartDate =
+      'A data de término deve ser posterior à data de início';
   static const String kitExists = 'Kit já existe';
   static const String addKit = 'Adicionar Novo Kit';
   static const String loadingKits = 'Carregando dados dos kits...';

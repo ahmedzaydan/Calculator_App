@@ -3,8 +3,8 @@ import 'package:azulzinho/core/resources/strings_manager.dart';
 import 'package:azulzinho/core/utils/dependency_injection.dart';
 import 'package:azulzinho/core/utils/functions.dart';
 import 'package:azulzinho/core/widgets/add_or_update_cancel_widget.dart';
-import 'package:azulzinho/core/widgets/add_view.dart';
 import 'package:azulzinho/core/widgets/custom_text_form_field.dart';
+import 'package:azulzinho/core/widgets/item_widgets/add_item_view_layout.dart';
 import 'package:azulzinho/features/kits/kit_cubit/kit_cubit.dart';
 import 'package:azulzinho/features/persons/person_cubit/persons_cubit.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +38,7 @@ class AddPersonView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AddView(
+    return AddItemViewLayout(
       title: PersonsStrings.addPerson,
       child: Form(
         key: _formKey,
@@ -60,8 +60,8 @@ class AddPersonView extends StatelessWidget {
   }
 
   Widget _actions() {
-    return AddUpdateCancelWidget(
-      onPressed: () async {
+    return ItemActionButtons(
+      onActionPressed: () async {
         if (_formKey.currentState!.validate()) {
           await personsCubit
               .createPerson(
@@ -76,7 +76,6 @@ class AddPersonView extends StatelessWidget {
         }
       },
       actionText: PersonsStrings.add,
-      sourceContext: sourceContext,
     );
   }
 

@@ -40,7 +40,7 @@ class CalculatorApp extends StatelessWidget {
               create: (context) => locator<PersonsCubit>(),
             ),
 
-            // profits cubit
+            // kits cubit
             BlocProvider<KitsCubit>(
               create: (context) => locator<KitsCubit>(),
             ),

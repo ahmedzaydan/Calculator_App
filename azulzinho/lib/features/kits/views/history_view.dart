@@ -1,12 +1,13 @@
-import 'package:azulzinho/themes/color_manager.dart';
 import 'package:azulzinho/core/resources/strings_manager.dart';
-import 'package:azulzinho/themes/styles_manager.dart';
 import 'package:azulzinho/core/resources/values_manager.dart';
 import 'package:azulzinho/core/utils/dependency_injection.dart';
+import 'package:azulzinho/core/utils/extensions.dart';
 import 'package:azulzinho/core/widgets/custom_list_view.dart';
-import 'package:azulzinho/core/widgets/data_item.dart';
+import 'package:azulzinho/core/widgets/item_widgets/data_item.dart';
 import 'package:azulzinho/features/app_layout/app_layout_cubit/app_states.dart';
 import 'package:azulzinho/features/kits/kit_cubit/kit_cubit.dart';
+import 'package:azulzinho/themes/color_manager.dart';
+import 'package:azulzinho/themes/styles_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -43,7 +44,7 @@ class HistoryView extends StatelessWidget {
                     return DataItem(
                       color: ColorManager.expired,
                       name: cubit.expiredKits[index].name,
-                      value: cubit.expiredKits[index].value.toString(),
+                      value: cubit.expiredKits[index].value.toString().currency,
                       isEditVisible: false,
                       isDeleteVisible: false,
                     );

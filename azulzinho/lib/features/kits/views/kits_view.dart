@@ -7,7 +7,7 @@ import 'package:azulzinho/core/widgets/loading_widget.dart';
 import 'package:azulzinho/features/app_layout/app_layout_cubit/app_states.dart';
 import 'package:azulzinho/features/kits/kit_cubit/kit_cubit.dart';
 import 'package:azulzinho/features/kits/kit_cubit/kit_states.dart';
-import 'package:azulzinho/features/kits/views/widgets/kits_view_body.dart';
+import 'package:azulzinho/features/kits/widgets/kits_view_body.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -27,7 +27,6 @@ class KitsView extends StatelessWidget {
         }
 
         if (state is UpdateKitErrorState) {
-          kprint(state.message);
           showCustomToast(state.message, ToastStates.error);
         }
 

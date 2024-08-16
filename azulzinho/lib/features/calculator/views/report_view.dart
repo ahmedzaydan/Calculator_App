@@ -9,7 +9,6 @@ import 'package:azulzinho/features/calculator/widgets/report/basic_info.dart';
 import 'package:azulzinho/features/calculator/widgets/report/note.dart';
 import 'package:azulzinho/features/calculator/widgets/report/results_section.dart';
 import 'package:azulzinho/themes/color_manager.dart';
-import 'package:azulzinho/themes/styles_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -26,7 +25,17 @@ class ReportView extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: _appBar(context),
+        appBar: CustomAppBar(
+          title: CalculatorStrings.reportScreen,
+          actions: [
+            Padding(
+              padding: EdgeInsets.only(
+                right: AppPadding.p24.w,
+              ),
+              child: ShareButton(controller: screenshotController),
+            ),
+          ],
+        ),
         body: Screenshot(
           controller: screenshotController,
           child: Container(
@@ -43,7 +52,19 @@ class ReportView extends StatelessWidget {
                     children: [
                       Gap(10.h),
                       const BasicInfo(),
-                      Gap(50.h),
+
+                      // Logo
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 20.w,
+                          vertical: 10.h,
+                        ),
+                        child: Opacity(
+                          opacity: 0.3,
+                          child: Image.asset('assets/images/logo.jpeg'),
+                        ),
+                      ),
+
                       const ResultsSection(),
                       Gap(50.h),
                       Note(cubit: cubit),
@@ -58,28 +79,27 @@ class ReportView extends StatelessWidget {
       ),
     );
   }
+}
 
-  AppBar _appBar(BuildContext context) {
-    return customAppBar(
-      context: context,
-      style: getBoldStyle(),
-      title: CalculatorStrings.reportScreen,
-      actions: [
-        Padding(
-          padding: EdgeInsets.only(
-            right: AppPadding.p18.w,
-          ),
-          child: CustomIconButton(
-            onPressed: () => locator<CalculatorCubit>()
-                .captureAndShare(screenshotController),
-            faIcon: FaIcon(
-              FontAwesomeIcons.solidShareFromSquare,
-              color: ColorManager.white,
-              size: AppSize.s28,
-            ),
-          ),
-        ),
-      ],
+class ShareButton extends StatelessWidget {
+  const ShareButton({
+    super.key,
+    required this.controller,
+  });
+
+  final ScreenshotController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomIconButton(
+      onPressed: () {
+        locator<CalculatorCubit>().captureAndShare(controller);
+      },
+      faIcon: FaIcon(
+        FontAwesomeIcons.solidShareFromSquare,
+        color: ColorManager.white,
+        size: AppSize.s24,
+      ),
     );
   }
 }

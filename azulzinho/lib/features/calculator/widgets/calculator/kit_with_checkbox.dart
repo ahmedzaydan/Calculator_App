@@ -1,4 +1,5 @@
 import 'package:azulzinho/core/resources/constants_manager.dart';
+import 'package:azulzinho/core/utils/extensions.dart';
 import 'package:azulzinho/core/utils/functions.dart';
 import 'package:azulzinho/features/kits/models/kit_model.dart';
 import 'package:azulzinho/themes/color_manager.dart';
@@ -48,7 +49,7 @@ class KitWithCheckbox extends StatelessWidget {
 
         // kit value
         Text(
-          '${kit.value}',
+          kit.value.toString().currency,
           style: getBoldStyle(color: color),
         ),
       ],

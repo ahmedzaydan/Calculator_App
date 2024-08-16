@@ -41,8 +41,7 @@ class EditItemView extends StatelessWidget {
     valueController.text = value.toString();
 
     return Scaffold(
-      appBar: customAppBar(
-        context: sourceContext,
+      appBar: CustomAppBar(
         title: updateKit
             ? 'Atualizar valor de $label'
             : 'Atualizar porcentagem de $label',
@@ -91,8 +90,8 @@ class EditItemView extends StatelessWidget {
   }
 
   Widget _actions() {
-    return AddUpdateCancelWidget(
-      onPressed: () async {
+    return ItemActionButtons(
+      onActionPressed: () async {
         var kitsCubit = locator<KitsCubit>();
         if (formKey.currentState!.validate()) {
           if (updateKit) {
@@ -137,8 +136,8 @@ class EditItemView extends StatelessWidget {
           }
         }
       },
+      
       actionText: StringsManager.update,
-      sourceContext: sourceContext,
     );
   }
 }

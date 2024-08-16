@@ -7,11 +7,10 @@ import 'package:azulzinho/features/kits/models/kit_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class KitsCubit extends Cubit<AppStates> {
-  KitsCubit() : super(KitsInitialState());
-
   double totalKits = 0.0;
   String checkedKits = '';
-  DateTime selectedDate = DateTime.now();
+  DateTime? startDate;
+  DateTime? endDate;
 
   List<bool> collapsedLists = [
     true,
@@ -35,6 +34,10 @@ class KitsCubit extends Cubit<AppStates> {
   List<KitModel> month24Kits = [];
   List<KitModel> month12Kits = [];
   List<KitModel> normalKits = [];
+
+  KitsCubit() : super(KitsInitialState());
+
+  static KitsCubit of(context) => BlocProvider.of<KitsCubit>(context);
 
   /// Methods deals with storage
   Future<void> fetchData() async {
@@ -70,7 +73,7 @@ class KitsCubit extends Cubit<AppStates> {
     }
   }
 
-  Future<bool> createKit({
+  Future<void> createKit({
     required String name,
     required double value,
   }) async {
@@ -87,7 +90,6 @@ class KitsCubit extends Cubit<AppStates> {
       // if kit name already exists
       if (rows.isNotEmpty) {
         emit(CreateKitErrorState(KitsStrings.kitExists));
-        return false;
       }
 
       // if kit name is not exists
@@ -96,10 +98,9 @@ class KitsCubit extends Cubit<AppStates> {
         KitModel kit = KitModel(
           name: newName,
           value: value,
-          startDate: getFormattedDate(date: selectedDate),
+          startDate: getFormattedDate(date: startDate),
+          endDate: endDate != null ? getFormattedDate(date: endDate!) : null,
         );
-
-        kprint('KitEndDate: ${kit.endDate}');
 
         int kitId = await SqfliteService.insertRow(
           '''INSERT INTO ${KitsStrings.tableName}
@@ -117,7 +118,6 @@ class KitsCubit extends Cubit<AppStates> {
         // if kit is not inserted successfully
         if (kitId == -1) {
           emit(CreateKitErrorState(newName));
-          return false;
         }
 
         // if kit is inserted successfully
@@ -125,12 +125,10 @@ class KitsCubit extends Cubit<AppStates> {
           kit.setDbId(kitId);
           emit(CreateKitSuccessState(newName));
           addKitToList(kit);
-          return true;
         }
       }
     } catch (e) {
       emit(CreateKitErrorState(newName));
-      return false;
     }
   }
 
@@ -161,6 +159,8 @@ class KitsCubit extends Cubit<AppStates> {
       return isUpdated;
     }
   }
+
+  Future<void> renewExpiredKit(KitModel kitModel) async {}
 
   Future<void> toggleKitChecked(KitModel kitModel) async {
     try {
