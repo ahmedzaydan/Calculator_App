@@ -141,8 +141,10 @@ import 'package:azulzinho/core/resources/strings_manager.dart';
 import 'package:azulzinho/core/resources/values_manager.dart';
 import 'package:azulzinho/core/utils/functions.dart';
 import 'package:azulzinho/core/widgets/add_list_tile.dart';
+import 'package:azulzinho/core/widgets/custom_list_view.dart';
+import 'package:azulzinho/features/kits/kit_cubit/kit_cubit.dart';
 import 'package:azulzinho/features/kits/views/add_kit_view.dart';
-import 'package:azulzinho/features/kits/widgets/kits_lists_view.dart';
+import 'package:azulzinho/features/kits/widgets/kits_list_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -154,6 +156,8 @@ class KitsViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var cubit = KitsCubit.of(context);
+
     return SingleChildScrollView(
       child: Padding(
         padding: EdgeInsets.symmetric(
@@ -169,13 +173,24 @@ class KitsViewBody extends StatelessWidget {
               onTap: () {
                 navigateTo(
                   context: context,
-                  dest: AddKitView(sourceContext: context),
+                  dest: AddKitView(),
                 );
               },
             ),
 
             Gap(20.h),
-            KitsListsView(sourceContext: context),
+            CustomListView(
+              itemBuilder: (context, index) {
+                return KitsListWidget(
+                  list: cubit.getCollapsableList(index),
+                  title: cubit.listsTitles[index],
+                  isCollapsed: cubit.collapsedLists[index],
+                  collapseOnPressed: () => cubit.toggleListVisibility(index),
+                );
+              },
+              itemCount: 5,
+              withSeparator: false,
+            )
           ],
         ),
       ),

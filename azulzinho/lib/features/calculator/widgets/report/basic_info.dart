@@ -3,8 +3,8 @@ import 'package:azulzinho/core/utils/dependency_injection.dart';
 import 'package:azulzinho/core/utils/extensions.dart';
 import 'package:azulzinho/core/utils/functions.dart';
 import 'package:azulzinho/core/widgets/custom_divider.dart';
-import 'package:azulzinho/features/calculator/calculator_cubit/calculator_cubit.dart';
 import 'package:azulzinho/core/widgets/item_widgets/info_item.dart';
+import 'package:azulzinho/features/calculator/calculator_cubit/calculator_cubit.dart';
 import 'package:azulzinho/features/kits/kit_cubit/kit_cubit.dart';
 import 'package:azulzinho/themes/color_manager.dart';
 import 'package:azulzinho/themes/styles_manager.dart';
@@ -20,6 +20,7 @@ class BasicInfo extends StatelessWidget {
     var kitsCubit = locator<KitsCubit>();
 
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
         // date
         InfoItem(

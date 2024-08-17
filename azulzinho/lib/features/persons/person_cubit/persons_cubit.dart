@@ -4,11 +4,10 @@ import 'package:azulzinho/core/utils/sqflite_service.dart';
 import 'package:azulzinho/features/app_layout/app_layout_cubit/app_states.dart';
 import 'package:azulzinho/features/persons/models/person_model.dart';
 import 'package:azulzinho/features/persons/person_cubit/persons_states.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PersonsCubit extends Cubit<AppStates> {
-  PersonsCubit() : super(PersonInitialState());
-
   double totalPercentage = 0.0;
 
   PersonModel admin = PersonModel(
@@ -17,6 +16,11 @@ class PersonsCubit extends Cubit<AppStates> {
   );
 
   List<PersonModel> personItems = [];
+
+  PersonsCubit() : super(PersonInitialState());
+
+  static PersonsCubit of(BuildContext context) =>
+      BlocProvider.of<PersonsCubit>(context);
 
   /// Methods deals with storage
   Future<void> fetchData() async {
@@ -67,7 +71,7 @@ class PersonsCubit extends Cubit<AppStates> {
     }
   }
 
-  Future<bool> createPerson({
+  Future<void> createPerson({
     required String name,
     required double percentage,
   }) async {
@@ -93,21 +97,17 @@ class PersonsCubit extends Cubit<AppStates> {
 
         if (id == -1) {
           emit(CreatePersonErrorState(person.name));
-          return false;
         } else {
           person.setDbId(id);
           totalPercentage += percentage;
           personItems.add(person);
           emit(CreatePersonSuccessState(person.name));
-          return true;
         }
       } else {
         emit(CreatePersonErrorState(errorMessage));
-        return false;
       }
     } catch (e) {
       emit(CreatePersonErrorState(name));
-      return false;
     }
   }
 
@@ -259,5 +259,37 @@ class PersonsCubit extends Cubit<AppStates> {
     for (var person in personItems) {
       person.calculateShareValue(totalNetProfit);
     }
+  }
+
+  String? validatePresonName(String? name) {
+    if (name!.isEmpty) {
+      return StringsManager.enterName;
+    } else if (name.isNotEmpty) {
+      // Check if the person name already exists
+      final bool isPersonExists = personItems.any(
+        (element) {
+          return element.name == name;
+        },
+      );
+
+      if (isPersonExists) {
+        return PersonsStrings.personExists;
+      }
+    }
+
+    return null;
+  }
+
+  String? validatePersonPercentage(String? percentage) {
+    if (percentage!.isEmpty) {
+      return PersonsStrings.enterPercentage;
+    } else if (percentage.isNotEmpty) {
+      // Check if the person percentage is valid
+      if (double.parse(percentage) < 0 && double.parse(percentage) > 100) {
+        return PersonsStrings.invalidPercentage;
+      }
+    }
+
+    return null;
   }
 }

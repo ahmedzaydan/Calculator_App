@@ -28,10 +28,10 @@ ThemeData getApplicationTheme() {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(
-            ConstantsManager.borderRadius * 2,
+            ConstantsManager.borderRadius,
           ),
           bottomRight: Radius.circular(
-            ConstantsManager.borderRadius * 2,
+            ConstantsManager.borderRadius,
           ),
         ),
       ),
@@ -73,6 +73,25 @@ ThemeData getApplicationTheme() {
     dividerTheme: DividerThemeData(
       color: ColorManager.black,
       thickness: 1.5.sp,
+    ),
+
+    // Lit tile theme
+    listTileTheme: ListTileThemeData(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(
+          ConstantsManager.borderRadius / 2,
+        ),
+      ),
+      tileColor: ColorManager.primary,
+      contentPadding: EdgeInsets.only(
+        left: 10.w,
+        right: 15.w,
+        top: isTablet ? 5 : 0,
+        bottom: isTablet ? 5 : 0,
+      ),
+      titleTextStyle: getBoldStyle(
+        color: ColorManager.white,
+      ),
     ),
   );
 }

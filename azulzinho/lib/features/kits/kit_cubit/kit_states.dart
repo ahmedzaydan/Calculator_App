@@ -66,6 +66,30 @@ class UpdateKitErrorState extends AppStates {
   UpdateKitErrorState(this.name, {this.error});
 }
 
+/// Renew kit states
+class RenewKitLoadingState extends AppStates {}
+
+class RenewKitSuccessState extends AppStates {
+  final String name;
+
+  String get message {
+    return '$name renovado com sucesso';
+  }
+
+  RenewKitSuccessState(this.name);
+}
+
+class RenewKitErrorState extends AppStates {
+  final String? error;
+  final String name;
+
+  String get message {
+    return error ?? '${KitsStrings.failedRenew} $name';
+  }
+
+  RenewKitErrorState(this.name, {this.error});
+}
+
 /// Change Kit status states
 class ToggleKitCheckedStatusSuccessState extends AppStates {}
 

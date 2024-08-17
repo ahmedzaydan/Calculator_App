@@ -6,7 +6,7 @@ import 'package:get_it/get_it.dart';
 
 final GetIt locator = GetIt.instance;
 
-void getAppModules() {
+void initializeDependencies() {
   // CalculatorCubit instance
   locator.registerLazySingleton<CalculatorCubit>(
     () => CalculatorCubit(

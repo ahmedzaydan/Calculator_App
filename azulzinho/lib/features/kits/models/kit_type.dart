@@ -7,6 +7,6 @@ class KitType {
 
   KitType({
     this.typeString = KitsStrings.normal,
-    this.backgroundColor = Colors.transparent,
+    this.backgroundColor = Colors.white,
   });
 }

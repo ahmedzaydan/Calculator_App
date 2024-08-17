@@ -11,13 +11,8 @@ import 'package:azulzinho/themes/color_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-// TODO: capture invisble parts also
-// capture from long widget constructor
-
 class ResultsSection extends StatelessWidget {
-  const ResultsSection({
-    super.key,
-  });
+  const ResultsSection({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -4,8 +4,10 @@ import 'package:azulzinho/core/utils/sqflite_service.dart';
 import 'package:azulzinho/features/app_layout/app_layout_cubit/app_states.dart';
 import 'package:azulzinho/features/kits/kit_cubit/kit_states.dart';
 import 'package:azulzinho/features/kits/models/kit_model.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+// TODO: try to separate it into more than one cubit please
 class KitsCubit extends Cubit<AppStates> {
   double totalKits = 0.0;
   String checkedKits = '';
@@ -160,7 +162,45 @@ class KitsCubit extends Cubit<AppStates> {
     }
   }
 
-  Future<void> renewExpiredKit(KitModel kitModel) async {}
+  Future<void> renewExpiredKit({
+    required KitModel kitModel,
+    required double value,
+  }) async {
+    emit(RenewKitLoadingState());
+    try {
+      KitModel tempKit = KitModel(
+        name: kitModel.name,
+        value: value,
+        startDate: getFormattedDate(date: startDate),
+        endDate: endDate != null ? getFormattedDate(date: endDate!) : null,
+      );
+
+      bool isUpdated = await SqfliteService.updateRecord(
+        tableName: KitsStrings.tableName,
+        data:
+            '''value = ${kitModel.value}, isExpired = 0, startDate = '${tempKit.startDate}', endDate = '${tempKit.endDate}' ''',
+        id: kitModel.getDbId,
+      );
+
+      if (isUpdated) {
+        deleteKitFromList(kitModel);
+
+        // Update current kit
+        kitModel.setValue(value);
+        kitModel.setIsExpired(false);
+        kitModel.status = tempKit.status;
+        kitModel.startDate = tempKit.startDate;
+        kitModel.endDate = tempKit.endDate;
+
+        addKitToList(kitModel);
+        emit(RenewKitSuccessState(kitModel.name));
+      } else {
+        emit(RenewKitErrorState(kitModel.name));
+      }
+    } catch (e) {
+      emit(RenewKitErrorState(kitModel.name));
+    }
+  }
 
   Future<void> toggleKitChecked(KitModel kitModel) async {
     try {
@@ -369,6 +409,53 @@ class KitsCubit extends Cubit<AppStates> {
     month12Kits.clear();
     normalKits.clear();
   }
+
+  String? validateKitName(String? value) {
+    if (value!.isEmpty) {
+      return KitsStrings.enterNumber;
+    }
+
+    // Value is not empty
+    else if (value.isNotEmpty) {
+      // Check if the kit number already exists
+      final bool exist = kits.any(
+        (element) {
+          return element.name == value;
+        },
+      );
+
+      if (exist) {
+        return KitsStrings.kitExists;
+      }
+    }
+
+    return null;
+  }
+
+  String? validateKitValue(String? value) {
+    if (value!.isEmpty) {
+      return KitsStrings.enterValue;
+    }
+
+    return null;
+  }
+
+  String? validateStartDate() {
+    if (startDate == null) {
+      return KitsStrings.enterStartDate;
+    }
+
+    return null;
+  }
+
+  String? validateEndDate() {
+    // If end date is before start date
+    if (endDate != null && endDate!.isBefore(startDate!)) {
+      return KitsStrings.endDateBeforeStartDate;
+    }
+
+    return null;
+  }
 }
 
 enum KitStatus {
@@ -382,4 +469,21 @@ enum KitStatus {
 enum SortingType {
   name,
   kitStatus,
+}
+
+extension KitStatusStringMapper on KitStatus {
+  String get name {
+    switch (this) {
+      case KitStatus.expired:
+        return "Expired";
+      case KitStatus.month12:
+        return "12 Months";
+      case KitStatus.month24:
+        return "24 Months";
+      case KitStatus.month30:
+        return "30 Months";
+      default:
+        return "Normal";
+    }
+  }
 }

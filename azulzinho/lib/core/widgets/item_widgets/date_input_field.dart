@@ -11,12 +11,17 @@ class DateInputField extends StatelessWidget {
     required this.label,
     this.validator,
     required this.onDateSelected,
+    this.startFromNow = false,
   });
 
   final TextEditingController controller;
   final String label;
   final String? Function(String?)? validator;
   final void Function(DateTime date) onDateSelected;
+
+  /// This variable is used to select the start date
+  /// either from 2000 or from now
+  final bool startFromNow;
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +51,7 @@ class DateInputField extends StatelessWidget {
           },
           context: context,
           initialDate: DateTime.now(),
-          firstDate: DateTime(2000),
+          firstDate: startFromNow ? DateTime.now() : DateTime(2000),
           lastDate: DateTime(2100),
         );
 

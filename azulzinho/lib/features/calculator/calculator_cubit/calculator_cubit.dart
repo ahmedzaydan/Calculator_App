@@ -24,6 +24,7 @@ class CalculatorCubit extends Cubit<AppStates> {
   final TextEditingController expensesController = TextEditingController();
   final TextEditingController extraController = TextEditingController();
   final TextEditingController noteController = TextEditingController();
+  final ScreenshotController screenshotController = ScreenshotController();
 
   String expenses = '';
   String note = '';
@@ -95,15 +96,11 @@ class CalculatorCubit extends Cubit<AppStates> {
     emit(ClearState());
   }
 
-  Future<void> captureAndShare(ScreenshotController controller) async {
+  Future<void> captureAndShare() async {
     emit(ShareLoadingState());
 
-    controller.capture().then(
-      (capturedImage) {
-        // _saveToGallery(capturedImage!);
-
-        _share(capturedImage!);
-      },
+    screenshotController.capture().then(
+      (capturedImage) => _share(capturedImage!),
     ).catchError(
       (onError) {
         kprint("\nError capturing visible image\n");

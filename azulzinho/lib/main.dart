@@ -5,28 +5,21 @@ import 'package:azulzinho/core/utils/functions.dart';
 import 'package:azulzinho/core/utils/sqflite_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() async {
   try {
     WidgetsFlutterBinding.ensureInitialized();
-
     await SqfliteService.initialize();
-
+    await ScreenUtil.ensureScreenSize();
     Bloc.observer = MyBlocObserver();
+    initializeDependencies();
 
-    getAppModules();
-
-    await Future.delayed(const Duration(milliseconds: 150));
-
-    // TODO: use the same icon family (change current)
-    // handle tablet
     // handle report view
     // handle laoding, error widgets and empty widgets
-    // handle bottom nav bar icons
-
     runApp(const CalculatorApp());
+    // runApp(MyApp());
   } catch (error) {
     kprint('Error in main: $error');
   }
 }
-

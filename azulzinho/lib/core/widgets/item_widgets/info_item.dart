@@ -19,29 +19,33 @@ class InfoItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: Text(
-            label,
-            style: getBoldStyle(
-              color: labelColor ?? ColorManager.black,
-            ),
-            maxLines: 10,
-            overflow: TextOverflow.ellipsis,
-            softWrap: true,
-          ),
-        ),
-        Padding(
-          padding: EdgeInsets.only(left: 10.w),
-          child: Text(
-            value,
-            style: getBoldStyle(
-              color: valueColor ?? ColorManager.black,
+    return SizedBox(
+      width: 1.sw,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Expanded(
+            child: Text(
+              label,
+              style: getBoldStyle(
+                color: labelColor ?? ColorManager.black,
+              ),
+              maxLines: 10,
+              overflow: TextOverflow.ellipsis,
+              softWrap: true,
             ),
           ),
-        ),
-      ],
+          Padding(
+            padding: EdgeInsets.only(left: 10.w),
+            child: Text(
+              value,
+              style: getBoldStyle(
+                color: valueColor ?? ColorManager.black,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

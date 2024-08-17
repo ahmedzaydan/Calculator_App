@@ -6,6 +6,7 @@ import 'package:azulzinho/core/widgets/custom_icon_button.dart';
 import 'package:azulzinho/features/app_layout/app_layout_cubit/app_states.dart';
 import 'package:azulzinho/features/calculator/calculator_cubit/calculator_cubit.dart';
 import 'package:azulzinho/features/calculator/widgets/report/basic_info.dart';
+import 'package:azulzinho/features/calculator/widgets/report/logo_widget.dart';
 import 'package:azulzinho/features/calculator/widgets/report/note.dart';
 import 'package:azulzinho/features/calculator/widgets/report/results_section.dart';
 import 'package:azulzinho/themes/color_manager.dart';
@@ -13,16 +14,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:gap/gap.dart';
 import 'package:screenshot/screenshot.dart';
 
 class ReportView extends StatelessWidget {
   ReportView({super.key});
 
-  final ScreenshotController screenshotController = ScreenshotController();
-
   @override
   Widget build(BuildContext context) {
+    var calculatorCubit = locator<CalculatorCubit>();
+
     return SafeArea(
       child: Scaffold(
         appBar: CustomAppBar(
@@ -32,73 +32,42 @@ class ReportView extends StatelessWidget {
               padding: EdgeInsets.only(
                 right: AppPadding.p24.w,
               ),
-              child: ShareButton(controller: screenshotController),
+              child: CustomIconButton(
+                onPressed: () => calculatorCubit.captureAndShare(),
+                faIcon: FaIcon(
+                  FontAwesomeIcons.solidShareFromSquare,
+                  color: ColorManager.white,
+                  size: AppSize.s24,
+                ),
+              ),
             ),
           ],
         ),
-        body: Screenshot(
-          controller: screenshotController,
-          child: Container(
-            color: ColorManager.white,
-            padding: EdgeInsets.symmetric(
-              horizontal: AppPadding.p20.w,
-              vertical: AppPadding.p20.h,
-            ),
-            child: SingleChildScrollView(
-              child: BlocBuilder<CalculatorCubit, AppStates>(
-                builder: (context, state) {
-                  var cubit = locator<CalculatorCubit>();
-                  return Column(
+        body: SingleChildScrollView(
+          child: BlocBuilder<CalculatorCubit, AppStates>(
+            builder: (context, state) {
+              var cubit = locator<CalculatorCubit>();
+              return Screenshot(
+                controller: cubit.screenshotController,
+                child: Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: AppPadding.p20.w,
+                    vertical: AppPadding.p20.h,
+                  ),
+                  color: ColorManager.white,
+                  child: Column(
                     children: [
-                      Gap(10.h),
                       const BasicInfo(),
-
-                      // Logo
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 20.w,
-                          vertical: 10.h,
-                        ),
-                        child: Opacity(
-                          opacity: 0.3,
-                          child: Image.asset('assets/images/logo.jpeg'),
-                        ),
-                      ),
-
+                      LogoWidget(),
                       const ResultsSection(),
-                      Gap(50.h),
-                      Note(cubit: cubit),
-                      Gap(50.h),
+                      Note(note: cubit.note),
                     ],
-                  );
-                },
-              ),
-            ),
+                  ),
+                ),
+              );
+            },
           ),
         ),
-      ),
-    );
-  }
-}
-
-class ShareButton extends StatelessWidget {
-  const ShareButton({
-    super.key,
-    required this.controller,
-  });
-
-  final ScreenshotController controller;
-
-  @override
-  Widget build(BuildContext context) {
-    return CustomIconButton(
-      onPressed: () {
-        locator<CalculatorCubit>().captureAndShare(controller);
-      },
-      faIcon: FaIcon(
-        FontAwesomeIcons.solidShareFromSquare,
-        color: ColorManager.white,
-        size: AppSize.s24,
       ),
     );
   }

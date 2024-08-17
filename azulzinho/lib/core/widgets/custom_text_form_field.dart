@@ -22,6 +22,7 @@ class CustomTextFormField extends StatelessWidget {
     this.fontSize,
     this.readOnly = false,
     this.onTap,
+    this.enabled = true,
   });
 
   final Key? formKey;
@@ -35,6 +36,7 @@ class CustomTextFormField extends StatelessWidget {
   final FontWeight fontWeight;
   final double? fontSize;
   final bool readOnly;
+  final bool enabled;
   final void Function()? onTap;
 
   @override
@@ -42,6 +44,7 @@ class CustomTextFormField extends StatelessWidget {
     return TextFormField(
       onTap: onTap,
       readOnly: readOnly,
+      enabled: enabled,
       cursorColor: Theme.of(context).primaryColor,
       key: formKey,
       controller: controller,
@@ -51,12 +54,10 @@ class CustomTextFormField extends StatelessWidget {
       style: getMediumStyle(),
       decoration: InputDecoration(
         hintText: hintText,
-        contentPadding: isTablet
-            ? EdgeInsets.symmetric(
-                vertical: 10.h,
-                horizontal: 10.w,
-              )
-            : null,
+        contentPadding: EdgeInsets.symmetric(
+          vertical: 14.h,
+          horizontal: 15.w,
+        ),
         hintStyle: getMediumStyle(
           color: ColorManager.lightGrey2,
         ),
@@ -68,7 +69,7 @@ class CustomTextFormField extends StatelessWidget {
         focusedBorder: _decorateBorder(color: ColorManager.primary),
         errorBorder: _decorateBorder(color: ColorManager.red),
         focusedErrorBorder: _decorateBorder(color: ColorManager.red),
-        disabledBorder: _decorateBorder(color: ColorManager.black),
+        disabledBorder: _decorateBorder(color: ColorManager.lightGrey2),
         border: _decorateBorder(color: ColorManager.black),
       ),
       onChanged: onChanged,

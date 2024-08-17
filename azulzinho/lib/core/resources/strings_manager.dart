@@ -57,6 +57,7 @@ abstract class KitsStrings {
       'A data de término deve ser posterior à data de início';
   static const String kitExists = 'Kit já existe';
   static const String addKit = 'Adicionar Novo Kit';
+  static const String renew = 'Renovar';
   static const String loadingKits = 'Carregando dados dos kits...';
   static const String month12 = '1° Reajuste';
   static const String month24 = '2° Reajuste';
@@ -70,6 +71,7 @@ abstract class KitsStrings {
   static const String historyTitle = 'Histórico das Kits Vencidos';
   static const String failedLoadingKits = 'Falha ao carregar os dados dos kits';
   static const String failedUpdateValue = 'Falha ao atualizar o valor de';
+  static const String failedRenew = 'Não conseguiu renovar de';
 }
 
 abstract class CalculatorStrings {

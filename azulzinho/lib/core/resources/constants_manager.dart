@@ -2,7 +2,7 @@ import 'package:azulzinho/core/resources/values_manager.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 abstract class ConstantsManager {
-  static double borderRadius = 10.0.r;
+  static double borderRadius = 20.r;
   static const zero = 0;
   static double iconSize = AppSize.s28;
 

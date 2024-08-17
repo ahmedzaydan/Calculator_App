@@ -1,23 +1,26 @@
 import 'package:azulzinho/core/resources/constants_manager.dart';
 import 'package:azulzinho/core/resources/strings_manager.dart';
-import 'package:azulzinho/themes/styles_manager.dart';
 import 'package:azulzinho/core/resources/values_manager.dart';
 import 'package:azulzinho/core/utils/functions.dart';
-import 'package:azulzinho/features/calculator/calculator_cubit/calculator_cubit.dart';
+import 'package:azulzinho/themes/color_manager.dart';
+import 'package:azulzinho/themes/styles_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
 class Note extends StatelessWidget {
-  const Note({super.key, required this.cubit});
+  const Note({
+    super.key,
+    required this.note,
+  });
 
-  final CalculatorCubit cubit;
+  final String note;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        if (cubit.note.isNotEmpty) ...[
+        if (note.isNotEmpty) ...[
           // note title
           Align(
             alignment: Alignment.centerLeft,
@@ -35,10 +38,10 @@ class Note extends StatelessWidget {
               horizontal: AppPadding.p10.w,
               vertical: AppPadding.p10.h,
             ),
-            width: double.infinity,
+            width: 1.sw,
             decoration: BoxDecoration(
               border: Border.all(
-                color: Colors.grey,
+                color: ColorManager.lightGrey2,
                 width: 2.sp,
               ),
               borderRadius: BorderRadius.circular(
@@ -46,10 +49,10 @@ class Note extends StatelessWidget {
               ),
             ),
             child: Directionality(
-              textDirection: getTextDirection(cubit.note),
+              textDirection: getTextDirection(note),
               child: Text(
-                cubit.note,
-                style: getBoldStyle(),
+                note,
+                style: getMediumStyle(),
               ),
             ),
           ),
