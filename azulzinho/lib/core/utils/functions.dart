@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:azulzinho/core/resources/constants_manager.dart';
+import 'package:azulzinho/core/utils/constants_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -58,5 +58,5 @@ TextDirection getTextDirection(String text) {
 }
 
 void kprint(dynamic message) {
-  log('$message\n');
+  log('$message');
 }

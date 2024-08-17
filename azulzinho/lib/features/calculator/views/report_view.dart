@@ -1,5 +1,4 @@
-import 'package:azulzinho/core/resources/strings_manager.dart';
-import 'package:azulzinho/core/resources/values_manager.dart';
+import 'package:azulzinho/themes/strings_manager.dart';
 import 'package:azulzinho/core/utils/dependency_injection.dart';
 import 'package:azulzinho/core/widgets/custom_app_bar.dart';
 import 'package:azulzinho/core/widgets/custom_icon_button.dart';
@@ -30,14 +29,14 @@ class ReportView extends StatelessWidget {
           actions: [
             Padding(
               padding: EdgeInsets.only(
-                right: AppPadding.p24.w,
+                right: 24.w,
               ),
               child: CustomIconButton(
                 onPressed: () => calculatorCubit.captureAndShare(),
                 faIcon: FaIcon(
                   FontAwesomeIcons.solidShareFromSquare,
                   color: ColorManager.white,
-                  size: AppSize.s24,
+                  size: 24.sp,
                 ),
               ),
             ),
@@ -51,8 +50,8 @@ class ReportView extends StatelessWidget {
                 controller: cubit.screenshotController,
                 child: Container(
                   padding: EdgeInsets.symmetric(
-                    horizontal: AppPadding.p20.w,
-                    vertical: AppPadding.p20.h,
+                    horizontal: 20.w,
+                    vertical: 20.h,
                   ),
                   color: ColorManager.white,
                   child: Column(

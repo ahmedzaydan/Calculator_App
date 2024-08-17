@@ -1,4 +1,4 @@
-import 'package:azulzinho/core/resources/strings_manager.dart';
+import 'package:azulzinho/themes/strings_manager.dart';
 import 'package:azulzinho/core/utils/dependency_injection.dart';
 import 'package:azulzinho/core/utils/extensions.dart';
 import 'package:azulzinho/core/utils/functions.dart';

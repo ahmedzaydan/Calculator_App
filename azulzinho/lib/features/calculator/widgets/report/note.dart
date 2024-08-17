@@ -1,6 +1,5 @@
-import 'package:azulzinho/core/resources/constants_manager.dart';
-import 'package:azulzinho/core/resources/strings_manager.dart';
-import 'package:azulzinho/core/resources/values_manager.dart';
+import 'package:azulzinho/core/utils/constants_manager.dart';
+import 'package:azulzinho/themes/strings_manager.dart';
 import 'package:azulzinho/core/utils/functions.dart';
 import 'package:azulzinho/themes/color_manager.dart';
 import 'package:azulzinho/themes/styles_manager.dart';
@@ -35,8 +34,8 @@ class Note extends StatelessWidget {
           // note body
           Container(
             padding: EdgeInsets.symmetric(
-              horizontal: AppPadding.p10.w,
-              vertical: AppPadding.p10.h,
+              horizontal: 10.w,
+              vertical: 10.h,
             ),
             width: 1.sw,
             decoration: BoxDecoration(

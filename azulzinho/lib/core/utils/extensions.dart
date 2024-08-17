@@ -1,6 +1,6 @@
 import 'package:azulzinho/themes/color_manager.dart';
-import 'package:azulzinho/core/resources/constants_manager.dart';
-import 'package:azulzinho/core/resources/strings_manager.dart';
+import 'package:azulzinho/core/utils/constants_manager.dart';
+import 'package:azulzinho/themes/strings_manager.dart';
 import 'package:azulzinho/features/kits/kit_cubit/kit_cubit.dart';
 import 'package:azulzinho/features/kits/models/kit_type.dart';
 

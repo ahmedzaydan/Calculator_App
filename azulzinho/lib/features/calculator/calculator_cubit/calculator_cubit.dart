@@ -5,7 +5,7 @@ import 'package:azulzinho/core/utils/functions.dart';
 import 'package:azulzinho/features/app_layout/app_layout_cubit/app_states.dart';
 import 'package:azulzinho/features/calculator/calculator_cubit/calculator_state.dart';
 import 'package:azulzinho/features/kits/kit_cubit/kit_cubit.dart';
-import 'package:azulzinho/features/persons/person_cubit/persons_cubit.dart';
+import 'package:azulzinho/features/persons/cubit/persons_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:path_provider/path_provider.dart';

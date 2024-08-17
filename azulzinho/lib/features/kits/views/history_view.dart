@@ -1,5 +1,4 @@
-import 'package:azulzinho/core/resources/strings_manager.dart';
-import 'package:azulzinho/core/resources/values_manager.dart';
+import 'package:azulzinho/themes/strings_manager.dart';
 import 'package:azulzinho/core/utils/dependency_injection.dart';
 import 'package:azulzinho/core/utils/extensions.dart';
 import 'package:azulzinho/core/utils/functions.dart';
@@ -29,8 +28,8 @@ class HistoryView extends StatelessWidget {
         return SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.symmetric(
-              vertical: AppPadding.p20.h,
-              horizontal: AppPadding.p14.w,
+              vertical: 20.h,
+              horizontal: 14.w,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

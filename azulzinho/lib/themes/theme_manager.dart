@@ -1,4 +1,4 @@
-import 'package:azulzinho/core/resources/constants_manager.dart';
+import 'package:azulzinho/core/utils/constants_manager.dart';
 import 'package:azulzinho/themes/color_manager.dart';
 import 'package:azulzinho/themes/styles_manager.dart';
 import 'package:flutter/material.dart';
@@ -82,7 +82,6 @@ ThemeData getApplicationTheme() {
           ConstantsManager.borderRadius / 2,
         ),
       ),
-      tileColor: ColorManager.primary,
       contentPadding: EdgeInsets.only(
         left: 10.w,
         right: 15.w,

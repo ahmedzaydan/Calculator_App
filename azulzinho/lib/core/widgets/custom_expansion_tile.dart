@@ -8,18 +8,20 @@ class CustomExpansionTile extends StatelessWidget {
     required this.title,
     this.children = const <Widget>[],
     this.trailing,
-    this.isExpanded = true,
   });
 
   final Widget title;
   final List<Widget> children;
   final Widget? trailing;
-  final bool isExpanded;
 
   @override
   Widget build(BuildContext context) {
     return ExpansionTile(
-      initiallyExpanded: isExpanded,
+      backgroundColor: ColorManager.white,
+      collapsedBackgroundColor: ColorManager.white,
+      tilePadding: EdgeInsets.symmetric(
+        horizontal: 0.w,
+      ),
       shape: RoundedRectangleBorder(
         side: BorderSide(
           color: ColorManager.transparent,
@@ -36,8 +38,9 @@ class CustomExpansionTile extends StatelessWidget {
           width: 1.w,
         ),
       ),
-      childrenPadding: EdgeInsets.symmetric(
-        horizontal: 10.w,
+      childrenPadding: EdgeInsetsDirectional.only(
+        start: 0.w,
+        end: 10.w,
       ),
       minTileHeight: 50.h,
       title: title,

@@ -1,4 +1,4 @@
-import 'package:azulzinho/core/resources/constants_manager.dart';
+import 'package:azulzinho/core/utils/constants_manager.dart';
 import 'package:azulzinho/themes/color_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -20,6 +20,7 @@ class AddListTile extends StatelessWidget {
       title: Text(
         text,
       ),
+      tileColor: ColorManager.primary,
       trailing: FaIcon(
         FontAwesomeIcons.chevronRight,
         color: ColorManager.white,

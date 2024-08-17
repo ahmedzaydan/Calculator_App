@@ -1,12 +1,11 @@
-import 'package:azulzinho/core/resources/strings_manager.dart';
-import 'package:azulzinho/core/resources/values_manager.dart';
+import 'package:azulzinho/themes/strings_manager.dart';
 import 'package:azulzinho/core/utils/dependency_injection.dart';
 import 'package:azulzinho/core/utils/extensions.dart';
 import 'package:azulzinho/core/widgets/custom_divider.dart';
 import 'package:azulzinho/core/widgets/custom_list_view.dart';
 import 'package:azulzinho/core/widgets/item_widgets/info_item.dart';
 import 'package:azulzinho/features/persons/models/person_model.dart';
-import 'package:azulzinho/features/persons/person_cubit/persons_cubit.dart';
+import 'package:azulzinho/features/persons/cubit/persons_cubit.dart';
 import 'package:azulzinho/themes/color_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -22,9 +21,9 @@ class ResultsSection extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.only(
           top: 0,
-          bottom: AppPadding.p8.h,
-          left: AppPadding.p8.w,
-          right: AppPadding.p8.w,
+          bottom: 8.h,
+          left: 8.w,
+          right: 8.w,
         ),
         child: Column(
           children: [

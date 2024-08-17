@@ -1,10 +1,9 @@
-import 'package:azulzinho/core/resources/strings_manager.dart';
+import 'package:azulzinho/themes/strings_manager.dart';
 import 'package:azulzinho/core/utils/functions.dart';
 import 'package:azulzinho/core/utils/sqflite_service.dart';
 import 'package:azulzinho/features/app_layout/app_layout_cubit/app_states.dart';
 import 'package:azulzinho/features/kits/kit_cubit/kit_states.dart';
 import 'package:azulzinho/features/kits/models/kit_model.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 // TODO: try to separate it into more than one cubit please

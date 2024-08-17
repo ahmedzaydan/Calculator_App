@@ -1,11 +1,11 @@
-import 'package:azulzinho/core/resources/constants_manager.dart';
-import 'package:azulzinho/core/resources/strings_manager.dart';
+import 'package:azulzinho/core/utils/constants_manager.dart';
+import 'package:azulzinho/themes/strings_manager.dart';
 import 'package:azulzinho/core/utils/functions.dart';
 import 'package:azulzinho/core/widgets/custom_text_form_field.dart';
 import 'package:azulzinho/core/widgets/item_widgets/action_view_layout.dart';
 import 'package:azulzinho/features/app_layout/app_layout_cubit/app_states.dart';
-import 'package:azulzinho/features/persons/person_cubit/persons_cubit.dart';
-import 'package:azulzinho/features/persons/person_cubit/persons_states.dart';
+import 'package:azulzinho/features/persons/cubit/persons_cubit.dart';
+import 'package:azulzinho/features/persons/cubit/persons_states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

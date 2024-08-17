@@ -1,7 +1,6 @@
+import 'package:azulzinho/themes/strings_manager.dart';
 import 'package:azulzinho/themes/color_manager.dart';
-import 'package:azulzinho/core/resources/strings_manager.dart';
 import 'package:azulzinho/themes/styles_manager.dart';
-import 'package:azulzinho/core/resources/values_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -16,7 +15,7 @@ class LoadingWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: AppPadding.p18.w),
+      padding: EdgeInsets.symmetric(horizontal: 18.w),
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -27,7 +26,7 @@ class LoadingWidget extends StatelessWidget {
             SizedBox(height: 20.h),
             Text(
               message,
-              style:  getBoldStyle(),
+              style: getBoldStyle(),
               textAlign: TextAlign.center,
               softWrap: true,
             ),

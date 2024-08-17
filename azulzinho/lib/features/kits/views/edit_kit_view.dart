@@ -1,5 +1,5 @@
-import 'package:azulzinho/core/resources/constants_manager.dart';
-import 'package:azulzinho/core/resources/strings_manager.dart';
+import 'package:azulzinho/core/utils/constants_manager.dart';
+import 'package:azulzinho/themes/strings_manager.dart';
 import 'package:azulzinho/core/utils/extensions.dart';
 import 'package:azulzinho/core/utils/functions.dart';
 import 'package:azulzinho/core/widgets/custom_text_form_field.dart';

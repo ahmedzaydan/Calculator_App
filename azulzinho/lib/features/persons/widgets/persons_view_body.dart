@@ -1,13 +1,12 @@
-import 'package:azulzinho/core/resources/constants_manager.dart';
-import 'package:azulzinho/core/resources/strings_manager.dart';
-import 'package:azulzinho/core/resources/values_manager.dart';
+import 'package:azulzinho/core/utils/constants_manager.dart';
+import 'package:azulzinho/themes/strings_manager.dart';
 import 'package:azulzinho/core/utils/functions.dart';
 import 'package:azulzinho/core/widgets/add_list_tile.dart';
 import 'package:azulzinho/core/widgets/custom_alert_dialog.dart';
 import 'package:azulzinho/core/widgets/custom_list_view.dart';
 import 'package:azulzinho/core/widgets/item_widgets/data_item.dart';
 import 'package:azulzinho/features/persons/models/person_model.dart';
-import 'package:azulzinho/features/persons/person_cubit/persons_cubit.dart';
+import 'package:azulzinho/features/persons/cubit/persons_cubit.dart';
 import 'package:azulzinho/features/persons/views/add_person_view.dart';
 import 'package:azulzinho/features/persons/views/edit_person_view.dart';
 import 'package:azulzinho/features/persons/widgets/admin_widget.dart';
@@ -28,8 +27,8 @@ class PersonsViewBody extends StatelessWidget {
     return SingleChildScrollView(
       child: Padding(
         padding: EdgeInsets.symmetric(
-          horizontal: AppPadding.p20.w,
-          vertical: AppPadding.p20.h,
+          horizontal: 20.w,
+          vertical: 20.h,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

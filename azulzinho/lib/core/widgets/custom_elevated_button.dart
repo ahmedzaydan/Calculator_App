@@ -1,4 +1,4 @@
-import 'package:azulzinho/core/resources/constants_manager.dart';
+import 'package:azulzinho/core/utils/constants_manager.dart';
 import 'package:azulzinho/themes/color_manager.dart';
 import 'package:azulzinho/themes/styles_manager.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +13,7 @@ class CustomElevatedButton extends StatelessWidget {
     this.height,
     this.backgroundColor,
     this.fontSize,
+    this.padding,
   });
 
   final void Function()? onPressed;
@@ -21,6 +22,7 @@ class CustomElevatedButton extends StatelessWidget {
   final double? height;
   final Color? backgroundColor;
   final double? fontSize;
+  final EdgeInsetsGeometry? padding;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +33,7 @@ class CustomElevatedButton extends StatelessWidget {
           width != null ? width!.w : double.infinity,
           height != null ? height!.h : 50.h,
         ),
-        padding: EdgeInsets.symmetric(
+        padding: padding ?? EdgeInsets.symmetric(
           horizontal: 10.w,
         ),
         shape: RoundedRectangleBorder(
