@@ -48,11 +48,9 @@ class KitsListWithClearButton extends StatelessWidget {
             height: 40,
             padding: EdgeInsets.symmetric(
               horizontal: 15.w,
-              vertical: 5.h,
+              vertical: 3.h,
             ),
-            onPressed: () async {
-              await calculatorCubit.clear();
-            },
+            onPressed: () => calculatorCubit.clear(),
             text: CalculatorStrings.clear,
           ),
         ],

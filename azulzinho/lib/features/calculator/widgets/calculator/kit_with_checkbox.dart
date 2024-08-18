@@ -22,10 +22,10 @@ class KitWithCheckbox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color color = kit.isChecked ? ColorManager.lightGrey : ColorManager.black;
-
     return BlocBuilder<KitsCubit, AppStates>(
       builder: (context, state) {
+        Color color =
+            kit.isChecked ? ColorManager.lightGrey : ColorManager.black;
         return Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -49,25 +49,25 @@ class KitWithCheckbox extends StatelessWidget {
                 },
               ),
             ),
-        
+
             Gap(isTablet ? 10.w : 0),
-        
+
             // kit name
             Text(
               kit.name,
               style: getBoldStyle(color: color),
             ),
-        
+
             Gap(5.h),
-        
+
             // kit start date
             Text(
               '(${getDateAsString(date: kit.startDate)})',
               style: getRegularStyle(color: color),
             ),
-        
+
             const Spacer(),
-        
+
             // kit value
             Text(
               kit.value.toString().currency,

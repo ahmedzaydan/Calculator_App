@@ -54,8 +54,6 @@ class KitsView extends StatelessWidget {
         }
       },
       builder: (_, state) {
-        return KitsViewBody();
-
         if (state is AppLayoutInitialState ||
             state is LoadingDataState ||
             state is KitsInitialState ||
