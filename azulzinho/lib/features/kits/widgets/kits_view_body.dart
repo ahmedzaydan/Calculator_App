@@ -1,4 +1,3 @@
-import 'package:azulzinho/themes/strings_manager.dart';
 import 'package:azulzinho/core/utils/extensions.dart';
 import 'package:azulzinho/core/utils/functions.dart';
 import 'package:azulzinho/core/widgets/add_list_tile.dart';
@@ -12,6 +11,7 @@ import 'package:azulzinho/features/kits/models/kit_model.dart';
 import 'package:azulzinho/features/kits/views/add_kit_view.dart';
 import 'package:azulzinho/features/kits/views/edit_kit_view.dart';
 import 'package:azulzinho/features/kits/views/renew_expired_kit_view.dart';
+import 'package:azulzinho/themes/strings_manager.dart';
 import 'package:azulzinho/themes/styles_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

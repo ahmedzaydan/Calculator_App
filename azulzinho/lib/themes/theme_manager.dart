@@ -79,14 +79,14 @@ ThemeData getApplicationTheme() {
     listTileTheme: ListTileThemeData(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(
-          ConstantsManager.borderRadius / 2,
+          ConstantsManager.borderRadius / (isTablet ? 1.5 : 2),
         ),
       ),
       contentPadding: EdgeInsets.only(
         left: 10.w,
         right: 15.w,
-        top: isTablet ? 5 : 0,
-        bottom: isTablet ? 5 : 0,
+        top: isTablet ? 10 : 0,
+        bottom: isTablet ? 10 : 0,
       ),
       titleTextStyle: getBoldStyle(
         color: ColorManager.white,

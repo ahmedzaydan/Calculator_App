@@ -55,7 +55,7 @@ class CustomTextFormField extends StatelessWidget {
       decoration: InputDecoration(
         hintText: hintText,
         contentPadding: EdgeInsets.symmetric(
-          vertical: 14.h,
+          vertical: isTablet ? 20.h : 14.h,
           horizontal: 15.w,
         ),
         hintStyle: getMediumStyle(

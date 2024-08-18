@@ -1,3 +1,4 @@
+import 'package:azulzinho/core/utils/constants_manager.dart';
 import 'package:azulzinho/themes/strings_manager.dart';
 import 'package:azulzinho/core/utils/dependency_injection.dart';
 import 'package:azulzinho/core/utils/functions.dart';
@@ -45,7 +46,9 @@ class AdminWidget extends StatelessWidget {
             },
             faIcon: FaIcon(
               FontAwesomeIcons.pen,
-              size: 20.sp,
+               size: isTablet
+                          ? ConstantsManager.iconSize / 1.5
+                          : ConstantsManager.iconSize / 1.8,
             ),
             style: ButtonStyle(
               iconColor: WidgetStateProperty.all(ColorManager.white),

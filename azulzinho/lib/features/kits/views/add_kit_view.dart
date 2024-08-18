@@ -1,5 +1,4 @@
 import 'package:azulzinho/core/utils/constants_manager.dart';
-import 'package:azulzinho/themes/strings_manager.dart';
 import 'package:azulzinho/core/utils/extensions.dart';
 import 'package:azulzinho/core/utils/functions.dart';
 import 'package:azulzinho/core/widgets/custom_text_form_field.dart';
@@ -7,6 +6,7 @@ import 'package:azulzinho/core/widgets/item_widgets/action_view_layout.dart';
 import 'package:azulzinho/core/widgets/item_widgets/date_input_field.dart';
 import 'package:azulzinho/features/app_layout/app_layout_cubit/app_states.dart';
 import 'package:azulzinho/features/kits/kit_cubit/kit_states.dart';
+import 'package:azulzinho/themes/strings_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -34,7 +34,6 @@ class AddKitView extends StatelessWidget {
       },
       builder: (context, state) {
         var cubit = KitsCubit.of(context);
-
         return ActionViewLayout(
           title: KitsStrings.addKit,
           onActionPressed: () async {

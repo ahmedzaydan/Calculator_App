@@ -23,7 +23,9 @@ class CollapseButton extends StatelessWidget {
             ? FontAwesomeIcons.circleChevronDown
             : FontAwesomeIcons.circleChevronUp,
         color: ColorManager.iconColor,
-        size: ConstantsManager.iconSize,
+        size: isTablet
+            ? ConstantsManager.iconSize / 1.5
+            : ConstantsManager.iconSize,
       ),
     );
   }

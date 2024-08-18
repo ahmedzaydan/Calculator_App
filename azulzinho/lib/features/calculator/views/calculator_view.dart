@@ -1,4 +1,4 @@
-import 'package:azulzinho/themes/strings_manager.dart';
+import 'package:azulzinho/core/utils/constants_manager.dart';
 import 'package:azulzinho/core/utils/dependency_injection.dart';
 import 'package:azulzinho/core/utils/functions.dart';
 import 'package:azulzinho/core/widgets/custom_elevated_button.dart';
@@ -9,6 +9,7 @@ import 'package:azulzinho/features/app_layout/app_layout_cubit/app_states.dart';
 import 'package:azulzinho/features/calculator/calculator_cubit/calculator_cubit.dart';
 import 'package:azulzinho/features/calculator/views/report_view.dart';
 import 'package:azulzinho/features/calculator/widgets/calculator/kits_list_with_clear_button.dart';
+import 'package:azulzinho/themes/strings_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -43,7 +44,7 @@ class CalculatorView extends StatelessWidget {
                   children: [
                     ExpensesField(),
                     ExtraField(),
-                
+
                     // Note field
                     Padding(
                       padding: EdgeInsets.only(
@@ -58,10 +59,10 @@ class CalculatorView extends StatelessWidget {
                             locator<CalculatorCubit>().note = note,
                       ),
                     ),
-                
+
                     // Calculate button
                     CustomElevatedButton(
-                      fontSize: 24.sp,
+                      fontSize: isTablet ? 18 : 24,
                       width: 1.sw,
                       onPressed: () {
                         locator<CalculatorCubit>().calculate();

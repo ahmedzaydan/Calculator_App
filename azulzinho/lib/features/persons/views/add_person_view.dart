@@ -44,6 +44,7 @@ class AddPersonView extends StatelessWidget {
                 CustomTextFormField(
                   controller: nameController,
                   labelText: PersonsStrings.name,
+                  keyboardType: TextInputType.text,
                   validator: (value) => cubit.validatePresonName(value),
                 ),
                 Gap(20.h),

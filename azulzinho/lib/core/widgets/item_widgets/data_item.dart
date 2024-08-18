@@ -45,7 +45,7 @@ class DataItem extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.symmetric(
           horizontal: 20.w,
-          vertical: 14.h,
+          vertical: isTablet ? 24.h : 14.h,
         ),
         child: Column(
           children: [
@@ -68,7 +68,9 @@ class DataItem extends StatelessWidget {
                     onPressed: onActionPressed,
                     faIcon: FaIcon(
                       actionIcon,
-                      size: 24.sp,
+                      size: isTablet
+                          ? ConstantsManager.iconSize / 1.5
+                          : ConstantsManager.iconSize * 0.9,
                     ),
                   ),
 
@@ -78,7 +80,9 @@ class DataItem extends StatelessWidget {
                     onPressed: deleteOnPressed,
                     faIcon: FaIcon(
                       FontAwesomeIcons.trash,
-                      size: 24.sp,
+                      size: isTablet
+                          ? ConstantsManager.iconSize / 1.5
+                          : ConstantsManager.iconSize * 0.9,
                     ),
                   ),
               ],

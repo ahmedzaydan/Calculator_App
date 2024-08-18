@@ -33,9 +33,10 @@ class CustomElevatedButton extends StatelessWidget {
           width != null ? width!.w : double.infinity,
           height != null ? height!.h : 50.h,
         ),
-        padding: padding ?? EdgeInsets.symmetric(
-          horizontal: 10.w,
-        ),
+        padding: padding ??
+            EdgeInsets.symmetric(
+              horizontal: 10.w,
+            ),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(
             ConstantsManager.borderRadius * 1.5,
@@ -45,8 +46,9 @@ class CustomElevatedButton extends StatelessWidget {
       onPressed: onPressed,
       child: Text(
         text,
-        style: getBoldStyle(color: ColorManager.white).copyWith(
-          fontSize: fontSize ?? 18.sp,
+        style: getBoldStyle(
+          color: ColorManager.white,
+          fontSize: fontSize ?? (isTablet ? 14 : 18),
         ),
         textAlign: TextAlign.center,
       ),

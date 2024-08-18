@@ -1,4 +1,3 @@
-import 'package:azulzinho/themes/strings_manager.dart';
 import 'package:azulzinho/core/utils/dependency_injection.dart';
 import 'package:azulzinho/core/widgets/collapse_button.dart';
 import 'package:azulzinho/core/widgets/custom_elevated_button.dart';
@@ -8,6 +7,7 @@ import 'package:azulzinho/features/calculator/calculator_cubit/calculator_cubit.
 import 'package:azulzinho/features/calculator/widgets/calculator/kit_with_checkbox.dart';
 import 'package:azulzinho/features/kits/kit_cubit/kit_cubit.dart';
 import 'package:azulzinho/features/kits/models/kit_model.dart';
+import 'package:azulzinho/themes/strings_manager.dart';
 import 'package:azulzinho/themes/styles_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -24,7 +24,7 @@ class KitsListWithClearButton extends StatelessWidget {
     return CustomExpansionTile(
       title: Text(
         CalculatorStrings.kits,
-        style: getBoldStyle(fontSize: 24.sp),
+        style: getBoldStyle(fontSize: 24),
       ),
       children: [
         CustomListView(

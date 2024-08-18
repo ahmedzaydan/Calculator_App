@@ -14,11 +14,7 @@ void main() async {
     await ScreenUtil.ensureScreenSize();
     Bloc.observer = MyBlocObserver();
     initializeDependencies();
-
-    // handle report view
-    // handle laoding, error widgets and empty widgets
     runApp(const CalculatorApp());
-    // runApp(MyApp());
   } catch (error) {
     kprint('Error in main: $error');
   }
