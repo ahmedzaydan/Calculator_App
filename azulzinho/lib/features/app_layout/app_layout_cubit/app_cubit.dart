@@ -1,11 +1,11 @@
-import 'package:azulzinho/core/resources/strings_manager.dart';
+import 'package:azulzinho/themes/strings_manager.dart';
 import 'package:azulzinho/features/app_layout/app_layout_cubit/app_states.dart';
 import 'package:azulzinho/features/calculator/calculator_cubit/calculator_cubit.dart';
 import 'package:azulzinho/features/calculator/views/calculator_view.dart';
 import 'package:azulzinho/features/kits/kit_cubit/kit_cubit.dart';
 import 'package:azulzinho/features/kits/views/history_view.dart';
 import 'package:azulzinho/features/kits/views/kits_view.dart';
-import 'package:azulzinho/features/persons/person_cubit/persons_cubit.dart';
+import 'package:azulzinho/features/persons/cubit/persons_cubit.dart';
 import 'package:azulzinho/features/persons/views/persons_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

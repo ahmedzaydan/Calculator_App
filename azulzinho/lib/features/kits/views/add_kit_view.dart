@@ -1,165 +1,103 @@
-import 'package:azulzinho/core/resources/constants_manager.dart';
-import 'package:azulzinho/core/resources/strings_manager.dart';
+import 'package:azulzinho/core/utils/constants_manager.dart';
 import 'package:azulzinho/core/utils/extensions.dart';
 import 'package:azulzinho/core/utils/functions.dart';
-import 'package:azulzinho/core/widgets/add_or_update_cancel_widget.dart';
-import 'package:azulzinho/core/widgets/add_view.dart';
 import 'package:azulzinho/core/widgets/custom_text_form_field.dart';
+import 'package:azulzinho/core/widgets/item_widgets/action_view_layout.dart';
+import 'package:azulzinho/core/widgets/item_widgets/date_input_field.dart';
+import 'package:azulzinho/features/app_layout/app_layout_cubit/app_states.dart';
+import 'package:azulzinho/features/kits/kit_cubit/kit_states.dart';
+import 'package:azulzinho/themes/strings_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
-import '../../../themes/color_manager.dart';
-import '../../../core/utils/dependency_injection.dart';
 import '../kit_cubit/kit_cubit.dart';
 
 class AddKitView extends StatelessWidget {
-  AddKitView({
-    super.key,
-    required this.sourceContext,
-  });
-
-  final BuildContext sourceContext;
+  AddKitView({super.key});
 
   final TextEditingController _kitNameController = TextEditingController();
   final TextEditingController _kitValueController = TextEditingController();
   final TextEditingController _startDateController = TextEditingController();
+  final TextEditingController _endDateController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    return AddView(
-      title: KitsStrings.addKit,
-      child: Form(
-        key: _formKey,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            _kitName(),
-            Gap(20.h),
-
-            _kitValue(),
-            Gap(20.h),
-
-            _timePicker(context),
-            Gap(20.h),
-
-            // add or cancel buttons
-            _actions(),
-          ],
-        ),
-      ),
-    );
-  }
-
-  CustomTextFormField _kitName() {
-    return CustomTextFormField(
-      controller: _kitNameController,
-      fontWeight: FontWeight.normal,
-      labelText: KitsStrings.kitNumber,
-      keyboardType: const TextInputType.numberWithOptions(decimal: false),
-      inputFormatters: getInputFormatters(ConstantsManager.kitsRegex),
-      validator: (value) {
-        if (value!.isEmpty) {
-          return KitsStrings.enterNumber;
-        } else if (value.isNotEmpty) {
-          // Check if the kit number already exists
-          if (locator<KitsCubit>()
-              .kits
-              .any((element) => element.name == value)) {
-            return KitsStrings.kitExists;
-          }
+    return BlocConsumer<KitsCubit, AppStates>(
+      listener: (context, state) {
+        if (state is CreateKitSuccessState) {
+          Navigator.pop(context);
         }
-        return null;
       },
-    );
-  }
-
-  CustomTextFormField _kitValue() {
-    return CustomTextFormField(
-      controller: _kitValueController,
-      fontWeight: FontWeight.normal,
-      labelText: KitsStrings.kitValue,
-      keyboardType: const TextInputType.numberWithOptions(decimal: true),
-      inputFormatters: getInputFormatters(ConstantsManager.valueRegex),
-      validator: (value) {
-        if (value!.isEmpty) {
-          return KitsStrings.enterValue;
-        }
-        return null;
-      },
-    );
-  }
-
-  CustomTextFormField _timePicker(BuildContext context) {
-    _startDateController.text = getDateAsString();
-
-    return CustomTextFormField(
-      controller: _startDateController,
-      labelText: KitsStrings.startDate,
-      hintText: getDateAsString(),
-      keyboardType: TextInputType.datetime,
-      readOnly: true,
-      onTap: () async {
-        var date = await showDatePicker(
-          builder: (context, child) {
-            return Theme(
-              data: ThemeData.light().copyWith(
-                colorScheme: ColorScheme.light(
-                  primary: ColorManager.black,
-                  onSurface: ColorManager.black,
-                ),
-                buttonTheme: ButtonThemeData(
-                  colorScheme: ColorScheme.light(
-                    primary: ColorManager.red,
-                  ),
-                ),
-              ),
-              child: child!,
-            );
+      builder: (context, state) {
+        var cubit = KitsCubit.of(context);
+        return ActionViewLayout(
+          title: KitsStrings.addKit,
+          onActionPressed: () async {
+            if (_formKey.currentState!.validate()) {
+              cubit.createKit(
+                name: _kitNameController.text,
+                value: _kitValueController.text.toDouble(),
+              );
+            }
           },
-          context: context,
-          initialDate: DateTime.now(),
-          firstDate: DateTime(2000),
-          lastDate: DateTime(2100),
-        );
-        if (date != null) {
-          locator<KitsCubit>().selectedDate = getFormattedDate(date: date);
-          _startDateController.text =
-              getDateAsString(date: getFormattedDate(date: date));
-        }
-      },
-      validator: (value) {
-        if (value!.isEmpty) {
-          return KitsStrings.enterStartDate;
-        }
-        return null;
-      },
-    );
-  }
+          actionText: KitsStrings.add,
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                // Kit name
+                CustomTextFormField(
+                  controller: _kitNameController,
+                  labelText: KitsStrings.kitNumber,
+                  keyboardType: TextInputType.phone,
+                  inputFormatters:
+                      getInputFormatters(ConstantsManager.kitsRegex),
+                  validator: (value) => cubit.validateKitName(value),
+                ),
+                Gap(20.h),
 
-  Widget _actions() {
-    return AddUpdateCancelWidget(
-      onPressed: () async {
-        var kitsCubit = locator<KitsCubit>();
-        if (_formKey.currentState!.validate()) {
-          kitsCubit
-              .createKit(
-            name: _kitNameController.text,
-            value: _kitValueController.text.toDouble(),
-          )
-              .then(
-            (response) {
-              if (response == true && sourceContext.mounted) {
-                Navigator.pop(sourceContext);
-              }
-            },
-          );
-        }
+                // Kit value
+                CustomTextFormField(
+                  controller: _kitValueController,
+                  labelText: KitsStrings.kitValue,
+                  inputFormatters:
+                      getInputFormatters(ConstantsManager.valueRegex),
+                  validator: (value) => cubit.validateKitValue(value),
+                ),
+                Gap(20.h),
+
+                // Start date
+                DateInputField(
+                  controller: _startDateController,
+                  label: KitsStrings.startDate,
+                  onDateSelected: (date) {
+                    cubit.startDate = getFormattedDate(date: date);
+                  },
+                  validator: (_) => cubit.validateStartDate(),
+                ),
+
+                Gap(20.h),
+
+                // End date
+                DateInputField(
+                  controller: _endDateController,
+                  label: KitsStrings.endDate,
+                  onDateSelected: (date) {
+                    cubit.endDate = getFormattedDate(date: date);
+                  },
+                  validator: (_) => cubit.validateEndDate(),
+                ),
+                Gap(20.h),
+              ],
+            ),
+          ),
+        );
       },
-      actionText: KitsStrings.add,
-      sourceContext: sourceContext,
     );
   }
 }

@@ -5,7 +5,8 @@ import 'package:azulzinho/core/utils/functions.dart';
 import 'package:azulzinho/features/app_layout/app_layout_cubit/app_states.dart';
 import 'package:azulzinho/features/calculator/calculator_cubit/calculator_state.dart';
 import 'package:azulzinho/features/kits/kit_cubit/kit_cubit.dart';
-import 'package:azulzinho/features/persons/person_cubit/persons_cubit.dart';
+import 'package:azulzinho/features/persons/cubit/persons_cubit.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:screenshot/screenshot.dart';
@@ -20,6 +21,11 @@ class CalculatorCubit extends Cubit<AppStates> {
   final PersonsCubit personsCubit;
   final KitsCubit kitCubit;
 
+  final TextEditingController expensesController = TextEditingController();
+  final TextEditingController extraController = TextEditingController();
+  final TextEditingController noteController = TextEditingController();
+  final ScreenshotController screenshotController = ScreenshotController();
+
   String expenses = '';
   String note = '';
   String extra = '';
@@ -30,6 +36,10 @@ class CalculatorCubit extends Cubit<AppStates> {
 
   bool isKitsListCollapsed = false;
 
+  static CalculatorCubit get(context) {
+    return BlocProvider.of<CalculatorCubit>(context);
+  }
+
   void toggleKitsListVisibility() {
     isKitsListCollapsed = !isKitsListCollapsed;
     emit(ToggleKitsListVisibilityState());
@@ -37,13 +47,13 @@ class CalculatorCubit extends Cubit<AppStates> {
 
   double calculateString(String s) {
     double total = 0.0;
-    List<String> values = s.split(',');
+    List<String> values = s.split(' ');
     for (var i = 0; i < values.length; i++) {
       if (values[i].isNotEmpty) {
         try {
           total += double.parse(values[i]);
         } catch (e) {
-          klog("\nError Parsing Value: $e\n");
+          kprint("\nError Parsing Value: $e\n");
         }
         // klog("\nTotal: $total\n");
       }
@@ -74,26 +84,27 @@ class CalculatorCubit extends Cubit<AppStates> {
   }
 
   Future<void> clear() async {
+    expensesController.clear();
+    extraController.clear();
+    noteController.clear();
+
     await kitCubit.clearCheckedKits();
+
     expenses = '';
     extra = '';
     note = '';
     emit(ClearState());
   }
 
-  Future<void> captureAndShare(ScreenshotController controller) async {
+  Future<void> captureAndShare() async {
     emit(ShareLoadingState());
 
-    controller.capture().then(
-      (capturedImage) {
-        // _saveToGallery(capturedImage!);
-
-        _share(capturedImage!);
-      },
+    screenshotController.capture().then(
+      (capturedImage) => _share(capturedImage!),
     ).catchError(
       (onError) {
-        klog("\nError capturing visible image\n");
-        klog("\n${onError.toString()}\n");
+        kprint("\nError capturing visible image\n");
+        kprint("\n${onError.toString()}\n");
       },
     );
   }
@@ -120,7 +131,7 @@ class CalculatorCubit extends Cubit<AppStates> {
         });
       });
     } catch (error) {
-      klog("\nError Sharing Image:\n$error\n");
+      kprint("\nError Sharing Image:\n$error\n");
     }
   }
 

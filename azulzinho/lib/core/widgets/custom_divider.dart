@@ -1,22 +1,16 @@
-import 'package:azulzinho/themes/color_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomDivider extends StatelessWidget {
-  const CustomDivider({
-    super.key,
-    this.color,
-    this.thickness,
-  });
-
-  final Color? color;
-  final double? thickness;
+  const CustomDivider({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Divider(
-      thickness: thickness ?? 1.5.sp,
-      color: color ?? ColorManager.black,
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 8.h),
+      child: Divider(
+        thickness: 1.sp,
+      ),
     );
   }
 }

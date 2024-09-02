@@ -1,4 +1,4 @@
-import 'package:azulzinho/core/resources/strings_manager.dart';
+import 'package:azulzinho/themes/strings_manager.dart';
 import 'package:azulzinho/features/app_layout/app_layout_cubit/app_states.dart';
 
 class KitsInitialState extends AppStates {}
@@ -64,6 +64,30 @@ class UpdateKitErrorState extends AppStates {
   }
 
   UpdateKitErrorState(this.name, {this.error});
+}
+
+/// Renew kit states
+class RenewKitLoadingState extends AppStates {}
+
+class RenewKitSuccessState extends AppStates {
+  final String name;
+
+  String get message {
+    return '$name renovado com sucesso';
+  }
+
+  RenewKitSuccessState(this.name);
+}
+
+class RenewKitErrorState extends AppStates {
+  final String? error;
+  final String name;
+
+  String get message {
+    return error ?? '${KitsStrings.failedRenew} $name';
+  }
+
+  RenewKitErrorState(this.name, {this.error});
 }
 
 /// Change Kit status states

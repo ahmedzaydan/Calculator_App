@@ -1,6 +1,5 @@
 import 'package:azulzinho/themes/color_manager.dart';
 import 'package:azulzinho/themes/styles_manager.dart';
-import 'package:azulzinho/core/resources/values_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -15,8 +14,8 @@ class CustomErrorWidget extends StatelessWidget {
     return Center(
       child: Padding(
         padding: EdgeInsets.symmetric(
-          horizontal: AppPadding.p20.w,
-          vertical: AppPadding.p20.h,
+          horizontal: 20.w,
+          vertical: 20.h,
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -24,7 +23,7 @@ class CustomErrorWidget extends StatelessWidget {
             FaIcon(
               FontAwesomeIcons.triangleExclamation,
               color: ColorManager.red,
-              size: AppSize.s50,
+              size: 50.sp,
             ),
             SizedBox(height: 20.h),
             Text(

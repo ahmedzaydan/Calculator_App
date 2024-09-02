@@ -1,28 +1,20 @@
-import 'package:azulzinho/core/resources/constants_manager.dart';
-import 'package:azulzinho/core/resources/strings_manager.dart';
-import 'package:azulzinho/core/utils/dependency_injection.dart';
+import 'package:azulzinho/core/utils/constants_manager.dart';
+import 'package:azulzinho/themes/strings_manager.dart';
 import 'package:azulzinho/core/utils/functions.dart';
-import 'package:azulzinho/core/widgets/add_or_update_cancel_widget.dart';
-import 'package:azulzinho/core/widgets/add_view.dart';
 import 'package:azulzinho/core/widgets/custom_text_form_field.dart';
-import 'package:azulzinho/features/kits/kit_cubit/kit_cubit.dart';
-import 'package:azulzinho/features/persons/person_cubit/persons_cubit.dart';
+import 'package:azulzinho/core/widgets/item_widgets/action_view_layout.dart';
+import 'package:azulzinho/features/app_layout/app_layout_cubit/app_states.dart';
+import 'package:azulzinho/features/persons/cubit/persons_cubit.dart';
+import 'package:azulzinho/features/persons/cubit/persons_states.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
 class AddPersonView extends StatelessWidget {
   AddPersonView({
     super.key,
-    this.labelInputType,
-    this.labelInputFormatters,
-    required this.sourceContext,
   });
-
-  // cubits
-  final PersonsCubit personsCubit = locator<PersonsCubit>();
-  final KitsCubit profitsCubit = locator<KitsCubit>();
 
   // controllers
   final TextEditingController nameController = TextEditingController();
@@ -30,98 +22,55 @@ class AddPersonView extends StatelessWidget {
 
   final _formKey = GlobalKey<FormState>();
 
-  // input properties
-  final TextInputType? labelInputType;
-  final List<TextInputFormatter>? labelInputFormatters;
-
-  final BuildContext sourceContext;
-
   @override
   Widget build(BuildContext context) {
-    return AddView(
-      title: PersonsStrings.addPerson,
-      child: Form(
-        key: _formKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _personName(),
-            Gap(20.h),
+    return BlocConsumer<PersonsCubit, AppStates>(
+      listener: (context, state) {
+        if (state is CreatePersonSuccessState) {
+          Navigator.pop(context);
+        }
+      },
+      builder: (context, state) {
+        var cubit = PersonsCubit.of(context);
 
-            _personPercentage(),
-            Gap(20.h),
+        return ActionViewLayout(
+          title: PersonsStrings.addPerson,
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Name
+                CustomTextFormField(
+                  controller: nameController,
+                  labelText: PersonsStrings.name,
+                  keyboardType: TextInputType.text,
+                  validator: (value) => cubit.validatePresonName(value),
+                ),
+                Gap(20.h),
 
-            // add or cancel buttons
-            _actions(),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _actions() {
-    return AddUpdateCancelWidget(
-      onPressed: () async {
-        if (_formKey.currentState!.validate()) {
-          await personsCubit
-              .createPerson(
-            name: nameController.text,
-            percentage: double.parse(valueController.text),
-          )
-              .then((response) {
-            if (response == true && sourceContext.mounted) {
-              Navigator.pop(sourceContext);
+                // Value
+                CustomTextFormField(
+                  controller: valueController,
+                  labelText: PersonsStrings.percentage,
+                  inputFormatters: getInputFormatters(
+                    ConstantsManager.valueRegex,
+                  ),
+                  validator: (value) => cubit.validatePersonPercentage(value),
+                ),
+              ],
+            ),
+          ),
+          onActionPressed: () async {
+            if (_formKey.currentState!.validate()) {
+              cubit.createPerson(
+                name: nameController.text,
+                percentage: double.parse(valueController.text),
+              );
             }
-          });
-        }
-      },
-      actionText: PersonsStrings.add,
-      sourceContext: sourceContext,
-    );
-  }
-
-  CustomTextFormField _personPercentage() {
-    return CustomTextFormField(
-      controller: valueController,
-      fontWeight: FontWeight.normal,
-      labelText: PersonsStrings.percentage,
-      keyboardType: const TextInputType.numberWithOptions(decimal: true),
-      inputFormatters: getInputFormatters(ConstantsManager.valueRegex),
-      validator: (value) {
-        if (value!.isEmpty) {
-          return PersonsStrings.enterPercentage;
-        } else if (value.isNotEmpty) {
-          // Check if the person percentage is valid
-          if (double.parse(value) < 0 && double.parse(value) > 100) {
-            return PersonsStrings.invalidPercentage;
-          }
-        }
-        return null;
-      },
-    );
-  }
-
-  CustomTextFormField _personName() {
-    return CustomTextFormField(
-      controller: nameController,
-      fontWeight: FontWeight.normal,
-      labelText: PersonsStrings.name,
-      keyboardType: labelInputType,
-      inputFormatters: labelInputFormatters,
-      validator: (value) {
-        if (value!.isEmpty) {
-          return StringsManager.enterName;
-        } else if (value.isNotEmpty) {
-          // Check if the person name already exists
-          if (personsCubit.personItems.any(
-            (element) {
-              return element.name == value;
-            },
-          )) {
-            return PersonsStrings.personExists;
-          }
-        }
-        return null;
+          },
+          actionText: PersonsStrings.add,
+        );
       },
     );
   }

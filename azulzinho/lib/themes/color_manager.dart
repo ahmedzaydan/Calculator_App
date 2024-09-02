@@ -13,9 +13,9 @@ abstract class ColorManager {
   static Color lightGrey = const Color(0xff9E9E9E);
   static Color lightGrey2 = const Color.fromARGB(255, 199, 199, 199);
 
-  static Color black = const Color(0xff000000);
+  static const Color black = Color(0xff000000);
 
-  static Color expired = const Color.fromARGB(255, 219, 219, 219);
+  static Color expired =  Color.fromARGB(255, 219, 219, 219);
 
   // kit month 30 staus color
   static Color red2 = const Color(0xffe00b0b);
@@ -25,4 +25,6 @@ abstract class ColorManager {
 
   // kit month 12 staus color
   static Color green = const Color(0xff39E53F);
+  static const Color lightGreen = Color(0xff4CAF50);
+  static Color darkGreen = const Color(0xff086F08);
 }

@@ -1,4 +1,4 @@
-import 'package:azulzinho/core/resources/strings_manager.dart';
+import 'package:azulzinho/themes/strings_manager.dart';
 import 'package:flutter/material.dart';
 
 class KitType {
@@ -7,6 +7,6 @@ class KitType {
 
   KitType({
     this.typeString = KitsStrings.normal,
-    this.backgroundColor = Colors.transparent,
+    this.backgroundColor = Colors.white,
   });
 }

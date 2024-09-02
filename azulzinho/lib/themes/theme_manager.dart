@@ -1,17 +1,11 @@
-import 'package:azulzinho/core/resources/constants_manager.dart';
+import 'package:azulzinho/core/utils/constants_manager.dart';
 import 'package:azulzinho/themes/color_manager.dart';
 import 'package:azulzinho/themes/styles_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 ThemeData getApplicationTheme() {
   return ThemeData(
-    // Main colors
-    // primaryColor: ColorManager.primary,
-    // primarySwatch: Colors.primaries[0],
-    // primarySwatch: Colors.blue,
-    // primaryColorLight: ColorManager.primary,
-    // disabledColor: ColorManager.primary,
-
     colorScheme: ColorScheme.light(
       primary: ColorManager.primary,
       secondary: ColorManager.white,
@@ -21,51 +15,51 @@ ThemeData getApplicationTheme() {
     appBarTheme: AppBarTheme(
       centerTitle: true,
       color: ColorManager.primary,
-      titleTextStyle: getBoldStyle(color: ColorManager.white),
+      titleTextStyle: getMediumStyle(
+        color: ColorManager.white,
+        fontSize: 20,
+      ),
       actionsIconTheme: IconThemeData(
         color: ColorManager.white,
       ),
       iconTheme: IconThemeData(
         color: ColorManager.white,
       ),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(
+            ConstantsManager.borderRadius,
+          ),
+          bottomRight: Radius.circular(
+            ConstantsManager.borderRadius,
+          ),
+        ),
+      ),
+      toolbarHeight: 70.h,
     ),
 
     // icon theme
     iconTheme: IconThemeData(
       color: ColorManager.white,
-    ),
-
-    // Elevated button theme
-    elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ElevatedButton.styleFrom(
-        textStyle: TextStyle(
-          color: ColorManager.red,
-        ),
-        backgroundColor: ColorManager.primary,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(
-            ConstantsManager.borderRadius,
-          ),
-        ),
-      ),
+      size: ConstantsManager.iconSize,
     ),
 
     // icon button theme
     iconButtonTheme: IconButtonThemeData(
       style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all(
+        backgroundColor: WidgetStateProperty.all(
           ColorManager.transparent,
         ),
-        iconColor: MaterialStateProperty.all(
+        iconColor: WidgetStateProperty.all(
           ColorManager.black,
         ),
-        iconSize: MaterialStateProperty.all(
+        iconSize: WidgetStateProperty.all(
           ConstantsManager.iconSize,
         ),
-        padding: MaterialStateProperty.all(
+        padding: WidgetStateProperty.all(
           const EdgeInsets.all(0),
         ),
-        shape: MaterialStateProperty.all(
+        shape: WidgetStateProperty.all(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(
               ConstantsManager.borderRadius,
@@ -76,6 +70,27 @@ ThemeData getApplicationTheme() {
     ),
 
     // divider theme
-    dividerColor: ColorManager.black,
+    dividerTheme: DividerThemeData(
+      color: ColorManager.black,
+      thickness: 1.5.sp,
+    ),
+
+    // Lit tile theme
+    listTileTheme: ListTileThemeData(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(
+          ConstantsManager.borderRadius / (isTablet ? 1.5 : 2),
+        ),
+      ),
+      contentPadding: EdgeInsets.only(
+        left: 10.w,
+        right: 15.w,
+        top: isTablet ? 10 : 0,
+        bottom: isTablet ? 10 : 0,
+      ),
+      titleTextStyle: getBoldStyle(
+        color: ColorManager.white,
+      ),
+    ),
   );
 }

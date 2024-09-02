@@ -1,8 +1,9 @@
-import 'package:azulzinho/core/resources/constants_manager.dart';
+import 'package:azulzinho/core/utils/constants_manager.dart';
 import 'package:azulzinho/themes/color_manager.dart';
 import 'package:azulzinho/themes/styles_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomTextFormField extends StatelessWidget {
   const CustomTextFormField({
@@ -21,6 +22,7 @@ class CustomTextFormField extends StatelessWidget {
     this.fontSize,
     this.readOnly = false,
     this.onTap,
+    this.enabled = true,
   });
 
   final Key? formKey;
@@ -34,6 +36,7 @@ class CustomTextFormField extends StatelessWidget {
   final FontWeight fontWeight;
   final double? fontSize;
   final bool readOnly;
+  final bool enabled;
   final void Function()? onTap;
 
   @override
@@ -41,30 +44,37 @@ class CustomTextFormField extends StatelessWidget {
     return TextFormField(
       onTap: onTap,
       readOnly: readOnly,
+      enabled: enabled,
       cursorColor: Theme.of(context).primaryColor,
       key: formKey,
       controller: controller,
       keyboardType: keyboardType,
       inputFormatters: inputFormatters,
       onTapOutside: (value) => FocusScope.of(context).unfocus(),
+      style: getMediumStyle(),
       decoration: InputDecoration(
         hintText: hintText,
-        hintStyle: TextStyle(
-          color: ColorManager.lightGrey,
+        contentPadding: EdgeInsets.symmetric(
+          vertical: isTablet ? 10.h : 14.h,
+          horizontal: 15.w,
+        ),
+        hintStyle: getMediumStyle(
+          color: ColorManager.lightGrey2,
         ),
         labelText: labelText,
         labelStyle: getMediumStyle(
           color: ColorManager.black,
         ),
-        enabledBorder: _decorateBorder(color: ColorManager.lightGrey),
+        enabledBorder: _decorateBorder(color: ColorManager.lightGrey2),
         focusedBorder: _decorateBorder(color: ColorManager.primary),
         errorBorder: _decorateBorder(color: ColorManager.red),
         focusedErrorBorder: _decorateBorder(color: ColorManager.red),
-        disabledBorder: _decorateBorder(color: ColorManager.black),
+        disabledBorder: _decorateBorder(color: ColorManager.lightGrey2),
         border: _decorateBorder(color: ColorManager.black),
       ),
       onChanged: onChanged,
       validator: validator,
+      onFieldSubmitted: (_) => FocusScope.of(context).unfocus(),
     );
   }
 }
@@ -72,7 +82,7 @@ class CustomTextFormField extends StatelessWidget {
 OutlineInputBorder _decorateBorder({Color? color}) {
   return OutlineInputBorder(
     borderRadius: BorderRadius.circular(
-      ConstantsManager.borderRadius,
+      ConstantsManager.borderRadius * 1.5,
     ),
     borderSide: BorderSide(
       color: color ?? ColorManager.primary,
