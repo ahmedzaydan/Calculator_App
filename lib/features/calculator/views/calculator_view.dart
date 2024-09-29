@@ -1,7 +1,7 @@
 import 'package:azulzinho/core/utils/constants_manager.dart';
 import 'package:azulzinho/core/utils/dependency_injection.dart';
 import 'package:azulzinho/core/utils/functions.dart';
-import 'package:azulzinho/core/widgets/custom_elevated_button.dart';
+import 'package:azulzinho/core/widgets/buttons/custom_elevated_button.dart';
 import 'package:azulzinho/core/widgets/custom_error_widget.dart';
 import 'package:azulzinho/core/widgets/custom_text_form_field.dart';
 import 'package:azulzinho/core/widgets/loading_widget.dart';

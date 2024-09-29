@@ -1,5 +1,8 @@
-import 'package:azulzinho/themes/strings_manager.dart';
+import 'dart:io';
+
 import 'package:azulzinho/core/utils/functions.dart';
+import 'package:azulzinho/themes/strings_manager.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
 class SqfliteService {
@@ -8,8 +11,9 @@ class SqfliteService {
 
   static Future<void> initialize() async {
     // Get a location using getDatabasesPath
-    var databasesPath = await getDatabasesPath();
-    String path = databasesPath + databaseName;
+    // var databasesPath = await getDatabasesPath();
+    Directory directory = await getApplicationDocumentsDirectory();
+    String path = directory.path + databaseName;
 
     await openDatabase(
       path,

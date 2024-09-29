@@ -1,6 +1,6 @@
 import 'package:azulzinho/core/utils/dependency_injection.dart';
-import 'package:azulzinho/core/widgets/collapse_button.dart';
-import 'package:azulzinho/core/widgets/custom_elevated_button.dart';
+import 'package:azulzinho/core/widgets/buttons/collapse_button.dart';
+import 'package:azulzinho/core/widgets/buttons/custom_elevated_button.dart';
 import 'package:azulzinho/core/widgets/custom_expansion_tile.dart';
 import 'package:azulzinho/core/widgets/custom_list_view.dart';
 import 'package:azulzinho/features/calculator/calculator_cubit/calculator_cubit.dart';

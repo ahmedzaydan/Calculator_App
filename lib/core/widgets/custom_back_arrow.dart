@@ -1,5 +1,5 @@
 import 'package:azulzinho/core/utils/constants_manager.dart';
-import 'package:azulzinho/core/widgets/custom_icon_button.dart';
+import 'package:azulzinho/core/widgets/buttons/custom_icon_button.dart';
 import 'package:azulzinho/themes/color_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

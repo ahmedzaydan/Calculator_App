@@ -1,7 +1,7 @@
 import 'package:azulzinho/themes/strings_manager.dart';
 import 'package:azulzinho/core/utils/dependency_injection.dart';
 import 'package:azulzinho/core/widgets/custom_app_bar.dart';
-import 'package:azulzinho/core/widgets/custom_icon_button.dart';
+import 'package:azulzinho/core/widgets/buttons/custom_icon_button.dart';
 import 'package:azulzinho/features/app_layout/app_layout_cubit/app_states.dart';
 import 'package:azulzinho/features/calculator/calculator_cubit/calculator_cubit.dart';
 import 'package:azulzinho/features/calculator/widgets/report/basic_info.dart';

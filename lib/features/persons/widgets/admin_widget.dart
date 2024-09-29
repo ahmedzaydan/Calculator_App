@@ -2,7 +2,7 @@ import 'package:azulzinho/core/utils/constants_manager.dart';
 import 'package:azulzinho/themes/strings_manager.dart';
 import 'package:azulzinho/core/utils/dependency_injection.dart';
 import 'package:azulzinho/core/utils/functions.dart';
-import 'package:azulzinho/core/widgets/custom_icon_button.dart';
+import 'package:azulzinho/core/widgets/buttons/custom_icon_button.dart';
 import 'package:azulzinho/features/persons/cubit/persons_cubit.dart';
 import 'package:azulzinho/features/persons/views/edit_person_view.dart';
 import 'package:azulzinho/themes/color_manager.dart';

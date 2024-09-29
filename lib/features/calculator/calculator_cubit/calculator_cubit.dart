@@ -99,24 +99,18 @@ class CalculatorCubit extends Cubit<AppStates> {
   Future<void> captureAndShare() async {
     emit(ShareLoadingState());
 
-    screenshotController.capture().then(
-      (capturedImage) => _share(capturedImage!),
-    ).catchError(
+    screenshotController
+        .capture()
+        .then(
+          (capturedImage) => _share(capturedImage!),
+        )
+        .catchError(
       (onError) {
         kprint("\nError capturing visible image\n");
         kprint("\n${onError.toString()}\n");
       },
     );
   }
-
-  // Future<void> _saveToGallery(Uint8List image) async {
-  //   try {
-  //     await ImageGallerySaver.saveImage(image);
-  //     kprint("File Saved to Gallery\n");
-  //   } catch (e) {
-  //     kprint("Error Saving File:\n$e");
-  //   }
-  // }
 
   void _share(Uint8List image) async {
     try {

@@ -6,7 +6,6 @@ import 'package:azulzinho/features/kits/kit_cubit/kit_states.dart';
 import 'package:azulzinho/features/kits/models/kit_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-// TODO: try to separate it into more than one cubit please
 class KitsCubit extends Cubit<AppStates> {
   double totalKits = 0.0;
   String checkedKits = '';

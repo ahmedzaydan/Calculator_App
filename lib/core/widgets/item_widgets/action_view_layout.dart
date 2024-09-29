@@ -1,6 +1,6 @@
 import 'package:azulzinho/themes/strings_manager.dart';
 import 'package:azulzinho/core/widgets/custom_app_bar.dart';
-import 'package:azulzinho/core/widgets/custom_elevated_button.dart';
+import 'package:azulzinho/core/widgets/buttons/custom_elevated_button.dart';
 import 'package:azulzinho/core/widgets/custom_padding.dart';
 import 'package:azulzinho/themes/color_manager.dart';
 import 'package:flutter/material.dart';

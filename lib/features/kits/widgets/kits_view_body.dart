@@ -1,7 +1,7 @@
 import 'package:azulzinho/core/utils/extensions.dart';
 import 'package:azulzinho/core/utils/functions.dart';
 import 'package:azulzinho/core/widgets/add_list_tile.dart';
-import 'package:azulzinho/core/widgets/collapse_button.dart';
+import 'package:azulzinho/core/widgets/buttons/collapse_button.dart';
 import 'package:azulzinho/core/widgets/custom_alert_dialog.dart';
 import 'package:azulzinho/core/widgets/custom_expansion_tile.dart';
 import 'package:azulzinho/core/widgets/custom_list_view.dart';
