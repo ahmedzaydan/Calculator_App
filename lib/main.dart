@@ -1,6 +1,7 @@
 import 'package:azulzinho/calculator_app.dart';
 import 'package:azulzinho/core/utils/bloc_observer.dart';
 import 'package:azulzinho/core/utils/dependency_injection.dart';
+import 'package:azulzinho/core/utils/functions.dart';
 import 'package:azulzinho/core/utils/sqflite_service.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,7 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 
 Future<void> init() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await requestStoragePermission();
   await SqfliteService.initialize();
   await ScreenUtil.ensureScreenSize();
   Bloc.observer = MyBlocObserver();

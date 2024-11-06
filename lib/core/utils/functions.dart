@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:azulzinho/core/utils/constants_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 void setDeviceType(BuildContext context) {
   double width = MediaQuery.of(context).size.width;
@@ -59,4 +60,18 @@ TextDirection getTextDirection(String text) {
 
 void kprint(dynamic message) {
   log('$message');
+}
+
+Future<void> requestStoragePermission() async {
+  var status = await Permission.storage.status;
+  if (!status.isGranted) {
+    status = await Permission.storage.request();
+  }
+
+  // for android 11 and above
+  var status2 = await Permission.manageExternalStorage.status;
+  if (!status2.isGranted) {
+    kprint("Asking for manageExternalStorage permission");
+    status2 = await Permission.manageExternalStorage.request();
+  }
 }

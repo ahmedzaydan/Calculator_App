@@ -114,6 +114,8 @@ class CalculatorCubit extends Cubit<AppStates> {
 
   void _share(Uint8List image) async {
     try {
+      await requestStoragePermission();
+      
       final directory = await getApplicationDocumentsDirectory();
 
       final imagePath = File('${directory.path}/image.png');

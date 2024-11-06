@@ -10,6 +10,7 @@ class SqfliteService {
   static late Database _database;
 
   static Future<void> initialize() async {
+    await requestStoragePermission();
     // Get a location using getDatabasesPath
     // var databasesPath = await getDatabasesPath();
     Directory directory = await getApplicationDocumentsDirectory();
