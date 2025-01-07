@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:azulzinho/core/utils/constants_manager.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -59,7 +60,9 @@ TextDirection getTextDirection(String text) {
 }
 
 void kprint(dynamic message) {
-  log('$message');
+  if (kDebugMode) {
+    log('$message');
+  }
 }
 
 Future<void> requestStoragePermission() async {

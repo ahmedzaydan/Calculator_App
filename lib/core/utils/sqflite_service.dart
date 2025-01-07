@@ -5,45 +5,56 @@ import 'package:azulzinho/themes/strings_manager.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
+import 'package:path/path.dart';
+
 class SqfliteService {
   static const String databaseName = 'azulzinho.db';
   static late Database _database;
 
   static Future<void> initialize() async {
-    await requestStoragePermission();
-    // Get a location using getDatabasesPath
-    // var databasesPath = await getDatabasesPath();
-    Directory directory = await getApplicationDocumentsDirectory();
-    String path = directory.path + databaseName;
+    try {
+      // Get the appropriate directory based on platform
+      final directory = await getApplicationDocumentsDirectory();
 
-    await openDatabase(
-      path,
-      version: 1,
-      onCreate: (Database db, int version) async {
-        kprint('Database created');
-        _database = db;
-        String msg1 = await _createPersonsTable();
-        String msg2 = await _createKitsTable();
+      // Handle Android permissions if needed
+      if (Platform.isAndroid) {
+        await requestStoragePermission();
+      }
 
-        kprint(msg1);
-        kprint(msg2);
-      },
-      onOpen: (Database db) {
-        kprint('Database opened');
-        _database = db;
-      },
-    );
+      // Create the proper path using path.join
+      final path = join(directory.path, databaseName);
+
+      // Initialize database with proper error handling
+      _database = await openDatabase(
+        path,
+        version: 1,
+        onCreate: (Database db, int version) async {
+          kprint('Database created');
+          await _createPersonsTable(db); // Pass the db instance
+          await _createKitsTable(db);
+        },
+        onOpen: (Database db) {
+          kprint('Database opened successfully');
+        },
+      );
+
+      kprint('Database initialized successfully at: $path');
+    } catch (e, stackTrace) {
+      kprint('Database initialization error: $e');
+      kprint('Stack trace: $stackTrace');
+      rethrow;
+    }
   }
 
-  static Future<String> _createPersonsTable() async {
+  static Future<String> _createPersonsTable(Database db) async {
     String? message;
 
-    await _database.transaction((txn) async {
+    await db.transaction((txn) async {
       await txn.execute(
         '''CREATE TABLE ${PersonsStrings.tableName} (
-              id INTEGER PRIMARY KEY, 
-              name TEXT, 
-              percentage REAL)''',
+            id INTEGER PRIMARY KEY, 
+            name TEXT, 
+            percentage REAL)''',
       ).catchError((e) {
         message = 'Error in execute while creating persons table: $e';
       });
@@ -54,19 +65,19 @@ class SqfliteService {
     return message ?? 'Persons table created';
   }
 
-  static Future<String> _createKitsTable() async {
+  static Future<String> _createKitsTable(Database db) async {
     String? message;
 
-    await _database.transaction((txn) async {
+    await db.transaction((txn) async {
       await txn.execute(
         '''CREATE TABLE ${KitsStrings.tableName} (
-              id INTEGER PRIMARY KEY, 
-              name TEXT, 
-              value REAL,
-              isChecked INTEGER,
-              isExpired INTEGER,
-              startDate TEXT,
-              endDate TEXT)''',
+            id INTEGER PRIMARY KEY, 
+            name TEXT, 
+            value REAL,
+            isChecked INTEGER,
+            isExpired INTEGER,
+            startDate TEXT,
+            endDate TEXT)''',
       ).catchError((e) {
         message = 'Error in execute while creating kits table: $e';
       });
@@ -92,8 +103,7 @@ class SqfliteService {
     return id;
   }
 
-  // function check if row exists by
-  // returning the number of rows matches the condition
+  /// function check if row exists by returning the number of rows matches the condition
   static Future<List<Map<String, Object?>>> getMatchedRecords({
     required String tableName,
     required String condition,
